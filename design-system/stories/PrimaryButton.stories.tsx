@@ -28,11 +28,6 @@ const meta = {
       description: '버튼 비활성화 여부',
       defaultValue: false,
     },
-    isFullWidth: {
-      control: 'boolean',
-      description: '버튼을 전체 너비로 설정',
-      defaultValue: false,
-    },
     className: {
       control: 'text',
       description: '추가적인 CSS 클래스',
