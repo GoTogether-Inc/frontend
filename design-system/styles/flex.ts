@@ -8,4 +8,6 @@ export const flexRow = 'flex flex-row';
 
 export const flexColumn = 'flex flex-col';
 
+export const flexColumnCenter = `${flexColumn} items-center justify-center`;
+
 export const flexColumnSpaceBetween = `${flexColumn} justify-between`;
