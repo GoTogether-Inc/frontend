@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     <div className="flex justify-between items-center w-full h-20">
       <h1 className="font-nexon text-lg md:text-2xl ml-3 md:ml-5 flex-wrap whitespace-nowrap">같이가요</h1>
       <div className="p-4 md:p-6 w-full">
-        <SearchBar width="w-full" placeholder="검색어를 입력해주세요." />
+        <SearchBar className="w-full" placeholder="검색어를 입력해주세요." />
       </div>
       {!isLoggedIn ? (
         <div className="mr-3 md:mr-5 text-sm md:text-md">
