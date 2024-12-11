@@ -1,0 +1,51 @@
+import OnlineIcon from '../../../../public/assets/OnlineIcon.svg';
+import OfflineIcon from '../../../../public/assets/OfflineIcon.svg';
+import { useState } from 'react';
+import { SearchBar } from '../../../shared';
+
+interface EventTypeProps {
+  className?: string;
+}
+
+const EventType: React.FC<EventTypeProps> = ({ className }) => {
+  const [selectedEvent, setSelectedEvent] = useState<'online' | 'offline' | null>(null);
+  const handleTypeClick = (type: 'online' | 'offline') => {
+    setSelectedEvent(type);
+  };
+  return (
+    <div className={`flex flex-col justify-center w-full ${className}`}>
+      <div className="flex flex-col justify-start">
+        <h1 className="font-bold text-black text-lg mb-4">이벤트가 온라인 인가요, 오프라인 인가요?</h1>
+        <div className="flex justify-between px-1">
+          <div
+            onClick={() => handleTypeClick('online')}
+            className={`flex flex-col justify-center items-center w-44 h-44 border rounded-[20px] cursor-pointer ${
+              selectedEvent === 'online' ? 'border-main' : 'border-placeholderText'
+            }`}
+          >
+            <img src={OnlineIcon} alt="온라인 이모지" className="w-32 h-32" />
+            <span className="text-base font-semibold">온라인 이벤트</span>
+          </div>
+
+          <div
+            onClick={() => handleTypeClick('offline')}
+            className={`flex flex-col justify-center items-center w-44 h-44 border rounded-[20px] cursor-pointer ${
+              selectedEvent === 'offline' ? 'border-main' : 'border-placeholderText'
+            }`}
+          >
+            <img src={OfflineIcon} alt="오프라인 이모지" className="w-32 h-32" />
+            <span className="text-base font-semibold">오프라인 이벤트</span>
+          </div>
+        </div>
+      </div>
+
+      {selectedEvent === 'offline' && (
+        <div className="mt-6 space-y-2">
+          <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
+          <SearchBar placeholder="장소를 입력하세요." className="w-full" />
+        </div>
+      )}
+    </div>
+  );
+};
+export default EventType;
