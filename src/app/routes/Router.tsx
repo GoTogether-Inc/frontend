@@ -4,6 +4,7 @@ import Layout from '../Layout';
 import AgreementPage from '../../pages/join/AgreementPage';
 import InfoInputPage from '../../pages/join/InfoInputPage';
 import MainPage from '../../pages/home/ui/MainPage';
+import FunnelPage from '../../pages/event-manage/ui/FunnelPage';
 
 const routesConfig = [
   {
@@ -19,6 +20,11 @@ const routesConfig = [
   {
     path: JOIN_ROUTES.infoInput, // 회원가입 경로 추가
     element: <InfoInputPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MAIN_ROUTES.eventCreation,
+    element: <FunnelPage />,
     requiresAuth: false,
   },
 ];
