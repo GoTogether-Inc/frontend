@@ -29,7 +29,7 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
   };
 
   return (
-    <div className="flex flex-col justify-start">
+    <div className="flex flex-col justify-start relative">
       <h1 className="font-bold text-black text-lg">이벤트 카테고리</h1>
       <p className="text-placeholderText text-base mb-2">1개의 카테고리를 선택해주세요</p>
 
@@ -45,7 +45,7 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
         </button>
         {open && (
           <div
-            className={`abosulte top-full left-0 bg-white border border-deDayTextDark rounded-[2px] z-50 ${className}`}
+            className={`absolute top-full left-0 bg-white border border-deDayTextDark rounded-[2px] z-50 ${className}`}
           >
             {categories.map(category => (
               <div

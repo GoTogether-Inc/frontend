@@ -47,7 +47,8 @@ const LinkInput = () => {
 
       {links.map(link => (
         <div key={link.id} className="mb-2">
-          <div className="flex items-center justify-between w-full space-x-2">
+          <div className="flex items-center justify-between w-full">
+            <img src={Link} alt="링크 이미지" className="p-2" />
             {/* Title Input */}
             <div
               className={`relative rounded-[3px] transition-colors ${
@@ -61,8 +62,8 @@ const LinkInput = () => {
                 type="text"
                 value={link.title}
                 onChange={e => updateLink(link.id, 'title', e.target.value)}
-                className="w-24 h-8 text-placeholderText p-2"
-                placeholder="링크 제목"
+                className="w-24 h-8 text-placeholderText ml-1"
+                placeholder="참조링크"
                 autoFocus={activeInput.id === link.id && activeInput.field === 'title'}
               />
             </div>
@@ -78,9 +79,9 @@ const LinkInput = () => {
             >
               <input
                 type="text"
-                value={link.title}
+                value={link.url}
                 onChange={e => updateLink(link.id, 'url', e.target.value)}
-                className="w-72 h-8 text-placeholderText p-2"
+                className="w-72 h-8 text-placeholderText ml-2"
                 placeholder="URL을 입력하세요"
                 autoFocus={activeInput.id === link.id && activeInput.field === 'url'}
               />

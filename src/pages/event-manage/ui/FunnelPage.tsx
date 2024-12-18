@@ -16,27 +16,27 @@ const FunnelPage = () => {
   return (
     <Funnel step={step}>
       <Step name="HostSelection">
-        <EventRegisterLayout title="이벤트를 호스팅할 채널을 선택해주세요." onNext={onNextStep} onPrev={onPrevStep}>
+        <EventRegisterLayout title="이벤트를 호스팅할 채널을 선택해주세요" onNext={onNextStep} onPrev={onPrevStep}>
           <HostSelectionPage />
         </EventRegisterLayout>
       </Step>
       <Step name="EventTitle">
-        <EventRegisterLayout title="이벤트 제목을 입력해주세요." onNext={onNextStep} onPrev={onPrevStep}>
+        <EventRegisterLayout title="이벤트 제목을 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
           <EventTitlePage />
         </EventRegisterLayout>
       </Step>
       <Step name="EventPeriod">
-        <EventRegisterLayout title="이벤트 기간을 입력해주세요." onNext={onNextStep} onPrev={onPrevStep}>
+        <EventRegisterLayout title="이벤트 기간을 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
           <EventPeriodPage />
         </EventRegisterLayout>
       </Step>
       <Step name="EventInfo">
-        <EventRegisterLayout title="이벤트 정보를 입력해주세요." onNext={onNextStep} onPrev={onPrevStep}>
+        <EventRegisterLayout title="이벤트 정보를 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
           <EventInfoPage />
         </EventRegisterLayout>
       </Step>
       <Step name="EventType">
-        <EventRegisterLayout title="이벤트 진행방식을 선택해주세요." onNext={onNextStep} onPrev={onPrevStep}>
+        <EventRegisterLayout title="이벤트 진행방식을 선택해주세요" onNext={onNextStep} onPrev={onPrevStep}>
           <EventTypePage />
         </EventRegisterLayout>
       </Step>

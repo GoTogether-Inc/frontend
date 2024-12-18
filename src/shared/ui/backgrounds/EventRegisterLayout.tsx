@@ -21,7 +21,7 @@ const EventRegisterLayout = ({ children, title, className, onNext, onPrev }: Eve
       {/* 레이아웃 내용 */}
       <div className="relative flex flex-col justify-between -translate-y-16 w-[85%] min-h-[81vh] bg-white rounded-[20px]">
         <div>
-          <div className="text-center w-full my-8 text-2xl font-bold">{title}</div>
+          <div className="text-center w-full my-8 text-lg md:text-2xl font-bold">{title}</div>
           <div className={`relative ${className}`}>{children}</div>
         </div>
         <div className="sticky bottom-0 left-0 w-full p-5">
