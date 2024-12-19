@@ -62,7 +62,7 @@ const LinkInput = () => {
                 type="text"
                 value={link.title}
                 onChange={e => updateLink(link.id, 'title', e.target.value)}
-                className="w-24 h-8 text-placeholderText ml-1"
+                className="w-24 h-8 text-placeholderText ml-1 outline-none bg-transparent"
                 placeholder="참조링크"
                 autoFocus={activeInput.id === link.id && activeInput.field === 'title'}
               />
@@ -81,7 +81,7 @@ const LinkInput = () => {
                 type="text"
                 value={link.url}
                 onChange={e => updateLink(link.id, 'url', e.target.value)}
-                className="w-72 h-8 text-placeholderText ml-2"
+                className="w-72 h-8 text-placeholderText ml-2 outline-none bg-transparent"
                 placeholder="URL을 입력하세요"
                 autoFocus={activeInput.id === link.id && activeInput.field === 'url'}
               />
