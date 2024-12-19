@@ -75,3 +75,17 @@
   font-weight: 700;
   font-style: normal;
 }
+
+/* ReactQuill 커스텀 스타일 */
+.custom-quill-editor .ql-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+}
+
+.custom-quill-editor .ql-container {
+  height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+}

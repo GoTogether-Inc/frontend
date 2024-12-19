@@ -53,7 +53,7 @@ const TextEditor = () => {
         modules={modules}
         formats={formats}
         onChange={handleChange}
-        className="h-[300px] overflow-auto"
+        className="custom-quill-editor"
       />
     </div>
   );
