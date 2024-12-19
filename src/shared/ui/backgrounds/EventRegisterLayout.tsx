@@ -15,7 +15,7 @@ const EventRegisterLayout = ({ children, title, className, onNext, onPrev }: Eve
     <div className="flex flex-col justify-center items-center">
       {/* 헤더 영역 */}
       <div className="w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px]">
-        <Header title="이벤트 등록" onBack={onPrev} className="text-white" />
+        <Header title="이벤트 등록" onBack={onPrev} textColor="text-white" />
       </div>
 
       {/* 레이아웃 내용 */}
