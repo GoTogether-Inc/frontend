@@ -7,8 +7,17 @@ import EventTagPage from './EventTagPage';
 import Funnel, { Step } from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
 import { EventRegisterLayout } from '../../../shared';
 import useFunnel from '../../../features/event-manage/model/eventCreation/useFunnel';
+import EventOrganizerInfo from './EventOrganizerInfo';
 
-const steps = ['HostSelection', 'EventTitle', 'EventPeriod', 'EventInfo', 'EventType', 'EventTag'];
+const steps = [
+  'HostSelection',
+  'EventTitle',
+  'EventPeriod',
+  'EventOrganizerInfo',
+  'EventInfo',
+  'EventType',
+  'EventTag',
+];
 
 const FunnelPage = () => {
   const { step, onNextStep, onPrevStep } = useFunnel({ steps });
@@ -28,6 +37,11 @@ const FunnelPage = () => {
       <Step name="EventPeriod">
         <EventRegisterLayout title="이벤트 기간을 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
           <EventPeriodPage />
+        </EventRegisterLayout>
+      </Step>
+      <Step name="EventOrganizerInfo">
+        <EventRegisterLayout title="이벤트 주최자 정보를 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
+          <EventOrganizerInfo />
         </EventRegisterLayout>
       </Step>
       <Step name="EventInfo">
