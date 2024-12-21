@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
 import Input from '../../../design-system/ui/Input';
+import { validations } from '../../shared/lib/validation';
 
 interface FormInputs {
   name: string;
@@ -45,7 +46,7 @@ const InfoInputPage: React.FC = () => {
 
   return (
     <div className="relative flex flex-col w-full h-screen border ">
-      <Header title="정보입력" onBack={() => window.history.back()} />
+      <Header title="정보입력" onBack={() => window.history.back()} textColor="text-black" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-8 m-20 mx-10 my-12 sm:mx-8 sm:my-10 md:mx-10 md:my-12 lg:mx-12 lg:my-16"
@@ -57,11 +58,7 @@ const InfoInputPage: React.FC = () => {
           error={errors.name?.message}
           className="text-xl"
           {...register('name', {
-            required: '이름을 입력해 주세요.',
-            minLength: {
-              value: 2,
-              message: '이름은 최소 두 글자 이상이어야 합니다.',
-            },
+            ...validations.name,
             validate: {
               notDuplicate: value => !existingNames.includes(value) || '이미 존재하는 이름입니다.',
             },
@@ -76,11 +73,7 @@ const InfoInputPage: React.FC = () => {
           error={errors.phone?.message}
           className="text-xl"
           {...register('phone', {
-            required: '연락처를 입력해 주세요.',
-            pattern: {
-              value: /^[0-9]{10,11}$/,
-              message: '연락처는 10~11자리 숫자여야 합니다.',
-            },
+            ...validations.phone,
             validate: {
               notDuplicate: value => !existingPhones.includes(value) || '이미 존재하는 연락처입니다.',
             },
@@ -95,11 +88,7 @@ const InfoInputPage: React.FC = () => {
           error={errors.email?.message}
           className="text-xl"
           {...register('email', {
-            required: '이메일을 입력해 주세요.',
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-              message: '올바른 이메일 형식이어야 합니다.',
-            },
+            ...validations.email,
             validate: {
               notDuplicate: value => !existingEmails.includes(value) || '이미 존재하는 이메일입니다.',
             },
