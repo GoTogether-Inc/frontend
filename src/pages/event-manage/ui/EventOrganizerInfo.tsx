@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '../../../../design-system/ui/Input';
 import { useForm } from 'react-hook-form';
-import { validations } from '../../../shared/lib/validation';
+import { validations } from '../../../shared/utils/validation';
 
 interface FormInputs {
   email: string;

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
 import Input from '../../../design-system/ui/Input';
-import { validations } from '../../shared/lib/validation';
+import { validations } from '../../shared/utils/validation';
 
 interface FormInputs {
   name: string;
