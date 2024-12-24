@@ -26,7 +26,7 @@ const meta = {
     color: {
       control: 'color',
       description: '버튼 텍스트 색상',
-      defaultValue: '#1D4ED8', // 기본값으로 파란색
+      defaultValue: '#444444', // 기본값으로 파란색
     },
     onClick: {
       action: 'clicked',
