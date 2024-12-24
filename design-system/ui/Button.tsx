@@ -7,7 +7,7 @@ interface ButtonProps {
   className?: string; // 추가 스타일링 클래스
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, className = '' }) => {
+const Button = ({ label, onClick, disabled = false, className = '' }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
