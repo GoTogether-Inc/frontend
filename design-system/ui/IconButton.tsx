@@ -6,7 +6,7 @@ interface IconButtonProps {
   onClick?: () => void;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ size = 'medium', iconPath, onClick }) => {
+const IconButton = ({ size = 'medium', iconPath, onClick }: IconButtonProps) => {
   const sizeClasses = {
     small: 'w-8 h-8',
     medium: 'w-10 h-10',

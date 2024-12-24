@@ -5,7 +5,7 @@ interface HeaderProps {
   onBack?: () => void; // 뒤로 가기 버튼 클릭 핸들러
 }
 
-const Header: React.FC<HeaderProps> = ({ title, onBack }) => {
+const Header = ({ title, onBack }: HeaderProps) => {
   return (
     <header
       className="flex items-center justify-between w-full h-16 px-4 border-b"

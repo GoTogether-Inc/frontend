@@ -6,7 +6,7 @@ interface TagButtonProps {
   onClick?: () => void; // 클릭 핸들러
 }
 
-const TagButton: React.FC<TagButtonProps> = ({ children, isChecked, onClick }) => {
+const TagButton = ({ children, isChecked, onClick }: TagButtonProps) => {
   // Active와 Inactive 스타일 분기
   const activeStyles = `
     border-main text-main border-main 

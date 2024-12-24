@@ -9,7 +9,7 @@ interface CheckboxProps {
   className?: string; // 추가 스타일링 클래스
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onChange, disabled = false, className = '' }) => {
+const Checkbox = ({ label, checked, onChange, disabled = false, className = '' }: CheckboxProps) => {
   return (
     <label
       className={`flex items-center space-x-2 ${

@@ -7,7 +7,7 @@ interface PrimaryButtonProps {
   onClick?: () => void; // 클릭 핸들러
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ label, disabled = false, className = '', onClick }) => {
+const PrimaryButton = ({ label, disabled = false, className = '', onClick }: PrimaryButtonProps) => {
   // 기본 스타일
   const baseStyles = `
     h-14 sm:h-12 md:h-14 lg:h-14 w-full py-2 px-4 text-white font-semibold transition text-base sm:text-xs md:text-sm lg:text-base 
