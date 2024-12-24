@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import useWindowSize from '../../../shared/lib/useWindowSizeHook';
+import useWindowSize from '../../../shared/hooks/useWindowSizeHook';
 
 interface DatePickerProps {
   title: string;
