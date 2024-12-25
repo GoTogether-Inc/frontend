@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import useWindowSize from '../../../shared/hooks/useWindowSizeHook';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
 
 interface DatePickerProps {
   title: string;
@@ -13,8 +12,6 @@ interface DatePickerProps {
 
 const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className }) => {
   const { data, updateFunnelData } = useFunnelStore();
-  const [windowSize] = useWindowSize();
-  const [width, setWidth] = useState(false);
 
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
@@ -36,19 +33,15 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    setWidth(windowSize.width <= 400);
-  }, [windowSize]);
-
-  useEffect(() => {
     updateFunnelData({ startDate, endDate, startTime, endTime });
   }, [startDate, endDate, startTime, endTime, updateFunnelData]);
 
   return (
     <div className="flex flex-col w-full">
       <h3 className={`text-black mb-5 font-semibold ${textSize} ${className}`}>{title}</h3>
-      <div className={`${width ? 'flex flex-col space-y-4' : 'flex justify-center items-center gap-1'}`}>
-        <div>
-          {width && <span className="text-xs font-bold">시작 날짜</span>}
+      <div className="flex flex-wrap lg:flex-nowrap justify-between gap-4">
+        <div className="flex flex-col w-full sm:w-auto">
+          <span className="text-xs font-bold">시작 날짜</span>
           <div className="flex gap-1">
             <DatePicker
               selected={startDate}
@@ -89,9 +82,8 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
             </select>
           </div>
         </div>
-        {!width && <div className="text-lg">&gt;</div>}
-        <div>
-          {width && <span className="text-xs font-bold">종료 날짜</span>}
+        <div className="flex flex-col w-full sm:w-auto">
+          <span className="text-xs font-bold">종료 날짜</span>
           <div className="flex gap-1">
             <DatePicker
               selected={endDate}
