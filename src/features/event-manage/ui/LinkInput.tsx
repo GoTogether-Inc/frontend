@@ -11,7 +11,7 @@ interface LinkInputProps {
 }
 
 const LinkInput = () => {
-  const { data, updateFunnelData } = useFunnelStore();
+  const { updateFunnelData } = useFunnelStore();
   const [links, setLinks] = useState<LinkInputProps[]>([]);
   const [activeInput, setActiveInput] = useState<{ id: string | null; field: 'title' | 'url' | null }>({
     id: null,
@@ -30,13 +30,13 @@ const LinkInput = () => {
     };
     setLinks([...links, newLink]);
     setActiveInput({ id: newLink.id, field: null });
-    updateFunnelData({ link: [...links, newLink] });
+    updateFunnelData({ referenceLinks: [...links, newLink] });
   };
 
   const removeLink = (id: string) => {
     const updatedLinks = links.filter(link => link.id !== id);
     setLinks(updatedLinks);
-    updateFunnelData({ link: updatedLinks });
+    updateFunnelData({ referenceLinks: updatedLinks });
 
     if (activeInput.id === id) {
       setActiveInput({ id: null, field: null });
@@ -46,7 +46,7 @@ const LinkInput = () => {
   const updateLink = (id: string, field: 'url' | 'title', value: string) => {
     const updatedLinks = links.map(link => (link.id === id ? { ...link, [field]: value } : link));
     setLinks(updatedLinks);
-    updateFunnelData({ link: updatedLinks });
+    updateFunnelData({ referenceLinks: updatedLinks });
   };
 
   return (

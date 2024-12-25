@@ -1,18 +1,18 @@
 import { create } from 'zustand';
 
 interface FunnelData {
-  host: string;
+  hostChannelId: number;
   title: string;
-  startDate?: Date;
+  startDate: string;
   startTime: string;
-  endDate?: Date;
+  endDate: string;
   endTime: string;
-  email: string;
-  phone: string;
-  file: string;
-  detail: string;
-  link: { title: string; url: string }[];
-  type: 'online' | 'offline';
+  hostEmail: string;
+  hostPhoneNumber: string;
+  bannerImageUrl: string;
+  description: string;
+  referenceLinks: { title: string; url: string }[];
+  onlineType: 'online' | 'offline';
   location: string;
   category: string;
   hashtags: string[];
@@ -25,18 +25,18 @@ interface FunnelStore {
 
 export const useFunnelStore = create<FunnelStore>(set => ({
   data: {
-    host: '',
+    hostChannelId: 0,
     title: '',
-    startDate: undefined,
+    startDate: '',
     startTime: '',
-    endDate: undefined,
+    endDate: '',
     endTime: '',
-    email: '',
-    phone: '',
-    file: '',
-    detail: '',
-    link: [],
-    type: 'online',
+    hostEmail: '',
+    hostPhoneNumber: '',
+    bannerImageUrl: '',
+    description: '',
+    referenceLinks: [],
+    onlineType: 'online',
     location: '',
     category: '',
     hashtags: [],
