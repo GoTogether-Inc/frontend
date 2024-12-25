@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import HorizontalCardButton from '../ui/HorizontalCardButton';
+import HorizontalCardButton from '../../ui/Button/HorizontalCardButton';
 type Story = StoryObj<typeof meta>;
 
 const meta = {

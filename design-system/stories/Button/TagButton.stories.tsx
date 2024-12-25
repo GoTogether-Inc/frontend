@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import TagButton from '../ui/TagButton';
+import TagButton from '../../ui/Button/TagButton';
 
 type Story = StoryObj<typeof meta>;
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import TextButton from '../ui/TextButton';
+import TextButton from '../../ui/Button/TextButton';
 
 type Story = StoryObj<typeof meta>;
 
