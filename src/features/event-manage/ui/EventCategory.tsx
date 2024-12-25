@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CategoryButton from '../../../../public/assets/BackBtn(black).svg';
+import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
 
 interface Category {
   id: string;
@@ -11,7 +12,7 @@ interface EventCategoryProps {
 }
 
 const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
-  const [selectedCategory, setSelectedCateory] = useState<string>('');
+  const { data, updateFunnelData } = useFunnelStore();
   const [open, setOpen] = useState(false);
 
   const categories: Category[] = [
@@ -24,7 +25,7 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
   const handleDropdown = () => setOpen(!open);
 
   const handleSelect = (id: string) => {
-    setSelectedCateory(id);
+    updateFunnelData({ category: id });
     setOpen(false);
   };
 
@@ -38,9 +39,7 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
           onClick={handleDropdown}
           className={`flex justify-between p-2 text-left bg-white border border-deDayTextDark rounded-[2px] focus:outline-none ${className}`}
         >
-          <span>
-            {selectedCategory ? categories.find(c => c.id === selectedCategory)?.name : '이벤트 카테고리 선택'}
-          </span>
+          <span>{data.category ? categories.find(c => c.id === data.category)?.name : '이벤트 카테고리 선택'}</span>
           <img src={CategoryButton} alt="카테고리 버튼" className="w-6 h-6 -rotate-90" />
         </button>
         {open && (
@@ -52,7 +51,7 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
                 key={category.id}
                 onClick={() => handleSelect(category.id)}
                 className={`p-2 cursor-pointer hover:bg-dropdown transition-colors ${
-                  selectedCategory === category.id ? 'bg-dropdown' : ''
+                  data.category === category.id ? 'bg-dropdown' : ''
                 }`}
               >
                 {category.name}

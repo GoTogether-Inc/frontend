@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AddButton from '../../../../public/assets/AddBtn.svg';
 import CloseButton from '../../../../public/assets/CloseBtn.svg';
 import Link from '../../../../public/assets/Link.svg';
+import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
 
 interface LinkInputProps {
   id: string;
@@ -10,6 +11,7 @@ interface LinkInputProps {
 }
 
 const LinkInput = () => {
+  const { data, updateFunnelData } = useFunnelStore();
   const [links, setLinks] = useState<LinkInputProps[]>([]);
   const [activeInput, setActiveInput] = useState<{ id: string | null; field: 'title' | 'url' | null }>({
     id: null,
@@ -28,17 +30,23 @@ const LinkInput = () => {
     };
     setLinks([...links, newLink]);
     setActiveInput({ id: newLink.id, field: null });
+    updateFunnelData({ link: [...links, newLink] });
   };
 
   const removeLink = (id: string) => {
-    setLinks(links.filter(link => link.id !== id));
+    const updatedLinks = links.filter(link => link.id !== id);
+    setLinks(updatedLinks);
+    updateFunnelData({ link: updatedLinks });
+
     if (activeInput.id === id) {
       setActiveInput({ id: null, field: null });
     }
   };
 
   const updateLink = (id: string, field: 'url' | 'title', value: string) => {
-    setLinks(links.map(link => (link.id === id ? { ...link, [field]: value } : link)));
+    const updatedLinks = links.map(link => (link.id === id ? { ...link, [field]: value } : link));
+    setLinks(updatedLinks);
+    updateFunnelData({ link: updatedLinks });
   };
 
   return (
