@@ -1,7 +1,7 @@
 import OnlineIcon from '../../../../public/assets/OnlineIcon.svg';
 import OfflineIcon from '../../../../public/assets/OfflineIcon.svg';
 import { useState } from 'react';
-import { SearchBar } from '../../../shared';
+import SearchBar from '../../../shared/ui/SearchBar';
 
 interface EventTypeProps {
   className?: string;
