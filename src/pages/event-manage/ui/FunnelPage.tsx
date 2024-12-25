@@ -1,13 +1,7 @@
-import HostSelectionPage from './HostSelectionPage';
-import EventTitlePage from './EventTitlePage';
-import EventPeriodPage from './EventPeriodPage';
-import EventInfoPage from './EventInfoPage';
-import EventTypePage from './EventTypePage';
-import EventTagPage from './EventTagPage';
-import Funnel, { Step } from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
-import { EventRegisterLayout } from '../../../shared';
-import useFunnel from '../../../features/event-manage/model/eventCreation/useFunnel';
-import EventOrganizerInfo from './EventOrganizerInfo';
+import { useEffect, useState } from 'react';
+import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
+import EventFunnel from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const steps = [
   'HostSelection',
@@ -20,47 +14,43 @@ const steps = [
 ];
 
 const FunnelPage = () => {
-  const { step, onNextStep, onPrevStep } = useFunnel({ steps });
+  const { Funnel, Step, setStep } = useFunnel(steps[0]);
+  const [currentStep, setCurrentStep] = useState(0);
 
-  return (
-    <Funnel step={step}>
-      <Step name="HostSelection">
-        <EventRegisterLayout title="이벤트를 호스팅할 채널을 선택해주세요" onNext={onNextStep} onPrev={onPrevStep}>
-          <HostSelectionPage />
-        </EventRegisterLayout>
-      </Step>
-      <Step name="EventTitle">
-        <EventRegisterLayout title="이벤트 제목을 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
-          <EventTitlePage />
-        </EventRegisterLayout>
-      </Step>
-      <Step name="EventPeriod">
-        <EventRegisterLayout title="이벤트 기간을 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
-          <EventPeriodPage />
-        </EventRegisterLayout>
-      </Step>
-      <Step name="EventOrganizerInfo">
-        <EventRegisterLayout title="이벤트 주최자 정보를 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
-          <EventOrganizerInfo />
-        </EventRegisterLayout>
-      </Step>
-      <Step name="EventInfo">
-        <EventRegisterLayout title="이벤트 정보를 입력해주세요" onNext={onNextStep} onPrev={onPrevStep}>
-          <EventInfoPage />
-        </EventRegisterLayout>
-      </Step>
-      <Step name="EventType">
-        <EventRegisterLayout title="이벤트 진행방식을 선택해주세요" onNext={onNextStep} onPrev={onPrevStep}>
-          <EventTypePage />
-        </EventRegisterLayout>
-      </Step>
-      <Step name="EventTag">
-        <EventRegisterLayout onNext={onNextStep} onPrev={onPrevStep}>
-          <EventTagPage />
-        </EventRegisterLayout>
-      </Step>
-    </Funnel>
-  );
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const onNextClick = () => {
+    const nextStep = currentStep + 1;
+    if (nextStep < steps.length) {
+      setCurrentStep(nextStep);
+      setStep(steps[nextStep]);
+      navigate(`${location.pathname}?step=${steps[nextStep]}`);
+    }
+  };
+
+  const onPrevClick = () => {
+    const prevStep = currentStep - 1;
+    if (prevStep >= 0) {
+      setCurrentStep(prevStep);
+      setStep(steps[prevStep]);
+      navigate(`${location.pathname}?step=${steps[prevStep]}`);
+    }
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const step = params.get('step');
+    if (step) {
+      const index = steps.findIndex(s => s === step);
+      if (index !== -1) {
+        setCurrentStep(index);
+        setStep(steps[index]);
+      }
+    }
+  }, [location.search]);
+
+  return <EventFunnel steps={steps} onNext={onNextClick} onPrev={onPrevClick} Funnel={Funnel} Step={Step} />;
 };
 
 export default FunnelPage;
