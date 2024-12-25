@@ -11,7 +11,7 @@ const EventType: React.FC<EventTypeProps> = ({ className }) => {
   const { data, updateFunnelData } = useFunnelStore();
 
   const handleTypeClick = (type: 'online' | 'offline') => {
-    updateFunnelData({ type: type });
+    updateFunnelData({ onlineType: type });
   };
 
   return (
@@ -22,7 +22,7 @@ const EventType: React.FC<EventTypeProps> = ({ className }) => {
           <div
             onClick={() => handleTypeClick('online')}
             className={`flex flex-col justify-center items-center w-40 h-40 md:w-44 md:h-44 border rounded-[20px] cursor-pointer ${
-              data.type === 'online' ? 'border-main' : 'border-placeholderText'
+              data.onlineType === 'online' ? 'border-main' : 'border-placeholderText'
             }`}
           >
             <img src={OnlineIcon} alt="온라인 이모지" className="w-28 h-28 md:w-32 md:h-32" />
@@ -32,7 +32,7 @@ const EventType: React.FC<EventTypeProps> = ({ className }) => {
           <div
             onClick={() => handleTypeClick('offline')}
             className={`flex flex-col justify-center items-center w-40 h-40 md:w-44 md:h-44 border rounded-[20px] cursor-pointer ${
-              data.type === 'offline' ? 'border-main' : 'border-placeholderText'
+              data.onlineType === 'offline' ? 'border-main' : 'border-placeholderText'
             }`}
           >
             <img src={OfflineIcon} alt="오프라인 이모지" className="w-28 h-28 md:w-32 md:h-32" />
@@ -41,7 +41,7 @@ const EventType: React.FC<EventTypeProps> = ({ className }) => {
         </div>
       </div>
 
-      {data.type === 'offline' && (
+      {data.onlineType === 'offline' && (
         <div className="mt-6 space-y-2">
           <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
           <SearchBar placeholder="장소를 입력하세요." className="w-full" />
