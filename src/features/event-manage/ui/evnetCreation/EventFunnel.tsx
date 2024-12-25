@@ -1,4 +1,6 @@
 import { FunnelProps, StepProps } from '../../hooks/useFunnel';
+import { useFunnelStore } from '../../model/funnelStore';
+
 import HostSelectionPage from '../../../../pages/event-manage/ui/HostSelectionPage';
 import EventTitlePage from '../../../../pages/event-manage/ui/EventTitlePage';
 import EventPeriodPage from '../../../../pages/event-manage/ui/EventPeriodPage';
@@ -17,12 +19,19 @@ export interface EventFunnelInterface {
 }
 
 const EventFunnel = ({ steps, onNext, onPrev, Funnel, Step }: EventFunnelInterface) => {
+  const { data } = useFunnelStore();
+
+  const handleNext = (nextStep: string) => {
+    console.log('이벤트 주최 데이터:', data);
+    onNext(nextStep);
+  };
+
   return (
     <Funnel>
       <Step name="HostSelection">
         <EventRegisterLayout
           title="이벤트를 호스팅할 채널을 선택해주세요"
-          onNext={() => onNext(steps[0])}
+          onNext={() => handleNext(steps[0])}
           // onPrev={() => {}}
         >
           <HostSelectionPage />
@@ -31,7 +40,7 @@ const EventFunnel = ({ steps, onNext, onPrev, Funnel, Step }: EventFunnelInterfa
       <Step name="EventTitle">
         <EventRegisterLayout
           title="이벤트 제목을 입력해주세요"
-          onNext={() => onNext(steps[1])}
+          onNext={() => handleNext(steps[1])}
           onPrev={() => onPrev(steps[0])}
         >
           <EventTitlePage />
@@ -40,7 +49,7 @@ const EventFunnel = ({ steps, onNext, onPrev, Funnel, Step }: EventFunnelInterfa
       <Step name="EventPeriod">
         <EventRegisterLayout
           title="이벤트 기간을 입력해주세요"
-          onNext={() => onNext(steps[2])}
+          onNext={() => handleNext(steps[2])}
           onPrev={() => onPrev(steps[1])}
         >
           <EventPeriodPage />
@@ -49,7 +58,7 @@ const EventFunnel = ({ steps, onNext, onPrev, Funnel, Step }: EventFunnelInterfa
       <Step name="EventOrganizerInfo">
         <EventRegisterLayout
           title="이벤트 주최자 정보를 입력해주세요"
-          onNext={() => onNext(steps[3])}
+          onNext={() => handleNext(steps[3])}
           onPrev={() => onPrev(steps[2])}
         >
           <EventOrganizerInfo />
@@ -58,7 +67,7 @@ const EventFunnel = ({ steps, onNext, onPrev, Funnel, Step }: EventFunnelInterfa
       <Step name="EventInfo">
         <EventRegisterLayout
           title="이벤트 정보를 입력해주세요"
-          onNext={() => onNext(steps[4])}
+          onNext={() => handleNext(steps[4])}
           onPrev={() => onPrev(steps[3])}
         >
           <EventInfoPage />
@@ -67,14 +76,14 @@ const EventFunnel = ({ steps, onNext, onPrev, Funnel, Step }: EventFunnelInterfa
       <Step name="EventType">
         <EventRegisterLayout
           title="이벤트 진행방식을 선택해주세요"
-          onNext={() => onNext(steps[5])}
+          onNext={() => handleNext(steps[5])}
           onPrev={() => onPrev(steps[4])}
         >
           <EventTypePage />
         </EventRegisterLayout>
       </Step>
       <Step name="EventTag">
-        <EventRegisterLayout onNext={() => onNext(steps[6])} onPrev={() => onPrev(steps[5])}>
+        <EventRegisterLayout onNext={() => handleNext(steps[6])} onPrev={() => onPrev(steps[5])}>
           <EventTagPage />
         </EventRegisterLayout>
       </Step>

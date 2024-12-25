@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import useWindowSize from '../../../shared/hooks/useWindowSizeHook';
+import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
 
 interface DatePickerProps {
   title: string;
@@ -11,13 +12,14 @@ interface DatePickerProps {
 }
 
 const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className }) => {
+  const { data, updateFunnelData } = useFunnelStore();
   const [windowSize] = useWindowSize();
   const [width, setWidth] = useState(false);
 
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState<string>('06:00');
-  const [endTime, setEndTime] = useState<string>('12:00');
+  const [endTime, setEndTime] = useState<string>('23:00');
 
   const generateTimeOptions = () => {
     const options = [];
@@ -36,6 +38,10 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
   useEffect(() => {
     setWidth(windowSize.width <= 400);
   }, [windowSize]);
+
+  useEffect(() => {
+    updateFunnelData({ startDate, endDate, startTime, endTime });
+  }, [startDate, endDate, startTime, endTime, updateFunnelData]);
 
   return (
     <div className="flex flex-col w-full">
