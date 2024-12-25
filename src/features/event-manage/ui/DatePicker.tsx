@@ -11,7 +11,7 @@ interface DatePickerProps {
 }
 
 const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className }) => {
-  const { data, updateFunnelData } = useFunnelStore();
+  const { updateFunnelData } = useFunnelStore();
 
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
   const [endDate, setEndDate] = useState<Date | undefined>(new Date());
@@ -30,10 +30,23 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
     return options;
   };
 
+  const formatDate = (date: Date | undefined) => {
+    if (!date) return '';
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`; // yyyy-mm-dd 형태로 포맷팅
+  };
+
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    updateFunnelData({ startDate, endDate, startTime, endTime });
+    updateFunnelData({
+      startDate: startDate ? formatDate(startDate) : undefined,
+      endDate: endDate ? formatDate(endDate) : undefined,
+      startTime,
+      endTime,
+    });
   }, [startDate, endDate, startTime, endTime, updateFunnelData]);
 
   return (
@@ -45,7 +58,11 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
           <div className="flex gap-1">
             <DatePicker
               selected={startDate}
-              onChange={date => setStartDate(date)}
+              onChange={(date: Date | null) => {
+                if (date) {
+                  setStartDate(date);
+                }
+              }}
               locale={ko}
               dateFormat="MM월 dd일"
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
@@ -87,7 +104,11 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
           <div className="flex gap-1">
             <DatePicker
               selected={endDate}
-              onChange={date => setEndDate(date)}
+              onChange={(date: Date | null) => {
+                if (date) {
+                  setEndDate(date);
+                }
+              }}
               locale={ko}
               dateFormat="MM월 dd일"
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
