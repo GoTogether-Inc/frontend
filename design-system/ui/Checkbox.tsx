@@ -16,14 +16,25 @@ const Checkbox = ({ label, checked, onChange, disabled = false, className = '' }
         disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-800'
       } ${className}`}
     >
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        disabled={disabled}
-        className={`w-5 h-5 rounded border-gray-300 focus:ring-2 focus:ring-blue-500 
-          ${disabled ? 'bg-gray-100' : 'bg-white'} cursor-pointer`}
-      />
+      <div
+        className={`relative w-5 h-5 flex items-center justify-center border ${
+          checked ? 'bg-main border-main' : 'bg-white border-gray-300'
+        } ${disabled ? 'bg-gray-100 border-gray-300 cursor-not-allowed' : 'cursor-pointer border-main'}
+        rounded focus-within:ring-2 focus-within:ring-main`}
+      >
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+          disabled={disabled}
+          className="absolute w-full h-full opacity-0"
+        />
+        {checked && (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className="w-3 h-3 fill-white">
+            <path d="M13.854 4.854a.5.5 0 0 0-.708-.708l-6.396 6.396-2.75-2.75a.5.5 0 0 0-.708.708l3.104 3.104a.5.5 0 0 0 .708 0l6.75-6.75z" />
+          </svg>
+        )}
+      </div>
       <span>{label}</span>
     </label>
   );

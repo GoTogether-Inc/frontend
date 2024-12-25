@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ToggleButton from '../ui/ToggleButton';
+import ToggleButton from '../../ui/Button/ToggleButton';
 
 type Story = StoryObj<typeof meta>;
 
