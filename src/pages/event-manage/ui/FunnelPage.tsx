@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
 import EventFunnel from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const steps = [
-  'HostSelection',
-  'EventTitle',
-  'EventPeriod',
-  'EventOrganizerInfo',
-  'EventInfo',
-  'EventType',
-  'EventTag',
-];
-
 const FunnelPage = () => {
-  const { Funnel, Step, setStep } = useFunnel(steps[0]);
-  const [currentStep, setCurrentStep] = useState(0);
+  const { Funnel, Step, setStep, currentStep, steps } = useFunnel(0);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,8 +12,7 @@ const FunnelPage = () => {
   const onNextClick = () => {
     const nextStep = currentStep + 1;
     if (nextStep < steps.length) {
-      setCurrentStep(nextStep);
-      setStep(steps[nextStep]);
+      setStep(nextStep);
       navigate(`${location.pathname}?step=${steps[nextStep]}`);
     }
   };
@@ -32,8 +20,7 @@ const FunnelPage = () => {
   const onPrevClick = () => {
     const prevStep = currentStep - 1;
     if (prevStep >= 0) {
-      setCurrentStep(prevStep);
-      setStep(steps[prevStep]);
+      setStep(prevStep);
       navigate(`${location.pathname}?step=${steps[prevStep]}`);
     }
   };
@@ -44,13 +31,21 @@ const FunnelPage = () => {
     if (step) {
       const index = steps.findIndex(s => s === step);
       if (index !== -1) {
-        setCurrentStep(index);
-        setStep(steps[index]);
+        setStep(index);
       }
     }
   }, [location.search]);
 
-  return <EventFunnel steps={steps} onNext={onNextClick} onPrev={onPrevClick} Funnel={Funnel} Step={Step} />;
+  return (
+    <EventFunnel
+      steps={steps}
+      onNext={onNextClick}
+      onPrev={onPrevClick}
+      Funnel={Funnel}
+      Step={Step}
+      currentStep={currentStep}
+    />
+  );
 };
 
 export default FunnelPage;

@@ -11,8 +11,18 @@ export interface FunnelProps {
   children: Array<ReactElement<StepProps>>;
 }
 
-export const useFunnel = (defaultStep: string) => {
+export const useFunnel = (defaultStep: number) => {
   const [step, setStep] = useState(defaultStep);
+
+  const steps = [
+    'HostSelection',
+    'EventTitle',
+    'EventPeriod',
+    'EventOrganizerInfo',
+    'EventInfo',
+    'EventType',
+    'EventTag',
+  ];
 
   // 각 단계를 나타내는 Step 컴포넌트
   const Step = (props: StepProps): ReactElement => {
@@ -21,11 +31,11 @@ export const useFunnel = (defaultStep: string) => {
 
   // 현재 활성화된 step을 렌더링
   const Funnel = ({ children }: FunnelProps) => {
-    const targetStep = children.find(s => s.props.name === step);
+    const targetStep = children.find(s => s.props.name === steps[step]);
     return <>{targetStep}</>;
   };
 
-  return { Funnel, Step, setStep, currentStep: step };
+  return { Funnel, Step, setStep, currentStep: step, steps };
 };
 
 /* 
