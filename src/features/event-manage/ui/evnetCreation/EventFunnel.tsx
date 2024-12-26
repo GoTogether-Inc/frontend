@@ -12,7 +12,6 @@ import EventRegisterLayout from '../../../../shared/ui/backgrounds/EventRegister
 import { useNavigate } from 'react-router-dom';
 
 export interface EventFunnelInterface {
-  steps: string[];
   onNext: (nextStep: string) => void;
   onPrev: (prevStep: string) => void;
   Funnel: React.ComponentType<FunnelProps>;
