@@ -16,10 +16,10 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
   const [open, setOpen] = useState(false);
 
   const categories: Category[] = [
-    { id: 'study', name: '개발/스터디' },
-    { id: 'networking', name: '네트워킹' },
-    { id: 'hackathon', name: '해커톤' },
-    { id: 'conference', name: '컨퍼런스' },
+    { id: 'DEVELOPMENT_STUDY', name: '개발/스터디' },
+    { id: 'NETWORKING', name: '네트워킹' },
+    { id: 'HACKATHON', name: '해커톤' },
+    { id: 'CONFERENCE', name: '컨퍼런스' },
   ];
 
   const handleDropdown = () => setOpen(!open);
