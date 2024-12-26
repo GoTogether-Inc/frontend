@@ -37,14 +37,7 @@ const FunnelPage = () => {
   }, [location.search]);
 
   return (
-    <EventFunnel
-      steps={steps}
-      onNext={onNextClick}
-      onPrev={onPrevClick}
-      Funnel={Funnel}
-      Step={Step}
-      currentStep={currentStep}
-    />
+    <EventFunnel onNext={onNextClick} onPrev={onPrevClick} Funnel={Funnel} Step={Step} currentStep={currentStep} />
   );
 };
 
