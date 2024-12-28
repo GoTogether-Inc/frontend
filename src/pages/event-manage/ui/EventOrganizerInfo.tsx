@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Input from '../../../../design-system/ui/Input';
 import { useForm } from 'react-hook-form';
 import { validations } from '../../../shared/utils/validation';
 import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
+import DefaultTextField from '../../../../design-system/ui/textField/DefaultTextField';
 
 interface FormInputs {
   email: string;
@@ -34,19 +34,19 @@ const EventOrganizerInfo: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-4 p-5">
-      <Input
+      <DefaultTextField
         label="이메일"
         placeholder="이메일"
         type="email"
-        error={errors.email?.message}
+        errorMessage={errors.email?.message}
         className="w-full"
         {...register('email', { ...validations.email })}
       />
-      <Input
+      <DefaultTextField
         label="전화번호"
         placeholder={`"-" 없이 번호만 입력해주세요`}
         type="tel"
-        error={errors.phone?.message}
+        errorMessage={errors.phone?.message}
         className="w-full"
         {...register('phone', { ...validations.phone })}
       />
