@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SearchTextField from '../../ui/textField/SearchTextField';
+import DefaultTextField from '../../ui/textFields/DefaultTextField';
 
 const meta = {
-  title: 'TextFields/SearchTextField',
-  component: SearchTextField,
+  title: 'TextFields/DefaultTextField',
+  component: DefaultTextField,
   parameters: {
     layout: 'centered',
   },
   decorators: [
     Story => (
-      <div style={{ width: '360px' }}>
+      <div style={{ width: '350px' }}>
         <Story />
       </div>
     ),
@@ -22,18 +22,23 @@ const meta = {
       description: '텍스트 필드에 들어갈 문자열의 정보',
       defaultValue: '입력해주세요',
     },
+    type: {
+      control: { type: 'select', options: ['text', 'password'] },
+      description: '텍스트 필드의 타입',
+      defaultValue: 'text',
+    },
     onChange: {
       description: '입력 이벤트',
     },
   },
-} satisfies Meta<typeof SearchTextField>;
+} satisfies Meta<typeof DefaultTextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    iconPath: '../icons/search.svg',
+    label: 'label',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
   },
