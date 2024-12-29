@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
-import DefaultTextField from '../../../../design-system/ui/textField/DefaultTextField';
+import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 
 const EventTitlePage: React.FC = () => {
   const { data, updateFunnelData } = useFunnelStore();

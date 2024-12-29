@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import BoxTextField from '../../ui/textField/BoxTextField';
+import SearchTextField from '../../ui/textFields/SearchTextField';
 
 const meta = {
-  title: 'TextFields/BoxTextField',
-  component: BoxTextField,
+  title: 'TextFields/SearchTextField',
+  component: SearchTextField,
   parameters: {
     layout: 'centered',
   },
   decorators: [
     Story => (
-      <div style={{ width: '380px' }}>
+      <div style={{ width: '360px' }}>
         <Story />
       </div>
     ),
@@ -26,15 +26,15 @@ const meta = {
       description: '입력 이벤트',
     },
   },
-} satisfies Meta<typeof BoxTextField>;
+} satisfies Meta<typeof SearchTextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    iconPath: '../icons/search.svg',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
-    className: 'h-12',
   },
 };

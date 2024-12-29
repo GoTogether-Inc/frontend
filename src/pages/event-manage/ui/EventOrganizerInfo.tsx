@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { validations } from '../../../shared/utils/validation';
 import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
-import DefaultTextField from '../../../../design-system/ui/textField/DefaultTextField';
+import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 
 interface FormInputs {
   email: string;
