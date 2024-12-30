@@ -13,7 +13,7 @@ const meta = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['xSmall', 'small', 'medium', 'large'],
       description: '아이콘 버튼의 사이즈',
       defaultValue: 'medium',
     },
@@ -26,6 +26,14 @@ const meta = {
 } satisfies Meta<typeof IconText>;
 
 export default meta;
+
+export const XSmallSize: Story = {
+  args: {
+    size: 'xSmall',
+    iconPath: '../icons/calendar.png',
+    children: 'IconText',
+  },
+};
 
 export const SmallSize: Story = {
   args: {
@@ -48,5 +56,6 @@ export const LargeSize: Story = {
     size: 'large',
     iconPath: '../icons/calendar.png',
     children: 'IconText',
+    className: '',
   },
 };
