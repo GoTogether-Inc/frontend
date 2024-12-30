@@ -27,6 +27,9 @@ export default {
         bold: 700, // Bold
         extrabold: 800, // ExtraBold
       },
+      fontSize: {
+        10: '10px',
+      },
       colors: {
         main: '#FF5593', // 메인컬러
         mainDark: '#FF3680', // 메인컬러(다크)

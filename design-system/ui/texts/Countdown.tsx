@@ -17,8 +17,8 @@ const Countdown = ({ children, isChecked }: CountdownProps) => {
   `;
 
   const baseStyles = `
-    h-6 sm:h-4 md:h-6 px-2 py-1 rounded-[2px] text-xs 
-    border-[0.1px] font-medium ${flexCenter}
+    h-5 sm:h-4 md:h-5 px-2 py-1 rounded-[2px] text-xs 
+    border-[0.1px] font-medium ${flexCenter} min-w-[38px] max-w-[38px]
   `;
 
   return <button className={`${baseStyles} ${isChecked ? activeStyles : inactiveStyles}`}>{children}</button>;
