@@ -7,7 +7,7 @@ interface IconTextProps {
   children: string;
 }
 
-const IconButton = ({ size = 'medium', iconPath, children }: IconTextProps) => {
+const IconText = ({ size = 'medium', iconPath, children }: IconTextProps) => {
   const sizeClasses = {
     small: 'w-8 h-8',
     medium: 'w-10 h-10',
@@ -17,9 +17,9 @@ const IconButton = ({ size = 'medium', iconPath, children }: IconTextProps) => {
   return (
     <button className={`${flexCenter} ${sizeClasses[size]}`}>
       <img src={iconPath} alt="icon" className="w-1/2 h-1/2 mr-2" />
-      <span className="text-left not-italic">{children}</span>
+      <span className="text-left whitespace-nowrap">{children}</span>
     </button>
   );
 };
 
-export default IconButton;
+export default IconText;
