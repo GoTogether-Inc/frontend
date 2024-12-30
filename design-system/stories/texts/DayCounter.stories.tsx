@@ -1,51 +1,55 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import DayCounter from '../../ui/texts/DayCounter';
+import Countdown from '../../ui/texts/DayCounter';
 
 type Story = StoryObj<typeof meta>;
 
 const meta = {
-  title: 'Texts/DayCounter',
-  component: DayCounter,
+  title: 'Texts/Countdown',
+  component: Countdown,
   parameters: {
     layout: 'centered',
   },
+  decorators: [
+    Story => (
+      <div style={{ width: '100%' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     children: {
       control: 'text',
-      description: '버튼 내부 내용',
-      defaultValue: 'DayCounter',
+      description: '카운트다운 내부 내용',
+      defaultValue: 'Countdown',
     },
     isChecked: {
       control: 'boolean',
-      description: '버튼 활성화 상태',
+      description: '활성화 상태',
       defaultValue: false,
     },
   },
-} satisfies Meta<typeof DayCounter>;
+} satisfies Meta<typeof Countdown>;
 
 export default meta;
 
 export const Default: Story = {
   args: {
-    children: 'DayCounter',
+    children: 'D-5',
     isChecked: true,
-    className: '',
   },
 };
 
 export const Active: Story = {
   args: {
-    children: 'Active DayCounter',
+    children: 'D-5',
     isChecked: true,
-    className: '',
   },
 };
 
 export const Inactive: Story = {
   args: {
-    children: 'Inactive DayCounter',
+    children: '종료',
     isChecked: false,
-    className: '',
   },
 };
