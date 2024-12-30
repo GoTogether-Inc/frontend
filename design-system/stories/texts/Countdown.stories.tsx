@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Countdown from '../../ui/texts/DayCounter';
+import Countdown from '../../ui/texts/Countdown';
 
 type Story = StoryObj<typeof meta>;
 
