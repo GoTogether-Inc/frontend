@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../../design-system/ui/Header';
-import Button from '../../../design-system/ui/Button';
+import Button from '../../../design-system/ui/buttons/Button';
 import AgreementList from '../../features/join/ui/AgreementList';
 import { useAgreementStore } from '../../features/join/model/agreementStore';
 import { useNavigate } from 'react-router-dom';
