@@ -33,6 +33,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    label: 'label',
+    detail: '',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
     className: 'h-12',
