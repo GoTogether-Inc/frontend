@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
-import Button from '../../../design-system/ui/Button';
+import Button from '../../../design-system/ui/buttons/Button';
 import { validations } from '../../shared/utils/validation';
 import DefaultTextField from '../../../design-system/ui/textFields/DefaultTextField';
 
