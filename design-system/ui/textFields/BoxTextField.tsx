@@ -12,7 +12,7 @@ interface BoxTextFieldProps {
 const BoxTextField = forwardRef<HTMLInputElement, BoxTextFieldProps>(
   ({ label, detail, value, onChange, placeholder = '', className = '', ...rest }, ref) => {
     return (
-      <div className={`${className}`}>
+      <div>
         <label className="block px-1 font-semibold text-gray-700 sm:text-base md:text-lg lg:text-lg">{label}</label>
         <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-xs md:text-sm lg:text-sm">
           {detail}
