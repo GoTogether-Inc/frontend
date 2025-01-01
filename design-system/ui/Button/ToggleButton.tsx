@@ -1,9 +1,8 @@
 import React from 'react';
-
 interface ToggleButtonProps {
   isChecked: boolean; // 토글 상태
   onChange: () => void; // 상태 변경 핸들러
-  className?: string; // 추가 커스텀 클래스
+  className?: string;
 }
 
 const ToggleButton = ({ isChecked, onChange, className = '' }: ToggleButtonProps) => {
