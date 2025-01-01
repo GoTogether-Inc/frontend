@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface TagButtonProps {
-  children: React.ReactNode; // 버튼 내부 컨텐츠
+  children: ReactNode; // 버튼 텍스트
   isChecked: boolean; // 활성화 여부
-  onClick?: () => void; // 클릭 핸들러
+  onClick: () => void; // 클릭 핸들러
 }
 
 const TagButton = ({ children, isChecked, onClick }: TagButtonProps) => {

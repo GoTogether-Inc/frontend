@@ -1,10 +1,9 @@
 import React from 'react';
-
 interface PrimaryButtonProps {
   label: string; // 버튼 텍스트
+  onClick: () => void; // 클릭 핸들러
   disabled?: boolean; // 비활성화 여부
   className?: string; // 추가 스타일링 클래스
-  onClick?: () => void; // 클릭 핸들러
 }
 
 const PrimaryButton = ({ label, disabled = false, className = '', onClick }: PrimaryButtonProps) => {

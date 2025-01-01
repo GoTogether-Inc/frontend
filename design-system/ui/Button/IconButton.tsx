@@ -1,9 +1,8 @@
 import React from 'react';
-
-interface IconButtonProps {
+export interface IconButtonProps {
+  iconPath: string;
+  onClick: () => void;
   size?: 'small' | 'medium' | 'large';
-  iconPath: string; // 아이콘 이미지 경로
-  onClick?: () => void;
 }
 
 const IconButton = ({ size = 'medium', iconPath, onClick }: IconButtonProps) => {

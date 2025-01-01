@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface TextButtonProps {
-  children: React.ReactNode;
-  color?: string;
-  onClick?: () => void;
+  label: ReactNode;
+  onClick: () => void;
+  className?: string;
 }
 
-const TextButton = ({ children, color = '#1D4ED8', onClick }: TextButtonProps) => {
+const TextButton = ({ label, onClick, className }: TextButtonProps) => {
   return (
-    <button style={{ color }} className="text-base font-semibold transition hover:underline" onClick={onClick}>
-      {children}
+    <button className={`text-base font-semibold transition hover:underline ${className}`} onClick={onClick}>
+      {label}
     </button>
   );
 };

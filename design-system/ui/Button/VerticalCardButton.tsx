@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { flexColumnCenter } from '../../styles/flex';
 
 type CardButtonProps = {
-  iconPath: string; // 기본 아이콘 경로
-  hoverIconPath: string; // hover 시 사용할 아이콘 경로
+  iconPath: string;
+  hoverIconPath: string;
   label: string;
   onClick: () => void;
+  size?: 'small' | 'medium' | 'large';
   className?: string;
-  size?: 'small' | 'medium' | 'large'; // 크기 추가
 };
 
 export default function VerticalCardButton({
@@ -16,7 +16,7 @@ export default function VerticalCardButton({
   hoverIconPath,
   label = '',
   className,
-  size = 'medium', // 기본 크기 설정
+  size = 'medium',
 }: CardButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -42,14 +42,10 @@ export default function VerticalCardButton({
       `}
       type="button"
       onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)} // hover 시작
-      onMouseLeave={() => setIsHovered(false)} // hover 종료
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        className={`${iconSizeClasses[size]} mb-1`} // 크기에 따라 아이콘 크기 조정
-        src={isHovered ? hoverIconPath : iconPath} // 상태에 따라 아이콘 변경
-        alt={label}
-      />
+      <img className={`${iconSizeClasses[size]} mb-1`} src={isHovered ? hoverIconPath : iconPath} alt={label} />
       <p>{label}</p>
     </button>
   );

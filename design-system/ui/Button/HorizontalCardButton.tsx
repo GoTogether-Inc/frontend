@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { flexRowStart } from '../../styles/flex';
 
 type CardButtonProps = {
-  iconPath: string; // 기본 아이콘 경로
-  hoverIconPath: string; // hover 시 사용할 아이콘 경로
+  iconPath: string;
+  hoverIconPath: string;
   label: string;
   onClick: () => void;
   className?: string;
@@ -26,14 +26,10 @@ export default function HorizontalCardButton({
       `}
       type="button"
       onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)} // hover 시작
-      onMouseLeave={() => setIsHovered(false)} // hover 종료
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        className="w-6 mr-4"
-        src={isHovered ? hoverIconPath : iconPath} // 상태에 따라 아이콘 변경
-        alt={label}
-      />
+      <img className="w-6 mr-4" src={isHovered ? hoverIconPath : iconPath} alt={label} />
       <p>{label}</p>
     </button>
   );
