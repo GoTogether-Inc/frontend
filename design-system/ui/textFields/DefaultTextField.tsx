@@ -18,7 +18,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
     return (
       <div>
         <label className="block px-1 font-semibold text-gray-700 sm:text-base md:text-lg lg:text-lg">{label}</label>
-        <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-xs md:text-sm lg:text-sm">
+        <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-10 md:text-sm lg:text-sm">
           {detail}
         </label>
         <div className={`flex items-center justify-center ${className}`}>
