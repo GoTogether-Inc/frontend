@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../../design-system/ui/Header';
-import Button from '../../../design-system/ui/buttons/Button';
+import Button from '../../../design-system/ui/Button';
 import AgreementList from '../../features/join/ui/AgreementList';
 import { useAgreementStore } from '../../features/join/model/agreementStore';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,13 @@ const AgreementPage: React.FC = () => {
   console.log('isAllRequiredAgreed:', isAllRequiredAgreed());
 
   return (
-    <div className="flex flex-col w-full h-screen bg-white border ">
-      <Header title="이용약관" onBack={() => navigate(-1)} />
+    <div className="flex flex-col w-full h-screen bg-white border">
+      <Header
+        centerContent="이용약관"
+        leftButtonClassName="뒤로 가기"
+        leftButtonClick={() => navigate(-1)}
+        color="black"
+      />
       <div className="relative mx-10 my-12 sm:mx-8 sm:my-10 md:mx-10 md:my-12 lg:mx-12 lg:my-16">
         <div className="mb-10">
           <p className="text-xl font-bold sm:text-base md:text-lg lg:text-xl">서비스 이용을 위해</p>

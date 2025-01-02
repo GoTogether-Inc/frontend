@@ -46,7 +46,12 @@ const InfoInputPage: React.FC = () => {
 
   return (
     <div className="relative flex flex-col w-full h-screen border ">
-      <Header title="정보입력" onBack={() => window.history.back()} textColor="text-black" />
+      <Header
+        centerContent="정보입력"
+        leftButtonLabel="뒤로가기"
+        leftButtonClick={() => window.history.back()}
+        color="black"
+      />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-8 m-20 mx-10 my-12 sm:mx-8 sm:my-10 md:mx-10 md:my-12 lg:mx-12 lg:my-16"
