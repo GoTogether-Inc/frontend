@@ -22,11 +22,6 @@ const meta = {
       description: '텍스트 필드에 들어갈 문자열의 정보',
       defaultValue: '입력해주세요',
     },
-    type: {
-      control: { type: 'select', options: ['text', 'password'] },
-      description: '텍스트 필드의 타입',
-      defaultValue: 'text',
-    },
     onChange: {
       description: '입력 이벤트',
     },
