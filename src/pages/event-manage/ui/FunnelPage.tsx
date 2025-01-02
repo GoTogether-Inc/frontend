@@ -1,25 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
 import EventFunnel from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
+import HostSelectionPage from './HostSelectionPage';
 
 const FunnelPage = () => {
   const { Funnel, Step, setStep, currentStep, steps } = useFunnel(0);
-
+  const [previousStep, setPreviousStep] = useState<number[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onNextClick = () => {
-    const nextStep = currentStep + 1;
+  const onNextClick = (targetStep?: number) => {
+    const nextStep = targetStep !== undefined ? targetStep : currentStep + 1;
     if (nextStep < steps.length) {
+      setPreviousStep([...previousStep, currentStep]);
       setStep(nextStep);
       navigate(`${location.pathname}?step=${steps[nextStep]}`);
     }
   };
 
   const onPrevClick = () => {
-    const prevStep = currentStep - 1;
-    if (prevStep >= 0) {
+    const prevStep = previousStep.pop();
+    if (prevStep !== undefined) {
       setStep(prevStep);
       navigate(`${location.pathname}?step=${steps[prevStep]}`);
     }
@@ -37,7 +39,17 @@ const FunnelPage = () => {
   }, [location.search]);
 
   return (
-    <EventFunnel onNext={onNextClick} onPrev={onPrevClick} Funnel={Funnel} Step={Step} currentStep={currentStep} />
+    <>
+      <EventFunnel
+        onNext={nextStep => onNextClick(Number(nextStep))}
+        onPrev={onPrevClick}
+        Funnel={Funnel}
+        Step={Step}
+        setStep={setStep}
+        currentStep={currentStep}
+      />
+      <HostSelectionPage onNext={nextStep => onNextClick(Number(nextStep))} currentStep={currentStep} />
+    </>
   );
 };
 

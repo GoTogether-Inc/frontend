@@ -16,6 +16,7 @@ export const useFunnel = (defaultStep: number) => {
 
   const steps = [
     'HostSelection',
+    'HostCreation',
     'EventTitle',
     'EventPeriod',
     'EventOrganizerInfo',

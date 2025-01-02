@@ -10,17 +10,20 @@ import EventTagPage from '../../../../pages/event-manage/ui/EventTagPage';
 import EventOrganizerInfo from '../../../../pages/event-manage/ui/EventOrganizerInfo';
 import EventRegisterLayout from '../../../../shared/ui/backgrounds/EventRegisterLayout';
 import { useNavigate } from 'react-router-dom';
+import HostCreationPage from '../../../../pages/event-manage/ui/HostCreationPage';
 
 export interface EventFunnelInterface {
   onNext: (nextStep: string) => void;
   onPrev: (prevStep: string) => void;
   Funnel: React.ComponentType<FunnelProps>;
   Step: React.ComponentType<StepProps>;
+  setStep: (step: number) => void;
   currentStep: number;
 }
 
-enum StepNames {
+export enum StepNames {
   HostSelection = 'HostSelection',
+  HostCreation = 'HostCreation',
   EventTitle = 'EventTitle',
   EventPeriod = 'EventPeriod',
   EventOrganizerInfo = 'EventOrganizerInfo',
@@ -43,10 +46,19 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.HostSelection}>
         <EventRegisterLayout
           title="이벤트를 호스팅할 채널을 선택해주세요"
-          onNext={() => handleNext(String(currentStep + 1))}
+          onNext={() => handleNext(String(currentStep + 2))}
           onPrev={() => navigate(-1)}
         >
-          <HostSelectionPage />
+          <HostSelectionPage onNext={handleNext} currentStep={currentStep} />
+        </EventRegisterLayout>
+      </Step>
+      <Step name={StepNames.HostCreation}>
+        <EventRegisterLayout
+          title="채널을 새로 생성합니다"
+          onNext={() => handleNext(String(currentStep + 1))}
+          onPrev={() => onPrev(String(currentStep - 1))}
+        >
+          <HostCreationPage />
         </EventRegisterLayout>
       </Step>
       <Step name={StepNames.EventTitle}>
