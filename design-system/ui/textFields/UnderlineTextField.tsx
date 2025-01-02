@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChangeEvent, forwardRef } from 'react';
 
-interface DefaultTextFieldProps {
+interface UnderlineTextFieldProps {
   label: string;
   type?: string;
   value?: string;
@@ -11,7 +11,7 @@ interface DefaultTextFieldProps {
   className?: string;
 }
 
-const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
+const UnderlineTextField = forwardRef<HTMLInputElement, UnderlineTextFieldProps>(
   ({ label, type = 'text', value, onChange, placeholder = '', errorMessage, className = '', ...rest }, ref) => {
     return (
       <div className={`relative ${className}`}>
@@ -33,4 +33,4 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
   }
 );
 
-export default DefaultTextField;
+export default UnderlineTextField;
