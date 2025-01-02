@@ -1,4 +1,5 @@
 import React from 'react';
+
 interface ToggleButtonProps {
   isChecked: boolean; // 토글 상태
   onChange: () => void; // 상태 변경 핸들러

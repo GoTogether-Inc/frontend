@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
-import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
+import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 
 const EventTitlePage: React.FC = () => {
   const { data, updateFunnelData } = useFunnelStore();
@@ -13,7 +13,7 @@ const EventTitlePage: React.FC = () => {
 
   return (
     <div className="flex justify-start items-center w-full p-5">
-      <DefaultTextField label="이벤트 제목" className="w-full" value={title} onChange={handleTitleChange} />
+      <UnderlineTextField label="이벤트 제목" className="w-full" value={title} onChange={handleTitleChange} />
     </div>
   );
 };

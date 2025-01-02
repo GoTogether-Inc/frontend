@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import Button from '../../../../design-system/ui/buttons/Button';
+import Button from '../../../../design-system/ui/Button';
 import Header from '../../../../design-system/ui/Header';
 
 interface EventRegisterLayoutProps {

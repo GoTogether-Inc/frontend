@@ -1,9 +1,9 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
-import Button from '../../../design-system/ui/buttons/Button';
-import { validations } from '../../shared/utils/validation';
-import DefaultTextField from '../../../design-system/ui/textFields/DefaultTextField';
+import Button from '../../../design-system/ui/Button';
+import { validations } from '../../shared/lib/validation';
+import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTextField';
 
 interface FormInputs {
   name: string;
@@ -52,7 +52,7 @@ const InfoInputPage: React.FC = () => {
         className="flex flex-col gap-8 m-20 mx-10 my-12 sm:mx-8 sm:my-10 md:mx-10 md:my-12 lg:mx-12 lg:my-16"
       >
         {/* 이름 필드 */}
-        <DefaultTextField
+        <UnderlineTextField
           label="이름"
           placeholder="이름"
           errorMessage={errors.name?.message}
@@ -66,7 +66,7 @@ const InfoInputPage: React.FC = () => {
         />
 
         {/* 연락처 필드 */}
-        <DefaultTextField
+        <UnderlineTextField
           label="연락처"
           placeholder={`"-" 없이 번호만 입력해주세요`}
           type="tel"
@@ -81,7 +81,7 @@ const InfoInputPage: React.FC = () => {
         />
 
         {/* 이메일 필드 */}
-        <DefaultTextField
+        <UnderlineTextField
           label="이메일"
           placeholder="이메일"
           type="email"
