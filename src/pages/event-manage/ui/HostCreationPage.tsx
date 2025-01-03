@@ -7,24 +7,18 @@ import React, { useState } from 'react';
 
 const HostCreationPage = () => {
   const { data, updateFunnelData } = useFunnelStore();
+  const [formState, setFormState] = useState({
+    hostChannelName: data.hostChannelName || '',
+    hostEmail: data.hostEmail || '',
+    channelDescription: data.channelDescription || '',
+  });
 
-  const [hostChannelName, setHostChannelName] = useState(data.hostChannelName);
-  const [hostEmail, setHostEmail] = useState(data.hostEmail);
-  const [channelDescription, setChannelDescription] = useState(data.channelDescription);
-
-  const handleHostChannelNameClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHostChannelName(e.target.value);
-    updateFunnelData({ hostChannelName: e.target.value });
-  };
-
-  const handlehostEmailClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHostEmail(e.target.value);
-    updateFunnelData({ hostEmail: e.target.value });
-  };
-
-  const handleChannelDescriptionClick = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setChannelDescription(e.target.value);
-    updateFunnelData({ channelDescription: e.target.value });
+  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormState(prev => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+    updateFunnelData(formState);
   };
 
   return (
@@ -38,20 +32,23 @@ const HostCreationPage = () => {
       <DefaultTextField
         label="채널 이름을 입력해주세요"
         placeholder="채널 이름을 입력해 주세요"
-        onChange={handleHostChannelNameClick}
+        value={formState.hostChannelName}
+        onChange={handleChange('hostChannelName')}
         className="h-12"
       />
       <DefaultTextField
         label="대표 이메일"
         detail="주최하는 이벤트에 대해 문의 할 수 있는 메일로 작성해주세요"
         placeholder="example@example.com"
-        onChange={handlehostEmailClick}
+        value={formState.hostEmail}
+        onChange={handleChange('hostEmail')}
         className="h-12"
       />
       <MultilineTextField
         label="채널에 대한 설명"
         placeholder="채널에 대한 설명을 적어주세요"
-        onChange={handleChannelDescriptionClick}
+        value={formState.channelDescription}
+        onChange={handleChange('channelDescription')}
         className="h-20"
       />
     </div>
