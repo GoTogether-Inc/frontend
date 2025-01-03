@@ -48,7 +48,9 @@ const FunnelPage = () => {
         setStep={setStep}
         currentStep={currentStep}
       />
-      <HostSelectionPage onNext={nextStep => onNextClick(Number(nextStep))} currentStep={currentStep} />
+      {currentStep === 0 && (
+        <HostSelectionPage onNext={nextStep => onNextClick(Number(nextStep))} currentStep={currentStep} />
+      )}
     </>
   );
 };

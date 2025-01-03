@@ -2,13 +2,17 @@ import { create } from 'zustand';
 
 interface FunnelData {
   hostChannelId: number;
+  hostProfileImageUrl?: string;
+  hostChannelName?: string;
+  hostEmail?: string;
+  channelDescription?: string;
   title: string;
   startDate: string;
   startTime: string;
   endDate: string;
   endTime: string;
-  hostEmail: string;
-  hostPhoneNumber: string;
+  organizerEmail: string;
+  organizerPhoneNumber: string;
   bannerImageUrl: string;
   description: string;
   referenceLinks: { title: string; url: string }[];
@@ -26,13 +30,17 @@ interface FunnelStore {
 export const useFunnelStore = create<FunnelStore>(set => ({
   data: {
     hostChannelId: 0,
+    hostProfileImageUrl: '',
+    hostChannelName: '',
+    hostEmail: '',
+    channelDescription: '',
     title: '',
     startDate: '',
     startTime: '',
     endDate: '',
     endTime: '',
-    hostEmail: '',
-    hostPhoneNumber: '',
+    organizerEmail: '',
+    organizerPhoneNumber: '',
     bannerImageUrl: '',
     description: '',
     referenceLinks: [],
