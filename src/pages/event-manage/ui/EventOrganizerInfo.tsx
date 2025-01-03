@@ -24,10 +24,10 @@ const EventOrganizerInfo: React.FC = () => {
   const emailValue = watch('email');
 
   useEffect(() => {
-    if (emailValue !== data.hostEmail || phoneValue !== data.hostPhoneNumber) {
+    if (emailValue !== data.organizerEmail || phoneValue !== data.organizerPhoneNumber) {
       updateFunnelData({
-        hostEmail: emailValue,
-        hostPhoneNumber: phoneValue,
+        organizerEmail: emailValue,
+        organizerPhoneNumber: phoneValue,
       });
     }
   }, [emailValue, phoneValue, data, updateFunnelData]);
