@@ -43,9 +43,8 @@ export const Default: Story = {
   },
 };
 
-export const WithLeftIconButton: Story = {
+export const LeftIconButtonOnly: Story = {
   args: {
-    centerContent: 'Header with Back Button',
     leftButtonLabel: '<',
     leftButtonClassName: 'text-xl',
   },
