@@ -7,7 +7,7 @@ interface EventRegisterLayoutProps {
   title?: string;
   className?: string;
   onNext: () => void;
-  onPrev?: () => void;
+  onPrev: () => void;
 }
 
 const EventRegisterLayout = ({ children, title, className = '', onNext, onPrev }: EventRegisterLayoutProps) => {
@@ -15,7 +15,13 @@ const EventRegisterLayout = ({ children, title, className = '', onNext, onPrev }
     <div className="relative flex">
       {/* 헤더 영역 */}
       <div className="absolute top-0 w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
-        <Header centerContent="이벤트 등록" leftButtonClick={onPrev} color="white" />
+        <Header
+          centerContent="이벤트 등록"
+          leftButtonLabel="<"
+          leftButtonClick={onPrev}
+          color="white"
+          leftButtonClassName="text-xl z-30"
+        />
       </div>
 
       {/* 레이아웃 내용 */}
