@@ -9,7 +9,7 @@ interface SecondaryButtonProps {
 
 const SecondaryButton = ({ label, color, onClick, className }: SecondaryButtonProps) => {
   const baseStyle = 'px-4 py-2 font-bold text-white rounded-lg';
-  const colorStyle = color === 'pink' ? 'bg-pink-500' : 'bg-black';
+  const colorStyle = color === 'pink' ? 'bg-main' : 'bg-black';
 
   return (
     <button className={`${baseStyle} ${colorStyle} ${className}`} onClick={onClick}>
