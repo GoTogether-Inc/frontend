@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
 import EventFunnel from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
-import HostSelectionPage from './HostSelectionPage';
 
 const FunnelPage = () => {
   const { Funnel, Step, setStep, currentStep, steps } = useFunnel(0);
@@ -48,9 +47,6 @@ const FunnelPage = () => {
         setStep={setStep}
         currentStep={currentStep}
       />
-      {currentStep === 0 && (
-        <HostSelectionPage onNext={nextStep => onNextClick(Number(nextStep))} currentStep={currentStep} />
-      )}
     </>
   );
 };
