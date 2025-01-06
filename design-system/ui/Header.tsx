@@ -26,10 +26,9 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header
-      className={`flex items-center justify-between space-x-6 w-full h-16 px-6 ${className} ${
+      className={`relative flex items-center justify-between w-full h-16 px-6 gap-6 ${className} ${
         color === 'white' ? 'text-white' : 'text-black'
       }`}
-      style={{ margin: '0 auto' }} // 중앙 정렬 스타일
     >
       {/* 왼쪽 콘텐츠 */}
       <div className="flex items-center space-x-2">
