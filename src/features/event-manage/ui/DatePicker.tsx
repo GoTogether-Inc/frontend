@@ -51,8 +51,7 @@ const EventDatePicker = ({ className }: DatePickerProps) => {
   }, [startDate, endDate, startTime, endTime, setFormState]);
 
   return (
-    <div className="flex flex-col w-full">
-      <h3 className={`text-black mb-5 font-semibold text-lg ${className}`}>{formState.title}</h3>
+    <div className={`flex flex-col w-full ${className}`}>
       <div className="flex flex-wrap lg:flex-nowrap justify-between gap-4">
         <div className="flex flex-col w-full sm:w-auto">
           <span className="text-xs font-bold">시작 날짜</span>
