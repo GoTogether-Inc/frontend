@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import AddButton from '../../../../public/assets/AddBtn.svg';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
+import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
@@ -8,27 +8,33 @@ interface HostSelectionPageProps {
 }
 
 const HostSelectionPage = ({ onNext, currentStep }: HostSelectionPageProps) => {
+  const { setFormState } = useFunnelState();
   const [selected, setSelected] = useState<number | null>(null);
-  const { updateFunnelData } = useFunnelStore();
 
-  const [hostList, setHostList] = useState([
-    { id: 1, hostChannelName: '실1000', hostEmail: 'example@example.com', channelDescription: '어쩌구저쩌구' },
-    { id: 2, hostChannelName: '같이가요', hostEmail: 'test@test.com', channelDescription: '어쩌구저쩌구' },
+  const [hostList] = useState([
+    {
+      hostChannelId: 1,
+      hostChannelName: '실1000',
+      hostEmail: 'example@example.com',
+      channelDescription: '어쩌구저쩌구',
+    },
+    { hostChannelId: 2, hostChannelName: '같이가요', hostEmail: 'test@test.com', channelDescription: '어쩌구저쩌구' },
   ]);
 
   const handleHostClick = (host: {
-    id: number;
+    hostChannelId: number;
     hostChannelName: string;
     hostEmail: string;
     channelDescription: string;
   }) => {
-    setSelected(host.id);
-    updateFunnelData({
-      hostChannelId: host.id,
+    setSelected(host.hostChannelId);
+    setFormState(prev => ({
+      ...prev,
+      hostChannelId: host.hostChannelId,
       hostChannelName: host.hostChannelName,
       hostEmail: host.hostEmail,
       channelDescription: host.channelDescription,
-    });
+    }));
   };
 
   return (
@@ -44,10 +50,10 @@ const HostSelectionPage = ({ onNext, currentStep }: HostSelectionPageProps) => {
       </div>
       {hostList.map(host => (
         <div
-          key={host.id}
+          key={host.hostChannelId}
           onClick={() => handleHostClick(host)}
           className={`flex justify-start items-center py-3 px-3 ${
-            selected === host.id
+            selected === host.hostChannelId
               ? 'bg-dropdown border border-main rounded-[5px]'
               : 'hover:bg-dropdown hover:border hover:border-main hover:rounded-[5px]'
           }`}

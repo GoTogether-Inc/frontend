@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CategoryButton from '../../../../public/assets/BackBtn(black).svg';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
+import { useFunnelState } from '../model/FunnelContext';
 
 interface Category {
   id: string;
@@ -11,8 +11,8 @@ interface EventCategoryProps {
   className: string;
 }
 
-const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
-  const { data, updateFunnelData } = useFunnelStore();
+const EventCategory = ({ className }: EventCategoryProps) => {
+  const { formState, setFormState } = useFunnelState();
   const [open, setOpen] = useState(false);
 
   const categories: Category[] = [
@@ -25,7 +25,10 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
   const handleDropdown = () => setOpen(!open);
 
   const handleSelect = (id: string) => {
-    updateFunnelData({ category: id });
+    setFormState(prev => ({
+      ...prev,
+      category: id,
+    }));
     setOpen(false);
   };
 
@@ -39,7 +42,9 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
           onClick={handleDropdown}
           className={`flex justify-between p-2 text-left bg-white border border-deDayTextDark rounded-[2px] focus:outline-none ${className}`}
         >
-          <span>{data.category ? categories.find(c => c.id === data.category)?.name : '이벤트 카테고리 선택'}</span>
+          <span>
+            {formState.category ? categories.find(c => c.id === formState.category)?.name : '이벤트 카테고리 선택'}
+          </span>
           <img src={CategoryButton} alt="카테고리 버튼" className="w-6 h-6 -rotate-90" />
         </button>
         {open && (
@@ -51,7 +56,7 @@ const EventCategory: React.FC<EventCategoryProps> = ({ className }) => {
                 key={category.id}
                 onClick={() => handleSelect(category.id)}
                 className={`p-2 cursor-pointer hover:bg-dropdown transition-colors ${
-                  data.category === category.id ? 'bg-dropdown' : ''
+                  formState.category === category.id ? 'bg-dropdown' : ''
                 }`}
               >
                 {category.name}
