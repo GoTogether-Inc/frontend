@@ -1,43 +1,22 @@
-import { FunnelProps, StepProps } from '../../hooks/useFunnel';
-import { useFunnelStore } from '../../model/funnelStore';
-
 import HostSelectionPage from '../../../../pages/event-manage/ui/HostSelectionPage';
+import HostCreationPage from '../../../../pages/event-manage/ui/HostCreationPage';
 import EventTitlePage from '../../../../pages/event-manage/ui/EventTitlePage';
 import EventPeriodPage from '../../../../pages/event-manage/ui/EventPeriodPage';
 import EventInfoPage from '../../../../pages/event-manage/ui/EventInfoPage';
 import EventTypePage from '../../../../pages/event-manage/ui/EventTypePage';
 import EventTagPage from '../../../../pages/event-manage/ui/EventTagPage';
-import EventOrganizerInfo from '../../../../pages/event-manage/ui/EventOrganizerInfo';
+import EventOrganizerInfoPage from '../../../../pages/event-manage/ui/EventOrganizerInfoPage';
 import EventRegisterLayout from '../../../../shared/ui/backgrounds/EventRegisterLayout';
 import { useNavigate } from 'react-router-dom';
-import HostCreationPage from '../../../../pages/event-manage/ui/HostCreationPage';
-
-export interface EventFunnelInterface {
-  onNext: (nextStep: string) => void;
-  onPrev: (prevStep: string) => void;
-  Funnel: React.ComponentType<FunnelProps>;
-  Step: React.ComponentType<StepProps>;
-  setStep: (step: number) => void;
-  currentStep: number;
-}
-
-export enum StepNames {
-  HostSelection = 'HostSelection',
-  HostCreation = 'HostCreation',
-  EventTitle = 'EventTitle',
-  EventPeriod = 'EventPeriod',
-  EventOrganizerInfo = 'EventOrganizerInfo',
-  EventInfo = 'EventInfo',
-  EventType = 'EventType',
-  EventTag = 'EventTag',
-}
+import { EventFunnelInterface, StepNames } from '../../../../shared/types/FunnelType';
+import { useFunnelState } from '../../model/FunnelContext';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
-  const { data } = useFunnelStore();
+  const { formState } = useFunnelState();
   const navigate = useNavigate();
 
   const handleNext = (nextStep: string) => {
-    console.log('이벤트 주최 데이터:', data);
+    console.log('이벤트 주최 데이터:', formState);
     onNext(nextStep);
   };
 
@@ -85,7 +64,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
           onNext={() => handleNext(String(currentStep + 1))}
           onPrev={() => onPrev(String(currentStep - 1))}
         >
-          <EventOrganizerInfo />
+          <EventOrganizerInfoPage />
         </EventRegisterLayout>
       </Step>
       <Step name={StepNames.EventInfo}>
