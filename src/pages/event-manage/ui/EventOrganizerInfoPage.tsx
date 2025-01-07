@@ -36,7 +36,7 @@ const EventOrganizerInfoPage = () => {
   }, [emailValue, phoneValue, setFormState]);
 
   return (
-    <div className="flex flex-col space-y-4 p-5">
+    <div className="flex flex-col gap-6 md:gap-7 p-5">
       <UnderlineTextField
         label="이메일"
         placeholder="이메일"

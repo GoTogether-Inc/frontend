@@ -13,8 +13,8 @@ const EventTagPage = () => {
         </h2>
       </div>
 
-      <EventCategory className="w-52" />
-      <EventTag className="w-90 h-40" />
+      <EventCategory />
+      <EventTag />
     </div>
   );
 };

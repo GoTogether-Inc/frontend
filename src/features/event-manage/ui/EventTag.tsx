@@ -1,20 +1,17 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useFunnelState } from '../model/FunnelContext';
+import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
 
-interface EventTagProps {
-  className: string;
-}
-
-const EventTag = ({ className }: EventTagProps) => {
+const EventTag = () => {
   const { formState, setFormState } = useFunnelState();
   const [inputValue, setInputValue] = useState('');
   const MAX_TAGS = 5;
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
       e.preventDefault();
 
@@ -46,13 +43,12 @@ const EventTag = ({ className }: EventTagProps) => {
       <p className="text-placeholderText text-base mb-2">최대 5개의 태그를 입력할 수 있어요</p>
 
       <div className="relative mb-4">
-        <input
-          type="text"
+        <MultilineTextField
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="엔터를 이용해 태그를 입력하세요"
-          className={`p-2 border text-left border-deDayTextDark rounded-[2px] focus:outline-none ${className}`}
+          className="w-full h-40"
           disabled={formState.hashtags.length >= MAX_TAGS}
         />
       </div>

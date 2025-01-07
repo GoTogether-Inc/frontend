@@ -7,11 +7,7 @@ interface Category {
   name: string;
 }
 
-interface EventCategoryProps {
-  className: string;
-}
-
-const EventCategory = ({ className }: EventCategoryProps) => {
+const EventCategory = () => {
   const { formState, setFormState } = useFunnelState();
   const [open, setOpen] = useState(false);
 
@@ -40,7 +36,7 @@ const EventCategory = ({ className }: EventCategoryProps) => {
       <div className="relative">
         <button
           onClick={handleDropdown}
-          className={`flex justify-between p-2 text-left bg-white border border-deDayTextDark rounded-[2px] focus:outline-none ${className}`}
+          className="flex justify-between p-2 text-left bg-white border border-placeholderText rounded-[2px] focus:outline-none w-full max-w-52"
         >
           <span>
             {formState.category ? categories.find(c => c.id === formState.category)?.name : '이벤트 카테고리 선택'}
@@ -48,9 +44,7 @@ const EventCategory = ({ className }: EventCategoryProps) => {
           <img src={CategoryButton} alt="카테고리 버튼" className="w-6 h-6 -rotate-90" />
         </button>
         {open && (
-          <div
-            className={`absolute top-full left-0 bg-white border border-deDayTextDark rounded-[2px] z-50 ${className}`}
-          >
+          <div className="absolute top-full left-0 bg-white border border-placeholderText rounded-[2px] z-50 w-full max-w-52">
             {categories.map(category => (
               <div
                 key={category.id}
