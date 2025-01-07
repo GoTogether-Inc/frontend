@@ -52,13 +52,11 @@ const LinkInput = () => {
 
       {links.map((link, index) => (
         <div key={index} className="mb-2">
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-between">
             <img src={Link} alt="링크 이미지" className="p-2" />
             {/* Title Input */}
             <div
-              className={`relative rounded-[3px] transition-colors ${
-                hoveredInput.field === link.title && hoveredInput.field === 'title' ? 'bg-gray3' : ''
-              }`}
+              className={`relative rounded-[3px] transition-colors ${hoveredInput.field === 'title' ? 'bg-gray3' : ''}`}
               onMouseEnter={() => setHoveredInput({ field: 'title' })}
               onMouseLeave={() => setHoveredInput({ field: null })}
               onClick={() => setActiveInput({ field: 'title' })}
@@ -67,7 +65,7 @@ const LinkInput = () => {
                 type="text"
                 value={link.title}
                 onChange={e => updateLink(link.title, 'title', e.target.value)}
-                className="w-24 h-8 text-placeholderText ml-1 outline-none bg-transparent"
+                className="w-full min-w-[3rem] md:min-w-[6rem] h-8 text-placeholderText ml-1 outline-none bg-transparent text-sm md:text-base"
                 placeholder="참조링크"
                 autoFocus={activeInput.field === link.title && activeInput.field === 'title'}
               />
@@ -84,7 +82,7 @@ const LinkInput = () => {
                 type="text"
                 value={link.url}
                 onChange={e => updateLink(link.title, 'url', e.target.value)}
-                className="w-72 h-8 text-placeholderText ml-2 outline-none bg-transparent"
+                className="w-full min-w-[10rem] md:min-w-[15rem] h-8 text-placeholderText ml-2 outline-none bg-transparent text-sm md:text-base"
                 placeholder="URL을 입력하세요"
                 autoFocus={activeInput.field === 'url'}
               />

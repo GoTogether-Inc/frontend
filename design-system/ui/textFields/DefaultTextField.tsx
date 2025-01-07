@@ -29,7 +29,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
             onChange={onChange}
             placeholder={placeholder}
             {...rest}
-            className={`w-full h-full border-[0.5px] border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none`}
+            className={`w-full h-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none`}
           />
           {rightContent && <div className="ml-3">{rightContent}</div>}
         </div>
