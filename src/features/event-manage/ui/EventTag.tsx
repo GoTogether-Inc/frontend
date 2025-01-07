@@ -1,13 +1,13 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { useFunnelState } from '../model/FunnelContext';
 
 interface EventTagProps {
   className: string;
 }
 
-const EventTag: React.FC<EventTagProps> = ({ className }) => {
-  const { data, updateFunnelData } = useFunnelStore();
-  const [inputValue, setInputValue] = useState<string>('');
+const EventTag = ({ className }: EventTagProps) => {
+  const { formState, setFormState } = useFunnelState();
+  const [inputValue, setInputValue] = useState('');
   const MAX_TAGS = 5;
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -18,20 +18,26 @@ const EventTag: React.FC<EventTagProps> = ({ className }) => {
     if (e.key === 'Enter' && inputValue.trim()) {
       e.preventDefault();
 
-      if (data.hashtags.length >= MAX_TAGS) {
+      if (formState.hashtags.length >= MAX_TAGS) {
         return;
       }
 
       const newTag = inputValue.trim();
-      if (!data.hashtags.includes(newTag)) {
-        updateFunnelData({ hashtags: [...data.hashtags, newTag] });
+      if (!formState.hashtags.includes(newTag)) {
+        setFormState(prev => ({
+          ...prev,
+          hashtags: [...prev.hashtags, newTag],
+        }));
         setInputValue('');
       }
     }
   };
 
   const removeHashtag = (tagToRemove: string) => {
-    updateFunnelData({ hashtags: data.hashtags.filter(tag => tag !== tagToRemove) });
+    setFormState(prev => ({
+      ...prev,
+      hashtags: prev.hashtags.filter(tag => tag !== tagToRemove),
+    }));
   };
 
   return (
@@ -47,12 +53,12 @@ const EventTag: React.FC<EventTagProps> = ({ className }) => {
           onKeyDown={handleKeyDown}
           placeholder="엔터를 이용해 태그를 입력하세요"
           className={`p-2 border text-left border-deDayTextDark rounded-[2px] focus:outline-none ${className}`}
-          disabled={data.hashtags.length >= MAX_TAGS}
+          disabled={formState.hashtags.length >= MAX_TAGS}
         />
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {data.hashtags.map((tag, index) => (
+        {formState.hashtags.map((tag, index) => (
           <div key={index} className="inline-flex items-center border border-main bg-dropdown px-3 py-1 rounded-[1px]">
             <span className="text-main mr-2">{tag}</span>
             <button onClick={() => removeHashtag(tag)} className="text-main focus:outline-none">

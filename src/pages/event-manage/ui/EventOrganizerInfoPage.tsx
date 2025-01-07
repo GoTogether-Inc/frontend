@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { validations } from '../../../shared/lib/validation';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
+import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
 
 interface FormInputs {
   email: string;
   phone: string;
 }
 
-const EventOrganizerInfo: React.FC = () => {
-  const { data, updateFunnelData } = useFunnelStore();
+const EventOrganizerInfoPage = () => {
+  const { formState, setFormState } = useFunnelState();
 
   const {
     register,
@@ -18,19 +18,22 @@ const EventOrganizerInfo: React.FC = () => {
     formState: { errors },
   } = useForm<FormInputs>({
     mode: 'onChange',
+    defaultValues: {
+      email: formState.organizerEmail || '',
+      phone: formState.organizerPhoneNumber || '',
+    },
   });
 
   const phoneValue = watch('phone');
   const emailValue = watch('email');
 
   useEffect(() => {
-    if (emailValue !== data.organizerEmail || phoneValue !== data.organizerPhoneNumber) {
-      updateFunnelData({
-        organizerEmail: emailValue,
-        organizerPhoneNumber: phoneValue,
-      });
-    }
-  }, [emailValue, phoneValue, data, updateFunnelData]);
+    setFormState(prev => ({
+      ...prev,
+      organizerEmail: emailValue,
+      organizerPhoneNumber: phoneValue,
+    }));
+  }, [emailValue, phoneValue, setFormState]);
 
   return (
     <div className="flex flex-col space-y-4 p-5">
@@ -53,4 +56,4 @@ const EventOrganizerInfo: React.FC = () => {
     </div>
   );
 };
-export default EventOrganizerInfo;
+export default EventOrganizerInfoPage;

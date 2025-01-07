@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
 import EventFunnel from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { FunnelProvider } from '../../../features/event-manage/model/FunnelContext';
 
 const FunnelPage = () => {
   const { Funnel, Step, setStep, currentStep, steps } = useFunnel(0);
@@ -35,10 +36,10 @@ const FunnelPage = () => {
         setStep(index);
       }
     }
-  }, [location.search]);
+  }, [location.search, setStep, steps]);
 
   return (
-    <>
+    <FunnelProvider>
       <EventFunnel
         onNext={nextStep => onNextClick(Number(nextStep))}
         onPrev={onPrevClick}
@@ -47,7 +48,7 @@ const FunnelPage = () => {
         setStep={setStep}
         currentStep={currentStep}
       />
-    </>
+    </FunnelProvider>
   );
 };
 

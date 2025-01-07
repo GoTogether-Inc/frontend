@@ -2,103 +2,98 @@ import { useState } from 'react';
 import AddButton from '../../../../public/assets/AddBtn.svg';
 import CloseButton from '../../../../public/assets/CloseBtn.svg';
 import Link from '../../../../public/assets/Link.svg';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
-
-interface LinkInputProps {
-  id: string;
-  url: string;
-  title: string;
-}
+import { useFunnelState } from '../model/FunnelContext';
 
 const LinkInput = () => {
-  const { updateFunnelData } = useFunnelStore();
-  const [links, setLinks] = useState<LinkInputProps[]>([]);
-  const [activeInput, setActiveInput] = useState<{ id: string | null; field: 'title' | 'url' | null }>({
-    id: null,
+  const { formState, setFormState } = useFunnelState();
+
+  const [links, setLinks] = useState<{ title: string; url: string }[]>(formState.referenceLinks);
+  const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
-  const [hoveredInput, setHoveredInput] = useState<{ id: string | null; field: 'title' | 'url' | null }>({
-    id: null,
+  const [hoveredInput, setHoveredInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
 
   const addNewLink = () => {
     const newLink = {
-      id: Math.random().toString(36).substring(2, 9),
       title: '',
       url: '',
     };
     setLinks([...links, newLink]);
-    setActiveInput({ id: newLink.id, field: null });
-    updateFunnelData({ referenceLinks: [...links, newLink] });
+    setActiveInput({ field: null });
+    setFormState(prev => ({
+      ...prev,
+      referenceLinks: [...prev.referenceLinks, newLink],
+    }));
   };
 
-  const removeLink = (id: string) => {
-    const updatedLinks = links.filter(link => link.id !== id);
+  const removeLink = (title: string) => {
+    const updatedLinks = links.filter(link => link.title !== title);
     setLinks(updatedLinks);
-    updateFunnelData({ referenceLinks: updatedLinks });
-
-    if (activeInput.id === id) {
-      setActiveInput({ id: null, field: null });
-    }
+    setFormState(prev => ({
+      ...prev,
+      referenceLinks: updatedLinks,
+    }));
   };
 
-  const updateLink = (id: string, field: 'url' | 'title', value: string) => {
-    const updatedLinks = links.map(link => (link.id === id ? { ...link, [field]: value } : link));
+  const updateLink = (title: string, field: 'url' | 'title', value: string) => {
+    const updatedLinks = links.map(link => (link.title === title ? { ...link, [field]: value } : link));
     setLinks(updatedLinks);
-    updateFunnelData({ referenceLinks: updatedLinks });
+    setFormState(prev => ({
+      ...prev,
+      referenceLinks: updatedLinks,
+    }));
   };
 
   return (
     <div className="flex flex-col gap-1">
       <h1 className="font-bold text-black text-lg">관련 링크</h1>
 
-      {links.map(link => (
-        <div key={link.id} className="mb-2">
+      {links.map((link, index) => (
+        <div key={index} className="mb-2">
           <div className="flex items-center justify-between w-full">
             <img src={Link} alt="링크 이미지" className="p-2" />
             {/* Title Input */}
             <div
               className={`relative rounded-[3px] transition-colors ${
-                hoveredInput.id === link.id && hoveredInput.field === 'title' ? 'bg-gray3' : ''
+                hoveredInput.field === link.title && hoveredInput.field === 'title' ? 'bg-gray3' : ''
               }`}
-              onMouseEnter={() => setHoveredInput({ id: link.id, field: 'title' })}
-              onMouseLeave={() => setHoveredInput({ id: null, field: null })}
-              onClick={() => setActiveInput({ id: link.id, field: 'title' })}
+              onMouseEnter={() => setHoveredInput({ field: 'title' })}
+              onMouseLeave={() => setHoveredInput({ field: null })}
+              onClick={() => setActiveInput({ field: 'title' })}
             >
               <input
                 type="text"
                 value={link.title}
-                onChange={e => updateLink(link.id, 'title', e.target.value)}
+                onChange={e => updateLink(link.title, 'title', e.target.value)}
                 className="w-24 h-8 text-placeholderText ml-1 outline-none bg-transparent"
                 placeholder="참조링크"
-                autoFocus={activeInput.id === link.id && activeInput.field === 'title'}
+                autoFocus={activeInput.field === link.title && activeInput.field === 'title'}
               />
             </div>
 
             {/* URL Input */}
             <div
-              className={`relative rounded-[3px] transition-colors ${
-                hoveredInput.id === link.id && hoveredInput.field === 'url' ? 'bg-gray3' : ''
-              }`}
-              onMouseEnter={() => setHoveredInput({ id: link.id, field: 'url' })}
-              onMouseLeave={() => setHoveredInput({ id: null, field: null })}
-              onClick={() => setActiveInput({ id: link.id, field: 'url' })}
+              className={`relative rounded-[3px] transition-colors ${hoveredInput.field === 'url' ? 'bg-gray3' : ''}`}
+              onMouseEnter={() => setHoveredInput({ field: 'url' })}
+              onMouseLeave={() => setHoveredInput({ field: null })}
+              onClick={() => setActiveInput({ field: 'url' })}
             >
               <input
                 type="text"
                 value={link.url}
-                onChange={e => updateLink(link.id, 'url', e.target.value)}
+                onChange={e => updateLink(link.title, 'url', e.target.value)}
                 className="w-72 h-8 text-placeholderText ml-2 outline-none bg-transparent"
                 placeholder="URL을 입력하세요"
-                autoFocus={activeInput.id === link.id && activeInput.field === 'url'}
+                autoFocus={activeInput.field === 'url'}
               />
               {/* Remove */}
-              {hoveredInput.id === link.id && (
+              {hoveredInput.field === 'url' && (
                 <button
                   onClick={e => {
                     e.stopPropagation();
-                    removeLink(link.id);
+                    removeLink(link.title);
                   }}
                   className="absolute top-1/2 right-2 transform -translate-y-1/2"
                 >

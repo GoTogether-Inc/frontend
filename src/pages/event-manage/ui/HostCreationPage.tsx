@@ -2,24 +2,18 @@ import basicProfile from '../../../../public/assets/basicProfile.svg';
 import addImage from '../../../../public/assets/addImage.svg';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
-import React, { useState } from 'react';
+import React from 'react';
+import { FunnelState, useFunnelState } from '../../../features/event-manage/model/FunnelContext';
 
 const HostCreationPage = () => {
-  const { data, updateFunnelData } = useFunnelStore();
-  const [formState, setFormState] = useState({
-    hostChannelName: data.hostChannelName || '',
-    hostEmail: data.hostEmail || '',
-    channelDescription: data.channelDescription || '',
-  });
-
-  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormState(prev => ({
-      ...prev,
-      [field]: e.target.value,
-    }));
-    updateFunnelData(formState);
-  };
+  const { formState, setFormState } = useFunnelState();
+  const handleChange =
+    (field: keyof FunnelState['formState']) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormState(prev => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+    };
 
   return (
     <div className="flex flex-col gap-4 px-4">

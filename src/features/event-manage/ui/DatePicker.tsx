@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useFunnelStore } from '../../../features/event-manage/model/funnelStore';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useFunnelState } from '../model/FunnelContext';
 
 interface DatePickerProps {
-  title: string;
-  textSize: string;
   className?: string;
 }
 
-const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className }) => {
-  const { updateFunnelData } = useFunnelStore();
+const EventDatePicker = ({ className }: DatePickerProps) => {
+  const { formState, setFormState } = useFunnelState();
 
-  const [startDate, setStartDate] = useState<Date | undefined>(new Date());
-  const [endDate, setEndDate] = useState<Date | undefined>(new Date());
-  const [startTime, setStartTime] = useState<string>('06:00');
-  const [endTime, setEndTime] = useState<string>('23:00');
+  const [startDate, setStartDate] = useState<Date | null>(
+    formState.startDate ? new Date(formState.startDate) : new Date()
+  );
+  const [endDate, setEndDate] = useState<Date | null>(formState.endDate ? new Date(formState.endDate) : new Date());
+  const [startTime, setStartTime] = useState<string>(formState.startTime || '06:00');
+  const [endTime, setEndTime] = useState<string>(formState.endTime || '23:00');
 
   const generateTimeOptions = () => {
     const options = [];
@@ -30,7 +30,7 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
     return options;
   };
 
-  const formatDate = (date: Date | undefined) => {
+  const formatDate = (date: Date | null) => {
     if (!date) return '';
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -41,28 +41,26 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    updateFunnelData({
+    setFormState(prev => ({
+      ...prev,
       startDate: startDate ? formatDate(startDate) : undefined,
       endDate: endDate ? formatDate(endDate) : undefined,
       startTime,
       endTime,
-    });
-  }, [startDate, endDate, startTime, endTime, updateFunnelData]);
+    }));
+  }, [startDate, endDate, startTime, endTime, setFormState]);
 
   return (
     <div className="flex flex-col w-full">
-      <h3 className={`text-black mb-5 font-semibold ${textSize} ${className}`}>{title}</h3>
+      <h3 className={`text-black mb-5 font-semibold text-lg ${className}`}>{formState.title}</h3>
       <div className="flex flex-wrap lg:flex-nowrap justify-between gap-4">
         <div className="flex flex-col w-full sm:w-auto">
           <span className="text-xs font-bold">시작 날짜</span>
           <div className="flex gap-1">
             <DatePicker
+              id="startDate"
               selected={startDate}
-              onChange={(date: Date | null) => {
-                if (date) {
-                  setStartDate(date);
-                }
-              }}
+              onChange={(date: Date | null) => setStartDate(date)}
               locale={ko}
               dateFormat="MM월 dd일"
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
@@ -87,6 +85,7 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
               )}
             />
             <select
+              id="startTime"
               value={startTime}
               onChange={e => setStartTime(e.target.value)}
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
@@ -103,12 +102,9 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
           <span className="text-xs font-bold">종료 날짜</span>
           <div className="flex gap-1">
             <DatePicker
+              id="endDate"
               selected={endDate}
-              onChange={(date: Date | null) => {
-                if (date) {
-                  setEndDate(date);
-                }
-              }}
+              onChange={(date: Date | null) => setEndDate(date)}
               locale={ko}
               dateFormat="MM월 dd일"
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
@@ -133,6 +129,7 @@ const EventDatePicker: React.FC<DatePickerProps> = ({ title, textSize, className
               )}
             />
             <select
+              id="endTime"
               value={endTime}
               onChange={e => setEndTime(e.target.value)}
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
