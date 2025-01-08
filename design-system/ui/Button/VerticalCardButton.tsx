@@ -6,7 +6,6 @@ type CardButtonProps = {
   hoverIconPath: string;
   label: string;
   onClick: () => void;
-  size?: 'small' | 'medium' | 'large';
   className?: string;
 };
 
@@ -16,36 +15,29 @@ export default function VerticalCardButton({
   hoverIconPath,
   label = '',
   className,
-  size = 'medium',
 }: CardButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
-
-  // 크기에 따라 스타일 정의
-  const sizeClasses = {
-    small: 'w-16 h-16 text-[10px]',
-    medium: 'w-20 h-20 text-xs',
-    large: 'w-24 h-24 text-sm',
-  };
-
-  const iconSizeClasses = {
-    small: 'w-5',
-    medium: 'w-6',
-    large: 'w-8',
-  };
 
   return (
     <button
       className={`
         ${flexColumnCenter}
-        rounded-default font-bold ${sizeClasses[size]} ${className}
+        rounded-default font-bold ${className}
         hover:text-main
+        sm:text-xs sm:px-3 sm:h-9
+      md:text-sm md:px-3.5 md:h-10
+      lg:text-base lg:px-4 lg:h-11
       `}
       type="button"
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img className={`${iconSizeClasses[size]} mb-1`} src={isHovered ? hoverIconPath : iconPath} alt={label} />
+      <img
+        className="w-4 sm:mb-1 sm:w-5 md:w-6 md:mb-1.5 lg:w-7 lg:mb-2"
+        src={isHovered ? hoverIconPath : iconPath}
+        alt={label}
+      />
       <p>{label}</p>
     </button>
   );
