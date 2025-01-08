@@ -8,7 +8,10 @@ interface TertiaryButtonProps {
 }
 
 const TertiaryButton = ({ label, color, onClick, className }: TertiaryButtonProps) => {
-  const baseStyle = 'px-4 py-2 rounded-lg border';
+  const baseStyle = `border
+  text-sm sm:px-3 sm:py-2 sm:text-xs sm:rounded
+  md:px-3.5 md:py-2.5 md:text-sm md:rounded-md
+  lg:px-4 lg:py-2.5 lg:text-base lg:rounded-md`;
   const colorStyle =
     color === 'pink'
       ? 'border-main text-main hover:bg-main hover:text-white hover:font-bold'
