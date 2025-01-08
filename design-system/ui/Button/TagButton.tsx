@@ -19,7 +19,7 @@ const TagButton = ({ children, isChecked, onClick }: TagButtonProps) => {
   `;
 
   const baseStyles = `
-    h-10 sm:h-8 md:h-10 lg:h-8 px-4 py-1 rounded-full text-sm sm:text-xs md:text-sm lg:text-base 
+    sm:h-7 sm:px-2 md:h-8 md:px-2.5 lg:h-9 lg:px-3 rounded-full text-sm sm:text-xs md:text-sm lg:text-base 
     border font-medium transition cursor-pointer flex items-center justify-center
   `;
 
