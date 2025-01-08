@@ -21,15 +21,17 @@ export default function HorizontalCardButton({
     <button
       className={`
       ${flexRowStart}
-      rounded-default font-bold text-base w-full p-5 ${className}
+      rounded-default font-bold w-full ${className}
       hover:text-main
-      `}
+      sm:text-sm sm:p-3 sm:rounded-md
+      md:text-base md:p-4 md:rounded-lg
+      lg:text-lg lg:p-6 lg:rounded-xl`}
       type="button"
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img className="w-6 mr-4" src={isHovered ? hoverIconPath : iconPath} alt={label} />
+      <img className="mr-4 sm:w-4 md:w-5 lg:w-6" src={isHovered ? hoverIconPath : iconPath} alt={label} />
       <p>{label}</p>
     </button>
   );
