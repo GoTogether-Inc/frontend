@@ -23,9 +23,9 @@ export default function HorizontalCardButton({
       ${flexRowStart}
       rounded-default font-bold w-full ${className}
       hover:text-main
-      sm:text-xs sm:px-3 sm:py-2
-      md:text-sm md:px-3.5 md:py-2
-      lg:text-base lg:px-4 lg:py-2.5`}
+      sm:text-xs sm:px-3 sm:h-9
+      md:text-sm md:px-3.5 md:h-10
+      lg:text-base lg:px-4 lg:h-11`}
       type="button"
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
