@@ -9,14 +9,14 @@ interface ToggleButtonProps {
 const ToggleButton = ({ isChecked, onChange, className = '' }: ToggleButtonProps) => {
   return (
     <div
-      className={`relative w-12 h-6 px-1 flex items-center bg-gray-300 rounded-full cursor-pointer transition ${
+      className={`relative lg:w-14 lg:h-6 lg:px-1 md:w-12 md:h-5 md:px-1 sm:w-10 sm:h-4 sm:px-1 flex items-center bg-gray-300 rounded-full cursor-pointer transition ${
         isChecked ? 'bg-main' : 'bg-gray-300'
       } ${className}`}
       onClick={onChange}
     >
       {/* 토글 버튼 내부 원 */}
       <div
-        className={`absolute w-4 h-4 bg-white rounded-full transition-transform ${
+        className={`absolute lg:w-4 lg:h-4 md:w-3.5 md:h-3.5 sm:w-2.5 sm:h-2.5 bg-white rounded-full transition-transform ${
           isChecked ? 'translate-x-6' : 'translate-x-0'
         }`}
       />
