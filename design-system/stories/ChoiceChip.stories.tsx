@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ChoiceChip from '../../ui/ChoiceChip';
+import ChoiceChip from '../ui/ChoiceChip';
 
 type Story = StoryObj<typeof meta>;
 
