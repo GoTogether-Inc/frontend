@@ -9,13 +9,7 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  decorators: [
-    Story => (
-      <div style={{ width: '350px' }}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [Story => <Story />],
   tags: ['autodocs'],
   argTypes: {
     label: {
