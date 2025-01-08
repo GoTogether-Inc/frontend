@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { flexRowStart } from '../../styles/flex';
 
-type CardButtonProps = {
+interface CardButtonProps {
   iconPath: string;
   hoverIconPath: string;
   label: string;
   onClick: () => void;
   className?: string;
-};
+}
 
 export default function HorizontalCardButton({
   onClick,
