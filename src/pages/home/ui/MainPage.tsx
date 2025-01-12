@@ -4,6 +4,9 @@ import BottomBar from '../../../widgets/main/ui/BottomBar';
 import firstPage from '../../../../public/assets/banners/1.png';
 import secondPage from '../../../../public/assets/banners/2.png';
 import thirdPage from '../../../../public/assets/banners/3.png';
+import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
+import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
+import searchIcon from '../../../../design-system/icons/search.svg';
 
 const MainPage = () => {
   const images = [
@@ -15,21 +18,11 @@ const MainPage = () => {
   return (
     <div>
       <Header
-        centerContent={
-          <input
-            className="w-full h-8 px-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-main"
-            placeholder="검색어를 입력하세요."
-            type="text"
-          />
-        }
-        leftButtonClassName="sm:text-md md:text-base lg:text-lg font-bold"
+        centerContent={<SearchTextField icon={searchIcon} onChange={() => {}} placeholder="입력해주세요" />}
+        leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
-        rightContent={
-          <button className="px-3.5 py-1.5 text-white bg-black rounded-md" type="button">
-            로그인
-          </button>
-        }
+        rightContent={<SecondaryButton color="black" label="로그인" onClick={() => {}} />}
       />
       <Banner images={images} interval={5000} />
       <BottomBar />
