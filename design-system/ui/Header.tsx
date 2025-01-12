@@ -1,5 +1,5 @@
 import React, { ReactElement, ButtonHTMLAttributes } from 'react';
-import TextButton from '../ui/Button/TextButton'; // TextButton 컴포넌트를 가져옵니다.
+import TextButton from './buttons/TextButton'; // TextButton 컴포넌트를 가져옵니다.
 
 type Button = ReactElement<ButtonHTMLAttributes<HTMLButtonElement>>;
 
