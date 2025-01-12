@@ -52,13 +52,15 @@ const MainPage = () => {
       <div className="mx-6">
         <Banner images={images} interval={5000} />
         {/* VerticalCardButtons Section */}
-        <div className="flex items-center justify-between my-6">
+        <div className="flex items-center justify-around sm:my-8 md:my-9 lg:my-10">
           {cardButtons.map((button, index) => (
             <VerticalCardButton
               key={index} // 각 버튼에 고유한 key 추가
               iconPath={button.iconPath}
               label={button.label}
+              size="lg"
               onClick={button.onClick}
+              className="font-semibold"
             />
           ))}
         </div>
