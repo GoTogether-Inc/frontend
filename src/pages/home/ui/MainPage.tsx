@@ -22,7 +22,7 @@ const MainPage = () => {
             type="text"
           />
         }
-        leftButtonClassName="sm:text-base md:text-lg lg:text-xl font-bold"
+        leftButtonClassName="sm:text-md md:text-base lg:text-lg font-bold"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
         rightContent={
