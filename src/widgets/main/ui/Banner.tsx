@@ -14,7 +14,7 @@ const Banner = ({ images, interval = 3000 }: BannerProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   return (
-    <div className="relative mx-6 my-1 overflow-hidden sm:h-32 md:h-36 lg:h-40 rounded-xl">
+    <div className="relative my-1 overflow-hidden sm:h-32 md:h-36 lg:h-40 rounded-xl">
       <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={0}
