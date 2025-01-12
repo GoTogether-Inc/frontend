@@ -3,7 +3,7 @@ import { flexColumnCenter } from '../../styles/flex';
 
 interface CardButtonProps {
   iconPath: string;
-  hoverIconPath: string;
+  hoverIconPath?: string;
   label: string;
   onClick: () => void;
   className?: string;
