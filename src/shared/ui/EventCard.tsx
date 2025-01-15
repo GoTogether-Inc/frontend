@@ -19,7 +19,7 @@ const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags 
 
       {/* 상세 정보 */}
       <div className="flex flex-col gap-1 mt-4">
-        <div className="flex">
+        <div className="flex justify-between">
           <h2 className="text-sm font-medium truncate">{eventTitle}</h2>
           <Countdown isChecked>{dDay}</Countdown>
         </div>
