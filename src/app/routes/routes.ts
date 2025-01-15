@@ -1,6 +1,7 @@
 export const MAIN_ROUTES = {
   main: '/',
   eventCreation: '/event-creation',
+  allEvents: '/all-events',
 };
 
 export const AUTH_ROUTES = {

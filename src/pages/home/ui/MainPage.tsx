@@ -10,6 +10,7 @@ import searchIcon from '../../../../design-system/icons/search.svg';
 import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCardButton';
 import EventCard from '../../../shared/ui/EventCard';
 import { useState, Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
   const images = [
@@ -137,6 +138,7 @@ const MainPage = () => {
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
+  const navigate = useNavigate(); // 페이지 이동을 위한 훅
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
@@ -148,7 +150,10 @@ const MainPage = () => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
 
-  console.log(latestStartIndex);
+  const handleAllEventsButtonClick = () => {
+    navigate('/all-events');
+  };
+
   return (
     <div className="flex flex-col items-center mb-28">
       <Header
@@ -294,7 +299,10 @@ const MainPage = () => {
           &gt;
         </button>
       </div>
-      <button className="flex items-center justify-center text-white bg-black lg:px-7 lg:py-3 md:px-6 md:py-3 sm:px-5 sm:py-2.5 rounded-3xl sm:text-xs md:text-sm lg:text-base">
+      <button
+        onClick={handleAllEventsButtonClick}
+        className="flex items-center justify-center text-white bg-black lg:px-7 lg:py-3 md:px-6 md:py-3 sm:px-5 sm:py-2.5 rounded-3xl sm:text-xs md:text-sm lg:text-base"
+      >
         전체 이벤트 보러가기 <span className="ml-1.5">&gt;</span>
       </button>
       <BottomBar />
