@@ -150,7 +150,7 @@ const MainPage = () => {
 
   console.log(latestStartIndex);
   return (
-    <div className="mb-28">
+    <div className="flex flex-col items-center mb-28">
       <Header
         centerContent={<SearchTextField icon={searchIcon} onChange={() => {}} placeholder="입력해주세요" />}
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
@@ -158,7 +158,7 @@ const MainPage = () => {
         leftButtonLabel="같이가요"
         rightContent={<SecondaryButton color="black" label="로그인" onClick={() => {}} />}
       />
-      <div className="mx-6">
+      <div className="w-full px-6">
         <Banner images={images} interval={5000} />
         {/* VerticalCardButtons Section */}
         <div className="flex items-center justify-around sm:my-8 md:my-9 lg:my-10">
@@ -175,7 +175,7 @@ const MainPage = () => {
         </div>
       </div>
       {/* 최신 이벤트 섹션 */}
-      <div className="relative px-6 mb-8">
+      <div className="relative w-full px-6 mb-8">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">최신 이벤트</h2>
         <div className="flex gap-4">
           {latestEvents
@@ -214,7 +214,7 @@ const MainPage = () => {
         </button>
       </div>
       {/* 요즘 뜨는 이벤트 섹션 */}
-      <div className="relative px-6 mb-8 ">
+      <div className="relative w-full px-6 mb-8 ">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">요즘 뜨는 이벤트</h2>
         <div className="flex gap-4">
           {trendingEvents
@@ -254,7 +254,7 @@ const MainPage = () => {
       </div>
 
       {/* 곧 마감되는 이벤트 섹션 */}
-      <div className="relative px-6 mb-8 ">
+      <div className="relative w-full px-6 mb-8 ">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">
           곧 이벤트가 마감돼요! ⏰
         </h2>
@@ -294,7 +294,9 @@ const MainPage = () => {
           &gt;
         </button>
       </div>
-
+      <button className="flex items-center justify-center text-white bg-black lg:px-7 lg:py-3 md:px-6 md:py-3 sm:px-5 sm:py-2.5 rounded-3xl sm:text-xs md:text-sm lg:text-base">
+        전체 이벤트 보러가기 <span className="ml-1.5">&gt;</span>
+      </button>
       <BottomBar />
     </div>
   );
