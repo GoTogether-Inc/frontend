@@ -57,7 +57,7 @@ const AllEventsPage = () => {
         rightContent={<SecondaryButton color="black" label="로그인" onClick={() => {}} />}
       />
       {/* 이벤트 카드 목록 */}
-      <div className="grid grid-cols-2 gap-4 mx-6 mt-6 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
         {trendingEvents.map((event, index) => (
           <EventCard
             key={index}
