@@ -48,12 +48,12 @@ const QrModal = ({
   });
 
   return (
-    <div className={`${flexCenter} h-screen bg-black bg-opacity-30 ${className}`}>
+    <div className={`${flexCenter} h-screen ${className}`}>
       <div>
         {iconPath1 && <div className="w-full">{iconPath1}</div>}
-        {iconPath2 && <div className={`ml-[8%] -mt-[173%] ${isChecked ? '' : 'opacity-50'}`}>{iconPath2}</div>}
+        {iconPath2 && <div className={`ml-[8%] -mt-[176%] ${isChecked ? '' : 'opacity-50'}`}>{iconPath2}</div>}
         <div className={`${flexColumn} justify-start px-6 ${isChecked ? '' : 'opacity-50'}`}>
-          <div className={`${flexRowSpaceBetweenCenter} w-full mt-[19.5%]`}>
+          <div className={`${flexRowSpaceBetweenCenter} w-full mt-[21%]`}>
             <h1 className="truncate max-w-48 mr-2 font-semibold">{title}</h1>
             <Countdown children={`${isCountdownChecked ? 'D-5' : '완료'}`} isChecked={isCountdownChecked} />
           </div>

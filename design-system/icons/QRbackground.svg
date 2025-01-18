@@ -1,5 +1,5 @@
-<svg width="265" height="475" viewBox="0 0 265 475" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 4.47715 4.47715 0 10 0H255C260.523 0 265 4.47715 265 10V245.69C251.193 245.69 240 257.148 240 271.282H25C25 257.148 13.8071 245.69 0 245.69V10Z" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 296.875C13.8071 296.875 25 285.417 25 271.282H240C240 285.417 251.193 296.875 265 296.875V465C265 470.523 260.523 475 255 475H9.99999C4.47714 475 0 470.523 0 465V296.875Z" fill="white"/>
-<line x1="25" y1="270.5" x2="240" y2="270.5" stroke="black" stroke-dasharray="7 7"/>
+<svg width="265" height="485" viewBox="0 0 265 485" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 9.99999C0 4.47715 4.47715 0 10 0H255C260.523 0 265 4.47715 265 10V251.163C254.789 251.163 246.512 259.597 246.512 270H18.4884C18.4882 259.597 10.2107 251.163 0 251.163V9.99999Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 289.527C10.2108 289.527 18.4884 280.785 18.4884 270C18.4884 270 18.4884 270 18.4884 270H246.512C246.512 280.539 254.789 289.083 265 289.083V475C265 480.523 260.523 485 255 485H9.99999C4.47714 485 0 480.523 0 475V289.527Z" fill="white"/>
+<line x1="19" y1="269.5" x2="246" y2="269.5" stroke="black" stroke-dasharray="7 7"/>
 </svg>
