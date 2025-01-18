@@ -8,6 +8,7 @@ import FunnelPage from '../../pages/event-manage/ui/FunnelPage';
 import AllEventsPage from '../../pages/all-events/ui/AllEventsPage';
 import MyTicketPage from '../../pages/menu/ui/MyTicketPage';
 import SearchPage from '../../pages/search/ui/SearchPage';
+import Menu from '../../pages/menu/ui/Menu';
 
 const routesConfig = [
   {
@@ -33,6 +34,11 @@ const routesConfig = [
   {
     path: MAIN_ROUTES.allEvents,
     element: <AllEventsPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MAIN_ROUTES.menu,
+    element: <Menu />,
     requiresAuth: false,
   },
   {
