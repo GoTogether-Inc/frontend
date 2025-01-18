@@ -1,11 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { MAIN_ROUTES, JOIN_ROUTES } from './routes';
+import { MAIN_ROUTES, JOIN_ROUTES, MENU_ROUTES } from './routes';
 import Layout from '../Layout';
 import AgreementPage from '../../pages/join/AgreementPage';
 import InfoInputPage from '../../pages/join/InfoInputPage';
 import MainPage from '../../pages/home/ui/MainPage';
 import FunnelPage from '../../pages/event-manage/ui/FunnelPage';
 import AllEventsPage from '../../pages/all-events/ui/AllEventsPage';
+import MyTicketPage from '../../pages/menu/ui/MyTicketPage';
 import SearchPage from '../../pages/search/ui/SearchPage';
 
 const routesConfig = [
@@ -32,6 +33,11 @@ const routesConfig = [
   {
     path: MAIN_ROUTES.allEvents,
     element: <AllEventsPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MENU_ROUTES.myTicket,
+    element: <MyTicketPage />,
     requiresAuth: false,
   },
   {

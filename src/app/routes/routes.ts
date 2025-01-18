@@ -3,6 +3,7 @@ export const MAIN_ROUTES = {
   eventCreation: '/event-creation',
   allEvents: '/all-events',
   search: '/search',
+  menu: `/menu`,
 };
 
 export const AUTH_ROUTES = {
@@ -13,4 +14,9 @@ export const JOIN_ROUTES = {
   // 회원가입 관련 페이지
   agreement: '/join/agreement', // 이용약관 페이지
   infoInput: '/join/info-input', // 정보입력 페이지
+};
+
+export const MENU_ROUTES = {
+  menuBar: `${MAIN_ROUTES.menu}`,
+  myTicket: `${MAIN_ROUTES.menu}/myTicket`,
 };
