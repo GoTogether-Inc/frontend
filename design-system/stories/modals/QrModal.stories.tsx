@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import QrModal from '../../ui/modals/QrModal';
+import QRbackground from '../../icons/QRbackground.svg';
+import QRcode from '../../icons/QRcode.svg';
 
 type Story = StoryObj<typeof meta>;
 
@@ -46,8 +48,8 @@ export default meta;
 export const ActiveQrModal: Story = {
   args: {
     isChecked: true,
-    iconPath1: '../icons/QRbackground.svg',
-    iconPath2: '../icons/QRcode.svg',
+    iconPath1: <img src={QRbackground} alt="QRbackground" />,
+    iconPath2: <img src={QRcode} alt="QRcode" />,
     title: '인프콘 2024 - INFCON 2024',
     hostName: '인프런',
     date: '2024-11-23',
@@ -63,8 +65,8 @@ export const ActiveQrModal: Story = {
 export const InActiveQrModal: Story = {
   args: {
     isChecked: false,
-    iconPath1: '../icons/QRbackground.svg',
-    iconPath2: '../icons/QRcode.svg',
+    iconPath1: <img src={QRbackground} alt="QRbackground" />,
+    iconPath2: <img src={QRcode} alt="QRcode" />,
     title: '인프콘 2024 - INFCON 2024',
     hostName: '인프런',
     date: '2024-11-23',
