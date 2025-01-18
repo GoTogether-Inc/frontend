@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { flexRowStart } from '../../styles/flex';
 
 interface CardButtonProps {
-  iconPath: string;
-  hoverIconPath: string;
+  iconPath: React.ReactElement;
+  hoverIconPath?: React.ReactElement;
   label: string;
   onClick: () => void;
   className?: string;
@@ -23,19 +23,17 @@ export default function HorizontalCardButton({
       ${flexRowStart}
       rounded-default font-bold w-full ${className}
       hover:text-main
-      sm:text-xs sm:px-3 sm:h-9
-      md:text-sm md:px-3.5 md:h-10
-      lg:text-base lg:px-4 lg:h-11`}
+      sm:text-sm sm:px-3 sm:h-9
+      md:text-base md:px-4 md:h-11
+      `}
       type="button"
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        className="mr-4 sm:w-4 sm:mr-3 md:w-4.5 md:mr-3.5 lg:w-5 lg:mr-4"
-        src={isHovered ? hoverIconPath : iconPath}
-        alt={label}
-      />
+      <div className="mr-4 sm:w-5 sm:h-5 sm:mr-3 md:w-6 md:h-6 md:mr-4">
+        {isHovered && hoverIconPath ? hoverIconPath : iconPath}
+      </div>
       <p>{label}</p>
     </button>
   );
