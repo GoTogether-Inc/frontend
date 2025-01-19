@@ -13,7 +13,7 @@ interface SearchTermListProps {
 
 const SearchTermList = ({ items, highlightColor, title, time }: SearchTermListProps) => {
   return (
-    <div className="space-y-2 text-sm">
+    <div className="mb-8 space-y-2 text-sm">
       <div className="flex items-center justify-between w-full mb-3">
         <span className="text-sm">{title}</span>
         <span className="text-xs">
