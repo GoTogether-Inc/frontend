@@ -1,7 +1,7 @@
 import React from 'react';
 import Countdown from '../texts/Countdown';
 import IconText from '../texts/IconText';
-import { flexCenter, flexColumn, flexRowSpaceBetweenCenter } from '../../styles/flex';
+import { flexColumnCenter, flexColumn, flexRowSpaceBetweenCenter } from '../../styles/flex';
 import qr_calendar from '../../icons/QrCalendar.svg';
 import qr_location from '../../icons/QrLocation.svg';
 import qr_ticket from '../../icons/QrTicket.svg';
@@ -21,6 +21,7 @@ interface QrModalProps {
   isApproved: boolean; // 티켓 승인 여부
   isCheckIn: boolean; // 참가자 체크인 여부
   isCountdownChecked: boolean;
+  onClick: () => void;
 }
 
 const QrModal = ({
@@ -37,6 +38,7 @@ const QrModal = ({
   isApproved,
   isCheckIn,
   isCountdownChecked,
+  onClick,
 }: QrModalProps) => {
   const formattedPrice = price.toLocaleString();
 
@@ -48,7 +50,7 @@ const QrModal = ({
   });
 
   return (
-    <div className={`${flexCenter} h-screen ${className}`}>
+    <div className={`${flexColumnCenter} h-screen ${className}`}>
       <div>
         {iconPath1 && <div className="w-full">{iconPath1}</div>}
         {iconPath2 && <div className={`ml-[8%] -mt-[176%] ${isChecked ? '' : 'opacity-50'}`}>{iconPath2}</div>}
@@ -79,6 +81,9 @@ const QrModal = ({
           </div>
         </div>
       </div>
+      <span onClick={onClick} className="text-white text-xs mt-3 underline cursor-pointer">
+        닫기
+      </span>
     </div>
   );
 };
