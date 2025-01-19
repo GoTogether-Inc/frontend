@@ -42,7 +42,8 @@ const SearchPage = () => {
         leftButtonLabel="<"
       />
       <div className="px-6">
-        <SearchTermList items={terms} highlightColor="red" title="인기 검색어" time="11.10 15:00" />
+        <SearchTermList items={terms} highlightColor="blue" title="인기 검색어" time="11.10 15:00" />
+        <SearchTermList items={terms} highlightColor="red" title="급상승 검색어" time="11.10 15:00" />
       </div>
     </div>
   );
