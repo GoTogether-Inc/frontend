@@ -9,11 +9,12 @@ interface EventCardProps {
   eventDate: string;
   location: string;
   hashtags: string[];
+  onClick?: () => void;
 }
 
-const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags }: EventCardProps) => {
+const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags, onClick }: EventCardProps) => {
   return (
-    <div className="w-full max-w-sm p-4 overflow-hidden bg-white rounded-lg shadow-md">
+    <div onClick={onClick} className="w-full max-w-sm p-4 overflow-hidden bg-white rounded-lg shadow-md cursor-pointer">
       {/* 이미지 */}
       <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />
 

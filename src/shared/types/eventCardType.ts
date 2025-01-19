@@ -25,7 +25,7 @@ export const trendingEvents = [
   {
     img: secondPage,
     eventTitle: 'Startup Meetup',
-    dDay: 'D-10',
+    dDay: 'D-2',
     host: 'Startup Hub',
     eventDate: '2025-01-27',
     location: 'Busan, Korea',
@@ -43,7 +43,7 @@ export const trendingEvents = [
   {
     img: firstPage,
     eventTitle: 'Developer Festival',
-    dDay: 'D-15',
+    dDay: 'D-7',
     host: 'Dev Korea',
     eventDate: '2025-02-01',
     location: 'Incheon, Korea',
