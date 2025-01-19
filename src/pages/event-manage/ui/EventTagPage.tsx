@@ -1,4 +1,4 @@
-import SuccessIcon from '../../../../public/assets/SuccessBox.svg';
+import SuccessIcon from '../../../../public/assets/event-manage/SuccessBox.svg';
 import EventCategory from '../../../features/event-manage/ui/EventCategory';
 import EventTag from '../../../features/event-manage/ui/EventTag';
 
