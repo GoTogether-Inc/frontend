@@ -138,7 +138,7 @@ const MainPage = () => {
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
-  const navigate = useNavigate(); // 페이지 이동을 위한 훅
+  const navigate = useNavigate();
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
@@ -154,10 +154,21 @@ const MainPage = () => {
     navigate('/all-events');
   };
 
+  const handleSearchButtonClick = () => {
+    navigate('/search');
+  };
+
   return (
     <div className="flex flex-col items-center mb-28">
       <Header
-        centerContent={<SearchTextField icon={searchIcon} onChange={() => {}} placeholder="입력해주세요" />}
+        centerContent={
+          <SearchTextField
+            icon={searchIcon}
+            onClick={handleSearchButtonClick}
+            onChange={() => {}}
+            placeholder="입력해주세요"
+          />
+        }
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
