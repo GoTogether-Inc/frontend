@@ -1,8 +1,8 @@
-import MenuIcon from '/assets/MenuIcon.svg';
-import EventIcon from '/assets/EventIcon.svg';
-import HomeIcon from '/assets/HomeIcon.svg';
-import InterestIcon from '/assets/InterestIcon.svg';
-import MypageIcon from '/assets/MypageIcon.svg';
+import MenuIcon from '../../../../public/assets/bottomBar/MenuIcon.svg';
+import EventIcon from '../../../../public/assets/bottomBar/EventIcon.svg';
+import HomeIcon from '../../../../public/assets/bottomBar/HomeIcon.svg';
+import InterestIcon from '../../../../public/assets/bottomBar/InterestIcon.svg';
+import MypageIcon from '../../../../public/assets/bottomBar/MypageIcon.svg';
 
 const BottomBar = () => {
   return (
