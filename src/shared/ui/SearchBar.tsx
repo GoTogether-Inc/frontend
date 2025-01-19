@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchIcon from '/assets/Search.svg';
+import SearchIcon from '../../../design-system/icons/Search.svg';
 
 interface SearchBarProps {
   className: string;
