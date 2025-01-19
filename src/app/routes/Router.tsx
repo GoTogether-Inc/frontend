@@ -6,6 +6,7 @@ import InfoInputPage from '../../pages/join/InfoInputPage';
 import MainPage from '../../pages/home/ui/MainPage';
 import FunnelPage from '../../pages/event-manage/ui/FunnelPage';
 import AllEventsPage from '../../pages/all-events/ui/AllEventsPage';
+import SearchPage from '../../pages/search/ui/SearchPage';
 
 const routesConfig = [
   {
@@ -31,6 +32,11 @@ const routesConfig = [
   {
     path: MAIN_ROUTES.allEvents,
     element: <AllEventsPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MAIN_ROUTES.search,
+    element: <SearchPage />,
     requiresAuth: false,
   },
 ];

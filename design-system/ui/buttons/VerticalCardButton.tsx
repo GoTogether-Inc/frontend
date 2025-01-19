@@ -49,7 +49,11 @@ export default function VerticalCardButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img className={`${sizeClasses[size].image}`} src={isHovered ? hoverIconPath : iconPath} alt={label} />
+      <img
+        className={`${sizeClasses[size].image}`}
+        src={hoverIconPath && isHovered ? hoverIconPath : iconPath}
+        alt={label}
+      />
       <p>{label}</p>
     </button>
   );
