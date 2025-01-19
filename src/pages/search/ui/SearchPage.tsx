@@ -32,6 +32,12 @@ const SearchPage = () => {
         leftButtonClick={handlePreviousButton}
         leftButtonLabel="<"
       />
+      <div className="flex justify-between w-full px-6">
+        <span>인기 검색어</span>
+        <span>
+          <span>11.10 15:00</span>, 기준
+        </span>
+      </div>
     </div>
   );
 };
