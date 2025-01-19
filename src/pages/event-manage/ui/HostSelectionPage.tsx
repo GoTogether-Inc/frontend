@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AddButton from '../../../../public/assets/AddBtn.svg';
+import AddButton from '../../../../public/assets/event-manage/AddBtn.svg';
 import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
 
 interface HostSelectionPageProps {

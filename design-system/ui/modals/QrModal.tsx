@@ -2,10 +2,10 @@ import React from 'react';
 import Countdown from '../texts/Countdown';
 import IconText from '../texts/IconText';
 import { flexCenter, flexColumn, flexRowSpaceBetweenCenter } from '../../styles/flex';
-import qr_calendar from '../../icons/qr_calendar.svg';
-import qr_location from '../../icons/qr_location.svg';
-import qr_ticket from '../../icons/qr_ticket.svg';
-import qr_check from '../../icons/qr_check.svg';
+import qr_calendar from '../../icons/QrCalendar.svg';
+import qr_location from '../../icons/QrLocation.svg';
+import qr_ticket from '../../icons/QrTicket.svg';
+import qr_check from '../../icons/QrCheck.svg';
 
 interface QrModalProps {
   isChecked: boolean; // QR 상태

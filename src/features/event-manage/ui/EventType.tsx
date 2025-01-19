@@ -1,5 +1,5 @@
-import OnlineIcon from '../../../../public/assets/OnlineIcon.svg';
-import OfflineIcon from '../../../../public/assets/OfflineIcon.svg';
+import OnlineIcon from '../../../../public/assets/event-manage/OnlineIcon.svg';
+import OfflineIcon from '../../../../public/assets/event-manage/OfflineIcon.svg';
 import SearchBar from '../../../shared/ui/SearchBar';
 import { useFunnelState } from '../model/FunnelContext';
 

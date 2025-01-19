@@ -2,7 +2,7 @@ import { flexColumn } from '../../../../design-system/styles/flex';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
 import { useNavigate } from 'react-router-dom';
 
-import searchIcon from '../../../../design-system/icons/search.png';
+import searchIcon from '../../../../design-system/icons/search.svg';
 import Header from '../../../../design-system/ui/Header';
 import { buttonData } from '../../../shared/types/menuType';
 

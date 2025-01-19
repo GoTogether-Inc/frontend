@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CategoryButton from '../../../../public/assets/BackBtn(black).svg';
+import CategoryButton from '../../../../public/assets/event-manage/BackBtn(black).svg';
 import { useFunnelState } from '../model/FunnelContext';
 
 interface Category {

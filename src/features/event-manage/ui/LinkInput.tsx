@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import AddButton from '../../../../public/assets/AddBtn.svg';
-import CloseButton from '../../../../public/assets/CloseBtn.svg';
-import Link from '../../../../public/assets/Link.svg';
+import AddButton from '../../../../public/assets/event-manage/AddBtn.svg';
+import CloseButton from '../../../../public/assets/event-manage/CloseBtn.svg';
+import Link from '../../../../public/assets/event-manage/Link.svg';
 import { useFunnelState } from '../model/FunnelContext';
 
 const LinkInput = () => {

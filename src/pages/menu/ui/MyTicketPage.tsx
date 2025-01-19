@@ -1,5 +1,5 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
-import Ticket from '../../../../public/assets/Tickets.svg';
+import Ticket from '../../../../public/assets/menu/Ticket.svg';
 import { useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
