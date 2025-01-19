@@ -1,5 +1,5 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
-import Ticket from '../../../../public/assets/menu/Ticket.svg';
+import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
 import { useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
@@ -15,7 +15,7 @@ const MyTicketPage = () => {
   };
   return (
     <div className="relative h-screen">
-      <TicketHostLayout image={Ticket}>
+      <TicketHostLayout image={TicketLogo}>
         <div onClick={handleEventCardClick} className="mb-96">
           이벤트카드
         </div>
