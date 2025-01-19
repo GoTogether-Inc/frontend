@@ -9,10 +9,10 @@ interface SearchTermProps {
 const SearchTerm: React.FC<SearchTermProps> = ({ number, text, color }) => {
   return (
     <div className="flex items-center space-x-2">
-      <span className="text-md" style={{ color }}>
+      <span className="sm:text-xs md:text-sm lg:text-base" style={{ color }}>
         {number}
       </span>
-      <span className="text-sm">{text}</span>
+      <span className="sm:text-xs md:text-sm lg:text-sm">{text}</span>
     </div>
   );
 };
