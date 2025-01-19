@@ -26,17 +26,15 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header
-      className={`relative flex items-center justify-between w-full h-16 px-6 gap-6 ${className} ${
+      className={`relative flex items-center justify-between w-full h-16 px-6 ${className} ${
         color === 'white' ? 'text-white' : 'text-black'
       }`}
     >
       {/* 왼쪽 콘텐츠 */}
       <div className="flex items-center space-x-2">
         {leftButtonLabel ? (
-          <TextButton label={leftButtonLabel} onClick={leftButtonClick} className={leftButtonClassName} />
-        ) : (
-          <div className="w-4" />
-        )}
+          <TextButton label={leftButtonLabel} onClick={leftButtonClick} className={`${leftButtonClassName} mr-6`} />
+        ) : null}
       </div>
 
       {/* 가운데 콘텐츠 */}
@@ -49,7 +47,7 @@ const Header = ({
       )}
 
       {/* 오른쪽 콘텐츠 */}
-      <div className="flex items-center space-x-2">{rightContent || <div className="w-4" />}</div>
+      {rightContent ? <div className="flex items-center ml-6 space-x-2">{rightContent}</div> : null}
     </header>
   );
 };
