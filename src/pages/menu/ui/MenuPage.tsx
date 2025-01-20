@@ -10,7 +10,7 @@ const handleIconClick = (navigate: (path: string) => void, path: string) => {
   navigate(path);
 };
 
-const Menu = () => {
+const MenuPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -41,4 +41,4 @@ const Menu = () => {
     </>
   );
 };
-export default Menu;
+export default MenuPage;
