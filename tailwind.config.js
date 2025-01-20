@@ -55,5 +55,5 @@ export default {
       lg: '512px', // 큰 화면
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };
