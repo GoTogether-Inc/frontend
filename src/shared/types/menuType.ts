@@ -9,14 +9,14 @@ import SelectedHost from '../../../public/assets/menu/SelectedHost.svg';
 import SelectedLogout from '../../../public/assets/menu/SelectedLogout.svg';
 import SelectedSetting from '../../../public/assets/menu/SelectedSetting.svg';
 
-export interface ButtonData {
+export interface buttonData {
   iconPath: string; // 아이콘 경로
   hoverIconPath: string; // 호버 아이콘 경로
   label: string; // 버튼 텍스트
   path: string; // 경로
 }
 
-export const buttonData: ButtonData[] = [
+export const buttonData: buttonData[] = [
   { iconPath: Ticket, hoverIconPath: SelectedTicket, label: '구입한 티켓', path: '/menu/myTicket' },
   { iconPath: Host, hoverIconPath: SelectedHost, label: '내 호스트', path: 'menu/myHost' },
   { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation' },

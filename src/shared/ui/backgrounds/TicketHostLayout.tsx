@@ -7,11 +7,20 @@ interface TicketHostLayoutProps {
 }
 
 const TicketHostLayout = ({ image, children, centerContent }: TicketHostLayoutProps) => {
+  const handleBackClick = () => {
+    window.history.back();
+  };
   return (
     <div className="relative">
-      <div className="relative top-0 h-32 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px]">
+      <div className="relative top-0 h-32 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
         {/* 헤더 */}
-        <Header leftButtonLabel="<" leftButtonClassName="text-xl" centerContent={centerContent} color="white" />
+        <Header
+          leftButtonLabel="<"
+          leftButtonClassName="text-xl z-30"
+          leftButtonClick={handleBackClick}
+          centerContent={centerContent}
+          color="white"
+        />
 
         {/* 레이아웃 내용 */}
         <>
@@ -19,7 +28,7 @@ const TicketHostLayout = ({ image, children, centerContent }: TicketHostLayoutPr
             <img
               src={image}
               alt="image"
-              className="w-20 h-20 md:w-24 md:h-24 object-cover absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="w-16 h-16 md:w-20 md:h-20 object-cover absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
             />
           </div>
 

@@ -8,7 +8,10 @@ interface TextButtonProps {
 
 const TextButton = ({ label, onClick, className }: TextButtonProps) => {
   return (
-    <button className={`text-base font-semibold transition hover:underline ${className}`} onClick={onClick}>
+    <button
+      className={`text-base font-semibold transition hover:underline cursor-pointer ${className}`}
+      onClick={onClick}
+    >
       {label}
     </button>
   );
