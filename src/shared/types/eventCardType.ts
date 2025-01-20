@@ -3,6 +3,7 @@ import secondPage from '../../../public/assets/banners/2.png';
 import thirdPage from '../../../public/assets/banners/3.png';
 
 export interface trendingEventsData {
+  id: number;
   img: string;
   eventTitle: string;
   dDay: string;
@@ -14,6 +15,7 @@ export interface trendingEventsData {
 
 export const trendingEvents = [
   {
+    id: 1,
     img: firstPage,
     eventTitle: 'Tech Conference 2025',
     dDay: 'D-3',
@@ -23,6 +25,7 @@ export const trendingEvents = [
     hashtags: ['#Tech', '#Innovation', '#Conference'],
   },
   {
+    id: 1,
     img: secondPage,
     eventTitle: 'Startup Meetup',
     dDay: 'D-2',
@@ -32,6 +35,7 @@ export const trendingEvents = [
     hashtags: ['#Startup', '#Networking', '#Innovation'],
   },
   {
+    id: 2,
     img: thirdPage,
     eventTitle: 'AI Summit 2025',
     dDay: 'D-5',
@@ -41,7 +45,28 @@ export const trendingEvents = [
     hashtags: ['#AI', '#MachineLearning', '#Tech'],
   },
   {
+    id: 2,
     img: firstPage,
+    eventTitle: 'Developer Festival',
+    dDay: 'D-7',
+    host: 'Dev Korea',
+    eventDate: '2025-02-01',
+    location: 'Incheon, Korea',
+    hashtags: ['#Developer', '#Coding', '#Festival'],
+  },
+  {
+    id: 3,
+    img: secondPage,
+    eventTitle: 'Developer Festival',
+    dDay: 'D-7',
+    host: 'Dev Korea',
+    eventDate: '2025-02-01',
+    location: 'Incheon, Korea',
+    hashtags: ['#Developer', '#Coding', '#Festival'],
+  },
+  {
+    id: 4,
+    img: thirdPage,
     eventTitle: 'Developer Festival',
     dDay: 'D-7',
     host: 'Dev Korea',
