@@ -4,9 +4,10 @@ interface TicketHostLayoutProps {
   image: string;
   children: React.ReactNode;
   centerContent: string;
+  showText?: boolean;
 }
 
-const TicketHostLayout = ({ image, children, centerContent }: TicketHostLayoutProps) => {
+const TicketHostLayout = ({ image, children, centerContent, showText = false }: TicketHostLayoutProps) => {
   const handleBackClick = () => {
     window.history.back();
   };
@@ -32,9 +33,11 @@ const TicketHostLayout = ({ image, children, centerContent }: TicketHostLayoutPr
             />
           </div>
 
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-sm whitespace-nowrap">
-            티켓을 누르면 입장을 위한 QR코드를 확인할 수 있습니다.
-          </div>
+          {showText && (
+            <div className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-sm whitespace-nowrap">
+              티켓을 누르면 입장을 위한 QR코드를 확인할 수 있습니다.
+            </div>
+          )}
         </>
       </div>
       {children}

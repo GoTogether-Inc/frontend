@@ -10,6 +10,7 @@ import MyTicketPage from '../../pages/menu/ui/MyTicketPage';
 import SearchPage from '../../pages/search/ui/SearchPage';
 import Menu from '../../pages/menu/ui/Menu';
 import SearchPage from '../../pages/search/ui/SearchPage';
+import MyHostPage from '../../pages/menu/ui/MyHostPage';
 
 const routesConfig = [
   {
@@ -45,6 +46,11 @@ const routesConfig = [
   {
     path: MENU_ROUTES.myTicket,
     element: <MyTicketPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MENU_ROUTES.myHost,
+    element: <MyHostPage />,
     requiresAuth: false,
   },
   {
