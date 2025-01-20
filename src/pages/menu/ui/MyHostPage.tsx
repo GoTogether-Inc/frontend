@@ -13,6 +13,8 @@ const MyHostPage = () => {
     { id: 2, name: '백유진' },
     { id: 3, name: '조히은' },
     { id: 4, name: '민정준' },
+    { id: 5, name: '백유진' },
+    { id: 6, name: '민정준' },
   ];
 
   const handleProfileClick = (hostId: number) => {
@@ -23,7 +25,7 @@ const MyHostPage = () => {
 
   return (
     <TicketHostLayout image={HostLogo} centerContent="내 호스트">
-      <div className="flex space-x-5 mt-24 mx-5">
+      <div className="flex space-x-5 mt-24 mx-5 overflow-x-auto scrollbar-hide">
         {hosts.map(profile => (
           <ProfileCircle
             key={profile.id}
