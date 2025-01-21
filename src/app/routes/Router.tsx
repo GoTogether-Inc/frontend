@@ -11,6 +11,7 @@ import SearchPage from '../../pages/search/ui/SearchPage';
 import Menu from '../../pages/menu/ui/Menu';
 import SearchPage from '../../pages/search/ui/SearchPage';
 import MyHostPage from '../../pages/menu/ui/MyHostPage';
+import HostDetailPage from '../../pages/menu/ui/HostDetailPage';
 
 const routesConfig = [
   {
@@ -51,6 +52,11 @@ const routesConfig = [
   {
     path: MENU_ROUTES.myHost,
     element: <MyHostPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MENU_ROUTES.hostDetail,
+    element: <HostDetailPage />,
     requiresAuth: false,
   },
   {
