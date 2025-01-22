@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
-import EventFunnel from '../../../features/event-manage/ui/evnetCreation/EventFunnel';
+import EventFunnel from '../../../features/event-manage/ui/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FunnelProvider } from '../../../features/event-manage/model/FunnelContext';
 
