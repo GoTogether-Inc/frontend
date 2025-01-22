@@ -10,6 +10,10 @@ export default {
   darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     extend: {
+      spacing: {
+        13: '3.25rem',
+        15: '3.75rem',
+      },
       width: {
         90: '22.5rem',
       },
@@ -29,6 +33,9 @@ export default {
       },
       fontSize: {
         10: '10px',
+        12: '12px',
+        13: '13px',
+        16: '16px',
       },
       colors: {
         main: '#FF5593', // 메인컬러

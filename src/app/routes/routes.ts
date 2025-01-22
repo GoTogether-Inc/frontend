@@ -22,4 +22,5 @@ export const MENU_ROUTES = {
   myTicket: `${MAIN_ROUTES.menu}/myTicket`,
   myHost: `${MAIN_ROUTES.menu}/myHost`,
   hostDetail: `${MAIN_ROUTES.menu}/hostDetail/:id`,
+  hostEdit: `${MAIN_ROUTES.menu}/hostEdit/:id`,
 };
