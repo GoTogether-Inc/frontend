@@ -1,15 +1,15 @@
-import HostSelectionPage from '../../../../pages/event-manage/ui/HostSelectionPage';
-import HostCreationPage from '../../../../pages/event-manage/ui/HostCreationPage';
-import EventTitlePage from '../../../../pages/event-manage/ui/EventTitlePage';
-import EventPeriodPage from '../../../../pages/event-manage/ui/EventPeriodPage';
-import EventInfoPage from '../../../../pages/event-manage/ui/EventInfoPage';
-import EventTypePage from '../../../../pages/event-manage/ui/EventTypePage';
-import EventTagPage from '../../../../pages/event-manage/ui/EventTagPage';
-import EventOrganizerInfoPage from '../../../../pages/event-manage/ui/EventOrganizerInfoPage';
-import EventRegisterLayout from '../../../../shared/ui/backgrounds/EventRegisterLayout';
+import HostSelectionPage from '../../../pages/event-manage/ui/HostSelectionPage';
+import HostCreationPage from '../../../pages/event-manage/ui/HostCreationPage';
+import EventTitlePage from '../../../pages/event-manage/ui/EventTitlePage';
+import EventPeriodPage from '../../../pages/event-manage/ui/EventPeriodPage';
+import EventInfoPage from '../../../pages/event-manage/ui/EventInfoPage';
+import EventTypePage from '../../../pages/event-manage/ui/EventTypePage';
+import EventTagPage from '../../../pages/event-manage/ui/EventTagPage';
+import EventOrganizerInfoPage from '../../../pages/event-manage/ui/EventOrganizerInfoPage';
+import EventRegisterLayout from '../../../shared/ui/backgrounds/EventRegisterLayout';
 import { useNavigate } from 'react-router-dom';
-import { EventFunnelInterface, StepNames } from '../../../../shared/types/funnelType';
-import { useFunnelState } from '../../model/FunnelContext';
+import { EventFunnelInterface, StepNames } from '../../../shared/types/funnelType';
+import { useFunnelState } from '../model/FunnelContext';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const { formState } = useFunnelState();
