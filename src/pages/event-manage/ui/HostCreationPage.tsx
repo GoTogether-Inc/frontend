@@ -29,6 +29,7 @@ const HostCreationPage = () => {
         value={formState.hostChannelName}
         onChange={handleChange('hostChannelName')}
         className="h-12"
+        labelClassName="sm:text-base md:text-lg"
       />
       <DefaultTextField
         label="대표 이메일"
@@ -37,6 +38,7 @@ const HostCreationPage = () => {
         value={formState.hostEmail}
         onChange={handleChange('hostEmail')}
         className="h-12"
+        labelClassName="sm:text-base md:text-lg"
       />
       <MultilineTextField
         label="채널에 대한 설명"

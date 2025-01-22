@@ -11,17 +11,30 @@ interface DefaultTextFieldProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  className: string;
+  className?: string;
+  labelClassName?: string;
 }
 
 const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
   (
-    { label, detail, value, leftText, rightContent, onChange, onKeyDown, placeholder = '', className = '', ...rest },
+    {
+      label,
+      detail,
+      value,
+      leftText,
+      rightContent,
+      onChange,
+      onKeyDown,
+      placeholder = '',
+      className = '',
+      labelClassName = '',
+      ...rest
+    },
     ref
   ) => {
     return (
       <div>
-        <label className="block px-1 font-semibold text-gray-700 sm:text-base md:text-lg lg:text-lg">{label}</label>
+        <label className={`block px-1 font-semibold text-gray-700 ${labelClassName}`}>{label}</label>
         <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-10 md:text-13">{detail}</label>
         <div className={`flex items-center justify-center ${className}`}>
           {leftText && <div className="w-20 text-base font-bold whitespace-nowrap">{leftText}</div>}
