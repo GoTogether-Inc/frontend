@@ -99,6 +99,7 @@ const HostEditPage = () => {
               detail="채널 혹은, 채널에서 주최하는 이벤트에 대해 문의 할 수 있는 메일로 작성해주세요."
               placeholder="example@example.com"
               className="h-12"
+              labelClassName="sm:text-base md:text-lg"
             />
             <div className="flex flex-col gap-2">
               <MultilineTextField
