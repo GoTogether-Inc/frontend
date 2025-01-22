@@ -4,6 +4,7 @@ import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTex
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { useForm } from 'react-hook-form';
 import { validations } from '../../../shared/lib/validation';
+import BottomBar from '../../../widgets/main/ui/BottomBar';
 
 const MyPage = () => {
   const userData = { email: 'aaa@naver.com', name: '고예진', phone: '01012345678' };
@@ -40,12 +41,12 @@ const MyPage = () => {
   return (
     <div>
       <Header leftButtonLabel="마이페이지" leftButtonClassName="font-bold text-2xl" />
-      <div className="flex flex-col px-5 mt-10 gap-6">
+      <div className="flex flex-col px-5 mt-8 md:mt-10 gap-6">
         <div className="flex flex-col gap-3">
           <h1 className="text-xl font-bold">기본 정보</h1>
           <div className="flex flex-col">
-            <span className="text-base font-normal">이메일</span>
-            <span className="text-base font-light">{userData.email}</span>
+            <span className="text-sm md:text-base font-normal">이메일</span>
+            <span className="text-sm md:text-base font-light">{userData.email}</span>
           </div>
         </div>
         <form onSubmit={handleSubmit(handleSave)} className="flex flex-col gap-2">
@@ -55,20 +56,20 @@ const MyPage = () => {
                 label="이름"
                 placeholder={userData.name}
                 className=" h-8"
-                labelClassName="text-base font-normal"
+                labelClassName="text-sm md:text-base font-normal"
                 {...register('name', validations.name)}
               />
-              {errors.name && <span className=" text-sm text-red-500">{errors.name.message}</span>}
+              {errors.name && <span className=" text-sm text-red-500 whitespace-nowrap">{errors.name.message}</span>}
             </div>
             <div className="flex flex-col gap-2">
               <DefaultTextField
                 label="전화번호"
                 placeholder={userData.phone}
                 className="h-8"
-                labelClassName="text-base font-normal"
+                labelClassName="text-sm md:text-base font-normal"
                 {...register('phone', validations.phone)}
               />
-              {errors.phone && <span className="text-sm text-red-500">{errors.phone.message}</span>}
+              {errors.phone && <span className="text-sm text-red-500 whitespace-nowrap">{errors.phone.message}</span>}
             </div>
           </div>
           {isChanged && <span className="text-red-500 text-sm">{isChanged}</span>}
@@ -76,9 +77,9 @@ const MyPage = () => {
         </form>
       </div>
 
-      <div className="flex flex-col px-5 mt-16 gap-6">
+      <div className="flex flex-col px-5 mt-12 md:mt-16 gap-6">
         <h1 className="text-xl font-bold">등록된 카드</h1>
-        <div className="flex w-full h-40">
+        <div className="flex w-full h-32 md:h-40">
           <div className="flex w-full gap-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory">
             {cardData.length === 1 ? (
               <div
@@ -102,6 +103,7 @@ const MyPage = () => {
           </div>
         </div>
       </div>
+      <BottomBar />
     </div>
   );
 };
