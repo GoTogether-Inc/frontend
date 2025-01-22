@@ -13,6 +13,7 @@ import SearchPage from '../../pages/search/ui/SearchPage';
 import MyHostPage from '../../pages/menu/ui/MyHostPage';
 import HostDetailPage from '../../pages/menu/ui/HostDetailPage';
 import HostEditPage from '../../pages/menu/ui/HostEditPage';
+import MyPage from '../../pages/menu/ui/MyPage';
 
 const routesConfig = [
   {
@@ -63,6 +64,11 @@ const routesConfig = [
   {
     path: MENU_ROUTES.hostEdit,
     element: <HostEditPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MENU_ROUTES.myPage,
+    element: <MyPage />,
     requiresAuth: false,
   },
   {
