@@ -12,6 +12,7 @@ import Menu from '../../pages/menu/ui/Menu';
 import SearchPage from '../../pages/search/ui/SearchPage';
 import MyHostPage from '../../pages/menu/ui/MyHostPage';
 import HostDetailPage from '../../pages/menu/ui/HostDetailPage';
+import HostEditPage from '../../pages/menu/ui/HostEditPage';
 
 const routesConfig = [
   {
@@ -57,6 +58,11 @@ const routesConfig = [
   {
     path: MENU_ROUTES.hostDetail,
     element: <HostDetailPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MENU_ROUTES.hostEdit,
+    element: <HostEditPage />,
     requiresAuth: false,
   },
   {

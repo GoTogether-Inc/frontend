@@ -16,7 +16,7 @@ const MultilineTextField = forwardRef<HTMLTextAreaElement, MultilineTextFieldPro
     return (
       <div className={`${className}`}>
         <label className="block px-1 font-semibold text-gray-700 sm:text-base md:text-lg lg:text-lg">{label}</label>
-        <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-10 md:text-xs lg:text-sm">
+        <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-10 md:text-13 lg:text-13">
           {detail}
         </label>
         <textarea

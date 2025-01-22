@@ -19,7 +19,7 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
 
   return (
     <div className="bg-white relative">
-      <div className="relative top-0 h-48 md:h-56 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)]">
+      <div className="top-0 h-48 md:h-56 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)]">
         {/* 헤더 영역 */}
         <Header
           leftButtonLabel="<"
@@ -38,7 +38,7 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
         </div>
       </div>
       {/* 레이아웃 내용 */}
-      <div className="absolute top-[calc(100%-2vh)] w-full bg-white rounded-[20px]">{children}</div>
+      <div className="absolute top-[calc(100%-2vh)] w-full bg-white rounded-t-[20px]">{children}</div>
     </div>
   );
 };
