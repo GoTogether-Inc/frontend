@@ -35,6 +35,7 @@ export default meta;
 export const Default: Story = {
   args: {
     label: 'Default Button',
+    type: 'button',
     color: 'pink',
   },
 };
@@ -42,6 +43,7 @@ export const Default: Story = {
 export const Pink: Story = {
   args: {
     label: '전송하기',
+    type: 'button',
     color: 'pink',
   },
 };
@@ -49,6 +51,7 @@ export const Pink: Story = {
 export const Black: Story = {
   args: {
     label: '로그인',
+    type: 'button',
     color: 'black',
   },
 };
