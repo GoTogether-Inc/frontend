@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import HorizontalCardButton from '../../ui/buttons/HorizontalCardButton';
-import Calendar from '../../icons/menu-event.svg';
-import SelectedCalendar from '../../icons/selected-event.svg';
+import Calendar from '../../icons/Event.svg';
+import SelectedCalendar from '../../icons/SelectedEvent.svg';
 
 type Story = StoryObj<typeof meta>;
 
