@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-type Profile = 'userProfile' | 'HostProfile';
+type Profile = 'userProfile' | 'hostProfile';
 
 interface ProfileProps {
   id?: number;
@@ -25,7 +25,7 @@ const ProfileCircle = ({ id, name, profile = 'userProfile', className = '', onCl
         }
       }}
       className={`${
-        profile === 'HostProfile' ? 'flex flex-col items-center hover:text-main' : 'flex items-center justify-center'
+        profile === 'hostProfile' ? 'flex flex-col items-center hover:text-main' : 'flex items-center justify-center'
       }`}
     >
       <div className="flex items-center">
@@ -34,7 +34,7 @@ const ProfileCircle = ({ id, name, profile = 'userProfile', className = '', onCl
         </div>
         {children && <span className="ml-2 text-black">{children}</span>}
       </div>
-      {profile === 'HostProfile' && name && (
+      {profile === 'hostProfile' && name && (
         <span className="mt-2 text-sm text-center">
           <Link to={`/menu/hostDetail/${id}`}>{name} &gt;</Link>
         </span>

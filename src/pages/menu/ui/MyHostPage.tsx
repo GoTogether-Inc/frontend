@@ -23,7 +23,7 @@ const MyHostPage = () => {
             key={profile.id}
             id={profile.id}
             name={profile.name}
-            profile="HostProfile"
+            profile="hostProfile"
             onClick={() => handleProfileClick(profile.id)}
             className="md:w-20 md:h-20 w-16 h-16 hover:border hover:border-main"
           />
