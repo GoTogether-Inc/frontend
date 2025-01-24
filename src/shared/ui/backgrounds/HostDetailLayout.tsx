@@ -29,7 +29,7 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
           color="white"
         />
         <div className="flex justify-center items-center px-6 md:px-10">
-          <ProfileCircle profile="HostProfile" className="md:w-28 md:h-28 w-24 h-24" />
+          <ProfileCircle profile="hostProfile" className="md:w-28 md:h-28 w-24 h-24" />
 
           <div className="flex flex-col gap-1 md:gap-3 ml-5 text-white">
             <p className="text-lg md:text-xl font-bold">{host?.name}</p>
