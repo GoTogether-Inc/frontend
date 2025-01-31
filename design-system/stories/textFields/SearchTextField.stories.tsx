@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SearchTextField from '../../ui/textFields/SearchTextField';
-import Search from '../../icons/Search.svg';
+import Search from '../icons/Search.svg';
 
 const meta = {
   title: 'TextFields/SearchTextField',
