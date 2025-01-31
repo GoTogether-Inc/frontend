@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChangeEvent, forwardRef } from 'react';
 
 interface UnderlineTextFieldProps {

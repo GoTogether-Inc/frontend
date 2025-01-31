@@ -1,4 +1,3 @@
-import React from 'react';
 import Countdown from '../../../design-system/ui/texts/Countdown';
 
 interface EventCardProps {

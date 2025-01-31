@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface TertiaryButtonProps {
   label: string;
   type: 'button' | 'submit';
