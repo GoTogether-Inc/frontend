@@ -4,7 +4,6 @@ export const MAIN_ROUTES = {
   allEvents: '/all-events',
   search: '/search',
   menu: `/menu`,
-  search: '/search',
 };
 
 export const AUTH_ROUTES = {
