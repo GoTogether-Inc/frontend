@@ -163,7 +163,7 @@ const MainPage = () => {
       <Header
         centerContent={
           <SearchTextField
-            iconPath={searchIcon}
+            iconPath={<img src={searchIcon} alt="Search" />}
             onClick={handleSearchButtonClick}
             onChange={() => {}}
             placeholder="입력해주세요"
@@ -181,7 +181,7 @@ const MainPage = () => {
           {cardButtons.map((button, index) => (
             <VerticalCardButton
               key={index}
-              iconPath={button.iconPath}
+              iconPath={<img src={button.iconPath} alt="메인 아이콘" />}
               label={button.label}
               size="lg"
               onClick={button.onClick}
