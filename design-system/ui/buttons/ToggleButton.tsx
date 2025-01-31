@@ -17,7 +17,7 @@ const ToggleButton = ({ isChecked, onChange, className = '' }: ToggleButtonProps
       {/* 토글 버튼 내부 원 */}
       <div
         className={`absolute lg:w-4 lg:h-4 md:w-3.5 md:h-3.5 sm:w-2.5 sm:h-2.5 bg-white rounded-full transition-transform ${
-          isChecked ? 'translate-x-6' : 'translate-x-0'
+          isChecked ? 'translate-x-8' : 'translate-x-0'
         }`}
       />
     </div>
