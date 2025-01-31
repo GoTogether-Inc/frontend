@@ -107,7 +107,7 @@ const HostEditPage = () => {
                 placeholder="채널에 대한 설명을 작성해주세요."
                 className="h-24 mb-8"
               />
-              <TertiaryButton label="저장하기" color="pink" />
+              <TertiaryButton type="button" label="저장하기" color="pink" />
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex flex-col">
@@ -117,7 +117,7 @@ const HostEditPage = () => {
                 </p>
               </div>
               <MemberEmailInput />
-              <TertiaryButton label="전송" color="pink" onClick={handleAddClick} className="mb-4" />
+              <TertiaryButton type="button" label="전송" color="pink" onClick={handleAddClick} className="mb-4" />
             </div>
           </div>
         )}
