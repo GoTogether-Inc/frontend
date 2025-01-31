@@ -10,7 +10,7 @@ const FunnelPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onNextClick = (targetStep?: number) => {
+  const onNextClick = (targetStep: number) => {
     const nextStep = targetStep !== undefined ? targetStep : currentStep + 1;
     if (nextStep < steps.length) {
       setPreviousStep([...previousStep, currentStep]);
@@ -41,7 +41,7 @@ const FunnelPage = () => {
   return (
     <FunnelProvider>
       <EventFunnel
-        onNext={nextStep => onNextClick(Number(nextStep))}
+        onNext={(nextStep: string) => onNextClick(Number(nextStep))}
         onPrev={onPrevClick}
         Funnel={Funnel}
         Step={Step}
