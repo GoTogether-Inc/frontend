@@ -31,7 +31,7 @@ const MyHostPage = () => {
       </div>
 
       {/* 이벤트 카드 목록 */}
-      <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2 pb-6">
         {filteredEvents.map((event, index) => (
           <EventCard
             key={index}
