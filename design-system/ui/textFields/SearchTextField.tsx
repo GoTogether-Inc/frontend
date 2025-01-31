@@ -3,7 +3,7 @@ import { flexCenter } from '../../styles/flex';
 
 interface SearchTextFieldProps {
   value?: string;
-  iconPath: React.ReactElement;
+  iconPath?: React.ReactElement;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   placeholder?: string;
