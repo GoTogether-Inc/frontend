@@ -1,4 +1,3 @@
-import React from 'react';
 import SearchTerm from './SearchTerm';
 
 interface SearchTermListProps {

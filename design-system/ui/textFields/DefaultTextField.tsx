@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ChangeEvent, forwardRef, ReactElement, KeyboardEvent } from 'react';
+import { ButtonHTMLAttributes, ChangeEvent, forwardRef, ReactElement, KeyboardEvent } from 'react';
 
 type Button = ReactElement<ButtonHTMLAttributes<HTMLButtonElement>>;
 

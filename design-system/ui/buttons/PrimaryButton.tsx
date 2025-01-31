@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface PrimaryButtonProps {
   label: string; // 버튼 텍스트
   onClick: () => void; // 클릭 핸들러

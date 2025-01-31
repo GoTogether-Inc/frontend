@@ -1,6 +1,3 @@
-// shared/ui/Checkbox.tsx
-import React from 'react';
-
 interface CheckboxProps {
   label: string; // 체크박스 옆에 표시할 텍스트
   checked: boolean; // 체크 여부

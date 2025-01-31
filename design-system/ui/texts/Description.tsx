@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface DescriptionProps {
   children: string;
   textColor?: string;
