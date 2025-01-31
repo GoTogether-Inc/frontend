@@ -61,20 +61,35 @@ const QrModal = ({
           </div>
           <h2 className="text-deDayTextDark text-xs font-medium mb-1">{hostName}</h2>
           <div className="space-y-1 text-deDayTextDark">
-            <IconText size="xSmall" iconPath={qr_calendar} children={formattedDate} className="text-10"></IconText>
-            <IconText size="xSmall" iconPath={qr_location} children={location} className="text-10"></IconText>
-            <IconText size="xSmall" iconPath={qr_ticket} children={ticketName} className="text-10"></IconText>
+            <IconText
+              size="xSmall"
+              iconPath={<img src={qr_calendar} alt="qr_calendar" />}
+              children={formattedDate}
+              className="text-10"
+            ></IconText>
+            <IconText
+              size="xSmall"
+              iconPath={<img src={qr_location} alt="qr_location" />}
+              children={location}
+              className="text-10"
+            ></IconText>
+            <IconText
+              size="xSmall"
+              iconPath={<img src={qr_ticket} alt="qr_ticket" />}
+              children={ticketName}
+              className="text-10"
+            ></IconText>
             <span className="text-sm font-bold">{formattedPrice}원</span>
             <hr />
             <IconText
               size="xSmall"
-              iconPath={qr_check}
+              iconPath={<img src={qr_check} alt="qr_check" />}
               children={isApproved ? '승인 됨' : '승인 안됨'}
               className="text-10"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={qr_check}
+              iconPath={<img src={qr_check} alt="qr_check" />}
               children={isCheckIn ? '체크인 완료' : '체크인 미완료'}
               className="text-10"
             ></IconText>
