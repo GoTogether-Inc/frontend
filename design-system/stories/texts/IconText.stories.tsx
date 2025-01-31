@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import IconText from '../../ui/texts/IconText';
+import Calendar from '../../icons/Event.svg';
 
 type Story = StoryObj<typeof meta>;
 
@@ -20,7 +21,7 @@ const meta = {
     iconPath: {
       control: 'text',
       description: '카드 버튼에 보이는 아이콘',
-      defaultValue: '../icons/calendar.png',
+      defaultValue: <img src={Calendar} alt="Calendar" />,
     },
   },
 } satisfies Meta<typeof IconText>;
@@ -30,7 +31,7 @@ export default meta;
 export const XSmallSize: Story = {
   args: {
     size: 'xSmall',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     children: 'IconText',
   },
 };
@@ -38,7 +39,7 @@ export const XSmallSize: Story = {
 export const SmallSize: Story = {
   args: {
     size: 'small',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     children: 'IconText',
   },
 };
@@ -46,7 +47,7 @@ export const SmallSize: Story = {
 export const MediumSize: Story = {
   args: {
     size: 'medium',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     children: 'IconText',
   },
 };
@@ -54,7 +55,7 @@ export const MediumSize: Story = {
 export const LargeSize: Story = {
   args: {
     size: 'large',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     children: 'IconText',
     className: '',
   },
