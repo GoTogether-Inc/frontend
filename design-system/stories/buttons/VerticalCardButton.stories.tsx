@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import VerticalCardButton from '../../ui/buttons/VerticalCardButton';
+import Calendar from '../../icons/Event.svg';
+import SelectedCalendar from '../../icons/SelectedEvent.svg';
 
 type Story = StoryObj<typeof meta>;
 
@@ -20,12 +22,12 @@ const meta = {
     iconPath: {
       control: 'text',
       description: '카드 버튼에 보이는 아이콘',
-      defaultValue: '../icons/calendar.png',
+      defaultValue: <img src={Calendar} alt="Calendar" />,
     },
     hoverIconPath: {
       control: 'text',
       description: 'hover 상태에서 사용할 아이콘 경로',
-      defaultValue: '../icons/selected_calendar.png',
+      defaultValue: <img src={SelectedCalendar} alt="SelectedCalendar" />,
     },
   },
 } satisfies Meta<typeof VerticalCardButton>;
@@ -35,8 +37,8 @@ export default meta;
 export const Button: Story = {
   args: {
     label: 'Button',
-    iconPath: '../icons/calendar.png',
-    hoverIconPath: '../icons/selected_calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
+    hoverIconPath: <img src={SelectedCalendar} alt="SelectedCalendar" />,
     onClick: () => console.log('Button clicked'), // onClick 속성 추가
   },
 };
@@ -44,8 +46,8 @@ export const Button: Story = {
 export const SmallButton: Story = {
   args: {
     label: 'Small',
-    iconPath: '../icons/calendar.png',
-    hoverIconPath: '../icons/selected_calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
+    hoverIconPath: <img src={SelectedCalendar} alt="SelectedCalendar" />,
     onClick: () => console.log('Small Button clicked'),
   },
 };
@@ -53,8 +55,8 @@ export const SmallButton: Story = {
 export const MediumButton: Story = {
   args: {
     label: 'Medium',
-    iconPath: '../icons/calendar.png',
-    hoverIconPath: '../icons/selected_calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
+    hoverIconPath: <img src={SelectedCalendar} alt="SelectedCalendar" />,
     onClick: () => console.log('Medium Button clicked'),
   },
 };
@@ -62,8 +64,8 @@ export const MediumButton: Story = {
 export const LargeButton: Story = {
   args: {
     label: 'Large',
-    iconPath: '../icons/calendar.png',
-    hoverIconPath: '../icons/selected_calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
+    hoverIconPath: <img src={SelectedCalendar} alt="SelectedCalendar" />,
     onClick: () => console.log('Large Button clicked'),
   },
 };

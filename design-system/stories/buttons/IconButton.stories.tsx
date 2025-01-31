@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import IconButton from '../../ui/buttons/IconButton';
+import Calendar from '../../icons/Event.svg';
 
 type Story = StoryObj<typeof meta>;
 
@@ -27,7 +28,7 @@ const meta = {
     iconPath: {
       control: 'text',
       description: '아이콘 경로 (SVG 또는 이미지 URL)',
-      defaultValue: '/icons/sample-icon.svg',
+      defaultValue: <img src={Calendar} alt="Calendar" />,
     },
     onClick: {
       action: 'clicked',
@@ -41,7 +42,7 @@ export default meta;
 export const SmallSize: Story = {
   args: {
     size: 'small',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     onClick: () => console.log('Small IconButton clicked'),
   },
 };
@@ -49,7 +50,7 @@ export const SmallSize: Story = {
 export const MediumSize: Story = {
   args: {
     size: 'medium',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     onClick: () => console.log('Medium IconButton clicked'),
   },
 };
@@ -57,7 +58,7 @@ export const MediumSize: Story = {
 export const LargeSize: Story = {
   args: {
     size: 'large',
-    iconPath: '../icons/calendar.png',
+    iconPath: <img src={Calendar} alt="Calendar" />,
     onClick: () => console.log('Large IconButton clicked'),
   },
 };
