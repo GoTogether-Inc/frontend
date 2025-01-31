@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.61.3",
-    "@types/swiper": "^6.0.0",
     "autoprefixer": "^10.4.20",
     "date-fns": "^4.1.0",
     "lodash": "^4.17.21",
