@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { flexColumnCenter } from '../../styles/flex';
 
 interface VerticalCardButtonProps {
-  iconPath: string;
-  hoverIconPath?: string;
+  iconPath: React.ReactElement;
+  hoverIconPath?: React.ReactElement;
   label: string;
   onClick: () => void;
   className?: string;
@@ -49,11 +49,7 @@ export default function VerticalCardButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        className={`${sizeClasses[size].image}`}
-        src={hoverIconPath && isHovered ? hoverIconPath : iconPath}
-        alt={label}
-      />
+      <div className={`${sizeClasses[size].image}`}>{hoverIconPath && isHovered ? hoverIconPath : iconPath}</div>
       <p>{label}</p>
     </button>
   );

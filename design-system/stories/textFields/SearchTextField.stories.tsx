@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
 import SearchTextField from '../../ui/textFields/SearchTextField';
+import Search from '../../icons/Search.svg';
 
 const meta = {
   title: 'TextFields/SearchTextField',
@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    iconPath: '../../icons/Search.svg',
+    iconPath: <img src={Search} alt="Search" />,
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
   },
