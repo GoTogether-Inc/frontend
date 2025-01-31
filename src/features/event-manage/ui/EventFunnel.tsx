@@ -9,7 +9,7 @@ import EventOrganizerInfoPage from '../../../pages/event-manage/ui/EventOrganize
 import EventRegisterLayout from '../../../shared/ui/backgrounds/EventRegisterLayout';
 import { useNavigate } from 'react-router-dom';
 import { useFunnelState } from '../model/FunnelContext';
-import { EventFunnelInterface, StepNames } from '../../../shared/types/FunnelType';
+import { EventFunnelInterface, StepNames } from '../../../shared/types/funnelType';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const { formState } = useFunnelState();
