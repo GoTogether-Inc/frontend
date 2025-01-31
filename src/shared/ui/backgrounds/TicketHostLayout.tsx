@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
 
 interface TicketHostLayoutProps {
@@ -8,8 +9,9 @@ interface TicketHostLayoutProps {
 }
 
 const TicketHostLayout = ({ image, children, centerContent, showText = false }: TicketHostLayoutProps) => {
+  const navigate = useNavigate();
   const handleBackClick = () => {
-    window.history.back();
+    navigate(-1);
   };
   return (
     <div className="relative">

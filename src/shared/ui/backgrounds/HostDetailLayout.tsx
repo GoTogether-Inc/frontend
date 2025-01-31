@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileCircle from '../../../../design-system/ui/Profile';
 import Header from '../../../../design-system/ui/Header';
 import { ButtonHTMLAttributes, ReactElement } from 'react';
@@ -10,11 +10,12 @@ interface HostDetailLayoutProps {
 }
 const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const host: hostInfoData | undefined = hostInfo.find(host => host.id === Number(id));
 
   const handleBackClick = () => {
-    window.history.back();
+    navigate(-1);
   };
 
   return (
