@@ -108,7 +108,7 @@ const MainPage = () => {
     {
       img: firstPage,
       eventTitle: '1커뮤니티 네트워킹 - Dev MeetUp 2024',
-      dDay: 'D-0',
+      dDay: 'D-6',
       host: 'Dev 커뮤니티',
       eventDate: '2025년 1월 12일',
       location: '판교 스타트업 캠퍼스',
@@ -117,7 +117,7 @@ const MainPage = () => {
     {
       img: secondPage,
       eventTitle: '2커뮤니티 네트워킹 - Dev MeetUp 2024',
-      dDay: 'D-0',
+      dDay: 'D-6',
       host: 'Dev 커뮤니티',
       eventDate: '2025년 1월 12일',
       location: '판교 스타트업 캠퍼스',
@@ -126,7 +126,7 @@ const MainPage = () => {
     {
       img: thirdPage,
       eventTitle: '3커뮤니티 네트워킹 - Dev MeetUp 2024',
-      dDay: 'D-0',
+      dDay: 'D-6',
       host: 'Dev 커뮤니티',
       eventDate: '2025년 1월 12일',
       location: '판교 스타트업 캠퍼스',
@@ -159,7 +159,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mb-28">
+    <div className="flex flex-col items-center pb-24">
       <Header
         centerContent={
           <SearchTextField
