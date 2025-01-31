@@ -50,6 +50,7 @@ const TextEditor = () => {
       <h1 className="font-bold text-black text-lg">이벤트에 대한 상세 설명</h1>
       <ReactQuill
         theme="snow"
+        value={content}
         modules={modules}
         formats={formats}
         onChange={handleChange}
