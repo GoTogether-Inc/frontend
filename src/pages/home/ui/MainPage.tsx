@@ -6,7 +6,7 @@ import secondPage from '../../../../public/assets/banners/2.png';
 import thirdPage from '../../../../public/assets/banners/3.png';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
-import searchIcon from '../../../../design-system/icons/search.svg';
+import searchIcon from '../../../../design-system/icons/Search.svg';
 import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCardButton';
 import EventCard from '../../../shared/ui/EventCard';
 import { useState, Dispatch, SetStateAction } from 'react';
@@ -163,7 +163,7 @@ const MainPage = () => {
       <Header
         centerContent={
           <SearchTextField
-            icon={searchIcon}
+            iconPath={searchIcon}
             onClick={handleSearchButtonClick}
             onChange={() => {}}
             placeholder="입력해주세요"

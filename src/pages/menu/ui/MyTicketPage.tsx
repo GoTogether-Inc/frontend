@@ -3,7 +3,7 @@ import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
 import { useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
-import QRcode from '../../../../design-system/icons/QRcode.svg';
+import QRcode from '../../../../design-system/icons/QrCode.svg';
 import { trendingEvents } from '../../../shared/types/eventCardType';
 import EventCard from '../../../shared/ui/EventCard';
 
