@@ -8,12 +8,11 @@ import FunnelPage from '../../pages/event-manage/ui/FunnelPage';
 import AllEventsPage from '../../pages/all-events/ui/AllEventsPage';
 import MyTicketPage from '../../pages/menu/ui/MyTicketPage';
 import SearchPage from '../../pages/search/ui/SearchPage';
-import Menu from '../../pages/menu/ui/Menu';
-import SearchPage from '../../pages/search/ui/SearchPage';
 import MyHostPage from '../../pages/menu/ui/MyHostPage';
 import HostDetailPage from '../../pages/menu/ui/HostDetailPage';
 import HostEditPage from '../../pages/menu/ui/HostEditPage';
 import MyPage from '../../pages/menu/ui/MyPage';
+import MenuPage from '../../pages/menu/ui/MenuPage';
 
 const routesConfig = [
   {
@@ -43,7 +42,7 @@ const routesConfig = [
   },
   {
     path: MAIN_ROUTES.menu,
-    element: <Menu />,
+    element: <MenuPage />,
     requiresAuth: false,
   },
   {
