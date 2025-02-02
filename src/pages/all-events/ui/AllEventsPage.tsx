@@ -1,7 +1,7 @@
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import Header from '../../../../design-system/ui/Header';
 import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
-import searchIcon from '../../../../design-system/icons/search.svg';
+import searchIcon from '../../../../design-system/icons/Search.svg';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 import EventCard from '../../../shared/ui/EventCard';
 import { trendingEvents } from '../../../shared/types/eventCardType';
@@ -10,7 +10,7 @@ const AllEventsPage = () => {
   return (
     <div className="flex flex-col items-center mb-28">
       <Header
-        centerContent={<SearchTextField icon={searchIcon} onChange={() => {}} placeholder="입력해주세요" />}
+        centerContent={<SearchTextField iconPath={searchIcon} onChange={() => {}} placeholder="입력해주세요" />}
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"

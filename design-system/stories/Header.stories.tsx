@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Header from '../ui/Header';
-import searchIcon from '../icons/search.svg';
+import searchIcon from '../icons/Search.svg';
 
 type Story = StoryObj<typeof Header>;
 

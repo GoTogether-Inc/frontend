@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import trashIcon from '../../icons/trash.svg';
+import trashIcon from '../../icons/Trash.svg';
 
 import DefaultTextField from '../../ui/textFields/DefaultTextField';
 

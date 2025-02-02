@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import QrModal from '../../ui/modals/QrModal';
-import QRbackground from '../../icons/QRbackground.svg';
-import QRcode from '../../icons/QRcode.svg';
+import QRbackground from '../../icons/QrBackground.svg';
+import QRcode from '../../icons/QrCode.svg';
 
 type Story = StoryObj<typeof meta>;
 
