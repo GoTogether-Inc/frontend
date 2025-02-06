@@ -40,7 +40,7 @@ const Header = ({
       {/* 가운데 콘텐츠 */}
       {typeof centerContent === 'string' ? (
         <div className="absolute inset-x-0 flex items-center justify-center">
-          <h1 className="text-xl font-bold text-center sm:text-base md:text-lg lg:text-xl">{centerContent}</h1>
+          <h1 className="text-xl font-bold text-center sm:text-lg md:text-xl">{centerContent}</h1>
         </div>
       ) : (
         <div className="flex items-center justify-center flex-grow">{centerContent}</div>

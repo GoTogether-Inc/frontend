@@ -3,7 +3,8 @@ export const MAIN_ROUTES = {
   eventCreation: '/event-creation',
   allEvents: '/all-events',
   search: '/search',
-  menu: `/menu`,
+  menu: '/menu',
+  dashbord: '/dashboard',
 };
 
 export const AUTH_ROUTES = {
@@ -23,4 +24,8 @@ export const MENU_ROUTES = {
   hostDetail: `${MAIN_ROUTES.menu}/hostDetail/:id`,
   hostEdit: `${MAIN_ROUTES.menu}/hostEdit/:id`,
   myPage: `${MAIN_ROUTES.menu}/myPage`,
+};
+
+export const DASHBOARD_ROUTES = {
+  dashboard: `${MAIN_ROUTES.dashbord}`,
 };
