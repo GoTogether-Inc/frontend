@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
 import dashboardMenu from '../../../../public/assets/dashboard/DashboardMenu.svg';
+import { useState } from 'react';
+import SideBar from '../../../widgets/dashboard/ui/SideBar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -9,9 +11,20 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children, centerContent }: DashboardLayoutProps) => {
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+
   const handleBackClick = () => {
     navigate(-1);
   };
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="relative flex">
       {/* 헤더 영역 */}
@@ -22,7 +35,9 @@ const DashboardLayout = ({ children, centerContent }: DashboardLayoutProps) => {
           leftButtonClick={handleBackClick}
           centerContent={centerContent}
           color="white"
-          rightContent={<img src={dashboardMenu} />}
+          rightContent={
+            <img src={dashboardMenu} alt="메뉴바" onClick={handleModalOpen} className="cursor-pointer z-30" />
+          }
         />
       </div>
 
@@ -30,6 +45,7 @@ const DashboardLayout = ({ children, centerContent }: DashboardLayoutProps) => {
       <div className="flex flex-col justify-between w-full min-h-[calc(100vh-6rem)] bg-white rounded-[20px] mt-20 z-20">
         {children}
       </div>
+      {modalOpen && <SideBar onClose={handleModalClose} />}
     </div>
   );
 };
