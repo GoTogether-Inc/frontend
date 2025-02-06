@@ -23,12 +23,14 @@ const MenuPage = () => {
           </button>
         }
       />
-      <div className={`${flexColumn} gap-4 px-10 mt-8`}>
+      <div className={`${flexColumn} gap-4 px-8 md:px-10 mt-8`}>
         {buttonData.map((button, index) => (
           <div key={button.label}>
             <HorizontalCardButton
-              iconPath={<img src={button.iconPath} alt={button.label} />}
-              hoverIconPath={<img src={button.hoverIconPath} alt={button.label} />}
+              iconPath={<img src={button.iconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
+              hoverIconPath={
+                <img src={button.hoverIconPath} alt={button.label} className="mr-4 sm:mr-3 w-6 h-6 md:w-7 md:h-7" />
+              }
               label={button.label}
               onClick={() => handleIconClick(navigate, button.path)}
             />
