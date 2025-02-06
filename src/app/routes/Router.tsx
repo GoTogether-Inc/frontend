@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { MAIN_ROUTES, JOIN_ROUTES, MENU_ROUTES } from './routes';
+import { MAIN_ROUTES, JOIN_ROUTES, MENU_ROUTES, DASHBOARD_ROUTES } from './routes';
 import Layout from '../Layout';
 import AgreementPage from '../../pages/join/AgreementPage';
 import InfoInputPage from '../../pages/join/InfoInputPage';
@@ -14,6 +14,7 @@ import HostDetailPage from '../../pages/menu/ui/HostDetailPage';
 import HostEditPage from '../../pages/menu/ui/HostEditPage';
 import MyPage from '../../pages/menu/ui/MyPage';
 import MenuPage from '../../pages/menu/ui/MenuPage';
+import DashboardPage from '../../pages/dashboard/ui/DashbaordPage';
 
 const routesConfig = [
   {
@@ -74,6 +75,11 @@ const routesConfig = [
   {
     path: MAIN_ROUTES.search,
     element: <SearchPage />,
+    requiresAuth: false,
+  },
+  {
+    path: DASHBOARD_ROUTES.dashboard,
+    element: <DashboardPage />,
     requiresAuth: false,
   },
 ];
