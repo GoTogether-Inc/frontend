@@ -1,15 +1,34 @@
-type DashboardLayoutProps = {
-  bgColor: string;
-};
+import { useNavigate } from 'react-router-dom';
+import Header from '../../../../design-system/ui/Header';
+import dashboardMenu from '../../../../public/assets/dashboard/DashboardMenu.svg';
 
-const DashboardLayout = ({ bgColor }: DashboardLayoutProps) => {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+  centerContent: string;
+}
+
+const DashboardLayout = ({ children, centerContent }: DashboardLayoutProps) => {
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate(-1);
+  };
   return (
-    <div className="h-screen bg-white relative">
+    <div className="relative flex">
       {/* 헤더 영역 */}
+      <div className="absolute top-0 w-full h-44 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] py-3">
+        <Header
+          leftButtonLabel="<"
+          leftButtonClassName="text-2xl z-30 font-semibold"
+          leftButtonClick={handleBackClick}
+          centerContent={centerContent}
+          color="white"
+          rightContent={<img src={dashboardMenu} />}
+        />
+      </div>
 
       {/* 레이아웃 내용 */}
-      <div className="relative top-0 h-28 md:h-32 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)]">
-        <div className={`absolute top-[calc(100%-2vh)] w-full h-screen ${bgColor} rounded-[20px]`} />
+      <div className="flex flex-col justify-between w-full min-h-[calc(100vh-6rem)] bg-white rounded-[20px] mt-20 z-20">
+        {children}
       </div>
     </div>
   );
