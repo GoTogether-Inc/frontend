@@ -43,7 +43,6 @@ export const Default: Story = {
     detail: '',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
-    className: 'h-12',
     labelClassName: 'sm:text-base md:text-lg',
   },
 };
@@ -54,7 +53,6 @@ export const WithTitleTextField: Story = {
     leftText: '받는',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
-    className: 'h-12',
     labelClassName: 'sm:text-base md:text-lg',
   },
 };
@@ -69,7 +67,6 @@ export const WithIconButtonTextField: Story = {
     ),
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
-    className: 'h-12',
     labelClassName: 'sm:text-base md:text-lg',
   },
 };
@@ -79,7 +76,6 @@ export const WithLabelTextField: Story = {
     detail: '',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
-    className: 'h-12',
     labelClassName: 'sm:text-base md:text-lg',
   },
 };
@@ -89,7 +85,6 @@ export const WithLabelDetailTextField: Story = {
     detail: 'detail',
     onChange: e => console.log(e.target.value),
     placeholder: '입력해주세요',
-    className: 'h-12',
     labelClassName: 'sm:text-base md:text-lg',
   },
 };

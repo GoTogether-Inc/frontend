@@ -45,7 +45,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             {...rest}
-            className={`w-full h-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none`}
+            className={`w-full h-12 border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none`}
           />
           {rightContent && <div className="ml-3">{rightContent}</div>}
         </div>
