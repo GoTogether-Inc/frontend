@@ -3,7 +3,7 @@ import Ticket from '../../../../public/assets/dashboard/create_ticket/Ticket(hor
 import { TicketMockData } from '../../../shared/types/ticketType';
 import TicketItem from '../../../features/dashboard/ui/TicketItem';
 
-const TicketCreatePage = () => {
+const TicketListPage = () => {
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="p-5">
@@ -34,4 +34,4 @@ const TicketCreatePage = () => {
   );
 };
 
-export default TicketCreatePage;
+export default TicketListPage;

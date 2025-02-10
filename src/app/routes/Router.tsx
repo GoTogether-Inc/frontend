@@ -19,6 +19,7 @@ import EventInfoPage from '../../pages/dashboard/ui/EventInfoPage';
 import EventDetailPage from '../../pages/dashboard/ui/EventDetailPage';
 import EventTagPage from '../../pages/dashboard/ui/EventTagPage';
 import TicketCreatePage from '../../pages/dashboard/ui/TicketCreatePage';
+import TicketListPage from '../../pages/dashboard/ui/TicketListPage';
 
 const routesConfig = [
   {
@@ -104,6 +105,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.ticketCreate,
     element: <TicketCreatePage />,
+    requiresAuth: false,
+  },
+  {
+    path: DASHBOARD_ROUTES.ticket,
+    element: <TicketListPage />,
     requiresAuth: false,
   },
 ];
