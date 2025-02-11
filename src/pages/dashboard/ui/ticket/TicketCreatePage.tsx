@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import { TwoOptions } from '../../../../../design-system/stories/ChoiceChip.stories';
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
