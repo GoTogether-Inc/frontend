@@ -21,6 +21,8 @@ const TicketListPage = () => {
           <br />
           적어도 1개의 티켓이 필요합니다.
         </p>
+
+        {/*티켓 생성 페이지 이동 버튼*/}
         <button
           className="bg-gray3 rounded-lg w-80 h-24 flex items-center justify-center gap-4 mb-10 "
           onClick={navigateToTicketCreate}
@@ -28,6 +30,8 @@ const TicketListPage = () => {
           <div className="rounded-full bg-white w-10 h-10 text-3xl text-center font-thin">+</div>
           <p className="text-xl ">티켓 새로 생성하기</p>
         </button>
+
+        {/*티켓 목록 렌더링 구역*/}
         <div className="w-full">
           <div className="flex gap-1 items-center mb-1">
             <img src={Ticket} />
