@@ -1,9 +1,17 @@
-import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
-import Ticket from '../../../../public/assets/dashboard/create_ticket/Ticket(horizon).svg';
-import { TicketMockData } from '../../../shared/types/ticketType';
-import TicketItem from '../../../features/dashboard/ui/TicketItem';
+import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
+import Ticket from '../../../../../public/assets/dashboard/create_ticket/Ticket(horizon).svg';
+import { TicketMockData } from '../../../../shared/types/ticketType';
+import TicketItem from '../../../../features/dashboard/ui/TicketItem';
+import { useNavigate } from 'react-router-dom';
+import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
 
 const TicketListPage = () => {
+  const navigate = useNavigate();
+
+  const navigateToTicketCreate = () => {
+    navigate(DASHBOARD_ROUTES.ticketCreate);
+  };
+
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="p-5">
@@ -13,7 +21,10 @@ const TicketListPage = () => {
           <br />
           적어도 1개의 티켓이 필요합니다.
         </p>
-        <button className="bg-gray3 rounded-lg w-80 h-24 flex items-center justify-center gap-4 mb-10 ">
+        <button
+          className="bg-gray3 rounded-lg w-80 h-24 flex items-center justify-center gap-4 mb-10 "
+          onClick={navigateToTicketCreate}
+        >
           <div className="rounded-full bg-white w-10 h-10 text-3xl text-center font-thin">+</div>
           <p className="text-xl ">티켓 새로 생성하기</p>
         </button>
