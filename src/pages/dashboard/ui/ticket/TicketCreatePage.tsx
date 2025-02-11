@@ -20,6 +20,16 @@ const TicketCreatePage = () => {
 
   const sum = price * quantity;
 
+  const formatNumber = (num: number): string => {
+    if (num >= 1000000) {
+      return num / 1000000 + 'M';
+    }
+    if (num >= 1000) {
+      return num / 1000 + 'K';
+    }
+    return num.toString();
+  };
+
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="p-5">
@@ -65,8 +75,7 @@ const TicketCreatePage = () => {
           <p className="text-gray-700 text-2xl">=</p>
           <div>
             <p className="text-gray-700 font-semibold">예상 수익</p>
-            {/* TODO:수익이 커서 text가 길어질 경우를 대비해서 10k , 10m 방식으로 표현하면 어떨까? */}
-            <p>₩ {sum}</p>
+            <p>₩ {formatNumber(sum)}</p>
           </div>
         </div>
       </div>
