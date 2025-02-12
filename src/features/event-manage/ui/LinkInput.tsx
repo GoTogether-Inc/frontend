@@ -2,12 +2,15 @@ import { useState } from 'react';
 import AddButton from '../../../../public/assets/event-manage/AddBtn.svg';
 import CloseButton from '../../../../public/assets/event-manage/CloseBtn.svg';
 import Link from '../../../../public/assets/event-manage/Link.svg';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 
-const LinkInput = () => {
-  const { formState, setFormState } = useFunnelState();
+interface LinkInputProps {
+  formState?: FunnelState['formState'];
+  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+}
 
-  const [links, setLinks] = useState<{ title: string; url: string }[]>(formState.referenceLinks);
+const LinkInput = ({ formState, setFormState }: LinkInputProps) => {
+  const [links, setLinks] = useState<{ title: string; url: string }[]>(formState?.referenceLinks || []);
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
@@ -22,28 +25,34 @@ const LinkInput = () => {
     };
     setLinks([...links, newLink]);
     setActiveInput({ field: null });
-    setFormState(prev => ({
-      ...prev,
-      referenceLinks: [...prev.referenceLinks, newLink],
-    }));
+    if (setFormState) {
+      setFormState(prev => ({
+        ...prev,
+        referenceLinks: [...prev.referenceLinks, newLink],
+      }));
+    }
   };
 
   const removeLink = (title: string) => {
     const updatedLinks = links.filter(link => link.title !== title);
     setLinks(updatedLinks);
-    setFormState(prev => ({
-      ...prev,
-      referenceLinks: updatedLinks,
-    }));
+    if (setFormState) {
+      setFormState(prev => ({
+        ...prev,
+        referenceLinks: updatedLinks,
+      }));
+    }
   };
 
   const updateLink = (title: string, field: 'url' | 'title', value: string) => {
     const updatedLinks = links.map(link => (link.title === title ? { ...link, [field]: value } : link));
     setLinks(updatedLinks);
-    setFormState(prev => ({
-      ...prev,
-      referenceLinks: updatedLinks,
-    }));
+    if (setFormState) {
+      setFormState(prev => ({
+        ...prev,
+        referenceLinks: updatedLinks,
+      }));
+    }
   };
 
   return (
