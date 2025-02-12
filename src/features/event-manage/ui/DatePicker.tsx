@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 
 interface DatePickerProps {
   className?: string;
+  formState?: FunnelState['formState'];
+  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
 }
 
-const EventDatePicker = ({ className }: DatePickerProps) => {
-  const { formState, setFormState } = useFunnelState();
-
+const EventDatePicker = ({ className, formState, setFormState }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
-    formState.startDate ? new Date(formState.startDate) : new Date()
+    formState?.startDate ? new Date(formState.startDate) : new Date()
   );
-  const [endDate, setEndDate] = useState<Date | null>(formState.endDate ? new Date(formState.endDate) : new Date());
-  const [startTime, setStartTime] = useState<string>(formState.startTime || '06:00');
-  const [endTime, setEndTime] = useState<string>(formState.endTime || '23:00');
+  const [endDate, setEndDate] = useState<Date | null>(formState?.endDate ? new Date(formState.endDate) : new Date());
+  const [startTime, setStartTime] = useState<string>(formState?.startTime || '06:00');
+  const [endTime, setEndTime] = useState<string>(formState?.endTime || '23:00');
 
   const generateTimeOptions = () => {
     const options = [];
@@ -41,13 +41,15 @@ const EventDatePicker = ({ className }: DatePickerProps) => {
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    setFormState(prev => ({
-      ...prev,
-      startDate: startDate ? formatDate(startDate) : undefined,
-      endDate: endDate ? formatDate(endDate) : undefined,
-      startTime,
-      endTime,
-    }));
+    if (setFormState) {
+      setFormState(prev => ({
+        ...prev,
+        startDate: startDate ? formatDate(startDate) : undefined,
+        endDate: endDate ? formatDate(endDate) : undefined,
+        startTime,
+        endTime,
+      }));
+    }
   }, [startDate, endDate, startTime, endTime, setFormState]);
 
   return (
