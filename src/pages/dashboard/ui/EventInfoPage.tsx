@@ -16,7 +16,7 @@ const EventInfoPage = () => {
   };
 
   const handleNextClick = () => {
-    navigate('/dashbord/event-detail');
+    navigate('/dashbord/eventDetail');
   };
 
   return (
@@ -43,7 +43,7 @@ const EventInfoPage = () => {
         )}
       </div>
       <div className="w-full p-7">
-        <Button label="다음" onClick={handleNextClick} className="w-full h-12 rounded-full" />
+        <Button label="저장하기" onClick={handleNextClick} className="w-full h-12 rounded-full" />
       </div>
     </DashboardLayout>
   );

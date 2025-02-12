@@ -16,6 +16,7 @@ import MyPage from '../../pages/menu/ui/MyPage';
 import MenuPage from '../../pages/menu/ui/MenuPage';
 import DashboardPage from '../../pages/dashboard/ui/DashbaordPage';
 import EventInfoPage from '../../pages/dashboard/ui/EventInfoPage';
+import EventDetailPage from '../../pages/dashboard/ui/EventDetailPage';
 
 const routesConfig = [
   {
@@ -86,6 +87,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.eventInfo,
     element: <EventInfoPage />,
+    requiresAuth: false,
+  },
+  {
+    path: DASHBOARD_ROUTES.eventDetail,
+    element: <EventDetailPage />,
     requiresAuth: false,
   },
 ];
