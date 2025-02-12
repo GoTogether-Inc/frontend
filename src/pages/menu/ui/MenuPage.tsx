@@ -28,9 +28,7 @@ const MenuPage = () => {
           <div key={button.label}>
             <HorizontalCardButton
               iconPath={<img src={button.iconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
-              hoverIconPath={
-                <img src={button.hoverIconPath} alt={button.label} className="mr-4 sm:mr-3 w-6 h-6 md:w-7 md:h-7" />
-              }
+              hoverIconPath={<img src={button.hoverIconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
               label={button.label}
               onClick={() => handleIconClick(navigate, button.path)}
             />
