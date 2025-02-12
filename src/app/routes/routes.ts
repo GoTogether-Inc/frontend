@@ -28,4 +28,5 @@ export const MENU_ROUTES = {
 
 export const DASHBOARD_ROUTES = {
   dashboard: `${MAIN_ROUTES.dashbord}`,
+  eventInfo: `${MAIN_ROUTES.dashbord}/eventInfo`,
 };
