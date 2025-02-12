@@ -17,8 +17,8 @@ const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '' }
   };
 
   return (
-    <>
-      <label className={`block px-1 font-semibold text-gray-700 ${labelClassName}`}>{label}</label>
+    <div>
+      <label className={`block px-1 font-semibold text-gray-700 mb-2 ${labelClassName}`}>{label}</label>
       <div className={`flex justify-between bg-gray-300 rounded-full p-1 ${className}`}>
         {options.map((option, index) => (
           <button
@@ -33,7 +33,7 @@ const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '' }
           </button>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
