@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import CategoryButton from '../../../../public/assets/event-manage/BackBtn(black).svg';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 
 interface Category {
   id: string;
   name: string;
 }
 
-const EventCategory = () => {
-  const { formState, setFormState } = useFunnelState();
+interface EventCategoryProps {
+  formState?: FunnelState['formState'];
+  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+}
+
+const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
   const [open, setOpen] = useState(false);
 
   const categories: Category[] = [
@@ -21,10 +25,12 @@ const EventCategory = () => {
   const handleDropdown = () => setOpen(!open);
 
   const handleSelect = (id: string) => {
-    setFormState(prev => ({
-      ...prev,
-      category: id,
-    }));
+    if (setFormState) {
+      setFormState(prev => ({
+        ...prev,
+        category: id,
+      }));
+    }
     setOpen(false);
   };
 
@@ -39,7 +45,7 @@ const EventCategory = () => {
           className="flex justify-between p-2 text-left bg-white border border-placeholderText rounded-[2px] focus:outline-none w-full max-w-52"
         >
           <span>
-            {formState.category ? categories.find(c => c.id === formState.category)?.name : '이벤트 카테고리 선택'}
+            {formState?.category ? categories.find(c => c.id === formState.category)?.name : '이벤트 카테고리 선택'}
           </span>
           <img src={CategoryButton} alt="카테고리 버튼" className="w-6 h-6 -rotate-90" />
         </button>
@@ -50,7 +56,7 @@ const EventCategory = () => {
                 key={category.id}
                 onClick={() => handleSelect(category.id)}
                 className={`p-2 cursor-pointer hover:bg-dropdown transition-colors ${
-                  formState.category === category.id ? 'bg-dropdown' : ''
+                  formState?.category === category.id ? 'bg-dropdown' : ''
                 }`}
               >
                 {category.name}
