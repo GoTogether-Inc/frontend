@@ -30,4 +30,5 @@ export const DASHBOARD_ROUTES = {
   dashboard: `${MAIN_ROUTES.dashbord}`,
   eventInfo: `${MAIN_ROUTES.dashbord}/eventInfo`,
   eventDetail: `${MAIN_ROUTES.dashbord}/eventDetail`,
+  eventTag: `${MAIN_ROUTES.dashbord}/eventTag`,
 };
