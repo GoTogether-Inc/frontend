@@ -4,6 +4,7 @@ import { TwoOptions } from '../../../../../design-system/stories/ChoiceChip.stor
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
 import Button from '../../../../../design-system/ui/Button';
+import EventDatePicker from '../../../../features/event-manage/ui/DatePicker';
 
 const TicketCreatePage = () => {
   const [price, setPrice] = useState<number>(0);
@@ -33,7 +34,7 @@ const TicketCreatePage = () => {
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
-      <div className="p-5 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+      <div className="p-5 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 min-h-screen">
         <div className="w-full text-center font-bold text-xl">티켓(입장권)</div>
         <p className="text-gray-400 text-xs">
           참가자들이 이벤트에 접속, 혹은 입장 할 수 있도록 티켓을 만들어 주세요.
@@ -80,9 +81,12 @@ const TicketCreatePage = () => {
           </div>
         </div>
         {/*캘린더가 들어갈 자리*/}
-        <div></div>
-
-        <div className="mt-auto w-full p-7">
+        <div className="flex flex-col gap-2">
+          <p className="px-1 text-gray-700 font-semibold">판매 기간</p>
+          <EventDatePicker />
+        </div>
+        <div className="flex-grow"></div>
+        <div className="w-full ">
           <Button label="저장하기" onClick={() => console.log('post 요청')} className="w-full h-12 rounded-full" />
         </div>
       </div>
