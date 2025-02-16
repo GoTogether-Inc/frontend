@@ -33,15 +33,15 @@ const TicketCreatePage = () => {
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
-      <div className="p-5">
-        <div className="w-full text-center font-bold text-xl mb-15">티켓(입장권)</div>
-        <p className="text-gray-400 text-xs mb-3">
+      <div className="p-5 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+        <div className="w-full text-center font-bold text-xl">티켓(입장권)</div>
+        <p className="text-gray-400 text-xs">
           참가자들이 이벤트에 접속, 혹은 입장 할 수 있도록 티켓을 만들어 주세요.
           <br />
           적어도 1개의 티켓이 필요합니다.
         </p>
         {/*티켓 종류 선택란*/}
-        <div className="mb-6">
+        <div className="">
           <div className="w-40 my-1">
             <p className="font-semibold px-1 mb-1 text-gray-700">티켓 종류</p>
             <ChoiceChip {...TwoOptions.args} />
@@ -51,28 +51,28 @@ const TicketCreatePage = () => {
           </p>
         </div>
         {/*티켓 이름 입력란*/}
-        <div className="mb-6">
+        <div className="">
           <DefaultTextField
             placeholder="VIP 입장권"
             label="티켓(입장권) 이름"
             detail="티켓을 잘 나타낼 수 있는 이름을 써보세요.(무료 입장권, VIP 입장권,얼리버드)"
-            className="h-11"
+            className="h-12"
           />
         </div>
         {/*티켓 설명 입력란*/}
-        <div className="mb-6">
+        <div className="">
           <DefaultTextField
             placeholder="무료 수강권과 티셔츠가 기본으로 포함되어 있는 티켓입니다."
             label="티켓 설명"
             detail="티켓에 대한 상세한 설명을 해주세요."
-            className="h-11"
+            className="h-12"
           />
         </div>
         {/*가격 계산 란*/}
-        <div className="flex items-center gap-5 mb-6">
-          <DefaultTextField label="1개당 가격" className="h-8" onChange={handlePriceChange} />
+        <div className="flex items-center gap-5">
+          <DefaultTextField label="1개당 가격" className="h-12" onChange={handlePriceChange} placeholder="0" />
           <p className="text-gray-700 text-2xl">X</p>
-          <DefaultTextField label="수량" className="h-8" onChange={handleQuantityChange} />
+          <DefaultTextField label="수량" className="h-12" onChange={handleQuantityChange} placeholder="1" />
           <p className="text-gray-700 text-2xl">=</p>
           <div>
             <p className="text-gray-700 font-semibold">예상 수익</p>
@@ -82,7 +82,7 @@ const TicketCreatePage = () => {
         {/*캘린더가 들어갈 자리*/}
         <div></div>
 
-        <div className="w-full p-7">
+        <div className="mt-auto w-full p-7">
           <Button label="저장하기" onClick={() => console.log('post 요청')} className="w-full h-12 rounded-full" />
         </div>
       </div>

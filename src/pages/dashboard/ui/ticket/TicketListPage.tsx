@@ -24,7 +24,7 @@ const TicketListPage = () => {
 
         {/*티켓 생성 페이지 이동 버튼*/}
         <button
-          className="bg-gray3 rounded-lg w-80 h-24 flex items-center justify-center gap-4 mb-10 "
+          className="bg-gray3 rounded-lg w-80 h-24 flex items-center justify-center gap-10 mb-10 "
           onClick={navigateToTicketCreate}
         >
           <div className="rounded-full bg-white w-10 h-10 text-3xl text-center font-thin">+</div>
