@@ -112,11 +112,6 @@ const routesConfig = [
     element: <TicketListPage />,
     requiresAuth: false,
   },
-  {
-    path: DASHBOARD_ROUTES.ticketCreate,
-    element: <TicketCreatePage />,
-    requireAuth: false,
-  },
 ];
 
 const router = createBrowserRouter(

@@ -1,7 +1,7 @@
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Ticket from '../../../../../public/assets/dashboard/create_ticket/Ticket(horizon).svg';
 import { TicketMockData } from '../../../../shared/types/ticketType';
-import TicketItem from '../../../../features/dashboard/ui/TicketItem';
+import TicketItem from '../../../../widgets/dashboard/ui/TicketItem';
 import { useNavigate } from 'react-router-dom';
 import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
 

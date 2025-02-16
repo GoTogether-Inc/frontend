@@ -31,7 +31,6 @@ export const DASHBOARD_ROUTES = {
   eventInfo: `${MAIN_ROUTES.dashbord}/eventInfo`,
   eventDetail: `${MAIN_ROUTES.dashbord}/eventDetail`,
   eventTag: `${MAIN_ROUTES.dashbord}/eventTag`,
-  ticketCreate: `${MAIN_ROUTES.dashbord}/ticket`,
   ticket: `${MAIN_ROUTES.dashbord}/ticket`,
   ticketCreate: `${MAIN_ROUTES.dashbord}/ticket/create`,
 };
