@@ -1,5 +1,5 @@
-import basicProfile from '../../../../public/assets/event-manage/BasicProfile.svg';
-import addImage from '../../../../public/assets/event-manage/AddImage.svg';
+import basicProfile from '../../../../public/assets/event-manage/creation/BasicProfile.svg';
+import addImage from '../../../../public/assets/event-manage/creation/AddImage.svg';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
 import React from 'react';
