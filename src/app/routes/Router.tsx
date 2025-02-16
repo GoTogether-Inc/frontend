@@ -5,7 +5,7 @@ import AgreementPage from '../../pages/join/AgreementPage';
 import InfoInputPage from '../../pages/join/InfoInputPage';
 import MainPage from '../../pages/home/ui/MainPage';
 import FunnelPage from '../../pages/event-manage/ui/FunnelPage';
-import AllEventsPage from '../../pages/all-events/ui/AllEventsPage';
+import AllEventsPage from '../../pages/event/ui/AllEventsPage';
 import MyTicketPage from '../../pages/menu/ui/MyTicketPage';
 import SearchPage from '../../pages/search/ui/SearchPage';
 
