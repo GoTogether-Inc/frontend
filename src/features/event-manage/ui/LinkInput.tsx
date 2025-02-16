@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import AddButton from '../../../../public/assets/event-manage/AddBtn.svg';
-import CloseButton from '../../../../public/assets/event-manage/CloseBtn.svg';
-import Link from '../../../../public/assets/event-manage/Link.svg';
+import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
+import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
+import Link from '../../../../public/assets/event-manage/creation/Link.svg';
 import { FunnelState } from '../model/FunnelContext';
 
 interface LinkInputProps {
