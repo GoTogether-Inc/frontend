@@ -2,6 +2,7 @@ export const MAIN_ROUTES = {
   main: '/',
   eventCreation: '/event-creation',
   allEvents: '/all-events',
+  eventDatail: '/event-details',
   search: '/search',
   menu: '/menu',
   dashbord: '/dashboard',
