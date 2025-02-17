@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Countdown from '../../../design-system/ui/texts/Countdown';
 
 interface EventCardProps {
@@ -11,9 +12,17 @@ interface EventCardProps {
   onClick?: () => void;
 }
 
-const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags, onClick }: EventCardProps) => {
+const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags }: EventCardProps) => {
+  const navigate = useNavigate();
+
+  const handleEventCardClick = () => {
+    navigate('/event-details');
+  };
   return (
-    <div onClick={onClick} className="w-full max-w-sm p-4 overflow-hidden bg-white rounded-lg shadow-md cursor-pointer">
+    <div
+      onClick={handleEventCardClick}
+      className="w-full max-w-sm p-4 overflow-hidden bg-white rounded-lg shadow-md cursor-pointer"
+    >
       {/* 이미지 */}
       <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />
 
