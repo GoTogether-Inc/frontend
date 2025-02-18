@@ -18,7 +18,7 @@ const EventDetailsPage = () => {
   return (
     <div>
       <Header
-        leftButtonClassName="text-xl hover:no-underline"
+        leftButtonClassName="text-xl hover:no-underline z-30"
         leftButtonClick={handlePreviousButton}
         leftButtonLabel="<"
         centerContent="같이가요"
@@ -28,12 +28,12 @@ const EventDetailsPage = () => {
         <img src={banner} alt="이벤트 배너" className="w-full h-64 mb-6" />
         <div className="flex flex-col gap-3 px-4 md:px-6">
           {eventData.map(event => (
-            <>
-              <h1 className="text-2xl font-bold">{event.title}</h1>
+            <div key={event.id} className="flex flex-col gap-2">
+              <h1 className="text-xl md:text-2xl font-bold">{event.title}</h1>
               <div className="flex justify-between items-center gap-1">
                 <div className="flex gap-2">
                   <img src={event.participantsImg} alt="인원수 이미지" />
-                  <span className="font-bold text-base md:text-lg">
+                  <span className="font-bold text-base md:text-lg py-2">
                     현재 {event.participants}명이 참가 신청했습니다.
                   </span>
                 </div>
@@ -50,12 +50,12 @@ const EventDetailsPage = () => {
                 <img src={event.timeImg} alt="시간 이미지" />
                 <span className="text-sm md:text-base">{event.time}</span>
               </div>
-              <div className="flex gap-2 mb-2 md:mb-4">
+              <div className="flex gap-2">
                 <img src={event.locationImg} alt="위치 이미지" />
                 <span className="text-sm md:text-base">{event.location}</span>
               </div>
-              <span className="text-sm md:text-base">{event.detail}</span>
-            </>
+              <span className="text-sm md:text-base py-3">{event.detail}</span>
+            </div>
           ))}
 
           <h2 className="font-bold text-xl">위치</h2>
