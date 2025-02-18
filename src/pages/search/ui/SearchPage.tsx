@@ -116,7 +116,7 @@ const SearchPage = () => {
             )}
           </div>
 
-          {!filterData.Host?.length && !filterData.Event?.length && (
+          {!filterData.Host?.length && !filterData.Events?.length && (
             <div className="p-6 text-center font-semibold text-gray-700">검색 결과가 없습니다.</div>
           )}
         </>
