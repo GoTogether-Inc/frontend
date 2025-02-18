@@ -8,11 +8,18 @@ import secondPage from '../../../../public/assets/banners/2.png';
 import thirdPage from '../../../../public/assets/banners/3.png';
 import EventCard from '../../../shared/ui/EventCard';
 import ProfileCircle from '../../../../design-system/ui/Profile';
+import { trendingEventsData } from '../../../shared/types/eventCardType';
+import { hostInfoData } from '../../../shared/types/hostInfoType';
+import { FilterDataType } from '../../../shared/types/filterDataType';
+import { FilterMockData } from '../../../shared/types/filterDataType';
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState('');
-  const [filterData, setFilterDate] = useState({});
-  //@TODO:추후에 response body 보고 Type 설정
+  const [filterData, setFilterDate] = useState<FilterDataType>({
+    Events: [],
+    Host: [],
+  });
+  //@TODO:추후에 response body 보고 Type 수정
 
   const images = [
     { img: firstPage, link: 'https://example.com/page1' },
@@ -32,70 +39,7 @@ const SearchPage = () => {
     //@TODO:API 호출 후, response를 setFilterDate에 넣을 예정
     //현재는 목업 데이터를 넣어놓음
     //@TODO:API 연동하며 디바운스 구현 예정
-    setFilterDate({
-      Events: [
-        {
-          img: firstPage,
-          eventTitle: '1인프콘 2024 - INFCON 2024',
-          dDay: 'D-1',
-          host: '인프런',
-          eventDate: '2025년 1월 13일',
-          location: '올림픽 공원',
-          hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-        },
-        {
-          img: secondPage,
-          eventTitle: '2인프콘 2024 - INFCON 2024',
-          dDay: 'D-1',
-          host: '인프런',
-          eventDate: '2025년 1월 13일',
-          location: '올림픽 공원',
-          hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-        },
-        {
-          img: thirdPage,
-          eventTitle: '3인프콘 2024 - INFCON 2024',
-          dDay: 'D-1',
-          host: '인프런',
-          eventDate: '2025년 1월 13일',
-          location: '올림픽 공원',
-          hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-        },
-        {
-          img: firstPage,
-          eventTitle: '1인프콘 2024 - INFCON 2024',
-          dDay: 'D-1',
-          host: '인프런',
-          eventDate: '2025년 1월 13일',
-          location: '올림픽 공원',
-          hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-        },
-        {
-          img: secondPage,
-          eventTitle: '2인프콘 2024 - INFCON 2024',
-          dDay: 'D-1',
-          host: '인프런',
-          eventDate: '2025년 1월 13일',
-          location: '올림픽 공원',
-          hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-        },
-        {
-          img: thirdPage,
-          eventTitle: '3인프콘 2024 - INFCON 2024',
-          dDay: 'D-1',
-          host: '인프런',
-          eventDate: '2025년 1월 13일',
-          location: '올림픽 공원',
-          hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-        },
-      ],
-      Host: [
-        { id: 1, name: 'Techeer' },
-        { id: 2, name: 'Techeer' },
-        { id: 3, name: 'Techeer' },
-        { id: 4, name: 'Techeer' },
-      ],
-    });
+    setFilterDate(FilterMockData);
   }, [keyword]);
 
   const navigate = useNavigate();
@@ -140,10 +84,9 @@ const SearchPage = () => {
               <div>
                 <p className="text-xl font-bold sm:text-sm md:text-lg lg:text-xl mb-3">이벤트</p>
                 <div className="grid grid-cols-2 gap-4">
-                  {/*@TODO : key값 index로 지정한 것들 Id로 바꿔주기*/}
-                  {filterData.Events?.map((event, index) => (
+                  {filterData.Events?.map((event: trendingEventsData) => (
                     <EventCard
-                      key={index}
+                      key={event.id}
                       img={event.img}
                       eventTitle={event.eventTitle}
                       dDay={event.dDay}
@@ -162,9 +105,8 @@ const SearchPage = () => {
               <div>
                 <p className="text-xl font-bold pb-3 sm:text-sm md:text-lg lg:text-xl mb-3">호스트</p>
                 <div className="grid grid-cols-4 gap-4">
-                  {/*@TODO : key값 index로 지정한 것들 Id로 바꿔주기*/}
-                  {filterData?.Host.map((host, index) => (
-                    <button key={index} className="flex flex-col items-center justify-center gap-2">
+                  {filterData?.Host.map((host: hostInfoData) => (
+                    <button key={host.id} className="flex flex-col items-center justify-center gap-2">
                       <ProfileCircle profile="hostProfile" className="md:w-20 md:h-20 w-16 h-16" />
                       <p>{host.name}</p>
                     </button>
