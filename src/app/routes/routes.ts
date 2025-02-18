@@ -24,6 +24,7 @@ export const MENU_ROUTES = {
   hostDetail: `${MAIN_ROUTES.menu}/hostDetail/:id`,
   hostEdit: `${MAIN_ROUTES.menu}/hostEdit/:id`,
   myPage: `${MAIN_ROUTES.menu}/myPage`,
+  hostInfo: `${MAIN_ROUTES.menu}/hostInfo/:id`, //Q.네이밍과 라우트가 적절한가?
 };
 
 export const DASHBOARD_ROUTES = {
