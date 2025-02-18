@@ -7,7 +7,7 @@ import firstPage from '../../../../public/assets/banners/1.png';
 import secondPage from '../../../../public/assets/banners/2.png';
 import thirdPage from '../../../../public/assets/banners/3.png';
 import EventCard from '../../../shared/ui/EventCard';
-import HostLogo from '../../../../public/assets/menu/HostLogo.svg';
+import ProfileCircle from '../../../../design-system/ui/Profile';
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -89,7 +89,12 @@ const SearchPage = () => {
           hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
         },
       ],
-      Host: [{ name: 'Techeer' }, { name: 'Techeer' }, { name: 'Techeer' }, { name: 'Techeer' }],
+      Host: [
+        { id: 1, name: 'Techeer' },
+        { id: 2, name: 'Techeer' },
+        { id: 3, name: 'Techeer' },
+        { id: 4, name: 'Techeer' },
+      ],
     });
   }, [keyword]);
 
@@ -129,12 +134,13 @@ const SearchPage = () => {
       />
       {keyword ? (
         <>
-          <div className="p-6 flex flex-col gap-24">
+          <div className="p-6 flex flex-col gap-12">
             {/* 이벤트 검색 결과를 렌더링 하는 부분 */}
             {filterData.Events?.length > 0 && (
               <div>
                 <p className="text-xl font-bold sm:text-sm md:text-lg lg:text-xl mb-3">이벤트</p>
                 <div className="grid grid-cols-2 gap-4">
+                  {/*@TODO : key값 index로 지정한 것들 Id로 바꿔주기*/}
                   {filterData.Events?.map((event, index) => (
                     <EventCard
                       key={index}
@@ -156,9 +162,10 @@ const SearchPage = () => {
               <div>
                 <p className="text-xl font-bold pb-3 sm:text-sm md:text-lg lg:text-xl mb-3">호스트</p>
                 <div className="grid grid-cols-4 gap-4">
+                  {/*@TODO : key값 index로 지정한 것들 Id로 바꿔주기*/}
                   {filterData?.Host.map((host, index) => (
-                    <button key={index} className="flex flex-col items-center justify-center">
-                      <img src={HostLogo} alt={host.name} className="w-16 h-16" />
+                    <button key={index} className="flex flex-col items-center justify-center gap-2">
+                      <ProfileCircle profile="hostProfile" className="md:w-20 md:h-20 w-16 h-16" />
                       <p>{host.name}</p>
                     </button>
                   ))}
