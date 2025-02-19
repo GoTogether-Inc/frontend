@@ -21,6 +21,7 @@ import EventTagPage from '../../pages/dashboard/ui/EventTagPage';
 import TicketListPage from '../../pages/dashboard/ui/ticket/TicketListPage';
 import TicketCreatePage from '../../pages/dashboard/ui/ticket/TicketCreatePage';
 import HostInfoPage from '../../pages/menu/ui/HostInfoPage';
+import EmailPage from '../../pages/dashboard/ui/EmailPage';
 
 const routesConfig = [
   {
@@ -113,6 +114,12 @@ const routesConfig = [
     element: <TicketListPage />,
     requiresAuth: false,
   },
+  {
+    path: DASHBOARD_ROUTES.email,
+    element: <EmailPage />,
+    requiresAuth: false,
+  },
+
   {
     path: MENU_ROUTES.hostInfo,
     element: <HostInfoPage />,
