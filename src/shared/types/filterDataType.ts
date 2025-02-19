@@ -3,6 +3,7 @@ import { hostInfoData } from '../../shared/types/hostInfoType';
 import firstPage from '../../../public/assets/banners/1.png';
 import secondPage from '../../../public/assets/banners/2.png';
 import thirdPage from '../../../public/assets/banners/3.png';
+import { hostInfo } from '../../shared/types/hostInfoType';
 
 export interface FilterDataType {
   Events: trendingEventsData[];
@@ -72,10 +73,5 @@ export const FilterMockData: FilterDataType = {
       hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
     },
   ],
-  Host: [
-    { id: 1, name: 'Techeer', description: '먹는거에 진심인 사람들이 모여 숨겨진 맛집을 찾아다니는 모임입니다.' },
-    { id: 2, name: 'Techeer', description: '먹는거에 진심인 사람들이 모여 숨겨진 맛집을 찾아다니는 모임입니다.' },
-    { id: 3, name: 'Techeer', description: '먹는거에 진심인 사람들이 모여 숨겨진 맛집을 찾아다니는 모임입니다.' },
-    { id: 4, name: 'Techeer', description: '먹는거에 진심인 사람들이 모여 숨겨진 맛집을 찾아다니는 모임입니다.' },
-  ],
+  Host: hostInfo,
 };

@@ -15,7 +15,6 @@ const HostInfoPage = () => {
     { id: 3, name: '정준', fullName: '민정준' },
     { id: 1, name: '히은', fullName: '조히은' },
   ];
-  //???
   const user = userData.filter(user => user.id === Number(id));
 
   return (
