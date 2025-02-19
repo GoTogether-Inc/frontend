@@ -7,11 +7,11 @@ import firstPage from '../../../../public/assets/banners/1.png';
 import secondPage from '../../../../public/assets/banners/2.png';
 import thirdPage from '../../../../public/assets/banners/3.png';
 import EventCard from '../../../shared/ui/EventCard';
-import ProfileCircle from '../../../../design-system/ui/Profile';
 import { trendingEventsData } from '../../../shared/types/eventCardType';
 import { hostInfoData } from '../../../shared/types/hostInfoType';
 import { FilterDataType } from '../../../shared/types/filterDataType';
 import { FilterMockData } from '../../../shared/types/filterDataType';
+import HostInfoButton from '../../../features/menu/ui/HostInfoButton';
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -105,11 +105,8 @@ const SearchPage = () => {
               <div>
                 <p className="text-xl font-bold pb-3 sm:text-sm md:text-lg lg:text-xl mb-3">호스트</p>
                 <div className="grid grid-cols-4 gap-4">
-                  {filterData?.Host.map((host: hostInfoData) => (
-                    <button key={host.id} className="flex flex-col items-center justify-center gap-2">
-                      <ProfileCircle profile="hostProfile" className="md:w-20 md:h-20 w-16 h-16" />
-                      <p>{host.name}</p>
-                    </button>
+                  {filterData.Host?.map((host: hostInfoData) => (
+                    <HostInfoButton key={host.id} host={host} />
                   ))}
                 </div>
               </div>
