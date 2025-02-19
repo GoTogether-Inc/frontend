@@ -1,21 +1,23 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { eventData } from '../../../shared/types/eventDetailType';
+import OrganizerInfo from '../../../widgets/event/ui/OrganizerInfo';
 import Header from '../../../../design-system/ui/Header';
 import Search from '../../../../design-system/icons/Search.svg';
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import banner from '../../../../public/assets/banners/1.png';
-import { eventData } from '../../../shared/types/eventDetailType';
 import share from '../../../../public/assets/event-manage/details/Share.svg';
 import like from '../../../../public/assets/event-manage/details/Like.svg';
-import OrganizerInfo from '../../../widgets/event/ui/OrganizerInfo';
+import liked from '../../../../public/assets/event-manage/details/ClickedLike.svg';
 import TicketInfo from '../../../widgets/event/ui/TicketInfo';
 import link from '../../../../public/assets/event-manage/details/Link.svg';
-import IconButton from '../../../../design-system/ui/buttons/IconButton';
-import { useState } from 'react';
 import ShareEventModal from '../../../features/event-manage/ui/ShareEventModal';
 
 const EventDetailsPage = () => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clickedLike, setClickedLike] = useState(false);
 
   const handlePreviousButton = () => {
     navigate(-1);
@@ -26,6 +28,9 @@ const EventDetailsPage = () => {
   };
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+  const handleLikeClick = () => {
+    setClickedLike(prev => !prev);
   };
   return (
     <>
@@ -54,7 +59,10 @@ const EventDetailsPage = () => {
                     iconPath={<img src={share} alt="공유하기 버튼" />}
                     onClick={() => handleShareClick(event.title)}
                   />
-                  <img src={like} alt="좋아하기 버튼" />
+                  <IconButton
+                    iconPath={<img src={clickedLike ? liked : like} alt="좋아요 버튼" />}
+                    onClick={handleLikeClick}
+                  />
                 </div>
               </div>
               <div className="flex gap-2">
