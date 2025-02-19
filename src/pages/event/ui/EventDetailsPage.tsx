@@ -8,15 +8,27 @@ import like from '../../../../public/assets/event-manage/details/Like.svg';
 import OrganizerInfo from '../../../widgets/event/ui/OrganizerInfo';
 import TicketInfo from '../../../widgets/event/ui/TicketInfo';
 import link from '../../../../public/assets/event-manage/details/Link.svg';
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
+import { useState } from 'react';
+import ShareEventModal from '../../../features/event-manage/ui/ShareEventModal';
 
 const EventDetailsPage = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [title, setTitle] = useState('');
 
   const handlePreviousButton = () => {
     navigate(-1);
   };
+  const handleShareClick = (title: string) => {
+    setTitle(title);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
-    <div>
+    <>
       <Header
         leftButtonClassName="text-xl hover:no-underline z-30"
         leftButtonClick={handlePreviousButton}
@@ -37,8 +49,11 @@ const EventDetailsPage = () => {
                     현재 {event.participants}명이 참가 신청했습니다.
                   </span>
                 </div>
-                <div className="flex gap-5">
-                  <img src={share} alt="공유하기 버튼" />
+                <div className="flex gap-3">
+                  <IconButton
+                    iconPath={<img src={share} alt="공유하기 버튼" />}
+                    onClick={() => handleShareClick(event.title)}
+                  />
                   <img src={like} alt="좋아하기 버튼" />
                 </div>
               </div>
@@ -75,7 +90,8 @@ const EventDetailsPage = () => {
           </div>
         </div>
       </>
-    </div>
+      {isModalOpen && <ShareEventModal closeModal={closeModal} eventName={title} />}
+    </>
   );
 };
 export default EventDetailsPage;
