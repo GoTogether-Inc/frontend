@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import Header from '../../../../design-system/ui/Header';
 import { buttonData } from '../../../shared/types/menuType';
+import BottomBar from '../../../widgets/main/ui/BottomBar';
 
 const handleIconClick = (navigate: (path: string) => void, path: string) => {
   navigate(path);
@@ -38,6 +39,7 @@ const MenuPage = () => {
           </div>
         ))}
       </div>
+      <BottomBar />
     </>
   );
 };
