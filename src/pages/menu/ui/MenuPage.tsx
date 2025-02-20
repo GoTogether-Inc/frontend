@@ -18,7 +18,7 @@ const MenuPage = () => {
       <Header
         centerContent="카테고리"
         rightContent={
-          <button type="button" className="w-5">
+          <button type="button" className="w-5 z-10" onClick={() => navigate('/search')}>
             <img src={searchIcon} alt="Search Icon" />
           </button>
         }
