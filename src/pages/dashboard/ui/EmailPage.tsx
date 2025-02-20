@@ -17,8 +17,12 @@ const EmailPage = () => {
             <button className="hover:text-main">전체 이메일 보내기</button>|
             <button className="hover:text-main">티켓별 이메일 보내기</button>
           </div>
-          <DefaultTextField className="h-12" leftText="받는 사람" />
-          <DefaultTextField className="h-12" leftText="제목" />
+          <DefaultTextField
+            className="h-12"
+            leftText="받는 사람"
+            placeholder="개인별로 선택하거나, 위에 필터를 선택하세요."
+          />
+          <DefaultTextField className="h-12" leftText="제목" placeholder="제목" />
         </div>
 
         {/* 이메일 내용 작성 부분 */}
@@ -26,6 +30,7 @@ const EmailPage = () => {
           label="추가 발송될 이메일 내용"
           detail="추가 발송될 이메일 본문 내용입니다."
           className="h-80 mb-10"
+          placeholder="엔터를 이용해 태그를 입력하세요"
         />
 
         {/*시간 선택 컴포넌트*/}
