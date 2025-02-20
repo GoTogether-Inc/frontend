@@ -10,7 +10,7 @@ interface ShareEventModalProp {
 const ShareEventModal = ({ closeModal, eventName }: ShareEventModalProp) => {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center">
-      <div className="absolute inset-0 mx-auto w-full max-w-lg bg-black bg-opacity-50" onClick={closeModal}></div>
+      <div className="absolute inset-0 mx-auto w-full max-w-lg bg-black bg-opacity-30" onClick={closeModal}></div>
       <div onClick={e => e.stopPropagation()} className="relative w-full max-w-lg bg-white rounded-t-[20px] px-6 py-4">
         <div className="flex justify-center">
           <div className="w-20 h-1 bg-black bg-opacity-30 rounded-full mb-3" />

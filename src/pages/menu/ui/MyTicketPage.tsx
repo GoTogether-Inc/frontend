@@ -1,6 +1,6 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import QRcode from '../../../../design-system/icons/QrCode.svg';
@@ -8,14 +8,22 @@ import { trendingEvents } from '../../../shared/types/eventCardType';
 import EventCard from '../../../shared/ui/EventCard';
 
 const MyTicketPage = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEventCardClick = () => {
-    setModalOpen(true);
+    setIsModalOpen(true);
   };
   const handleCloseModal = () => {
-    setModalOpen(false);
+    setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'scroll';
+    }
+  }, [isModalOpen]);
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" showText={true}>
@@ -36,7 +44,7 @@ const MyTicketPage = () => {
         ))}
       </div>
 
-      {modalOpen && (
+      {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full z-20">
           <div className="relative mx-auto w-full max-w-lg bg-black bg-opacity-30">
             <QrModal
