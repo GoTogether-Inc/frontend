@@ -11,7 +11,7 @@ const TimePicker = () => {
     <div className="flex items-center justify-between">
       <label className="font-bold text-gray-700 whitespace-nowrap text-sm md:text-base">예약 일시</label>
 
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex flex-row justify-center md:gap-3 gap-1">
         {/* 날짜 선택 */}
         <DatePicker
           selected={selectedDate}
