@@ -46,7 +46,7 @@ const SearchPage = () => {
   const inputRef = useRef<HTMLInputElement | null>(null); // Input 요소를 참조하기 위한 훅
 
   const handlePreviousButton = () => {
-    navigate('/');
+    navigate('/'); //Q.바로 이전 페이지로 돌아가는게 자연스럽지 않을까요?
   };
 
   const changeInputKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
