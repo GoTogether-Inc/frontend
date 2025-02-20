@@ -26,7 +26,7 @@ const TimePicker = () => {
           className="border rounded-md px-3 py-2 md:w-[80px] w-[60px] text-sm md:text-base text-center"
         >
           {Array.from({ length: 24 }, (_, i) => {
-            const hour = i.toString().padStart(2, '0'); // 1자리 숫자를 "00", "01" 형식으로 변환
+            const hour = i.toString().padStart(2, '0');
             return (
               <option key={hour} value={hour}>
                 {hour}시

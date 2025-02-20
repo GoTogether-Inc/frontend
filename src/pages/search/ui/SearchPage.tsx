@@ -11,7 +11,7 @@ import { trendingEventsData } from '../../../shared/types/eventCardType';
 import { hostInfoData } from '../../../shared/types/hostInfoType';
 import { FilterDataType } from '../../../shared/types/filterDataType';
 import { FilterMockData } from '../../../shared/types/filterDataType';
-import HostInfoButton from '../../../features/menu/ui/HostInfoButton';
+import ProfileCircle from '../../../../design-system/ui/Profile';
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -106,7 +106,12 @@ const SearchPage = () => {
                 <p className="text-xl font-bold pb-3 sm:text-sm md:text-lg lg:text-xl mb-3">호스트</p>
                 <div className="grid grid-cols-4 gap-4">
                   {filterData.Host?.map((host: hostInfoData) => (
-                    <HostInfoButton key={host.id} host={host} />
+                    <ProfileCircle
+                      profile="hostInfoProfile"
+                      name={host.name}
+                      id={host.id}
+                      className="w-12 h-12 md:w-13 md:h-13 lg:w-14 lg:h-14 text-sm md:text-16 lg:text-base"
+                    />
                   ))}
                 </div>
               </div>
