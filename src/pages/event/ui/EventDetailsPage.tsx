@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { eventData } from '../../../shared/types/eventDetailType';
 import OrganizerInfo from '../../../widgets/event/ui/OrganizerInfo';
@@ -32,6 +32,15 @@ const EventDetailsPage = () => {
   const handleLikeClick = () => {
     setClickedLike(prev => !prev);
   };
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'scroll';
+    }
+  }, [isModalOpen]);
+
   return (
     <>
       <Header
