@@ -149,7 +149,9 @@ const MainPage = () => {
   const handlePrev = (setStartIndex: SetStartIndex, currentIndex: number, eventsLength: number): void => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
-
+  const handleEventCardClick = () => {
+    navigate('/event-details');
+  };
   const handleAllEventsButtonClick = () => {
     navigate('/all-events');
   };
@@ -211,6 +213,7 @@ const MainPage = () => {
                 eventDate={event.eventDate}
                 location={event.location}
                 hashtags={event.hashtags}
+                onClick={handleEventCardClick}
               />
             ))}
         </div>
