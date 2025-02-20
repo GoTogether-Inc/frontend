@@ -4,8 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const TimePicker = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedHour, setSelectedHour] = useState<string>('0');
-  const [selectedMinute, setSelectedMinute] = useState<string>('0');
+  const [selectedHour, setSelectedHour] = useState<string>('00');
+  const [selectedMinute, setSelectedMinute] = useState<string>('00');
 
   return (
     <div className="flex items-center justify-between">
@@ -19,20 +19,21 @@ const TimePicker = () => {
           dateFormat="yyyy년 MM월 dd일"
           className="border rounded-md px-3 py-2 w-[100px] text-center text-sm md:w-[150px] md:text-base"
         />
-
         {/* 시간 선택 */}
         <select
           value={selectedHour}
           onChange={e => setSelectedHour(e.target.value)}
           className="border rounded-md px-3 py-2 md:w-[80px] w-[60px] text-sm md:text-base text-center"
         >
-          {Array.from({ length: 24 }, (_, i) => (
-            <option key={i} value={i}>
-              {i}시
-            </option>
-          ))}
+          {Array.from({ length: 24 }, (_, i) => {
+            const hour = i.toString().padStart(2, '0'); // 1자리 숫자를 "00", "01" 형식으로 변환
+            return (
+              <option key={hour} value={hour}>
+                {hour}시
+              </option>
+            );
+          })}
         </select>
-
         {/* 분 선택 */}
         <select
           value={selectedMinute}
