@@ -6,7 +6,7 @@ interface TicketRevenueProps {
 
 const TicketRevenue = ({ icon, title, value }: TicketRevenueProps) => {
   return (
-    <div className="flex items-center w-full h-full bg-white shadow-lg rounded-[10px] gap-3 md:gap-7 px-3 md:px-4 py-5">
+    <div className="flex items-center w-full h-full bg-white shadow-md rounded-[10px] gap-3 md:gap-7 px-3 md:px-4 py-5">
       <div className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-main rounded-[5px]">{icon}</div>
       <div className="flex flex-col">
         <span className="text-xs md:text-base text-main font-semibold">{title}</span>

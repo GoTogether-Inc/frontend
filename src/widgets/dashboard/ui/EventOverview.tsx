@@ -1,6 +1,6 @@
 const EventOverview = () => {
   return (
-    <div className="flex flex-col w-full h-full bg-white shadow-lg rounded-[10px] gap-5 px-4 py-6">
+    <div className="flex flex-col w-full h-full bg-white shadow-md rounded-[10px] gap-5 px-4 py-6">
       <div>
         <h2 className="text-base font-semibold mb-2">이벤트 개요</h2>
         <hr />

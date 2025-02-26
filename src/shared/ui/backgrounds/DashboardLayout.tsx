@@ -5,11 +5,12 @@ import { useState } from 'react';
 import SideBar from '../../../widgets/dashboard/ui/SideBar';
 
 interface DashboardLayoutProps {
+  pinkBg?: boolean;
   children: React.ReactNode;
   centerContent: string;
 }
 
-const DashboardLayout = ({ children, centerContent }: DashboardLayoutProps) => {
+const DashboardLayout = ({ pinkBg = false, children, centerContent }: DashboardLayoutProps) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -42,7 +43,11 @@ const DashboardLayout = ({ children, centerContent }: DashboardLayoutProps) => {
       </div>
 
       {/* 레이아웃 내용 */}
-      <div className="flex flex-col justify-between w-full min-h-[calc(100vh-6rem)] bg-white rounded-[20px] mt-20 z-20">
+      <div
+        className={`flex flex-col justify-between w-full min-h-[calc(100vh-6rem)] rounded-[20px] mt-20 z-20 ${
+          pinkBg ? 'bg-[#FFFCFC]' : 'bg-white'
+        }`}
+      >
         {children}
       </div>
       {modalOpen && <SideBar onClose={handleModalClose} />}
