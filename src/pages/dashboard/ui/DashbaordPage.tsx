@@ -3,11 +3,11 @@ import EventOverview from '../../../widgets/dashboard/ui/EventOverview';
 import TicketRevenue from '../../../widgets/dashboard/ui/TicketRevenue';
 import ticket from '../../../../public/assets/dashboard/main/Ticket(white).svg';
 import cash from '../../../../public/assets/dashboard/main/Cash.svg';
-import CheckList from '../../../features/dashboard/ui/Checklist';
+import CheckList from '../../../features/dashboard/ui/CheckList';
 
 const DashboardPage = () => {
   return (
-    <DashboardLayout centerContent="대시보드">
+    <DashboardLayout centerContent="대시보드" pinkBg={true}>
       <div className="flex flex-col mt-8 md:mt-13 px-7 gap-4">
         <h1 className="text-2xl font-bold">WOOACON 2024</h1>
         <CheckList />
