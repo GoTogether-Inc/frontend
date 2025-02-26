@@ -1,9 +1,9 @@
 import check from '../../../../public/assets/dashboard/main/Check.svg';
 // import completeCheck from '../../../../public/assets/dashboard/main/Check(complete).svg';
 
-const checklists = ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기'];
+const checkLists = ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기'];
 
-const Checklist = () => {
+const CheckList = () => {
   return (
     <div className="flex flex-col w-full h-full bg-white shadow-lg rounded-[10px] gap-4 px-4 py-6">
       <div className="flex flex-col">
@@ -16,7 +16,7 @@ const Checklist = () => {
         ))}
       </div>
       <div className="flex flex-col gap-2">
-        {checklists.map((item, index) => (
+        {checkLists.map((item, index) => (
           <div key={index} className="flex items-center gap-3">
             <img src={check} alt="체크" className="w-4 h-4" />
             <div className="text-xs md:text-sm">{item}</div>
@@ -27,4 +27,4 @@ const Checklist = () => {
     </div>
   );
 };
-export default Checklist;
+export default CheckList;
