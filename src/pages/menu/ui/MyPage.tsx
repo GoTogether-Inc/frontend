@@ -5,6 +5,7 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import { useForm } from 'react-hook-form';
 import { validations } from '../../../shared/lib/validation';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
+import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 
 const MyPage = () => {
   const userData = { email: 'aaa@naver.com', name: '고예진', phone: '01012345678' };
@@ -76,33 +77,7 @@ const MyPage = () => {
           <TertiaryButton label="저장하기" color="black" size="large" type="submit" className="w-24 h-8" />
         </form>
       </div>
-
-      <div className="flex flex-col px-5 mt-12 md:mt-16 gap-6">
-        <h1 className="text-xl font-bold">등록된 카드</h1>
-        <div className="flex w-full h-32 md:h-40">
-          <div className="flex w-full gap-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory">
-            {cardData.length === 1 ? (
-              <div
-                key={cardData[0].id}
-                className={`flex items-center justify-center text-white text-2xl w-72 h-full rounded-xl mx-auto ${cardData[0].color}`}
-              >
-                {cardData[0].name}
-              </div>
-            ) : (
-              cardData.map((card, index) => (
-                <div
-                  key={card.id}
-                  className={`flex items-center justify-center w-[60%] h-full text-white text-2xl snap-center shrink-0 rounded-xl ${
-                    card.color
-                  }  ${index === 0 ? 'ml-40' : index === cardData.length - 1 ? 'mr-40' : ''}`}
-                >
-                  {card.name}
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </div>
+      <PaymentCard title={'등록된 카드'} />
       <BottomBar />
     </div>
   );
