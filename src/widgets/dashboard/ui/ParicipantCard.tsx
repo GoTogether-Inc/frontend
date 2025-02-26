@@ -1,5 +1,6 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import Checkbox from '../../../../design-system/ui/Checkbox';
+import { useParticipantStore } from '../../../features/dashboard/model/participantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 
 interface ParticipantCardProps {
@@ -10,11 +11,12 @@ interface ParticipantCardProps {
 }
 
 const ParticipantCard = ({ participant, checked, checkIn, onChange }: ParticipantCardProps) => {
+  const { approvedParticipants, toggleApproveParticipant } = useParticipantStore();
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-3 py-2 shadow-sm">
       <div className="flex gap-3">
         <Checkbox checked={checked} onChange={onChange} label="" />
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <p>{participant.ticketNum}</p>
           <div className="flex flex-col">
             <p>이름: {participant.name}</p>
@@ -28,8 +30,19 @@ const ParticipantCard = ({ participant, checked, checkIn, onChange }: Participan
       <div className="flex items-center gap-4">
         {/* ver2에서 넣어야 할 버튼
          <SecondaryButton label="확인하기" color="pink" size="small" /> */}
-        <p>{checkIn ? '완료' : '미완료'}</p>
-        <TertiaryButton label="승인" type="button" size="small" color="pink" />
+        <p className=" text-[#888686]">{checkIn ? '완료' : '미완료'}</p>
+
+        {approvedParticipants[participant.ticketNum] ? (
+          <p className=" text-[#888686]">승인됨</p>
+        ) : (
+          <TertiaryButton
+            label="승인"
+            type="button"
+            size="small"
+            color="pink"
+            onClick={() => toggleApproveParticipant(participant.ticketNum)}
+          />
+        )}
       </div>
     </div>
   );
