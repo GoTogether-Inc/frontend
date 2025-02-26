@@ -13,7 +13,7 @@ const TertiaryButton = ({ label, type, color, size, onClick, className }: Tertia
   const sizeStyle =
     size === 'large'
       ? 'text-sm sm:px-2.5 sm:py-2 sm:text-xs sm:rounded md:px-3 md:py-2.5 md:text-sm md:rounded-md lg:px-3 lg:py-2.5 lg:text-base lg:rounded-md'
-      : 'px-2 py-1 text-xs';
+      : 'px-2 py-0.5 text-11';
 
   const colorStyle =
     color === 'pink'
