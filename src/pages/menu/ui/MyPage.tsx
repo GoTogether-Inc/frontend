@@ -73,7 +73,7 @@ const MyPage = () => {
             </div>
           </div>
           {isChanged && <span className="text-red-500 text-sm">{isChanged}</span>}
-          <TertiaryButton label="저장하기" color="black" type="submit" className="w-24 h-8" />
+          <TertiaryButton label="저장하기" color="black" size="large" type="submit" className="w-24 h-8" />
         </form>
       </div>
 

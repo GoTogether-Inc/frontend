@@ -55,7 +55,7 @@ const TicketInfo = () => {
                   className="flex justify-center items-center bg-white w-6 h-6 md:w-7 md:h-7"
                 />
               </div>
-              <TertiaryButton label="구매하기" type="button" color="black" className="w-22 h-8" />
+              <TertiaryButton label="구매하기" type="button" color="black" size="large" className="w-22 h-8" />
             </div>
           </div>
         </div>
