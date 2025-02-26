@@ -23,6 +23,7 @@ import TicketCreatePage from '../../pages/dashboard/ui/ticket/TicketCreatePage';
 import HostInfoPage from '../../pages/menu/ui/HostInfoPage';
 import EmailPage from '../../pages/dashboard/ui/EmailPage';
 import EventDetailsPage from '../../pages/event/ui/EventDetailsPage';
+import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMangementPage';
 
 const routesConfig = [
   {
@@ -56,6 +57,11 @@ const routesConfig = [
     requiresAuth: false,
   },
   {
+    path: MAIN_ROUTES.search,
+    element: <SearchPage />,
+    requiresAuth: false,
+  },
+  {
     path: MAIN_ROUTES.menu,
     element: <MenuPage />,
     requiresAuth: false,
@@ -86,8 +92,8 @@ const routesConfig = [
     requiresAuth: false,
   },
   {
-    path: MAIN_ROUTES.search,
-    element: <SearchPage />,
+    path: MENU_ROUTES.hostInfo,
+    element: <HostInfoPage />,
     requiresAuth: false,
   },
   {
@@ -125,10 +131,9 @@ const routesConfig = [
     element: <EmailPage />,
     requiresAuth: false,
   },
-
   {
-    path: MENU_ROUTES.hostInfo,
-    element: <HostInfoPage />,
+    path: DASHBOARD_ROUTES.participantsMangement,
+    element: <ParticipantsManagementPage />,
     requiresAuth: false,
   },
 ];
