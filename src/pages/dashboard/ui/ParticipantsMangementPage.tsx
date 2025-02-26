@@ -5,10 +5,12 @@ import SearchBar from '../../../shared/ui/SearchBar';
 import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
 import ParticipantsFilterBar from '../../../features/dashboard/ui/ParticipantsFilterBar';
 import EmailModal from '../../../features/dashboard/ui/EmailModal';
+import SelectTicketModal from '../../../widgets/dashboard/ui/SelectTicketModal';
 
 const ParticipantsManagementPage = () => {
   const [filterModalOpen, setfilterModalOpen] = useState(false);
   const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const [listType, setListType] = useState<'all' | 'approved' | 'pending'>('all');
   const [filter, setFilter] = useState<string[]>([]);
 
@@ -41,7 +43,24 @@ const ParticipantsManagementPage = () => {
           onClose={() => setfilterModalOpen(false)}
         />
       )}
-      {emailModalOpen && <EmailModal onClose={() => setEmailModalOpen(false)} />}
+      {emailModalOpen && (
+        <EmailModal
+          onClose={() => setEmailModalOpen(false)}
+          openSelectTicket={() => {
+            setEmailModalOpen(false);
+            setTicketModalOpen(true);
+          }}
+        />
+      )}
+      {ticketModalOpen && (
+        <SelectTicketModal
+          onClose={() => setTicketModalOpen(false)}
+          openEmailModal={() => {
+            setTicketModalOpen(false);
+            setEmailModalOpen(true);
+          }}
+        />
+      )}
     </DashboardLayout>
   );
 };

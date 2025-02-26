@@ -4,9 +4,10 @@ import MultilineTextField from '../../../../design-system/ui/textFields/Multilin
 
 interface EmailInputProps {
   type?: '이메일 예약 발송' | '선택 이메일 보내기';
+  openSelectTicket: () => void;
 }
 
-const EmailInput = ({ type = '이메일 예약 발송' }: EmailInputProps) => {
+const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket }: EmailInputProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full text-center font-bold text-xl">{type}</div>
@@ -14,7 +15,7 @@ const EmailInput = ({ type = '이메일 예약 발송' }: EmailInputProps) => {
       {/* 수신자와 제목 입력하는 부분 */}
       <div className="text-xs flex flex-row gap-2 text-gray-700 w-full justify-end">
         <TextButton label="전체 이메일 보내기" onClick={() => console.log('전체 이메일 보내기')} />|
-        <TextButton label="티켓별 이메일 보내기" onClick={() => console.log('전체 이메일 보내기')} />
+        <TextButton label="티켓별 이메일 보내기" onClick={openSelectTicket} />
       </div>
       <div className="flex flex-col gap-2">
         <DefaultTextField
