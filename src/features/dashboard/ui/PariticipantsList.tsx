@@ -18,15 +18,15 @@ const ParticipantsList = ({ listType }: ParticipantsListProps) => {
   });
 
   useEffect(() => {
-    initializeParticipants(participantsInfo.map(p => p.ticketNum));
+    initializeParticipants(participantsInfo);
   }, [participantsInfo, initializeParticipants]);
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between text-xs text-placeholderText bg-white shadow-sm px-3 py-3 rounded-t-lg">
+      <div className="flex items-center justify-between text-xs text-[#888686] bg-white shadow-sm px-3 py-3 rounded-t-lg">
         <div className="flex gap-3">
           <Checkbox checked={all} onChange={toggleAll} label="" />
-          <div className="flex gap-20">
+          <div className="flex gap-24">
             <p>티켓 번호</p>
             <p>참여자 정보</p>
           </div>
