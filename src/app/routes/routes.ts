@@ -6,6 +6,7 @@ export const MAIN_ROUTES = {
   search: '/search',
   menu: '/menu',
   dashbord: '/dashboard',
+  payment: '/payment',
 };
 
 export const AUTH_ROUTES = {
@@ -39,4 +40,8 @@ export const DASHBOARD_ROUTES = {
   mailBox: `${MAIN_ROUTES.dashbord}/mailBox`,
   emailEdit: `${MAIN_ROUTES.dashbord}/edit-email`,
   participantsMangement: `${MAIN_ROUTES.dashbord}/participants-mangement`,
+};
+
+export const PAYMENT_ROUTES = {
+  cardRegister: `${MAIN_ROUTES.payment}/cardRegister`,
 };

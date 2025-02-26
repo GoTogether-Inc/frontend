@@ -10,7 +10,7 @@ const PaymentCard = ({ title }: { title: string }) => {
     <div className="flex flex-col px-5 mt-12 md:mt-16 gap-6">
       <h1 className="text-xl font-bold">{title}</h1>
       <div className="flex w-full h-32 md:h-40">
-        <div className="flex w-full gap-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory">
+        <div className="flex w-full gap-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory items-center">
           {cardData.map((card, index) => (
             <div
               key={card.id}

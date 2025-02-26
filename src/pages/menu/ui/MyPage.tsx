@@ -9,12 +9,6 @@ import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 
 const MyPage = () => {
   const userData = { email: 'aaa@naver.com', name: '고예진', phone: '01012345678' };
-  const cardData = [
-    { id: 1, name: 'Card 1', color: 'bg-blue-500' },
-    { id: 2, name: 'Card 2', color: 'bg-red-500' },
-    { id: 3, name: 'Card 3', color: 'bg-green-500' },
-    { id: 4, name: 'Card 4', color: 'bg-yellow-500' },
-  ];
 
   const [isChanged, setIsChanged] = useState<string>('');
   const {

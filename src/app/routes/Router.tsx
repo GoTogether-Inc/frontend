@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { MAIN_ROUTES, JOIN_ROUTES, MENU_ROUTES, DASHBOARD_ROUTES } from './routes';
+import { MAIN_ROUTES, JOIN_ROUTES, MENU_ROUTES, DASHBOARD_ROUTES, PAYMENT_ROUTES } from './routes';
 import Layout from '../Layout';
 import AgreementPage from '../../pages/join/AgreementPage';
 import InfoInputPage from '../../pages/join/InfoInputPage';
@@ -23,6 +23,7 @@ import TicketCreatePage from '../../pages/dashboard/ui/ticket/TicketCreatePage';
 import HostInfoPage from '../../pages/menu/ui/HostInfoPage';
 import EmailPage from '../../pages/dashboard/ui/mail/EmailPage';
 import EventDetailsPage from '../../pages/event/ui/EventDetailsPage';
+import CardRegisterPage from '../../pages/payment/ui/CardRegisterPage';
 import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMangementPage';
 import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
 import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
@@ -136,6 +137,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.mailBox,
     element: <MailBoxPage />,
+    requiresAuth: false,
+  },
+  {
+    path: PAYMENT_ROUTES.cardRegister,
+    element: <CardRegisterPage />,
     requiresAuth: false,
   },
   {
