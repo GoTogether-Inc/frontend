@@ -5,10 +5,16 @@ import filterImg from '../../../../public/assets/dashboard/Filter.svg';
 interface ParticipantsFilterBarProps {
   listType: 'all' | 'approved' | 'pending';
   setListType: (type: 'all' | 'approved' | 'pending') => void;
-  setModalOpen: (open: boolean) => void;
+  setFilterModalOpen: (open: boolean) => void;
+  setEmailModalOpen: (open: boolean) => void;
 }
 
-const ParticipantsFilterBar = ({ listType, setListType, setModalOpen }: ParticipantsFilterBarProps) => {
+const ParticipantsFilterBar = ({
+  listType,
+  setListType,
+  setFilterModalOpen,
+  setEmailModalOpen,
+}: ParticipantsFilterBarProps) => {
   return (
     <div className="flex items-center justify-between text-sm py-2">
       <div className="flex gap-3 font-semibold">
@@ -29,11 +35,17 @@ const ParticipantsFilterBar = ({ listType, setListType, setModalOpen }: Particip
         />
       </div>
       <div className="flex gap-2">
-        <div onClick={() => setModalOpen(true)} className="flex items-center gap-1 text-11 cursor-pointer">
+        <div onClick={() => setFilterModalOpen(true)} className="flex items-center gap-1 text-11 cursor-pointer">
           <p>필터</p>
           <img src={filterImg} alt="필터 아이콘" className="w-3.5" />
         </div>
-        <TertiaryButton label="선택 이메일 보내기" color="black" type="button" size="small" />
+        <TertiaryButton
+          label="선택 이메일 보내기"
+          color="black"
+          type="button"
+          size="small"
+          onClick={() => setEmailModalOpen(true)}
+        />
       </div>
     </div>
   );

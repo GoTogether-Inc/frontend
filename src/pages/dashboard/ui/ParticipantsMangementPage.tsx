@@ -4,9 +4,11 @@ import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../shared/ui/SearchBar';
 import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
 import ParticipantsFilterBar from '../../../features/dashboard/ui/ParticipantsFilterBar';
+import EmailModal from '../../../features/dashboard/ui/EmailModal';
 
 const ParticipantsManagementPage = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [filterModalOpen, setfilterModalOpen] = useState(false);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [listType, setListType] = useState<'all' | 'approved' | 'pending'>('all');
   const [filter, setFilter] = useState<string[]>([]);
 
@@ -22,18 +24,24 @@ const ParticipantsManagementPage = () => {
           <span>0</span>
         </div>
         <SearchBar placeholder="이름, 이메일, 전화번호, 티켓ID로 검색" className="py-5" />
-        <ParticipantsFilterBar listType={listType} setListType={setListType} setModalOpen={setModalOpen} />
+        <ParticipantsFilterBar
+          listType={listType}
+          setListType={setListType}
+          setFilterModalOpen={setfilterModalOpen}
+          setEmailModalOpen={setEmailModalOpen}
+        />
         <ParticipantsList listType={listType} selectedFilter={filter} />
       </div>
-      {modalOpen && (
+      {filterModalOpen && (
         <ButtonModal
           onApply={filters => {
             setFilter(filters);
-            setModalOpen(false);
+            setfilterModalOpen(false);
           }}
-          onClose={() => setModalOpen(false)}
+          onClose={() => setfilterModalOpen(false)}
         />
       )}
+      {emailModalOpen && <EmailModal onClose={() => setEmailModalOpen(false)} />}
     </DashboardLayout>
   );
 };

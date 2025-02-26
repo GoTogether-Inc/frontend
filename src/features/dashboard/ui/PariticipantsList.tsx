@@ -32,7 +32,7 @@ const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListPro
   }, [participantsInfo, initializeParticipants]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 mb-4">
       <div className="flex items-center justify-between text-xs text-[#888686] bg-white shadow-sm px-3 py-3 rounded-t-lg">
         <div className="flex gap-3">
           <Checkbox checked={all} onChange={toggleAll} label="" />
