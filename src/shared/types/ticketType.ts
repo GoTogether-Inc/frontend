@@ -38,7 +38,7 @@ export const TicketMockData: TicketType[] = [
   },
   {
     eventId: 3,
-    ticketType: '무료',
+    ticketType: '할인 티켓',
     ticketName: '학생 할인 티켓',
     ticketDescription: '학생증 제시 시 할인 적용된 티켓입니다.',
     ticketPrice: 30000,

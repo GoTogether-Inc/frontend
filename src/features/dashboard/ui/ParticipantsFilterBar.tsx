@@ -1,6 +1,6 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
-import filterImg from '../../../../public/assets/dashboard/Filter.svg';
+import filterImg from '../../../../public/assets/dashboard/participants-management/Filter.svg';
 
 interface ParticipantsFilterBarProps {
   listType: 'all' | 'approved' | 'pending';
