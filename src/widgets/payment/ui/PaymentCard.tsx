@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 const PaymentCard = ({ title }: { title: string }) => {
+  const navigate = useNavigate();
+
   const cardData = [
     { id: 1, name: 'Card 1', color: 'bg-blue-500' },
     { id: 2, name: 'Card 2', color: 'bg-red-500' },
@@ -24,7 +28,7 @@ const PaymentCard = ({ title }: { title: string }) => {
           {/*  카드 추가 버튼  */}
           <button
             className="flex items-center justify-center w-[60%] h-full text-white text-2xl snap-center shrink-0 rounded-xl bg-gray-400 mr-40"
-            onClick={() => alert('카드 추가 페이지 이동')}
+            onClick={() => navigate('/payment/cardRegister')}
           >
             + 카드 추가
           </button>
