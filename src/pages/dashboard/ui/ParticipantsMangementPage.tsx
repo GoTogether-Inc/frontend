@@ -5,9 +5,12 @@ import SearchBar from '../../../shared/ui/SearchBar';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import filterImg from '../../../../public/assets/dashboard/Filter.svg';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
+import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
 
 const ParticipantsManagementPage = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [listType, setListType] = useState<'all' | 'approved' | 'pending'>('all');
+  const [filter, setFilter] = useState<string[]>([]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
@@ -40,15 +43,24 @@ const ParticipantsManagementPage = () => {
             />
           </div>
           <div className="flex gap-2">
-            <div className="flex items-center gap-1 text-11">
+            <div onClick={() => setModalOpen(true)} className="flex items-center gap-1 text-11 cursor-pointer">
               <p>필터</p>
               <img src={filterImg} alt="필터 아이콘" className="w-3.5" />
             </div>
             <TertiaryButton label="선택 이메일 보내기" color="black" type="button" size="small" />
           </div>
         </div>
-        <ParticipantsList listType={listType} />
+        <ParticipantsList listType={listType} selectedFilter={filter} />
       </div>
+      {modalOpen && (
+        <ButtonModal
+          onApply={filters => {
+            setFilter(filters);
+            setModalOpen(false);
+          }}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </DashboardLayout>
   );
 };
