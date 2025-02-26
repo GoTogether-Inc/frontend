@@ -6,15 +6,25 @@ import { useParticipantStore } from '../model/participantStore';
 
 interface ParticipantsListProps {
   listType: 'all' | 'approved' | 'pending';
+  selectedFilter: string[];
 }
 
-const ParticipantsList = ({ listType }: ParticipantsListProps) => {
+const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListProps) => {
   const { all, participants, initializeParticipants, toggleAll, toggleParticipant } = useParticipantStore();
 
+  useEffect(() => {
+    initializeParticipants(participantsInfo);
+  }, [initializeParticipants]);
+
   const filteredParticipants = participantsInfo.filter(participant => {
-    if (listType === 'approved') return participant.approved;
-    if (listType === 'pending') return !participant.approved;
-    return true; // 'all'이면 전체 목록
+    if (listType === 'approved' && !participant.approved) return false;
+    if (listType === 'pending' && participant.approved) return false;
+
+    if (selectedFilter.length === 0 || selectedFilter.includes('전체')) return true;
+    if (selectedFilter.includes('체크인 완료') && participant.checkIn) return true;
+    if (selectedFilter.includes('체크인 전') && !participant.checkIn) return true;
+
+    return false;
   });
 
   useEffect(() => {
@@ -37,15 +47,18 @@ const ParticipantsList = ({ listType }: ParticipantsListProps) => {
           <p className="mr-2">승인</p>
         </div>
       </div>
-      {filteredParticipants.map(participant => (
-        <ParticipantCard
-          key={participant.ticketNum}
-          participant={participant}
-          checked={participants[participant.ticketNum] || false}
-          onChange={() => toggleParticipant(participant.ticketNum)}
-          checkIn={true}
-        />
-      ))}
+      {filteredParticipants.length === 0 ? (
+        <p>참가자 정보가 없습니다.</p>
+      ) : (
+        filteredParticipants.map(participant => (
+          <ParticipantCard
+            key={participant.ticketNum}
+            participant={participant}
+            checked={participants[participant.ticketNum] || false}
+            onChange={() => toggleParticipant(participant.ticketNum)}
+          />
+        ))
+      )}
     </div>
   );
 };

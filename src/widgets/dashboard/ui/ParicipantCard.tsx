@@ -6,11 +6,10 @@ import { participantsData } from '../../../shared/types/participantInfoType';
 interface ParticipantCardProps {
   participant: participantsData;
   checked: boolean;
-  checkIn: boolean;
   onChange: () => void;
 }
 
-const ParticipantCard = ({ participant, checked, checkIn, onChange }: ParticipantCardProps) => {
+const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
   const { approvedParticipants, toggleApproveParticipant } = useParticipantStore();
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-3 py-2 shadow-sm">
@@ -27,13 +26,13 @@ const ParticipantCard = ({ participant, checked, checkIn, onChange }: Participan
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-center gap-4">
         {/* ver2에서 넣어야 할 버튼
          <SecondaryButton label="확인하기" color="pink" size="small" /> */}
-        <p className=" text-[#888686]">{checkIn ? '완료' : '미완료'}</p>
+        {participant.checkIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
 
         {approvedParticipants[participant.ticketNum] ? (
-          <p className=" text-[#888686]">승인됨</p>
+          <p className="text-[#888686]">승인됨</p>
         ) : (
           <TertiaryButton
             label="승인"
