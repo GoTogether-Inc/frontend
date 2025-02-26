@@ -17,11 +17,23 @@ const meta = {
       description: '버튼에 표시될 텍스트',
       defaultValue: 'Button',
     },
+    type: {
+      control: 'radio',
+      options: ['button', 'submit'],
+      description: '버튼 타입',
+      defaultValue: 'button',
+    },
     color: {
       control: 'radio',
       options: ['pink', 'black'],
       description: '버튼 색상',
       defaultValue: 'pink',
+    },
+    size: {
+      control: 'radio',
+      options: ['small', 'large'],
+      description: '버튼 크기',
+      defaultValue: 'large',
     },
     onClick: {
       action: 'clicked',
@@ -37,6 +49,7 @@ export const Default: Story = {
     label: 'Default Button',
     type: 'button',
     color: 'pink',
+    size: 'large',
   },
 };
 
@@ -45,6 +58,7 @@ export const Pink: Story = {
     label: '전송하기',
     type: 'button',
     color: 'pink',
+    size: 'large',
   },
 };
 
@@ -53,5 +67,15 @@ export const Black: Story = {
     label: '로그인',
     type: 'button',
     color: 'black',
+    size: 'large',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    label: '작은 버튼',
+    type: 'button',
+    color: 'pink',
+    size: 'small',
   },
 };
