@@ -24,7 +24,7 @@ const AllEventsPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton color="black" label="로그인" onClick={() => {}} />}
+        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
       />
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">

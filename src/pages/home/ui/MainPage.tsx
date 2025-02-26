@@ -174,7 +174,7 @@ const MainPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton color="black" label="로그인" onClick={() => {}} />}
+        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
       />
       <div className="w-full px-6">
         <Banner images={images} interval={5000} />
