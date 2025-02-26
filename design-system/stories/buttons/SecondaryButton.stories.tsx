@@ -23,6 +23,12 @@ const meta = {
       description: '버튼 색상',
       defaultValue: 'pink',
     },
+    size: {
+      control: 'radio',
+      options: ['large', 'small'],
+      description: '버튼 크기',
+      defaultValue: 'large',
+    },
     onClick: {
       action: 'clicked',
       description: '버튼 클릭 핸들러',
@@ -36,19 +42,30 @@ export const Default: Story = {
   args: {
     label: 'Default Button',
     color: 'pink',
+    size: 'large',
   },
 };
 
-export const Pink: Story = {
+export const SmallPink: Story = {
   args: {
-    label: '전송하기',
+    label: '작은 버튼',
     color: 'pink',
+    size: 'small',
   },
 };
 
-export const Black: Story = {
+export const BigBlack: Story = {
   args: {
-    label: '로그인',
+    label: '큰 버튼',
     color: 'black',
+    size: 'large',
+  },
+};
+
+export const SmallBlack: Story = {
+  args: {
+    label: '작은 검은 버튼',
+    color: 'black',
+    size: 'small',
   },
 };
