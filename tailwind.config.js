@@ -15,7 +15,15 @@ export default {
         15: '3.75rem',
       },
       width: {
+        17: '4.25rem',
+        18: '4.5rem',
+        19: '4.75rem',
         90: '22.5rem',
+      },
+      height: {
+        17: '4.25rem',
+        18: '4.5rem',
+        19: '4.75rem',
       },
       fontFamily: {
         sans: ['Apple SD Gothic Neo', 'sans-self'],

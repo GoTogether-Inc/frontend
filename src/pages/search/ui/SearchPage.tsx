@@ -61,7 +61,7 @@ const SearchPage = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <Header
         centerContent={
           <input
@@ -78,11 +78,11 @@ const SearchPage = () => {
       />
       {keyword ? (
         <>
-          <div className="p-6 flex flex-col gap-12">
+          <div className="px-6 flex flex-col gap-8">
             {/* 이벤트 검색 결과를 렌더링 하는 부분 */}
             {filterData.Events?.length > 0 && (
               <div>
-                <p className="text-xl font-bold sm:text-sm md:text-lg lg:text-xl mb-3">이벤트</p>
+                <p className="font-bold text-lg lg:text-xl mb-3">이벤트</p>
                 <div className="grid grid-cols-2 gap-4">
                   {filterData.Events?.map((event: trendingEventsData) => (
                     <EventCard
@@ -103,14 +103,15 @@ const SearchPage = () => {
             {/* 호스트 검색 결과를 렌더링 하는 부분 */}
             {filterData.Host?.length > 0 && (
               <div>
-                <p className="text-xl font-bold pb-3 sm:text-sm md:text-lg lg:text-xl mb-3">호스트</p>
-                <div className="grid grid-cols-4 gap-4">
+                <p className="font-bold pb-3 text-lg lg:text-xl mb-3">호스트</p>
+                <div className="flex flex-wrap gap-9 px-2">
                   {filterData.Host?.map((host: hostInfoData) => (
                     <ProfileCircle
+                      key={host.id}
                       profile="hostInfoProfile"
                       name={host.name}
                       id={host.id}
-                      className="w-12 h-12 md:w-13 md:h-13 lg:w-14 lg:h-14 text-sm md:text-16 lg:text-base"
+                      className="w-19 h-19 md:w-20 md:h-20 text-sm md:text-16 lg:text-base"
                     />
                   ))}
                 </div>
@@ -129,7 +130,7 @@ const SearchPage = () => {
           <Banner images={images} interval={4000} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
