@@ -2,13 +2,22 @@ import Header from '../../../../design-system/ui/Header';
 import ticket from '../../../../public/assets/dashboard/create_ticket/Ticket(horizon).svg';
 import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 import Button from '../../../../design-system/ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 const PaymentPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative flex flex-col gap-2 min-h-screen">
       {/*헤더 영역*/}
       <div className="absolute top-0 w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
-        <Header centerContent="결제하기" leftButtonLabel="<" color="white" leftButtonClassName="text-xl z-30" />
+        <Header
+          centerContent="결제하기"
+          leftButtonLabel="<"
+          color="white"
+          leftButtonClassName="text-xl z-30"
+          leftButtonClick={() => navigate(-1)}
+        />
       </div>
       {/*티켓 정보*/}
       <div className="flex flex-col justify-between w-[90%] h-40 bg-white rounded-md mt-24 mx-auto z-10 shadow-md p-6">
