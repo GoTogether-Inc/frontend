@@ -5,7 +5,7 @@ import TicketItem from '../../../../widgets/dashboard/ui/TicketItem';
 import { useNavigate } from 'react-router-dom';
 import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
-import AddButton from '../../../../../public/assets/dashboard/create_ticket/AddButton.svg';
+import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
 
 const TicketListPage = () => {
   const navigate = useNavigate();
