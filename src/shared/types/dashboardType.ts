@@ -27,5 +27,10 @@ export const menuLists = [
   { text: '이벤트 태그 정보', icon: tag, clickedIcon: clickedTag, path: '/dashboard/eventTag' },
   { text: '티켓 생성하기', icon: ticket, clickedIcon: clickedTicket, path: '/dashboard/ticket' },
   { text: '이메일 예약 발송', icon: email, clickedIcon: clickedEmail, path: '/dashboard/email' },
-  { text: '구매/참가자 관리', icon: participants, clickedIcon: clickedParticipants, path: '/dashboard/participants' },
+  {
+    text: '구매/참가자 관리',
+    icon: participants,
+    clickedIcon: clickedParticipants,
+    path: '/dashboard/participants-mangement',
+  },
 ];
