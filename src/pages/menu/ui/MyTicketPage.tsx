@@ -1,6 +1,6 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import QRcode from '../../../../design-system/icons/QrCode.svg';
@@ -16,14 +16,6 @@ const MyTicketPage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflowY = 'hidden';
-    } else {
-      document.body.style.overflowY = 'scroll';
-    }
-  }, [isModalOpen]);
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" showText={true}>
