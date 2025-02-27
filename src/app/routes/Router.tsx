@@ -27,6 +27,7 @@ import CardRegisterPage from '../../pages/payment/ui/CardRegisterPage';
 import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMangementPage';
 import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
 import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
+import PaymentPage from '../../pages/payment/ui/PaymentPage';
 
 const routesConfig = [
   {
@@ -137,6 +138,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.mailBox,
     element: <MailBoxPage />,
+    requiresAuth: false,
+  },
+  {
+    path: MAIN_ROUTES.payment,
+    element: <PaymentPage />,
     requiresAuth: false,
   },
   {
