@@ -55,29 +55,29 @@ const QrModal = ({
         {iconPath1 && <div className="w-full">{iconPath1}</div>}
         {iconPath2 && <div className={`ml-[8%] -mt-[176%] ${isChecked ? '' : 'opacity-50'}`}>{iconPath2}</div>}
         <div className={`${flexColumn} justify-start px-6 ${isChecked ? '' : 'opacity-50'}`}>
-          <div className={`${flexRowSpaceBetweenCenter} w-full mt-[21%]`}>
+          <div className={`${flexRowSpaceBetweenCenter} w-full mt-[22%]`}>
             <h1 className="truncate max-w-48 mr-2 font-semibold">{title}</h1>
             <Countdown children={`${isCountdownChecked ? 'D-5' : '완료'}`} isChecked={isCountdownChecked} />
           </div>
-          <h2 className="text-deDayTextDark text-xs font-medium mb-1">{hostName}</h2>
+          <h2 className="text-deDayTextDark text-xs font-medium mb-2">{hostName}</h2>
           <div className="space-y-1 text-deDayTextDark">
             <IconText
               size="xSmall"
               iconPath={<img src={qr_calendar} alt="qr_calendar" />}
               children={formattedDate}
-              className="text-10"
+              className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
               iconPath={<img src={qr_location} alt="qr_location" />}
               children={location}
-              className="text-10"
+              className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
               iconPath={<img src={qr_ticket} alt="qr_ticket" />}
               children={ticketName}
-              className="text-10"
+              className="text-11"
             ></IconText>
             <span className="text-sm font-bold">{formattedPrice}원</span>
             <hr />
@@ -85,18 +85,18 @@ const QrModal = ({
               size="xSmall"
               iconPath={<img src={qr_check} alt="qr_check" />}
               children={isApproved ? '승인 됨' : '승인 안됨'}
-              className="text-10"
+              className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
               iconPath={<img src={qr_check} alt="qr_check" />}
               children={isCheckIn ? '체크인 완료' : '체크인 미완료'}
-              className="text-10"
+              className="text-11"
             ></IconText>
           </div>
         </div>
       </div>
-      <span onClick={onClick} className="text-white text-xs mt-3 underline cursor-pointer">
+      <span onClick={onClick} className="text-white text-xs mt-6 underline cursor-pointer">
         닫기
       </span>
     </div>
