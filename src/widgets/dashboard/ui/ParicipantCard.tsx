@@ -12,10 +12,10 @@ interface ParticipantCardProps {
 const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
   const { approvedParticipants, toggleApproveParticipant } = useParticipantStore();
   return (
-    <div className="flex items-center justify-between w-full text-xs bg-white px-3 py-2 shadow-sm">
-      <div className="flex gap-3">
+    <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
+      <div className="flex gap-2 md:gap-3">
         <Checkbox checked={checked} onChange={onChange} label="" />
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 md:gap-6 text-11 md:text-12">
           <p>{participant.ticketNum}</p>
           <div className="flex flex-col">
             <p>이름: {participant.name}</p>

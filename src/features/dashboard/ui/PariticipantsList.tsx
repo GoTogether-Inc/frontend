@@ -33,18 +33,18 @@ const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListPro
 
   return (
     <div className="flex flex-col gap-2 mb-4">
-      <div className="flex items-center justify-between text-xs text-[#888686] bg-white shadow-sm px-3 py-3 rounded-t-lg">
-        <div className="flex gap-3">
+      <div className="flex justify-between text-xs text-[#888686] bg-white shadow-sm px-2 md:px-3 py-3 rounded-t-lg">
+        <div className="flex gap-2 md:gap-3">
           <Checkbox checked={all} onChange={toggleAll} label="" />
-          <div className="flex gap-24">
+          <div className="flex items-center gap-15 md:gap-24">
             <p>티켓 번호</p>
             <p>참여자 정보</p>
           </div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex items-center gap-4">
           {/* <p>참여자 정보</p> */}
           <p>체크인</p>
-          <p className="mr-2">승인</p>
+          <p className="mr-1 md:mr-2">승인</p>
         </div>
       </div>
       {filteredParticipants.length === 0 ? (

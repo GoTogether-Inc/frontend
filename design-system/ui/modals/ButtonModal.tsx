@@ -21,7 +21,7 @@ const ButtonModal = ({ onApply, onClose, className = '' }: ButtonModalProps) => 
 
   return (
     <div className="fixed inset-0 flex items-center justify-center w-full max-w-lg h-full mx-auto bg-black bg-opacity-30 z-30">
-      <div className={`w-96 space-y-3 px-6 py-5 rounded-[5px] bg-white ${className}`}>
+      <div className={`w-[95%] space-y-3 px-6 py-5 rounded-[5px] bg-white ${className}`}>
         <h1 className="text-sm text-black font-semibold">티켓 필터</h1>
         <hr />
         <div className={`${flexColumn} space-y-2`}>

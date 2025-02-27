@@ -17,14 +17,14 @@ const ParticipantsManagementPage = () => {
 
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
-      <div className="flex flex-col px-4">
-        <h1 className="text-center font-bold text-xl py-6">구매/참가자 관리</h1>
-        <div className="flex justify-end gap-3 px-4">
-          <h3 className="text-placeholderText">체크인</h3>
-          <span>0/0</span>
-          <span>|</span>
-          <h3 className="text-placeholderText">미승인</h3>
-          <span>0</span>
+      <div className="flex flex-col px-2 md:px-4">
+        <h1 className="text-center font-bold text-xl py-4 md:py-6">구매/참가자 관리</h1>
+        <div className="flex justify-end gap-2 md:gap-3 px-4">
+          <h3 className="text-placeholderText text-sm md:text-base">체크인</h3>
+          <span className="text-sm md:text-base">0/0</span>
+          <span className="text-sm md:text-base">|</span>
+          <h3 className="text-placeholderText text-sm md:text-base">미승인</h3>
+          <span className="text-sm md:text-base">0</span>
         </div>
         <SearchBar placeholder="이름, 이메일, 전화번호, 티켓ID로 검색" className="py-5" />
         <ParticipantsFilterBar
