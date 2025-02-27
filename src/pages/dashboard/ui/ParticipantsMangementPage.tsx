@@ -3,8 +3,8 @@ import ParticipantsList from '../../../features/dashboard/ui/PariticipantsList';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../shared/ui/SearchBar';
 import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
-import ParticipantsFilterBar from '../../../features/dashboard/ui/ParticipantsFilterBar';
-import EmailModal from '../../../features/dashboard/ui/EmailModal';
+import ParticipantsFilterBar from '../../../widgets/dashboard/ui/ParticipantsFilterBar';
+import EmailModal from '../../../widgets/dashboard/ui/EmailModal';
 import SelectTicketModal from '../../../widgets/dashboard/ui/SelectTicketModal';
 import { participantsInfo } from '../../../shared/types/participantInfoType';
 
