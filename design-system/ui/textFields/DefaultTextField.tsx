@@ -34,7 +34,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
   ) => {
     return (
       <div>
-        <label className={`block px-1 font-semibold text-gray-700 ${labelClassName}`}>{label}</label>
+        <label className={`block px-1 text-sm font-semibold text-gray-700 ${labelClassName}`}>{label}</label>
         <label className="block px-1 mb-1 font-medium text-placeholderText sm:text-10 md:text-13">{detail}</label>
         <div className={`flex items-center justify-center `}>
           {leftText && <div className="w-20 text-base font-bold whitespace-nowrap">{leftText}</div>}
