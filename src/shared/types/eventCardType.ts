@@ -13,6 +13,36 @@ export interface trendingEventsData {
   hashtags: string[];
 }
 
+export const latestEvents = [
+  {
+    img: firstPage,
+    eventTitle: '1인프콘 2024 - INFCON 2024',
+    dDay: 'D-1',
+    host: '인프런',
+    eventDate: '2025년 1월 13일',
+    location: '올림픽 공원',
+    hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
+  },
+  {
+    img: secondPage,
+    eventTitle: '2인프콘 2024 - INFCON 2024',
+    dDay: 'D-1',
+    host: '인프런',
+    eventDate: '2025년 1월 13일',
+    location: '올림픽 공원',
+    hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
+  },
+  {
+    img: thirdPage,
+    eventTitle: '3인프콘 2024 - INFCON 2024',
+    dDay: 'D-1',
+    host: '인프런',
+    eventDate: '2025년 1월 13일',
+    location: '올림픽 공원',
+    hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
+  },
+];
+
 export const trendingEvents = [
   {
     id: 1,
@@ -73,5 +103,35 @@ export const trendingEvents = [
     eventDate: '2025-02-01',
     location: 'Incheon, Korea',
     hashtags: ['#Developer', '#Coding', '#Festival'],
+  },
+];
+
+export const closingSoonEvents = [
+  {
+    img: firstPage,
+    eventTitle: '1커뮤니티 네트워킹 - Dev MeetUp 2024',
+    dDay: 'D-6',
+    host: 'Dev 커뮤니티',
+    eventDate: '2025년 1월 12일',
+    location: '판교 스타트업 캠퍼스',
+    hashtags: ['#네트워킹', '#개발자', '#스타트업', '#기술교류'],
+  },
+  {
+    img: secondPage,
+    eventTitle: '2커뮤니티 네트워킹 - Dev MeetUp 2024',
+    dDay: 'D-6',
+    host: 'Dev 커뮤니티',
+    eventDate: '2025년 1월 12일',
+    location: '판교 스타트업 캠퍼스',
+    hashtags: ['#네트워킹', '#개발자', '#스타트업', '#기술교류'],
+  },
+  {
+    img: thirdPage,
+    eventTitle: '3커뮤니티 네트워킹 - Dev MeetUp 2024',
+    dDay: 'D-6',
+    host: 'Dev 커뮤니티',
+    eventDate: '2025년 1월 12일',
+    location: '판교 스타트업 캠퍼스',
+    hashtags: ['#네트워킹', '#개발자', '#스타트업', '#기술교류'],
   },
 ];

@@ -11,6 +11,10 @@ import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCar
 import EventCard from '../../../shared/ui/EventCard';
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { closingSoonEvents, latestEvents, trendingEvents } from '../../../shared/types/eventCardType';
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
+import rightButton from '../../../../public/assets/main-buttons/RightButton.svg';
+import leftButton from '../../../../public/assets/main-buttons/LeftButton.svg';
 
 const MainPage = () => {
   const images = [
@@ -40,97 +44,6 @@ const MainPage = () => {
       iconPath: '/assets/main-buttons/Conference.svg',
       label: '컨퍼런스',
       onClick: () => console.log('Conference clicked'),
-    },
-  ];
-
-  // 이벤트 리스트 분리
-  const latestEvents = [
-    {
-      img: firstPage,
-      eventTitle: '1인프콘 2024 - INFCON 2024',
-      dDay: 'D-1',
-      host: '인프런',
-      eventDate: '2025년 1월 13일',
-      location: '올림픽 공원',
-      hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-    },
-    {
-      img: secondPage,
-      eventTitle: '2인프콘 2024 - INFCON 2024',
-      dDay: 'D-1',
-      host: '인프런',
-      eventDate: '2025년 1월 13일',
-      location: '올림픽 공원',
-      hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-    },
-    {
-      img: thirdPage,
-      eventTitle: '3인프콘 2024 - INFCON 2024',
-      dDay: 'D-1',
-      host: '인프런',
-      eventDate: '2025년 1월 13일',
-      location: '올림픽 공원',
-      hashtags: ['#IT', '#개발자', '#컨퍼런스', '#교육'],
-    },
-  ];
-
-  const trendingEvents = [
-    {
-      img: firstPage,
-      eventTitle: '1해커톤 2024 - Global Hackathon',
-      dDay: 'D-5',
-      host: '해커톤 조직 위원회',
-      eventDate: '2025년 1월 18일',
-      location: '서울 코엑스',
-      hashtags: ['#Hackathon', '#창의력', '#개발', '#팀워크'],
-    },
-    {
-      img: secondPage,
-      eventTitle: '2해커톤 2024 - Global Hackathon',
-      dDay: 'D-5',
-      host: '해커톤 조직 위원회',
-      eventDate: '2025년 1월 18일',
-      location: '서울 코엑스',
-      hashtags: ['#Hackathon', '#창의력', '#개발', '#팀워크'],
-    },
-    {
-      img: thirdPage,
-      eventTitle: '3해커톤 2024 - Global Hackathon',
-      dDay: 'D-5',
-      host: '해커톤 조직 위원회',
-      eventDate: '2025년 1월 18일',
-      location: '서울 코엑스',
-      hashtags: ['#Hackathon', '#창의력', '#개발', '#팀워크'],
-    },
-  ];
-
-  const closingSoonEvents = [
-    {
-      img: firstPage,
-      eventTitle: '1커뮤니티 네트워킹 - Dev MeetUp 2024',
-      dDay: 'D-6',
-      host: 'Dev 커뮤니티',
-      eventDate: '2025년 1월 12일',
-      location: '판교 스타트업 캠퍼스',
-      hashtags: ['#네트워킹', '#개발자', '#스타트업', '#기술교류'],
-    },
-    {
-      img: secondPage,
-      eventTitle: '2커뮤니티 네트워킹 - Dev MeetUp 2024',
-      dDay: 'D-6',
-      host: 'Dev 커뮤니티',
-      eventDate: '2025년 1월 12일',
-      location: '판교 스타트업 캠퍼스',
-      hashtags: ['#네트워킹', '#개발자', '#스타트업', '#기술교류'],
-    },
-    {
-      img: thirdPage,
-      eventTitle: '3커뮤니티 네트워킹 - Dev MeetUp 2024',
-      dDay: 'D-6',
-      host: 'Dev 커뮤니티',
-      eventDate: '2025년 1월 12일',
-      location: '판교 스타트업 캠퍼스',
-      hashtags: ['#네트워킹', '#개발자', '#스타트업', '#기술교류'],
     },
   ];
 
@@ -193,7 +106,7 @@ const MainPage = () => {
         </div>
       </div>
       {/* 최신 이벤트 섹션 */}
-      <div className="relative w-full px-6 mb-8">
+      <div className="relative w-full px-6">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">최신 이벤트</h2>
         <div className="flex gap-4">
           {latestEvents
@@ -218,22 +131,18 @@ const MainPage = () => {
             ))}
         </div>
         {latestStartIndex !== 0 && (
-          <button
+          <IconButton
+            iconPath={<img src={leftButton} alt="왼쪽 버튼" className="absolute top-1/2 left-0.5" />}
             onClick={() => handlePrev(setLatestStartIndex, latestStartIndex, latestEvents.length)}
-            className="absolute text-gray-500 rounded-full shadow-md sm:text-xs md:text-sm lg:text-md sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 sm:left-3 md:left-2.5 lg:left-2 bg-gray-50 top-1/2"
-          >
-            &lt;
-          </button>
+          />
         )}
-        <button
+        <IconButton
+          iconPath={<img src={rightButton} alt="오른쪽 버튼" className="absolute top-1/2 right-0.5" />}
           onClick={() => handleNext(setLatestStartIndex, latestStartIndex, latestEvents.length)}
-          className="absolute text-gray-500 rounded-full shadow-md sm:text-xs md:text-sm lg:text-md sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 sm:right-3 md:right-2.5 lg:right-2 bg-gray-50 top-1/2 "
-        >
-          &gt;
-        </button>
+        />
       </div>
       {/* 요즘 뜨는 이벤트 섹션 */}
-      <div className="relative w-full px-6 mb-8 ">
+      <div className="relative w-full px-6">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">요즘 뜨는 이벤트</h2>
         <div className="flex gap-4">
           {trendingEvents
@@ -257,23 +166,19 @@ const MainPage = () => {
             ))}
         </div>
         {trendingStartIndex !== 0 && (
-          <button
+          <IconButton
+            iconPath={<img src={leftButton} alt="왼쪽 버튼" className="absolute top-1/2 left-0.5" />}
             onClick={() => handlePrev(setTrendingStartIndex, trendingStartIndex, trendingEvents.length)}
-            className="absolute text-gray-500 rounded-full shadow-md sm:text-xs md:text-sm lg:text-md sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 sm:left-3 md:left-2.5 lg:left-2 bg-gray-50 top-1/2"
-          >
-            &lt;
-          </button>
+          />
         )}
-        <button
+        <IconButton
+          iconPath={<img src={rightButton} alt="오른쪽 버튼" className="absolute top-1/2 right-0.5" />}
           onClick={() => handleNext(setTrendingStartIndex, trendingStartIndex, trendingEvents.length)}
-          className="absolute text-gray-500 rounded-full shadow-md sm:text-xs md:text-sm lg:text-md sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 sm:right-3 md:right-2.5 lg:right-2 bg-gray-50 top-1/2"
-        >
-          &gt;
-        </button>
+        />
       </div>
 
       {/* 곧 마감되는 이벤트 섹션 */}
-      <div className="relative w-full px-6 mb-8 ">
+      <div className="relative w-full px-6">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">
           곧 이벤트가 마감돼요! ⏰
         </h2>
@@ -299,19 +204,15 @@ const MainPage = () => {
             ))}
         </div>
         {closingStartIndex !== 0 && (
-          <button
+          <IconButton
+            iconPath={<img src={leftButton} alt="왼쪽 버튼" className="absolute top-1/2 left-0.5" />}
             onClick={() => handlePrev(setClosingStartIndex, closingStartIndex, closingSoonEvents.length)}
-            className="absolute text-gray-500 rounded-full shadow-md sm:text-xs md:text-sm lg:text-md sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 sm:left-3 md:left-2.5 lg:left-2 bg-gray-50 top-1/2"
-          >
-            &lt;
-          </button>
+          />
         )}
-        <button
+        <IconButton
+          iconPath={<img src={rightButton} alt="오른쪽 버튼" className="absolute top-1/2 right-0.5" />}
           onClick={() => handleNext(setClosingStartIndex, closingStartIndex, closingSoonEvents.length)}
-          className="absolute text-gray-500 rounded-full shadow-md sm:text-xs md:text-sm lg:text-md sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 sm:right-3 md:right-2.5 lg:right-2 bg-gray-50 top-1/2"
-        >
-          &gt;
-        </button>
+        />
       </div>
       <button
         onClick={handleAllEventsButtonClick}
