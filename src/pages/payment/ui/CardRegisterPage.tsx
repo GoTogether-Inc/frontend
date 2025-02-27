@@ -80,7 +80,7 @@ const CardRegisterPage = () => {
         </div>
         <div className="flex-grow"></div>
         <div>
-          <Button label="저장하기" onClick={() => console.log('카드 정보 저장')} className="rounded-full w-full" />
+          <Button label="저장하기" onClick={() => console.log('카드 정보 저장')} className="rounded-full w-full h-12" />
         </div>
       </div>
     </TicketHostLayout>
