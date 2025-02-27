@@ -1,5 +1,5 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import EmailInput from './EmailInput';
+import EmailInput from '../../../features/dashboard/ui/EmailInput';
 
 interface EmailModalProps {
   onClose: () => void;
