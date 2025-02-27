@@ -27,10 +27,20 @@ const PaymentCard = ({ title }: { title: string }) => {
           ))}
           {/*  카드 추가 버튼  */}
           <button
-            className="flex items-center justify-center w-[60%] h-full text-white text-2xl snap-center shrink-0 rounded-xl bg-gray-400 mr-40"
+            className={`flex flex-col items-center justify-center w-[60%] h-full border-2 border-dashed border-gray-400 rounded-xl p-6 text-center bg-white snap-center shrink-0 mr-40 gap-2 ${
+              cardData.length == 0 ? 'ml-40' : ''
+            }`}
             onClick={() => navigate('/payment/cardRegister')}
           >
-            + 카드 추가
+            <div className="flex items-center justify-center w-6 h-6 bg-pink-500 text-white text-xl rounded-full">
+              +
+            </div>
+
+            <p className="md:text-lg text-base font-semibold text-gray-700">카드 등록</p>
+            <p className="md:text-sm text-xs text-gray-500">
+              계좌를 한번만 등록해놓으면 <br />
+              매번 쉽게 결제할 수 있어요!
+            </p>
           </button>
         </div>
       </div>
