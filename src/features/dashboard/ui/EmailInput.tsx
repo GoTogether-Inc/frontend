@@ -39,7 +39,7 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
             inputValue={inputValue}
             setInputValue={setInputValue}
             onRemove={removeAllEmail}
-            placeholder={allEmails.length === 0 ? '개인별로 입력하거나, 위에 필터를 선택하세요.' : ''}
+            placeholder={allEmails.length === 0 ? '위 필터로 이메일 보내실 대상을 선택하세요.' : ''}
           />
         </div>
         <DefaultTextField className="h-12" leftText="제목" placeholder="제목" />
