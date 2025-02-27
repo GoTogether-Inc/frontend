@@ -6,6 +6,7 @@ import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
 import ParticipantsFilterBar from '../../../features/dashboard/ui/ParticipantsFilterBar';
 import EmailModal from '../../../features/dashboard/ui/EmailModal';
 import SelectTicketModal from '../../../widgets/dashboard/ui/SelectTicketModal';
+import { participantsInfo } from '../../../shared/types/participantInfoType';
 
 const ParticipantsManagementPage = () => {
   const [filterModalOpen, setfilterModalOpen] = useState(false);
@@ -50,6 +51,7 @@ const ParticipantsManagementPage = () => {
             setEmailModalOpen(false);
             setTicketModalOpen(true);
           }}
+          allParticipantEmails={participantsInfo.map(p => p.email)}
         />
       )}
       {ticketModalOpen && (
