@@ -111,7 +111,7 @@ const HostEditPage = () => {
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex flex-col">
-                <h1 className="font-bold text-black text-lg">이벤트 해시태그</h1>
+                <h1 className="font-bold text-black text-lg">멤버 등록</h1>
                 <p className="text-placeholderText text-10 md:text-13">
                   이메일로 회원을 검색해 추가 할 수 있습니다. 삭제 하려면 추가된 이메일 아이콘의 x를 눌러주세요.{' '}
                 </p>
