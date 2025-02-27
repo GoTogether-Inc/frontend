@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import CreditCard from '../../../../public/assets/payment/CreditCard.svg';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
+import Button from '../../../../design-system/ui/Button';
 
 const CardRegisterPage = () => {
   const [cardNumber, setCardNumber] = useState<string>('');
@@ -44,7 +45,7 @@ const CardRegisterPage = () => {
 
   return (
     <TicketHostLayout centerContent="새 카드 추가" image={CreditCard}>
-      <div className="p-10 flex flex-col gap-16 mt-20">
+      <div className="p-10 flex flex-col gap-16 mt-20 min-h-[80vh]">
         <p className="text-gray-400 text-sm">안전한 결제를 위해 카드 정보를 입력해주세요.</p>
         <DefaultTextField
           label="카드 번호"
@@ -76,6 +77,10 @@ const CardRegisterPage = () => {
             onChange={handleExpiryYearChange}
           />
           <DefaultTextField label="CVC/CVV" className="h-12" placeholder="123" value={cvc} onChange={handleCvcChange} />
+        </div>
+        <div className="flex-grow"></div>
+        <div>
+          <Button label="저장하기" onClick={() => console.log('카드 정보 저장')} className="rounded-full w-full" />
         </div>
       </div>
     </TicketHostLayout>
