@@ -22,17 +22,21 @@ const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
     { id: 'CONFERENCE', name: '컨퍼런스' },
   ];
 
-  const handleDropdown = () => setOpen(!open);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    formState?.category
+      ? { id: formState.category, name: categories.find(c => c.id === formState.category)?.name || '' }
+      : null
+  );
 
-  const handleSelect = (id: string) => {
-    if (setFormState) {
-      setFormState(prev => ({
-        ...prev,
-        category: id,
-      }));
-    }
+  const handleSelect = (category: Category) => {
+    setSelectedCategory(category);
     setOpen(false);
+    if (setFormState) {
+      setFormState(prev => ({ ...prev, category: category.id }));
+    }
   };
+
+  const handleDropdown = () => setOpen(!open);
 
   return (
     <div className="flex flex-col justify-start relative">
@@ -44,9 +48,7 @@ const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
           onClick={handleDropdown}
           className="flex justify-between p-2 text-left bg-white border border-placeholderText rounded-[2px] focus:outline-none w-full max-w-52"
         >
-          <span>
-            {formState?.category ? categories.find(c => c.id === formState.category)?.name : '이벤트 카테고리 선택'}
-          </span>
+          <span>{selectedCategory ? selectedCategory.name : '이벤트 카테고리 선택'}</span>
           <img src={CategoryButton} alt="카테고리 버튼" className="w-6 h-6 -rotate-90" />
         </button>
         {open && (
@@ -54,7 +56,7 @@ const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
             {categories.map(category => (
               <div
                 key={category.id}
-                onClick={() => handleSelect(category.id)}
+                onClick={() => handleSelect(category)}
                 className={`p-2 cursor-pointer hover:bg-dropdown transition-colors ${
                   formState?.category === category.id ? 'bg-dropdown' : ''
                 }`}
