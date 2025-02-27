@@ -23,10 +23,14 @@ const EventInfoPage = () => {
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 기본 정보</h1>
-        <DefaultTextField label="이벤트 제목" placeholder="제목을 입력해주세요" />
+        <DefaultTextField label="이벤트 제목" placeholder="제목을 입력해주세요" className="h-12" />
         <EventDatePicker />
-        <DefaultTextField label="주최자 이메일" placeholder="example@example.com" />
-        <DefaultTextField label="주최자 연락처" placeholder="01012345678(‘-’를 제외한 숫자만 입력해주세요)" />
+        <DefaultTextField label="주최자 이메일" placeholder="example@example.com" className="h-12" />
+        <DefaultTextField
+          label="주최자 연락처"
+          placeholder="01012345678(‘-’를 제외한 숫자만 입력해주세요)"
+          className="h-12"
+        />
         <ChoiceChip
           label="온라인/오프라인 여부"
           options={['온라인', '오프라인']}

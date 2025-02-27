@@ -55,8 +55,8 @@ const EventDatePicker = ({ className, formState, setFormState }: DatePickerProps
   return (
     <div className={`flex flex-col w-full ${className}`}>
       <div className="flex flex-wrap lg:flex-nowrap justify-between gap-4">
-        <div className="flex flex-col w-full sm:w-auto">
-          <span className="text-xs font-bold">시작 날짜</span>
+        <div className="flex flex-col w-full sm:w-auto gap-2">
+          <span className="text-sm font-medium">시작 날짜</span>
           <div className="flex gap-1">
             <DatePicker
               id="startDate"
@@ -99,8 +99,8 @@ const EventDatePicker = ({ className, formState, setFormState }: DatePickerProps
             </select>
           </div>
         </div>
-        <div className="flex flex-col w-full sm:w-auto">
-          <span className="text-xs font-bold">종료 날짜</span>
+        <div className="flex flex-col w-full sm:w-auto gap-2">
+          <span className="text-sm font-medium">종료 날짜</span>
           <div className="flex gap-1">
             <DatePicker
               id="endDate"
