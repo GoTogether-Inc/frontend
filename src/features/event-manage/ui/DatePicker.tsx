@@ -8,9 +8,10 @@ interface DatePickerProps {
   className?: string;
   formState?: FunnelState['formState'];
   setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+  isLabel?: boolean;
 }
 
-const EventDatePicker = ({ className, formState, setFormState }: DatePickerProps) => {
+const EventDatePicker = ({ className, formState, setFormState, isLabel = false }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
     formState?.startDate ? new Date(formState.startDate) : new Date()
   );
@@ -54,9 +55,9 @@ const EventDatePicker = ({ className, formState, setFormState }: DatePickerProps
 
   return (
     <div className={`flex flex-col w-full ${className}`}>
-      <div className="flex flex-wrap lg:flex-nowrap justify-between gap-4">
+      <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-2">
         <div className="flex flex-col w-full sm:w-auto gap-2">
-          <span className="text-sm font-medium">시작 날짜</span>
+          {!isLabel && <span className="text-sm font-medium">시작 날짜</span>}
           <div className="flex gap-1">
             <DatePicker
               id="startDate"
@@ -99,8 +100,11 @@ const EventDatePicker = ({ className, formState, setFormState }: DatePickerProps
             </select>
           </div>
         </div>
+
+        {isLabel && <span className="text-2xl hidden lg:inline">&gt;</span>}
+
         <div className="flex flex-col w-full sm:w-auto gap-2">
-          <span className="text-sm font-medium">종료 날짜</span>
+          {!isLabel && <span className="text-sm font-medium">종료 날짜</span>}
           <div className="flex gap-1">
             <DatePicker
               id="endDate"
