@@ -31,7 +31,7 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-5">
           <h1 className="text-base font-bold whitespace-nowrap">받는 사람</h1>
           {/* 이메일 입력 필드 */}
           <EmailInputBase
@@ -47,7 +47,7 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
       {/* 이메일 내용 작성 부분 */}
       <MultilineTextField
         label="추가 발송될 이메일 내용"
-        className="h-80 mb-4"
+        className="h-80 md:mb-4"
         placeholder="추가 발송될 이메일 본문 내용입니다."
       />
     </div>
