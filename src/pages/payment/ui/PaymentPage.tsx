@@ -1,10 +1,11 @@
 import Header from '../../../../design-system/ui/Header';
 import ticket from '../../../../public/assets/dashboard/create_ticket/Ticket(horizon).svg';
 import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
+import Button from '../../../../design-system/ui/Button';
 
 const PaymentPage = () => {
   return (
-    <div className="relative flex flex-col gap-2">
+    <div className="relative flex flex-col gap-2 min-h-screen">
       {/*헤더 영역*/}
       <div className="absolute top-0 w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
         <Header centerContent="결제하기" leftButtonLabel="<" color="white" leftButtonClassName="text-xl z-30" />
@@ -39,6 +40,10 @@ const PaymentPage = () => {
             <p className="font-semibold md:text-base text-sm">100,000원</p>
           </div>
         </div>
+      </div>
+      <div className="flex flex-grow"></div>
+      <div className="p-7">
+        <Button label="결제하기" onClick={() => console.log('결제 진행')} className="rounded-full h-12 w-full" />
       </div>
     </div>
   );
