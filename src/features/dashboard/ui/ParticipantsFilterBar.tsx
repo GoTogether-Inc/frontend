@@ -16,8 +16,8 @@ const ParticipantsFilterBar = ({
   setEmailModalOpen,
 }: ParticipantsFilterBarProps) => {
   return (
-    <div className="flex items-center justify-between text-sm py-2">
-      <div className="flex gap-3 font-semibold">
+    <div className="flex items-center justify-between text-11 md:text-sm py-2">
+      <div className="flex gap-1.5 md:gap-3 font-semibold">
         <TextButton
           label="구매자 목록"
           onClick={() => setListType('all')}
@@ -36,8 +36,8 @@ const ParticipantsFilterBar = ({
       </div>
       <div className="flex gap-2">
         <div onClick={() => setFilterModalOpen(true)} className="flex items-center gap-1 text-11 cursor-pointer">
-          <p>필터</p>
-          <img src={filterImg} alt="필터 아이콘" className="w-3.5" />
+          <p className="text-10 md:text-11">필터</p>
+          <img src={filterImg} alt="필터 아이콘" className="w-3 md:w-3.5" />
         </div>
         <TertiaryButton
           label="선택 이메일 보내기"
