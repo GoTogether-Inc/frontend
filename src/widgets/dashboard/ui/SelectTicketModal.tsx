@@ -4,7 +4,7 @@ import SelectTicketInfo from './SelectTicketInfo';
 
 interface SelectTicketModalProps {
   onClose: () => void;
-  openEmailModal: () => void;
+  openEmailModal?: () => void;
 }
 
 const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) => {
@@ -16,13 +16,18 @@ const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) 
             label="<"
             onClick={() => {
               onClose();
-              openEmailModal();
+              openEmailModal?.();
             }}
           />
           <h1 className="font-bold text-lg">이메일 발송할 티켓을 선택하세요</h1>
         </div>
         {TicketMockData.map(ticket => (
-          <SelectTicketInfo key={ticket.eventId} tickets={ticket} onClose={onClose} openEmailModal={openEmailModal} />
+          <SelectTicketInfo
+            key={ticket.eventId}
+            tickets={ticket}
+            onClose={onClose}
+            openEmailModal={openEmailModal ?? (() => {})}
+          />
         ))}
       </div>
     </div>
