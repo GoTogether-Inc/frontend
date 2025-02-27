@@ -34,25 +34,25 @@ const TicketCreatePage = () => {
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
-      <div className="p-5 flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-10 min-h-screen">
+      <div className=" flex flex-col gap-3 md:gap-5 px-7 py-5">
         <div className="w-full text-center font-bold text-xl">티켓(입장권)</div>
-        <p className="text-gray-400 text-xs">
+        <p className="text-gray-400 text-11 md:text-xs">
           참가자들이 이벤트에 접속, 혹은 입장 할 수 있도록 티켓을 만들어 주세요.
           <br />
           적어도 1개의 티켓이 필요합니다.
         </p>
         {/*티켓 종류 선택란*/}
-        <div className="">
-          <div className="w-40 my-1">
+        <div>
+          <div className="w-32 md:w-40 my-1">
             <p className="font-semibold px-1 mb-1 text-gray-700">티켓 종류</p>
             <ChoiceChip {...TwoOptions.args} />
           </div>
-          <p className="block px-1 mb-1 font-medium text-placeholderText sm:text-10 md:text-13">
+          <p className="block px-1 mb-1 text-placeholderText text-11 md:text-13">
             참가자가 선착순으로 발행된 티켓을 구매합니다.
           </p>
         </div>
         {/*티켓 이름 입력란*/}
-        <div className="">
+        <div>
           <DefaultTextField
             placeholder="VIP 입장권"
             label="티켓(입장권) 이름"
@@ -61,7 +61,7 @@ const TicketCreatePage = () => {
           />
         </div>
         {/*티켓 설명 입력란*/}
-        <div className="">
+        <div>
           <DefaultTextField
             placeholder="무료 수강권과 티셔츠가 기본으로 포함되어 있는 티켓입니다."
             label="티켓 설명"
@@ -69,23 +69,26 @@ const TicketCreatePage = () => {
             className="h-12"
           />
         </div>
+
         {/*가격 계산 란*/}
         <div className="flex items-center gap-5">
-          <DefaultTextField label="1개당 가격" className="h-12" onChange={handlePriceChange} placeholder="0" />
+          <DefaultTextField label="1개당 가격" className="h-8 md:h-9" onChange={handlePriceChange} placeholder="0" />
           <p className="text-gray-700 text-2xl">X</p>
-          <DefaultTextField label="수량" className="h-12" onChange={handleQuantityChange} placeholder="1" />
+          <DefaultTextField label="수량" className="h-8 md:h-9" onChange={handleQuantityChange} placeholder="1" />
           <p className="text-gray-700 text-2xl">=</p>
           <div>
-            <p className="text-gray-700 font-semibold">예상 수익</p>
+            <p className="whitespace-nowrap text-gray-700 font-semibold text-15 md:text-base">예상 수익</p>
             <p>₩ {formatNumber(sum)}</p>
           </div>
         </div>
+
         {/*캘린더가 들어갈 자리*/}
         <div className="flex flex-col gap-2">
           <p className="px-1 text-gray-700 font-semibold">판매 기간</p>
-          <EventDatePicker />
+          <EventDatePicker isLabel={true} />
         </div>
         <div className="flex-grow"></div>
+
         <div className="w-full ">
           <Button label="저장하기" onClick={() => console.log('post 요청')} className="w-full h-12 rounded-full" />
         </div>
