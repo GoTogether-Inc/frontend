@@ -10,6 +10,8 @@ import ticket from '../../../public/assets/dashboard/menu/Ticket(black).svg';
 import clickedTicket from '../../../public/assets/dashboard/menu/Ticket(pink).svg';
 import email from '../../../public/assets/dashboard/menu/Email(black).svg';
 import clickedEmail from '../../../public/assets/dashboard/menu/Email(pink).svg';
+import sentEmail from '../../../public/assets/dashboard/menu/SentMail(black).svg';
+import clickedSentEmail from '../../../public/assets/dashboard/menu/SentMail(pink).svg';
 import participants from '../../../public/assets/dashboard/menu/Participants(black).svg';
 import clickedParticipants from '../../../public/assets/dashboard/menu/Participants(pink).svg';
 
@@ -27,6 +29,7 @@ export const menuLists = [
   { text: '이벤트 태그 정보', icon: tag, clickedIcon: clickedTag, path: '/dashboard/eventTag' },
   { text: '티켓 생성하기', icon: ticket, clickedIcon: clickedTicket, path: '/dashboard/ticket' },
   { text: '이메일 예약 발송', icon: email, clickedIcon: clickedEmail, path: '/dashboard/email' },
+  { text: '보낸 이메일', icon: sentEmail, clickedIcon: clickedSentEmail, path: '/dashboard/mailBox' },
   {
     text: '구매/참가자 관리',
     icon: participants,
