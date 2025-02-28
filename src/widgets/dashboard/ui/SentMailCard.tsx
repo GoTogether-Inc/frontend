@@ -4,6 +4,7 @@ import { useState } from 'react';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import { formatDate } from '../../../shared/lib/date';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
+import { useNavigate } from 'react-router-dom';
 
 interface SentMailCardProps {
   mail: mailInfoData;
@@ -12,6 +13,7 @@ interface SentMailCardProps {
 }
 
 const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardProps) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,7 +43,13 @@ const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardP
                 size="medium"
                 onClick={() => setIsModalOpen(true)}
               />
-              <TertiaryButton label="수정하기" type="button" color="pink" size="medium" />
+              <TertiaryButton
+                label="수정하기"
+                type="button"
+                color="pink"
+                size="medium"
+                onClick={() => navigate('/dashboard/edit-email')}
+              />
             </div>
           )}
         </div>
