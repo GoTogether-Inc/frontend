@@ -3,7 +3,7 @@ interface TertiaryButtonProps {
   type: 'button' | 'submit';
   color: 'pink' | 'black';
   size: 'small' | 'medium' | 'large';
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
 }
 
