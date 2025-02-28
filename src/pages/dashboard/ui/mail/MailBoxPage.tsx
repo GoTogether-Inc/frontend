@@ -18,7 +18,7 @@ const MailBoxPage = () => {
       <div className={`flex flex-col gap-2 mt-8 px-7 ${isModalOpen ? 'blur-sm' : ''}`}>
         <h1 className="w-full text-center font-bold text-xl">보낸 메일함</h1>
         <div className="flex justify-end">
-          <SearchBar placeholder="제목 검색" className="w-[45%] my-2" />
+          <SearchBar placeholder="제목 검색" className="w-[35%] my-2" />
         </div>
         <div className="flex gap-3 font-semibold text-15">
           <TextButton
