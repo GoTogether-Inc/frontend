@@ -8,9 +8,10 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 interface SentMailCardProps {
   mail: mailInfoData;
   isPending: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SentMailCard = ({ mail, isPending = false }: SentMailCardProps) => {
+const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -33,7 +34,13 @@ const SentMailCard = ({ mail, isPending = false }: SentMailCardProps) => {
           <p className="mt-4 text-14 whitespace-pre-line">{mail.content}</p>
           {isPending && (
             <div className="flex justify-end gap-3">
-              <TertiaryButton label="삭제하기" type="button" color="black" size="medium" />
+              <TertiaryButton
+                label="삭제하기"
+                type="button"
+                color="black"
+                size="medium"
+                onClick={() => setIsModalOpen(true)}
+              />
               <TertiaryButton label="수정하기" type="button" color="pink" size="medium" />
             </div>
           )}
