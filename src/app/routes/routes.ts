@@ -44,4 +44,5 @@ export const DASHBOARD_ROUTES = {
 
 export const PAYMENT_ROUTES = {
   cardRegister: `${MAIN_ROUTES.payment}/cardRegister`,
+  payment: `${MAIN_ROUTES.payment}`,
 };
