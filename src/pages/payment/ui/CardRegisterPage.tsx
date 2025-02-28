@@ -1,87 +1,124 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import CreditCard from '../../../../public/assets/payment/CreditCard.svg';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import Button from '../../../../design-system/ui/Button';
+import { useForm } from 'react-hook-form';
+
+type CardFormValues = {
+  cardNumber: string;
+  cardHolder: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvc: string;
+};
 
 const CardRegisterPage = () => {
-  const [cardNumber, setCardNumber] = useState<string>('');
-  const [cardHolder, setCardHolder] = useState<string>('');
-  const [expiryMonth, setExpiryMonth] = useState<string>('');
-  const [expiryYear, setExpiryYear] = useState<string>('');
-  const [cvc, setCvc] = useState<string>('');
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<CardFormValues>();
 
-  //포맷팅
-  // 카드 번호 입력 핸들러
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 16);
-    const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 '); // 4자리마다 공백 추가
-    setCardNumber(formattedValue);
+  // 공통 포맷 함수
+  const formatValue = (type: keyof CardFormValues, value: string): string => {
+    switch (type) {
+      case 'cardNumber':
+        return value
+          .replace(/\D/g, '')
+          .slice(0, 16)
+          .replace(/(\d{4})/g, '$1 ')
+          .trim();
+      case 'expiryMonth':
+        return value.replace(/\D/g, '').slice(0, 2);
+      case 'expiryYear':
+        return value.replace(/\D/g, '').slice(0, 4);
+      case 'cvc':
+        return value.replace(/\D/g, '').slice(0, 3);
+      default:
+        return value;
+    }
   };
 
-  // 카드 소지자 입력 핸들러
-  const handleCardHolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\d/g, '');
-    setCardHolder(value);
+  // 공통 핸들러
+  const handleInputChange = (type: keyof CardFormValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatValue(type, e.target.value);
+    setValue(type, formattedValue, { shouldValidate: true });
   };
 
-  // 만료 월 입력 핸들러
-  const handleExpiryMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 2);
-    setExpiryMonth(value);
-  };
-
-  // 만료 연도 입력 핸들러
-  const handleExpiryYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 2);
-    setExpiryYear(value);
-  };
-
-  // CVC 입력 핸들러
-  const handleCvcChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 3);
-    setCvc(value);
+  const onSubmit = (data: CardFormValues) => {
+    console.log('폼 전체 데이터 객체:', data);
   };
 
   return (
     <TicketHostLayout centerContent="새 카드 추가" image={CreditCard}>
       <div className="p-10 flex flex-col gap-16 mt-20 min-h-[80vh]">
         <p className="text-gray-400 text-sm">안전한 결제를 위해 카드 정보를 입력해주세요.</p>
-        <DefaultTextField
-          label="카드 번호"
-          className="h-12"
-          placeholder="1234 5678 9012 3456"
-          value={cardNumber}
-          onChange={handleCardNumberChange}
-        />
-        <DefaultTextField
-          label="카드 소지자 이름"
-          className="h-12"
-          placeholder="홍길동"
-          value={cardHolder}
-          onChange={handleCardHolderChange}
-        />
+
+        <div>
+          <DefaultTextField
+            label="카드 번호"
+            className={`h-12 ${errors.cardNumber ? 'border-2 border-red-500' : ''}`}
+            placeholder="1234 5678 9012 3456"
+            {...register('cardNumber', {
+              required: '카드 번호를 입력하세요.',
+              pattern: {
+                value: /^\d{4} \d{4} \d{4} \d{4}$/,
+                message: '올바른 카드 번호 형식이 아닙니다.',
+              },
+            })}
+            onChange={handleInputChange('cardNumber')}
+          />
+          {errors.cardNumber && <p className="text-red-500 text-xs md:text-sm">{errors.cardNumber.message}</p>}
+        </div>
+
+        <div>
+          <DefaultTextField
+            label="카드 소지자 이름"
+            className={`h-12 ${errors.cardHolder ? 'border-2 border-red-500' : ''}`}
+            placeholder="홍길동"
+            {...register('cardHolder', { required: '카드 소지자 이름을 입력하세요. ' })}
+          />
+          {errors.cardHolder && <p className="text-red-500 text-xs md:text-sm">{errors.cardHolder.message}</p>}
+        </div>
+
         <div className="flex gap-3">
-          <DefaultTextField
-            label="만료 월"
-            className="h-12"
-            placeholder="월"
-            value={expiryMonth}
-            onChange={handleExpiryMonthChange}
-          />
-          <DefaultTextField
-            label="만료 년도"
-            className="h-12"
-            placeholder="년도"
-            value={expiryYear}
-            onChange={handleExpiryYearChange}
-          />
-          <DefaultTextField label="CVC/CVV" className="h-12" placeholder="123" value={cvc} onChange={handleCvcChange} />
+          <div>
+            <DefaultTextField
+              label="만료 월"
+              className={`h-12 ${errors.expiryMonth ? 'border-2 border-red-500' : ''}`}
+              placeholder="월"
+              {...register('expiryMonth', { required: '만료 월을 입력하세요.' })}
+              onChange={handleInputChange('expiryMonth')}
+            />
+            {errors.expiryMonth && <p className="text-red-500 text-xs md:text-sm">{errors.expiryMonth.message}</p>}
+          </div>
+          <div>
+            <DefaultTextField
+              label="만료 년도"
+              className={`h-12 ${errors.expiryYear ? 'border-2 border-red-500' : ''}`}
+              placeholder="년도"
+              {...register('expiryYear', { required: '만료 년도를 입력하세요.' })}
+              onChange={handleInputChange('expiryYear')}
+            />
+            {errors.expiryYear && <p className="text-red-500 text-xs md:text-sm">{errors.expiryYear.message}</p>}
+          </div>
+          <div>
+            <DefaultTextField
+              label="CVC/CVV"
+              className={`h-12 ${errors.cvc ? 'border-2 border-red-500' : ''}`}
+              placeholder="123"
+              {...register('cvc', { required: 'cvc를 입력하세요.' })}
+              onChange={handleInputChange('cvc')}
+            />
+            {errors.cvc && <p className="text-red-500 text-xs md:text-sm">{errors.cvc.message}</p>}
+          </div>
         </div>
         <div className="flex-grow"></div>
-        <div>
-          <Button label="저장하기" onClick={() => console.log('카드 정보 저장')} className="rounded-full w-full h-12" />
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Button label="저장하기" onClick={() => console.log()} className="rounded-full w-full h-12" />
+        </form>
       </div>
     </TicketHostLayout>
   );
