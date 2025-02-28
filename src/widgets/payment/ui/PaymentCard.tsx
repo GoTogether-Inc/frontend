@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import PlusButton from '../../../../public/assets/payment/PlusButton.svg';
+import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCardButton';
 
 const PaymentCard = ({ title }: { title: string }) => {
   const navigate = useNavigate();
@@ -26,22 +28,28 @@ const PaymentCard = ({ title }: { title: string }) => {
             </div>
           ))}
           {/*  카드 추가 버튼  */}
-          <button
-            className={`flex flex-col items-center justify-center w-[60%] h-full border-2 border-dashed border-gray-400 rounded-xl p-6 text-center bg-white snap-center shrink-0 mr-40 gap-2 ${
+          <div
+            className={`flex flex-col items-center justify-center w-[60%] h-full border-2 border-dashed border-gray-400 rounded-xl p-6 text-center bg-white snap-center shrink-0 mr-40 gap-5 ${
               cardData.length == 0 ? 'ml-40' : ''
             }`}
-            onClick={() => navigate('/payment/cardRegister')}
           >
-            <div className="flex items-center justify-center w-6 h-6 bg-pink-500 text-white text-xl rounded-full">
-              +
-            </div>
+            <VerticalCardButton
+              iconPath={
+                <div className="w-full h-full flex justify-center">
+                  <img src={PlusButton} alt="카드 등록 버튼" className="md:w-5 w-4" />
+                </div>
+              }
+              label="카드 등록"
+              onClick={() => navigate(`/payment/cardRegister`)}
+              size="lg"
+              className="font-semibold w-full h-full"
+            />
 
-            <p className="md:text-lg text-base font-semibold text-gray-700">카드 등록</p>
             <p className="md:text-sm text-xs text-gray-500">
               계좌를 한번만 등록해놓으면 <br />
               매번 쉽게 결제할 수 있어요!
             </p>
-          </button>
+          </div>
         </div>
       </div>
     </div>
