@@ -12,7 +12,7 @@ const EmailEditPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   return (
     <DashboardLayout centerContent="WOOACON 2024">
-      <div className="p-5 flex flex-col gap-10 min-h-full">
+      <div className="flex flex-col gap-5 mt-8 px-7">
         <EmailInput
           type="이메일 내용 수정"
           openSelectTicket={() => setTicketModalOpen(true)}
@@ -20,7 +20,6 @@ const EmailEditPage = () => {
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker />
-        <div className="flex-grow"></div>
         <Button label="보내기" onClick={() => navigate('/dashboard/mailBox')} className="w-full h-12 rounded-full" />
       </div>
       {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} />}
