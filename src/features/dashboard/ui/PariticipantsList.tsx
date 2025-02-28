@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Checkbox from '../../../../design-system/ui/Checkbox';
 import { participantsInfo } from '../../../shared/types/participantInfoType';
 import ParticipantCard from './ParicipantCard';
-import { useParticipantStore } from '../model/ParticipantStore';
+import { useParticipantStore } from '../model/ParticipantStore';
 
 interface ParticipantsListProps {
   listType: 'all' | 'approved' | 'pending';
