@@ -5,7 +5,7 @@ import MultilineTextField from '../../../../design-system/ui/textFields/Multilin
 import EmailInputBase from '../../../shared/ui/EmailInputBase';
 
 interface EmailInputProps {
-  type?: '이메일 예약 발송' | '선택 이메일 보내기';
+  type?: '이메일 예약 발송' | '선택 이메일 보내기' | '이메일 내용 수정';
   openSelectTicket: () => void;
   allParticipantEmails: string[];
 }

@@ -25,6 +25,7 @@ import EmailPage from '../../pages/dashboard/ui/mail/EmailPage';
 import EventDetailsPage from '../../pages/event/ui/EventDetailsPage';
 import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMangementPage';
 import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
+import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 
 const routesConfig = [
   {
@@ -135,6 +136,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.mailBox,
     element: <MailBoxPage />,
+    requiresAuth: false,
+  },
+  {
+    path: DASHBOARD_ROUTES.emailEdit,
+    element: <EmailEditPage />,
     requiresAuth: false,
   },
   {
