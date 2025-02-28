@@ -20,7 +20,7 @@ const EmailInputBase = ({
   showAllEmails = false,
 }: EmailInputBaseProps) => {
   return (
-    <div className="w-full p-2 border border-placeholderText rounded-[3px] min-h-[48px]">
+    <div className="w-full p-2 border border-placeholderText rounded-[3px] min-h-12 max-h-20 overflow-y-auto">
       {emails.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {showAllEmails ? (
@@ -55,6 +55,7 @@ const EmailInputBase = ({
         onChange={e => setInputValue(e.target.value)}
         onKeyDown={onKeyDown}
         placeholder={emails.length === 0 ? placeholder : ''}
+        readOnly={!showAllEmails}
         className="w-full outline-none text-xs font-light"
       />
     </div>

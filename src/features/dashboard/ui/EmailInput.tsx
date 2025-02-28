@@ -39,6 +39,7 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
             inputValue={inputValue}
             setInputValue={setInputValue}
             onRemove={removeAllEmail}
+            showAllEmails={false}
             placeholder={allEmails.length === 0 ? '위 필터로 이메일 보내실 대상을 선택하세요.' : ''}
           />
         </div>
