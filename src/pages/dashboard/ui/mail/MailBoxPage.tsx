@@ -7,6 +7,9 @@ import { mailInfo } from '../../../../shared/types/mailInfoType';
 
 const MailBoxPage = () => {
   const [listType, setListType] = useState<'all' | 'pending'>('all');
+  const currentDate = new Date();
+
+  const pendingMails = mailInfo.filter(mail => new Date(mail.date) > currentDate);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -27,8 +30,8 @@ const MailBoxPage = () => {
             className={listType === 'pending' ? 'text-main' : ''}
           />
         </div>
-        {mailInfo.map(mail => (
-          <SentMailCard key={mail.id} mail={mail} />
+        {(listType === 'all' ? mailInfo : pendingMails).map(mail => (
+          <SentMailCard key={mail.id} mail={mail} isPending={listType === 'pending' ? true : false} />
         ))}
       </div>
     </DashboardLayout>
