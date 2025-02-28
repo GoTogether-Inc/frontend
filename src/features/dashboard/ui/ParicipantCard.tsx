@@ -1,6 +1,6 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import Checkbox from '../../../../design-system/ui/Checkbox';
-import { useParticipantStore } from '../model/ParticipantStore';
+import { useParticipantStore } from '../model/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 
 interface ParticipantCardProps {
