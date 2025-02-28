@@ -1,12 +1,14 @@
-import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
-import Button from '../../../../design-system/ui/Button';
-import TimePicker from '../../../features/event-manage/ui/TimePicker';
-import EmailInput from '../../../features/dashboard/ui/EmailInput';
-import { participantsInfo } from '../../../shared/types/participantInfoType';
+import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
+import Button from '../../../../../design-system/ui/Button';
+import TimePicker from '../../../../features/event-manage/ui/TimePicker';
+import EmailInput from '../../../../features/dashboard/ui/EmailInput';
+import { participantsInfo } from '../../../../shared/types/participantInfoType';
 import { useState } from 'react';
-import SelectTicketModal from '../../../widgets/dashboard/ui/SelectTicketModal';
+import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
+import { useNavigate } from 'react-router-dom';
 
 const EmailPage = () => {
+  const navigate = useNavigate();
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -18,7 +20,7 @@ const EmailPage = () => {
         {/*시간 선택 컴포넌트*/}
         <TimePicker />
         <div className="flex-grow"></div>
-        <Button label="보내기" onClick={() => console.log('post 요청')} className="w-full h-12 rounded-full" />
+        <Button label="보내기" onClick={() => navigate('/dashboard/mailBox')} className="w-full h-12 rounded-full" />
       </div>
       {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} />}
     </DashboardLayout>

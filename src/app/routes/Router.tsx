@@ -21,9 +21,10 @@ import EventTagPage from '../../pages/dashboard/ui/EventTagPage';
 import TicketListPage from '../../pages/dashboard/ui/ticket/TicketListPage';
 import TicketCreatePage from '../../pages/dashboard/ui/ticket/TicketCreatePage';
 import HostInfoPage from '../../pages/menu/ui/HostInfoPage';
-import EmailPage from '../../pages/dashboard/ui/EmailPage';
+import EmailPage from '../../pages/dashboard/ui/mail/EmailPage';
 import EventDetailsPage from '../../pages/event/ui/EventDetailsPage';
 import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMangementPage';
+import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
 
 const routesConfig = [
   {
@@ -129,6 +130,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.email,
     element: <EmailPage />,
+    requiresAuth: false,
+  },
+  {
+    path: DASHBOARD_ROUTES.mailBox,
+    element: <MailBoxPage />,
     requiresAuth: false,
   },
   {
