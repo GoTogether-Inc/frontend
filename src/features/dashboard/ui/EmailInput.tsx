@@ -21,7 +21,7 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
     setAllEmails([]);
   };
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mb-2">
       <div className="w-full text-center font-bold text-xl">{type}</div>
 
       {/* 수신자와 제목 입력하는 부분 */}
