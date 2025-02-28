@@ -1,3 +1,5 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import TertiaryButton from '../../../design-system/ui/buttons/TertiaryButton';
 import Countdown from '../../../design-system/ui/texts/Countdown';
 
 interface EventCardProps {
@@ -12,6 +14,11 @@ interface EventCardProps {
 }
 
 const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags, onClick }: EventCardProps) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
+
   return (
     <div onClick={onClick} className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md cursor-pointer">
       {/* 이미지 */}
@@ -35,6 +42,21 @@ const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags,
             </span>
           ))}
         </div>
+
+        {/* 대시보드 버튼 */}
+        {isHostPage && (
+          <TertiaryButton
+            label="호스트 대시보드 바로가기"
+            type="button"
+            color="pink"
+            size="small"
+            onClick={event => {
+              event?.stopPropagation();
+              navigate('/dashboard');
+            }}
+            className="w-31.5 md:w-33 mt-2"
+          />
+        )}
       </div>
     </div>
   );

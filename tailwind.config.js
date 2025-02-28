@@ -18,6 +18,8 @@ export default {
         17: '4.25rem',
         18: '4.5rem',
         19: '4.75rem',
+        31.5: '8rem',
+        33: '8.25rem',
         90: '22.5rem',
       },
       height: {
