@@ -1,10 +1,10 @@
-import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
-import HostLogo from '../../../../public/assets/menu/HostLogo.svg';
-import ProfileCircle from '../../../../design-system/ui/Profile';
-import { trendingEvents } from '../../../shared/types/eventCardType';
-import EventCard from '../../../shared/ui/EventCard';
+import TicketHostLayout from '../../../../shared/ui/backgrounds/TicketHostLayout';
+import HostLogo from '../../../../../public/assets/menu/HostLogo.svg';
+import ProfileCircle from '../../../../../design-system/ui/Profile';
+import { trendingEvents } from '../../../../shared/types/eventCardType';
+import EventCard from '../../../../shared/ui/EventCard';
 import { useState } from 'react';
-import { hostInfo } from '../../../shared/types/hostInfoType';
+import { hostInfo } from '../../../../shared/types/hostInfoType';
 
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);

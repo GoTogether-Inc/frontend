@@ -1,5 +1,5 @@
-import HostDetailLayout from '../../../shared/ui/backgrounds/HostDetailLayout';
-import ProfileCircle from '../../../../design-system/ui/Profile';
+import HostDetailLayout from '../../../../shared/ui/backgrounds/HostDetailLayout';
+import ProfileCircle from '../../../../../design-system/ui/Profile';
 import { useParams } from 'react-router-dom';
 
 const HostInfoPage = () => {
