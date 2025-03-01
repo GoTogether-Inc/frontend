@@ -22,7 +22,7 @@ const AllEventsPage = () => {
           />
         }
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
-        leftButtonClick={() => {}}
+        leftButtonClick={() => navigater('/')}
         leftButtonLabel="같이가요"
         rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
       />
