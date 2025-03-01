@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import HostDetailLayout from '../../../shared/ui/backgrounds/HostDetailLayout';
-import { trendingEvents } from '../../../shared/types/eventCardType';
-import EventCard from '../../../shared/ui/EventCard';
+import HostDetailLayout from '../../../../shared/ui/backgrounds/HostDetailLayout';
+import { trendingEvents } from '../../../../shared/types/eventCardType';
+import EventCard from '../../../../shared/ui/EventCard';
 
 const HostDetailPage = () => {
   const navigate = useNavigate();

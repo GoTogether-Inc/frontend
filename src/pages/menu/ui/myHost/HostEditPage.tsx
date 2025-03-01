@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import HostDetailLayout from '../../../shared/ui/backgrounds/HostDetailLayout';
-import ProfileCircle from '../../../../design-system/ui/Profile';
-import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
-import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
-import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
+import HostDetailLayout from '../../../../shared/ui/backgrounds/HostDetailLayout';
+import ProfileCircle from '../../../../../design-system/ui/Profile';
+import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
+import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
+import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import { useParams } from 'react-router-dom';
-import MemberEmailInput from '../../../features/menu/ui/MemberEmailInput';
+import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
