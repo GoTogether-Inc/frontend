@@ -12,26 +12,32 @@ const AgreementPage: React.FC = () => {
   console.log('isAllRequiredAgreed:', isAllRequiredAgreed());
 
   return (
-    <div className="flex flex-col w-full h-screen bg-white border">
+    <div className="flex flex-col w-full h-screen bg-white">
       <Header
         centerContent="이용약관"
-        leftButtonClassName="뒤로 가기"
+        leftButtonLabel="<"
+        leftButtonClassName="text-2xl z-30 font-semibold"
         leftButtonClick={() => navigate(-1)}
         color="black"
       />
-      <div className="relative mx-10 my-12 sm:mx-8 sm:my-10 md:mx-10 md:my-12 lg:mx-12 lg:my-16">
-        <div className="mb-10">
-          <p className="text-xl font-bold sm:text-base md:text-lg lg:text-xl">서비스 이용을 위해</p>
-          <p className="text-xl font-bold sm:text-base md:text-lg lg:text-xl">약관에 동의해 주세요.</p>
-        </div>
+      <div className="relative px-10 py-10 md:px-12 md:py-14">
+        <p className="font-bold text-lg md:text-xl mb-10">
+          서비스 이용을 위해
+          <br />
+          약관에 동의해 주세요.
+        </p>
+
         <AgreementList />
       </div>
-      <Button
-        className="absolute h-14 sm:h-12 md:h-14 lg:h-14 max-w-90 bottom-16 left-0 right-0 mx-10 sm:mx-8 md:mx-10 lg:mx-12 rounded-[150px]"
-        label="다음"
-        onClick={() => navigate('/join/info-input')}
-        disabled={!isAllRequiredAgreed()}
-      />
+      <div className="flex flex-grow" />
+      <div className="w-full px-5 py-10">
+        <Button
+          className="w-full h-12 rounded-full"
+          label="다음"
+          onClick={() => navigate('/join/info-input')}
+          disabled={!isAllRequiredAgreed()}
+        />
+      </div>
     </div>
   );
 };
