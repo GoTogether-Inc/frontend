@@ -4,6 +4,7 @@ import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
 import { validations } from '../../shared/lib/validation';
 import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTextField';
+import { useNavigate } from 'react-router-dom';
 
 interface FormInputs {
   name: string;
@@ -24,6 +25,7 @@ const InfoInputPage: React.FC = () => {
   } = useForm<FormInputs>({
     mode: 'onChange',
   });
+  const navigate = useNavigate();
 
   const nameValue = watch('name');
   const phoneValue = watch('phone');
@@ -48,14 +50,12 @@ const InfoInputPage: React.FC = () => {
     <div className="relative flex flex-col w-full h-screen border ">
       <Header
         centerContent="정보입력"
-        leftButtonLabel="뒤로가기"
-        leftButtonClick={() => window.history.back()}
+        leftButtonLabel="<"
+        leftButtonClassName="text-2xl z-30 font-semibold"
+        leftButtonClick={() => navigate(-1)}
         color="black"
       />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-8 m-20 mx-10 my-12 sm:mx-8 sm:my-10 md:mx-10 md:my-12 lg:mx-12 lg:my-16"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 px-10 py-12 md:px-12 md:py-16">
         {/* 이름 필드 */}
         <UnderlineTextField
           label="이름"
@@ -100,12 +100,15 @@ const InfoInputPage: React.FC = () => {
           })}
         />
       </form>
-      <Button
-        label="시작하기"
-        onClick={handleSubmit(onSubmit)}
-        disabled={!isButtonEnabled}
-        className="absolute h-14 sm:h-12 md:h-14 lg:h-14 max-w-90 bottom-16 left-0 right-0 mx-10 sm:mx-8 md:mx-10 lg:mx-12 rounded-[150px]"
-      />
+      <div className="flex flex-grow" />
+      <div className="w-full px-5 py-10">
+        <Button
+          label="시작하기"
+          onClick={handleSubmit(onSubmit)}
+          disabled={!isButtonEnabled}
+          className="w-full h-12 rounded-full"
+        />
+      </div>
     </div>
   );
 };
