@@ -13,8 +13,8 @@ import { useState, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { closingSoonEvents, latestEvents, trendingEvents } from '../../../shared/types/eventCardType';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
-import rightButton from '../../../../public/assets/main-buttons/RightButton.svg';
-import leftButton from '../../../../public/assets/main-buttons/LeftButton.svg';
+import rightButton from '../../../../public/assets/main/RightButton.svg';
+import leftButton from '../../../../public/assets/main/LeftButton.svg';
 
 const MainPage = () => {
   const images = [
@@ -26,22 +26,22 @@ const MainPage = () => {
   // 버튼 데이터
   const cardButtons = [
     {
-      iconPath: '/assets/main-buttons/DevStudy.svg',
+      iconPath: '/assets/main/DevStudy.svg',
       label: '개발/스터디',
       onClick: () => console.log('DevStudy clicked'),
     },
     {
-      iconPath: '/assets/main-buttons/Networking.svg',
+      iconPath: '/assets/main/Networking.svg',
       label: '네트워킹',
       onClick: () => console.log('Networking clicked'),
     },
     {
-      iconPath: '/assets/main-buttons/Hackathon.svg',
+      iconPath: '/assets/main/Hackathon.svg',
       label: '해커톤',
       onClick: () => console.log('Hackathon clicked'),
     },
     {
-      iconPath: '/assets/main-buttons/Conference.svg',
+      iconPath: '/assets/main/Conference.svg',
       label: '컨퍼런스',
       onClick: () => console.log('Conference clicked'),
     },
