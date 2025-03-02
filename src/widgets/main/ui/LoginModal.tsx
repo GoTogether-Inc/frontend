@@ -20,7 +20,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
       <div className="flex flex-col justify-center gap-16 w-full max-w-lg h-[85%] bg-gradient-to-br from-[#FF5593] to-[#FF7577] rounded-b-[40px] px-10 py-8 shadow-lg">
         <div className="flex flex-col font-bold text-white">
           <div className="flex items-end gap-2">
-            <p className="text-2xl">같이가자,</p>
+            <p className="text-26">같이가자,</p>
             <p className="text-22">더 많은 사람들과 함께해요.</p>
           </div>
           <p className="text-22">언제 어디서든 자유롭게 이벤트를 만들어보세요.👋🏻</p>
@@ -31,6 +31,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
               iconPath={<img src={kakao} alt="카카오 아이콘" className="" />}
               label="카카오 로그인"
               onClick={() => {}}
+              className="mx-auto my-auto"
             />
           </div>
           <div className="flex items-center w-full h-12 bg-white gap-4 rounded-full">
@@ -38,6 +39,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
               iconPath={<img src={google} alt="구글 아이콘" className="" />}
               label="Google 로그인"
               onClick={() => {}}
+              className="mx-auto my-auto"
             />
           </div>
         </div>

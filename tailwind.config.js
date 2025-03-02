@@ -52,6 +52,7 @@ export default {
         15: '15px',
         16: '16px',
         22: '22px',
+        26: '26px',
       },
       colors: {
         main: '#FF5593', // 메인컬러
