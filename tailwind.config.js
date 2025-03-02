@@ -1,5 +1,7 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+import scrollbarHide from 'tailwind-scrollbar-hide';
+
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
 
 export default {
   content: [
