@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { flexRowStart } from '../../styles/flex';
+import { flexCenter } from '../../styles/flex';
 
 interface CardButtonProps {
   iconPath: React.ReactElement;
@@ -20,7 +20,7 @@ export default function HorizontalCardButton({
   return (
     <button
       className={`
-      ${flexRowStart}
+      ${flexCenter}
       rounded-default font-bold w-full 
       hover:text-main
       sm:text-sm sm:px-3 sm:h-9

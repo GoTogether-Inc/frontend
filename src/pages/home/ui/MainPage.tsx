@@ -15,6 +15,8 @@ import { closingSoonEvents, latestEvents, trendingEvents } from '../../../shared
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
+import { AnimatePresence } from 'framer-motion';
+import LoginModal from '../../../widgets/main/ui/LoginModal';
 
 const MainPage = () => {
   const images = [
@@ -46,7 +48,7 @@ const MainPage = () => {
       onClick: () => console.log('Conference clicked'),
     },
   ];
-
+  const [modalOpen, setModalOpen] = useState(false);
   const [latestStartIndex, setLatestStartIndex] = useState<number>(0);
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
@@ -87,8 +89,10 @@ const MainPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
+        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => setModalOpen(true)} />}
       />
+      <AnimatePresence>{modalOpen && <LoginModal onClose={() => setModalOpen(false)} />}</AnimatePresence>
+
       <div className="w-full px-6">
         <Banner images={images} interval={5000} />
         {/* VerticalCardButtons Section */}
