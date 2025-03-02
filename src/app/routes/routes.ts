@@ -5,7 +5,7 @@ export const MAIN_ROUTES = {
   eventDatail: '/event-details',
   search: '/search',
   menu: '/menu',
-  dashbord: '/dashboard',
+  dashboard: '/dashboard',
   payment: '/payment',
 };
 
@@ -30,16 +30,17 @@ export const MENU_ROUTES = {
 };
 
 export const DASHBOARD_ROUTES = {
-  dashboard: `${MAIN_ROUTES.dashbord}`,
-  eventInfo: `${MAIN_ROUTES.dashbord}/eventInfo`,
-  eventDetail: `${MAIN_ROUTES.dashbord}/eventDetail`,
-  eventTag: `${MAIN_ROUTES.dashbord}/eventTag`,
-  ticket: `${MAIN_ROUTES.dashbord}/ticket`,
-  ticketCreate: `${MAIN_ROUTES.dashbord}/ticket/create`,
-  email: `${MAIN_ROUTES.dashbord}/email`,
-  mailBox: `${MAIN_ROUTES.dashbord}/mailBox`,
-  emailEdit: `${MAIN_ROUTES.dashbord}/edit-email`,
-  participantsMangement: `${MAIN_ROUTES.dashbord}/participants-mangement`,
+  dashboard: `${MAIN_ROUTES.dashboard}`,
+  eventInfo: `${MAIN_ROUTES.dashboard}/eventInfo`,
+  eventDetail: `${MAIN_ROUTES.dashboard}/eventDetail`,
+  eventTag: `${MAIN_ROUTES.dashboard}/eventTag`,
+  ticket: `${MAIN_ROUTES.dashboard}/ticket`,
+  ticketCreate: `${MAIN_ROUTES.dashboard}/ticket/create`,
+  ticketConfirm: `${MAIN_ROUTES.dashboard}/ticket/confirm`,
+  email: `${MAIN_ROUTES.dashboard}/email`,
+  mailBox: `${MAIN_ROUTES.dashboard}/mailBox`,
+  emailEdit: `${MAIN_ROUTES.dashboard}/edit-email`,
+  participantsMangement: `${MAIN_ROUTES.dashboard}/participants-mangement`,
 };
 
 export const PAYMENT_ROUTES = {

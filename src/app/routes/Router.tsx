@@ -28,6 +28,7 @@ import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMan
 import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
 import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 import PaymentPage from '../../pages/payment/ui/PaymentPage';
+import TIcketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
 
 const routesConfig = [
   {
@@ -158,6 +159,11 @@ const routesConfig = [
   {
     path: DASHBOARD_ROUTES.participantsMangement,
     element: <ParticipantsManagementPage />,
+    requiresAuth: false,
+  },
+  {
+    path: DASHBOARD_ROUTES.ticketConfirm,
+    element: <TIcketConfirmPage />,
     requiresAuth: false,
   },
 ];
