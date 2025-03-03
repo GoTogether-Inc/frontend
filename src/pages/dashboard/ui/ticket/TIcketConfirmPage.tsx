@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CallIcon from '../../../../../public/assets/dashboard/ticket/callIcon.svg';
 import EmailIcon from '../../../../../public/assets/dashboard/ticket/emailIcon.svg';
 import CheckIcon from '../../../../../public/assets/dashboard/ticket/checkIcon.svg';
+import KakaoMap from '../../../../features/dashboard/ui/KakaoMap';
 
 const TIcketConfirmPage = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const TIcketConfirmPage = () => {
         centerContent="티켓 구매 확인"
         rightContent={<img src={Search} alt="검색" className="w-4" />}
       />
-      <div className="relative bg-gray-100 p-3 min-h-screen flex flex-col gap-3">
+      <div className=" bg-gray-100 p-3 min-h-screen flex flex-col gap-3">
         {/* 상단 배너 */}
         <div>
           <div className="flex flex-col justify-center items-center">
@@ -67,6 +68,12 @@ const TIcketConfirmPage = () => {
             <img src={EmailIcon} alt="Email_Icon" />
             <p className="text-gray-500">aaa@naver.com</p>
           </div>
+        </div>
+        <div className="p-5 bg-white flex flex-col gap-2">
+          <p className="font-bold text-2xl">오시는 길</p>
+          <p>서울특별시 강남구 00동</p>
+
+          <KakaoMap />
         </div>
       </div>
     </>
