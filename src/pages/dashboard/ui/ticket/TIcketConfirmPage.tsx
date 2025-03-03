@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../../../../design-system/ui/Header';
 import Search from '../../../../../design-system/icons/Search.svg';
 import { useNavigate } from 'react-router-dom';
@@ -6,9 +6,11 @@ import CallIcon from '../../../../../public/assets/dashboard/ticket/callIcon.svg
 import EmailIcon from '../../../../../public/assets/dashboard/ticket/emailIcon.svg';
 import CheckIcon from '../../../../../public/assets/dashboard/ticket/checkIcon.svg';
 import KakaoMap from '../../../../features/dashboard/ui/KakaoMap';
+import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
 
-const TIcketConfirmPage = () => {
+const TicketConfirmPage = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePreviousButton = () => {
     navigate(-1);
@@ -27,11 +29,11 @@ const TIcketConfirmPage = () => {
         {/* 상단 배너 */}
         <div>
           <div className="flex flex-col justify-center items-center">
-            <div className="w-full h-16 bg-gradient-to-r from-main to-gradation text-white font-bold flex items-center px-10 text-xl pt-2 gap-2">
+            <div className="w-full h-16 bg-gradient-to-l from-main to-gradation text-white font-bold flex items-center px-10 text-xl pt-2 gap-2">
               <img src={CheckIcon} alt="Check_Icon" />
               <p>구매 확정</p>
             </div>
-            <div className="w-full h-3 bg-gradient-to-r from-main to-gradation clip-top-banner"></div>
+            <div className="w-full h-3 bg-gradient-to-l from-main to-gradation clip-top-banner"></div>
           </div>
           <div className="w-full h-3 bg-white clip-bottom-banner"></div>
           <div className="bg-white p-5 flex flex-col gap-5">
@@ -48,8 +50,12 @@ const TIcketConfirmPage = () => {
             </div>
 
             <div className="mt-4 space-y-2">
-              <button className="w-full border border-gray-300 py-2">상세보기</button>
-              <button className="w-full border border-gray-300 py-2">구매 취소</button>
+              <button className="w-full border border-gray-300 py-2" onClick={() => navigate('/menu/myticket')}>
+                상세보기
+              </button>
+              <button className="w-full border border-gray-300 py-2" onClick={() => setIsModalOpen(true)}>
+                구매 취소
+              </button>
             </div>
           </div>
         </div>
@@ -76,8 +82,17 @@ const TIcketConfirmPage = () => {
           <KakaoMap />
         </div>
       </div>
+      {isModalOpen && (
+        <EmailDeleteMoal
+          mainText="WOOACON 2024의 일반 티켓 2매 구매를 취소하시겠습니까?. 취소 후에는 복구가 불가능합니다."
+          approveButtonText="취소"
+          rejectButtonText="뒤로가기"
+          onClose={() => setIsModalOpen(false)}
+          onClick={() => navigate('/menu/myticket')}
+        />
+      )}
     </>
   );
 };
 
-export default TIcketConfirmPage;
+export default TicketConfirmPage;
