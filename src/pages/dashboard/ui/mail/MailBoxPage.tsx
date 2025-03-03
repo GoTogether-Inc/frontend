@@ -41,7 +41,15 @@ const MailBoxPage = () => {
           />
         ))}
       </div>
-      {isModalOpen && <EmailDeleteMoal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <EmailDeleteMoal
+          mainText="이메일을 삭제하면 예약이 자동으로 취소됩니다.. 그래도 삭제하시겠습니까?"
+          approveButtonText="삭제"
+          rejectButtonText="취소"
+          onClose={() => setIsModalOpen(false)}
+          onClick={() => setIsModalOpen(false)} //임시
+        />
+      )}
     </DashboardLayout>
   );
 };
