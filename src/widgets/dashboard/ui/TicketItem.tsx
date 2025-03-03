@@ -1,6 +1,6 @@
 import { TicketType } from '../../../shared/types/ticketType';
-import AvailableTicket from '../../../../public/assets/dashboard/create_ticket/Ticket(gray).svg';
-import PersonIcon from '../../../../public/assets/dashboard/create_ticket/PersonIcon.svg';
+import AvailableTicket from '../../../../public/assets/dashboard/ticket/Ticket(gray).svg';
+import PersonIcon from '../../../../public/assets/dashboard/ticket/PersonIcon.svg';
 
 const TicketItem = ({ ticket }: { ticket: TicketType }) => {
   return (

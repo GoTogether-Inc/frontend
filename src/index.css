@@ -97,3 +97,13 @@ body {
 * {
   box-sizing: border-box;
 }
+
+@layer utilities {
+  .clip-top-banner {
+    clip-path: polygon(0% 0%, 3% 100%, 97% 100%, 100% 0%);
+  }
+
+  .clip-bottom-banner {
+    clip-path: polygon(3% 0%, 0% 100%, 100% 100%, 97% 0%);
+  }
+}

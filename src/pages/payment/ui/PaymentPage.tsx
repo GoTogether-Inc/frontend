@@ -1,5 +1,5 @@
 import Header from '../../../../design-system/ui/Header';
-import ticket from '../../../../public/assets/dashboard/create_ticket/Ticket(horizon).svg';
+import ticket from '../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
 import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 import Button from '../../../../design-system/ui/Button';
 import { useNavigate } from 'react-router-dom';
