@@ -53,7 +53,7 @@ const CardRegisterPage = () => {
 
   return (
     <TicketHostLayout centerContent="새 카드 추가" image={CreditCard}>
-      <div className="p-10 flex flex-col gap-16 mt-20 min-h-[80vh]">
+      <div className="px-10 flex flex-col min-h-[calc(100vh-16rem)] gap-6 md:gap-8 mt-20 md:mt-24">
         <p className="text-gray-400 text-sm">안전한 결제를 위해 카드 정보를 입력해주세요.</p>
 
         <div>
@@ -83,11 +83,11 @@ const CardRegisterPage = () => {
           {errors.cardHolder && <p className="text-red-500 text-xs md:text-sm">{errors.cardHolder.message}</p>}
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex justify-between w-full gap-2">
           <div>
             <DefaultTextField
               label="만료 월"
-              className={`h-12 ${errors.expiryMonth ? 'border-2 border-red-500' : ''}`}
+              className={`h-10 ${errors.expiryMonth ? 'border-2 border-red-500' : ''}`}
               placeholder="월"
               {...register('expiryMonth', { required: '만료 월을 입력하세요.' })}
               onChange={handleInputChange('expiryMonth')}
@@ -97,7 +97,7 @@ const CardRegisterPage = () => {
           <div>
             <DefaultTextField
               label="만료 년도"
-              className={`h-12 ${errors.expiryYear ? 'border-2 border-red-500' : ''}`}
+              className={`h-10 ${errors.expiryYear ? 'border-2 border-red-500' : ''}`}
               placeholder="년도"
               {...register('expiryYear', { required: '만료 년도를 입력하세요.' })}
               onChange={handleInputChange('expiryYear')}
@@ -107,7 +107,7 @@ const CardRegisterPage = () => {
           <div>
             <DefaultTextField
               label="CVC/CVV"
-              className={`h-12 ${errors.cvc ? 'border-2 border-red-500' : ''}`}
+              className={`h-10 ${errors.cvc ? 'border-2 border-red-500' : ''}`}
               placeholder="123"
               {...register('cvc', { required: 'cvc를 입력하세요.' })}
               onChange={handleInputChange('cvc')}
@@ -115,8 +115,8 @@ const CardRegisterPage = () => {
             {errors.cvc && <p className="text-red-500 text-xs md:text-sm">{errors.cvc.message}</p>}
           </div>
         </div>
-        <div className="flex-grow"></div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-grow" />
+        <form onSubmit={handleSubmit(onSubmit)} className="py-5">
           <Button label="저장하기" onClick={() => console.log()} className="rounded-full w-full h-12" />
         </form>
       </div>
