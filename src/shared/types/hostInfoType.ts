@@ -3,6 +3,7 @@ import email from '../../../public/assets/event-manage/details/Email.svg';
 
 export interface hostInfoData {
   id: number;
+  nickname?: string;
   name: string;
   description: string;
   phoneImg: string;
@@ -14,6 +15,7 @@ export interface hostInfoData {
 export const hostInfo: hostInfoData[] = [
   {
     id: 1,
+    nickname: '예진',
     name: '고예진',
     description: '먹는거에 진심인 사람들이 모여 숨겨진 맛집을 찾아다니는 모임입니다.',
     phoneImg: phone,
@@ -23,6 +25,7 @@ export const hostInfo: hostInfoData[] = [
   },
   {
     id: 2,
+    nickname: '유진',
     name: '백유진',
     description: '여행을 좋아하는 사람들이 모여 새로운 모험을 떠나는 그룹입니다.',
     phoneImg: phone,
@@ -32,6 +35,7 @@ export const hostInfo: hostInfoData[] = [
   },
   {
     id: 3,
+    nickname: '히은',
     name: '조히은',
     description: '책을 좋아하는 사람들이 함께 모여 독서를 즐기는 커뮤니티입니다.',
     phoneImg: phone,
@@ -41,6 +45,7 @@ export const hostInfo: hostInfoData[] = [
   },
   {
     id: 4,
+    nickname: '정준',
     name: '민정준',
     description: '먹는거에 진심인 사람들이 모여 숨겨진 맛집을 찾아다니는 모임입니다.',
     phoneImg: phone,
@@ -50,6 +55,7 @@ export const hostInfo: hostInfoData[] = [
   },
   {
     id: 5,
+    nickname: '유진',
     name: '백유진',
     description: '여행을 좋아하는 사람들이 모여 새로운 모험을 떠나는 그룹입니다.',
     phoneImg: phone,
@@ -59,6 +65,7 @@ export const hostInfo: hostInfoData[] = [
   },
   {
     id: 6,
+    nickname: '히은',
     name: '조히은',
     description: '책을 좋아하는 사람들이 함께 모여 독서를 즐기는 커뮤니티입니다.',
     phoneImg: phone,
