@@ -13,7 +13,7 @@ const PaymentCard = ({ title }: { title: string }) => {
   ];
 
   return (
-    <div className="flex flex-col px-5 mt-12 md:mt-16 gap-6">
+    <div className="flex flex-col px-6 md:px-8 mt-8 md:mt-10 gap-6">
       <h1 className="text-base md:text-xl font-semibold">{title}</h1>
       <div className="flex w-full h-32 md:h-40">
         <div className="flex w-full gap-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory items-center">
@@ -29,14 +29,14 @@ const PaymentCard = ({ title }: { title: string }) => {
           ))}
           {/*  카드 추가 버튼  */}
           <div
-            className={`flex flex-col items-center justify-center w-[60%] h-full border-2 border-dashed border-gray-400 rounded-xl p-6 text-center bg-white snap-center shrink-0 mr-40 gap-5 ${
+            className={`flex flex-col items-center justify-center w-[60%] h-full border-2 border-dashed border-gray-400 rounded-xl p-6 text-center bg-white snap-center shrink-0 mr-40 gap-3 ${
               cardData.length == 0 ? 'ml-40' : ''
             }`}
           >
             <VerticalCardButton
               iconPath={
                 <div className="w-full h-full flex justify-center">
-                  <img src={PlusButton} alt="카드 등록 버튼" className="md:w-5 w-4" />
+                  <img src={PlusButton} alt="카드 등록 버튼" className="md:w-6 w-5" />
                 </div>
               }
               label="카드 등록"

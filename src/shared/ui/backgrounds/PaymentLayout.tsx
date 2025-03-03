@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
 import ticket from '../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
+import Button from '../../../../design-system/ui/Button';
 
 interface PaymentLayoutProps {
   children: React.ReactNode;
@@ -11,8 +12,7 @@ const PaymentLayout = ({ children, centerContent }: PaymentLayoutProps) => {
   const navigate = useNavigate();
   return (
     <div className="relative flex">
-      {/* 레이아웃 내용 */}
-      <div className="relative top-0 w-full h-44 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[20px]">
+      <div className="absolute top-0 w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[20px]">
         {/* 헤더 영역 */}
         <Header
           leftButtonLabel="<"
@@ -29,8 +29,8 @@ const PaymentLayout = ({ children, centerContent }: PaymentLayoutProps) => {
               <p className="text-gray-400 text-xs md:text-sm">티켓 수량을 선택하고 결제 수단을 선택하세요</p>
             </div>
             <div className="flex flex-row justify-between items-center">
-              <div className="flex gap-2">
-                <img src={ticket} alt="ticket logo" />
+              <div className="flex gap-4">
+                <img src={ticket} alt="ticket logo" className="w-7" />
                 <div>
                   <p className="font-bold text-sm md:text-base">콘서트 티켓</p>
                   <p className="text-gray-400 text-xs md:text-sm">50,000원 / 장</p>
@@ -40,8 +40,13 @@ const PaymentLayout = ({ children, centerContent }: PaymentLayoutProps) => {
             </div>
           </div>
         </div>
-
+      </div>
+      <div className="flex flex-col w-full min-h-[calc(100vh-17rem)] mt-60 md:mt-64">
         {children}
+        <div className="flex flex-grow" />
+        <div className="w-full p-6">
+          <Button label="다음" onClick={() => {}} className="w-full h-12 rounded-full" />
+        </div>
       </div>
     </div>
   );
