@@ -17,6 +17,7 @@ import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
 import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
+import { cardButtons } from '../../../shared/types/mainCardButtonType';
 
 const MainPage = () => {
   const images = [
@@ -25,29 +26,6 @@ const MainPage = () => {
     { img: thirdPage, link: 'https://example.com/page3' },
   ];
 
-  // 버튼 데이터
-  const cardButtons = [
-    {
-      iconPath: '/assets/main/DevStudy.svg',
-      label: '개발/스터디',
-      onClick: () => console.log('DevStudy clicked'),
-    },
-    {
-      iconPath: '/assets/main/Networking.svg',
-      label: '네트워킹',
-      onClick: () => console.log('Networking clicked'),
-    },
-    {
-      iconPath: '/assets/main/Hackathon.svg',
-      label: '해커톤',
-      onClick: () => console.log('Hackathon clicked'),
-    },
-    {
-      iconPath: '/assets/main/Conference.svg',
-      label: '컨퍼런스',
-      onClick: () => console.log('Conference clicked'),
-    },
-  ];
   const [modalOpen, setModalOpen] = useState(false);
   const [latestStartIndex, setLatestStartIndex] = useState<number>(0);
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
@@ -64,16 +42,6 @@ const MainPage = () => {
   const handlePrev = (setStartIndex: SetStartIndex, currentIndex: number, eventsLength: number): void => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
-  const handleEventCardClick = () => {
-    navigate('/event-details');
-  };
-  const handleAllEventsButtonClick = () => {
-    navigate('/all-events');
-  };
-
-  const handleSearchButtonClick = () => {
-    navigate('/search');
-  };
 
   return (
     <div className="flex flex-col items-center pb-24">
@@ -81,7 +49,7 @@ const MainPage = () => {
         centerContent={
           <SearchTextField
             iconPath={<img src={searchIcon} alt="Search" />}
-            onClick={handleSearchButtonClick}
+            onClick={() => navigate('/search')}
             onChange={() => {}}
             placeholder="입력해주세요"
           />
@@ -130,7 +98,7 @@ const MainPage = () => {
                 eventDate={event.eventDate}
                 location={event.location}
                 hashtags={event.hashtags}
-                onClick={handleEventCardClick}
+                onClick={() => navigate('/event-details')}
               />
             ))}
         </div>
@@ -219,7 +187,7 @@ const MainPage = () => {
         />
       </div>
       <button
-        onClick={handleAllEventsButtonClick}
+        onClick={() => navigate('/all-events')}
         className="flex items-center justify-center text-white bg-black lg:px-7 lg:py-3 md:px-6 md:py-3 sm:px-5 sm:py-2.5 rounded-3xl sm:text-xs md:text-sm lg:text-base"
       >
         전체 이벤트 보러가기 <span className="ml-1.5">&gt;</span>

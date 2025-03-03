@@ -20,7 +20,7 @@ const SearchTextField = forwardRef<HTMLInputElement, SearchTextFieldProps>(
           onChange={onChange}
           placeholder={placeholder}
           {...rest}
-          className="w-full sm:h-6 md:h-7 border-[0.3px] border-black rounded-[3px] px-2 outline-none placeholder:text-placeholderText text-xs font-light"
+          className="w-full h-7 md:h-8 border-[0.3px] border-black rounded-[3px] px-2 outline-none placeholder:text-placeholderText text-xs font-light"
         />
         <div className="absolute cursor-pointer right-2">{iconPath}</div>
       </div>
