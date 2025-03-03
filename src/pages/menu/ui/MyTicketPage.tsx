@@ -10,13 +10,6 @@ import EventCard from '../../../shared/ui/EventCard';
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleEventCardClick = () => {
-    setIsModalOpen(true);
-  };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" showText={true}>
       {/* 이벤트 카드 목록 */}
@@ -31,7 +24,7 @@ const MyTicketPage = () => {
             eventDate={event.eventDate}
             location={event.location}
             hashtags={event.hashtags}
-            onClick={handleEventCardClick}
+            onClick={() => setIsModalOpen(true)}
           />
         ))}
       </div>
@@ -52,7 +45,7 @@ const MyTicketPage = () => {
               isApproved={true}
               isCheckIn={false}
               isCountdownChecked={true}
-              onClick={handleCloseModal}
+              onClick={() => setIsModalOpen(false)}
             />
           </div>
         </div>

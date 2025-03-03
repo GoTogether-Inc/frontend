@@ -11,13 +11,10 @@ const HostDetailPage = () => {
   // hostId에 해당하는 이벤트들만 필터링
   const filteredEvents = trendingEvents.filter(event => event.id === Number(id));
 
-  const handleClick = () => {
-    navigate(`/menu/hostEdit/${id}`);
-  };
   return (
     <HostDetailLayout
       rightContent={
-        <button onClick={handleClick} className="text-xs cursor-pointer">
+        <button onClick={() => navigate(`/menu/hostEdit/${id}`)} className="text-xs cursor-pointer">
           수정하기
         </button>
       }

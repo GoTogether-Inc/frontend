@@ -19,9 +19,6 @@ const EventDetailsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickedLike, setClickedLike] = useState(false);
 
-  const handlePreviousButton = () => {
-    navigate(-1);
-  };
   const handleShareClick = (title: string) => {
     setTitle(title);
     setIsModalOpen(true);
@@ -45,7 +42,7 @@ const EventDetailsPage = () => {
     <>
       <Header
         leftButtonClassName="text-xl hover:no-underline z-30"
-        leftButtonClick={handlePreviousButton}
+        leftButtonClick={() => navigate(-1)}
         leftButtonLabel="<"
         centerContent="같이가요"
         rightContent={<img src={Search} alt="검색" className="w-4" />}
