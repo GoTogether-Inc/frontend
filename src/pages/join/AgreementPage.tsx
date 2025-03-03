@@ -9,8 +9,6 @@ const AgreementPage: React.FC = () => {
   const { isAllRequiredAgreed } = useAgreementStore();
   const navigate = useNavigate();
 
-  console.log('isAllRequiredAgreed:', isAllRequiredAgreed());
-
   return (
     <div className="flex flex-col w-full h-screen bg-white">
       <Header

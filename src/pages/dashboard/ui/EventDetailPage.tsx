@@ -8,9 +8,6 @@ import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 const EventDetailPage = () => {
   const navigate = useNavigate();
 
-  const handleNextClick = () => {
-    navigate('/dashbord/eventDetail');
-  };
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="flex flex-col gap-5 mt-8 px-7">
@@ -20,7 +17,11 @@ const EventDetailPage = () => {
         <LinkInput />
       </div>
       <div className="w-full p-7">
-        <Button label="저장하기" onClick={handleNextClick} className="w-full h-12 rounded-full" />
+        <Button
+          label="저장하기"
+          onClick={() => navigate('/dashbord/eventDetail')}
+          className="w-full h-12 rounded-full"
+        />
       </div>
     </DashboardLayout>
   );

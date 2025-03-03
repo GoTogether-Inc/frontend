@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
@@ -16,7 +15,7 @@ const existingNames = ['김원영']; // 중복 이름 예시
 const existingPhones = ['01012345678']; // 중복 연락처 예시
 const existingEmails = ['example@example.com']; // 중복 이메일 예시
 
-const InfoInputPage: React.FC = () => {
+const InfoInputPage = () => {
   const {
     register,
     handleSubmit,
