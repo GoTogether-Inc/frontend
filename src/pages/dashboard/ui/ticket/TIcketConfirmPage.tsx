@@ -38,7 +38,7 @@ const TicketConfirmPage = () => {
           <div className="w-full h-3 bg-white clip-bottom-banner"></div>
           <div className="bg-white p-5 flex flex-col gap-5">
             <div>
-              <p className="text-pink-500 font-bold text-2xl">WOOACON 2024</p>
+              <p className="text-pink-500 font-bold md:text-2xl text-xl">WOOACON 2024</p>
               <p className="text-gray-700 mt-5 flex gap-3">
                 <span className="font-semibold text-gray-400">일정</span>
                 2025년 4월 24일, 14시 20분
@@ -50,10 +50,16 @@ const TicketConfirmPage = () => {
             </div>
 
             <div className="mt-4 space-y-2">
-              <button className="w-full border border-gray-300 py-2" onClick={() => navigate('/menu/myticket')}>
+              <button
+                className="w-full border border-gray-300 py-2 md:text-base text-sm"
+                onClick={() => navigate('/menu/myticket')}
+              >
                 상세보기
               </button>
-              <button className="w-full border border-gray-300 py-2" onClick={() => setIsModalOpen(true)}>
+              <button
+                className="w-full border border-gray-300 py-2 md:text-base text-sm"
+                onClick={() => setIsModalOpen(true)}
+              >
                 구매 취소
               </button>
             </div>
@@ -61,9 +67,9 @@ const TicketConfirmPage = () => {
         </div>
 
         <div className="bg-white w-full p-5 flex flex-col gap-3">
-          <p className="text-2xl font-bold">주최자 정보</p>
+          <p className="md:text-2xl text-xl font-bold">주최자 정보</p>
           <p>테크 이노베이션 그룹</p>
-          <p className="text-gray-400">
+          <p className="text-gray-400 md:text-base text-sm">
             최신 기술 트렌드를 선도하는 테크 이노베이션 그룹입니다. 다양한 기술 컨퍼런스와 워크샵을 주최하고 있습니다.
           </p>
           <div className="flex gap-3 items-center">
@@ -76,7 +82,7 @@ const TicketConfirmPage = () => {
           </div>
         </div>
         <div className="p-5 bg-white flex flex-col gap-2">
-          <p className="font-bold text-2xl">오시는 길</p>
+          <p className="font-bold md:text-2xl text-xl">오시는 길</p>
           <p>서울특별시 강남구 00동</p>
 
           <KakaoMap />
