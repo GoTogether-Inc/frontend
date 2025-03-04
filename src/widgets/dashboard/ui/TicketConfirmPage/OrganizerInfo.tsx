@@ -4,7 +4,7 @@ import EmailIcon from '../../../../../public/assets/dashboard/ticket/emailIcon.s
 
 const OrganizerInfo = () => {
   return (
-    <div className="bg-white w-full p-5 flex flex-col gap-3">
+    <div className="bg-white w-full p-5 flex flex-col gap-3 rounded-[10px]">
       <p className="md:text-2xl text-xl font-bold">주최자 정보</p>
       <p>테크 이노베이션 그룹</p>
       <p className="text-gray-400 md:text-base text-sm">

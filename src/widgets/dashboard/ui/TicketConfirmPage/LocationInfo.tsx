@@ -8,7 +8,7 @@ const MapInfo = {
 
 const LocationInfo = () => {
   return (
-    <div className="p-5 bg-white flex flex-col gap-2">
+    <div className="p-5 bg-white flex flex-col gap-2 rounded-[10px]">
       <p className="font-bold md:text-2xl text-xl">오시는 길</p>
       <p>{MapInfo.LocationName}</p>
       <KakaoMap lat={MapInfo.lat} lng={MapInfo.lng} />
