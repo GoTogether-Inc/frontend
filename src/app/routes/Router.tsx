@@ -30,143 +30,49 @@ import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 import PaymentPage from '../../pages/payment/ui/PaymentPage';
 import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
 
-const routesConfig = [
-  {
-    path: MAIN_ROUTES.main,
-    element: <MainPage />,
-    requiresAuth: false,
-  },
-  {
-    path: JOIN_ROUTES.agreement, // 회원가입 경로 추가
-    element: <AgreementPage />,
-    requiresAuth: false,
-  },
-  {
-    path: JOIN_ROUTES.infoInput, // 회원가입 경로 추가
-    element: <InfoInputPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MAIN_ROUTES.eventCreation,
-    element: <FunnelPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MAIN_ROUTES.allEvents,
-    element: <AllEventsPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MAIN_ROUTES.eventDatail,
-    element: <EventDetailsPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MAIN_ROUTES.search,
-    element: <SearchPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MAIN_ROUTES.menu,
-    element: <MenuPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MENU_ROUTES.myTicket,
-    element: <MyTicketPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MENU_ROUTES.myHost,
-    element: <MyHostPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MENU_ROUTES.hostDetail,
-    element: <HostDetailPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MENU_ROUTES.hostEdit,
-    element: <HostEditPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MENU_ROUTES.myPage,
-    element: <MyPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MENU_ROUTES.hostInfo,
-    element: <HostInfoPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.dashboard,
-    element: <DashboardPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.eventInfo,
-    element: <EventInfoPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.eventDetail,
-    element: <EventDetailPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.eventTag,
-    element: <EventTagPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.ticketCreate,
-    element: <TicketCreatePage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.ticket,
-    element: <TicketListPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.email,
-    element: <EmailPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.mailBox,
-    element: <MailBoxPage />,
-    requiresAuth: false,
-  },
-  {
-    path: MAIN_ROUTES.payment,
-    element: <PaymentPage />,
-    requiresAuth: false,
-  },
-  {
-    path: PAYMENT_ROUTES.cardRegister,
-    element: <CardRegisterPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.emailEdit,
-    element: <EmailEditPage />,
-    requiresAuth: false,
-  },
-  {
-    path: DASHBOARD_ROUTES.participantsMangement,
-    element: <ParticipantsManagementPage />,
-    requiresAuth: false,
-  },
-  {
-    path: PAYMENT_ROUTES.ticketConfirm,
-    element: <TicketConfirmPage />,
-    requiresAuth: false,
-  },
+const mainRoutes = [
+  { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.eventCreation, element: <FunnelPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.allEvents, element: <AllEventsPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.eventDatail, element: <EventDetailsPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.search, element: <SearchPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.menu, element: <MenuPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.payment, element: <PaymentPage />, requiresAuth: false },
 ];
+
+const joinRoutes = [
+  { path: JOIN_ROUTES.agreement, element: <AgreementPage />, requiresAuth: false },
+  { path: JOIN_ROUTES.infoInput, element: <InfoInputPage />, requiresAuth: false },
+];
+
+const menuRoutes = [
+  { path: MENU_ROUTES.myTicket, element: <MyTicketPage />, requiresAuth: false },
+  { path: MENU_ROUTES.myHost, element: <MyHostPage />, requiresAuth: false },
+  { path: MENU_ROUTES.hostDetail, element: <HostDetailPage />, requiresAuth: false },
+  { path: MENU_ROUTES.hostEdit, element: <HostEditPage />, requiresAuth: false },
+  { path: MENU_ROUTES.myPage, element: <MyPage />, requiresAuth: false },
+  { path: MENU_ROUTES.hostInfo, element: <HostInfoPage />, requiresAuth: false },
+];
+
+const dashboardRoutes = [
+  { path: DASHBOARD_ROUTES.dashboard, element: <DashboardPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.eventInfo, element: <EventInfoPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.eventDetail, element: <EventDetailPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.eventTag, element: <EventTagPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.ticketCreate, element: <TicketCreatePage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.ticket, element: <TicketListPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.email, element: <EmailPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.mailBox, element: <MailBoxPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.emailEdit, element: <EmailEditPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.participantsMangement, element: <ParticipantsManagementPage />, requiresAuth: false },
+];
+
+const paymentRoutes = [
+  { path: PAYMENT_ROUTES.cardRegister, element: <CardRegisterPage />, requiresAuth: false },
+  { path: PAYMENT_ROUTES.ticketConfirm, element: <TicketConfirmPage />, requiresAuth: false },
+];
+
+const routesConfig = [...mainRoutes, ...joinRoutes, ...menuRoutes, ...dashboardRoutes, ...paymentRoutes];
 
 const router = createBrowserRouter(
   routesConfig.map(route => ({
