@@ -36,7 +36,6 @@ export const DASHBOARD_ROUTES = {
   eventTag: `${MAIN_ROUTES.dashboard}/eventTag`,
   ticket: `${MAIN_ROUTES.dashboard}/ticket`,
   ticketCreate: `${MAIN_ROUTES.dashboard}/ticket/create`,
-  ticketConfirm: `${MAIN_ROUTES.dashboard}/ticket/confirm`,
   email: `${MAIN_ROUTES.dashboard}/email`,
   mailBox: `${MAIN_ROUTES.dashboard}/mailBox`,
   emailEdit: `${MAIN_ROUTES.dashboard}/edit-email`,
@@ -44,6 +43,7 @@ export const DASHBOARD_ROUTES = {
 };
 
 export const PAYMENT_ROUTES = {
-  cardRegister: `${MAIN_ROUTES.payment}/cardRegister`,
   payment: `${MAIN_ROUTES.payment}`,
+  cardRegister: `${MAIN_ROUTES.payment}/cardRegister`,
+  ticketConfirm: `${MAIN_ROUTES.payment}/ticket-confirm`,
 };
