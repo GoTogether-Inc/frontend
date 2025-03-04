@@ -9,11 +9,11 @@ const PurchaseBanner = ({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<Rea
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-        <div className="w-full h-16 bg-gradient-to-l from-main to-gradation text-white font-bold flex items-center px-10 text-xl pt-2 gap-2">
+        <div className="w-full h-14 md:h-16 bg-gradient-to-l from-main to-gradation text-white font-bold flex items-center px-6 text-xl pt-2 gap-2">
           <img src={CheckIcon} alt="Check_Icon" />
           <p>구매 확정</p>
         </div>
-        <div className="w-full h-3 bg-gradient-to-l from-main to-gradation clip-top-banner"></div>
+        <div className="w-full h-2 md:h-3 bg-gradient-to-l from-main to-gradation clip-top-banner"></div>
       </div>
       <div className="w-full h-3 bg-white clip-bottom-banner"></div>
       <div className="bg-white p-5 flex flex-col gap-5">
