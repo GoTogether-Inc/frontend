@@ -40,6 +40,7 @@ export const DASHBOARD_ROUTES = {
   mailBox: `${MAIN_ROUTES.dashboard}/mailBox`,
   emailEdit: `${MAIN_ROUTES.dashboard}/edit-email`,
   participantsMangement: `${MAIN_ROUTES.dashboard}/participants-mangement`,
+  responsesManagement:`${MAIN_ROUTES.dashboard}/responses-management`,
 };
 
 export const PAYMENT_ROUTES = {
