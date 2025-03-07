@@ -6,18 +6,17 @@ import { participantsInfo } from '../../../shared/types/participantInfoType';
 
 const ResponsesManagementPage = () => {
     const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-    const [filter, setFilter] = useState<string[]>([]);
     return(
         <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
             <div className="flex flex-col px-2 md:px-4">
-                <h1 className="text-left font-semibold text-xl py-4 md:py-6 pl-8">응답 {participantsInfo.length}개</h1>
+                <h1 className="text-left font-semibold text-2xl py-4 md:py-6 pl-4">응답 {participantsInfo.length}개</h1>
                 <div className="flex justify-center">
                     <ResponsesFilterBar
                         listType={listType}
                         setListType={setListType}
                     />
                 </div>
-                <ResponsesList listType={listType} selectedFilter={filter} />
+                <ResponsesList listType={listType}  />
             </div>
         </DashboardLayout>
     );
