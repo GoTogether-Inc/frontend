@@ -29,6 +29,7 @@ import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
 import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 import PaymentPage from '../../pages/payment/ui/PaymentPage';
 import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
+import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagementPage';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -65,6 +66,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_ROUTES.mailBox, element: <MailBoxPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.emailEdit, element: <EmailEditPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.participantsMangement, element: <ParticipantsManagementPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.responsesManagement, element: <ResponseManagementPage />, requiresAuth: false },
 ];
 
 const paymentRoutes = [
