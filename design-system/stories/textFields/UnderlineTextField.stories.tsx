@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import UnderlineTextField from '../../ui/textFields/UnderlineTextField';
+import TextField from '../../ui/textFields/TextField';
 
 const meta = {
-  title: 'TextFields/UnderlineTextField',
-  component: UnderlineTextField,
+  title: 'TextFields/TextField',
+  component: TextField,
   parameters: {
     layout: 'centered',
   },
@@ -26,7 +26,7 @@ const meta = {
       description: '입력 이벤트',
     },
   },
-} satisfies Meta<typeof UnderlineTextField>;
+} satisfies Meta<typeof TextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
