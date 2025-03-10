@@ -47,9 +47,9 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
       </div>
       {/* 이메일 내용 작성 부분 */}
       <MultilineTextField
-        label="추가 발송될 이메일 내용"
+        label="발송될 이메일 내용"
         className="h-80 md:mb-4"
-        placeholder="추가 발송될 이메일 본문 내용입니다."
+        placeholder="발송될 이메일 본문 내용입니다."
       />
     </div>
   );
