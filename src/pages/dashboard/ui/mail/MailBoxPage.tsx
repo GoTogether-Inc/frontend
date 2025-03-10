@@ -7,10 +7,11 @@ import { mailInfo } from '../../../../shared/types/mailInfoType';
 import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
 
 const MailBoxPage = () => {
-  const [listType, setListType] = useState<'all' | 'pending'>('all');
+  const [listType, setListType] = useState<'completed' | 'pending'>('completed');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const currentDate = new Date();
 
+  const completedMails = mailInfo.filter(mail => new Date(mail.date) < currentDate);
   const pendingMails = mailInfo.filter(mail => new Date(mail.date) > currentDate);
 
   return (
@@ -22,9 +23,9 @@ const MailBoxPage = () => {
         </div>
         <div className="flex gap-3 font-semibold text-15">
           <TextButton
-            label="모든 메일"
-            onClick={() => setListType('all')}
-            className={listType === 'all' ? 'text-main' : ''}
+            label="발송 예약 메일"
+            onClick={() => setListType('completed')}
+            className={listType === 'completed' ? 'text-main' : ''}
           />
           <TextButton
             label="미발송 예약 메일"
@@ -32,7 +33,7 @@ const MailBoxPage = () => {
             className={listType === 'pending' ? 'text-main' : ''}
           />
         </div>
-        {(listType === 'all' ? mailInfo : pendingMails).map(mail => (
+        {(listType === 'completed' ? completedMails : pendingMails).map(mail => (
           <SentMailCard
             key={mail.id}
             mail={mail}
