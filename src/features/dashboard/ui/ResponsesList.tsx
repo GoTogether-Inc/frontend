@@ -25,10 +25,9 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
     );
     const itemsPerPage2 = 1;
     const individualPages = Math.ceil(filteredResponses.length / itemsPerPage2);
-    const uniqueResponseNames = [...new Set(responses.map(response => response.name))]; //드롭다운 목록
+    const uniqueResponseNames = [...new Set(responses.map(response => response.name))]; 
 
     useEffect(() => {
-        // responsesInfo 데이터를 responses 상태로 설정
         setResponses(responsesInfo);
     }, []);
 
@@ -191,16 +190,16 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                                 {options.map((option) => {
                                     const selectedChoice = response.selectedOptions[option.optionName];
                                     return (
-                                        <div key={option.optionName}>
-                                            <strong>{option.optionName}</strong>
-                                            <ul>
+                                        <div key={option.optionName} >
+                                            <p className="block mb-2 text-l">{option.optionName}</p>
+                                            <ul className="space-y-1">
                                                 {option.choices.map((choice) => (
                                                     <li>
                                                         <Checkbox
                                                             label={choice as string}  
                                                             checked={selectedChoice === choice}  
                                                             onChange={() => { }} 
-                                                            disabled={true}  
+                                                            disabled={selectedChoice != choice}  
                                                         />
                                                     </li>
                                                 ))}
