@@ -36,6 +36,7 @@ export const DASHBOARD_ROUTES = {
   eventTag: `${MAIN_ROUTES.dashboard}/eventTag`,
   ticket: `${MAIN_ROUTES.dashboard}/ticket`,
   ticketCreate: `${MAIN_ROUTES.dashboard}/ticket/create`,
+  ticketOption: `${MAIN_ROUTES.dashboard}/ticket/option`,
   email: `${MAIN_ROUTES.dashboard}/email`,
   mailBox: `${MAIN_ROUTES.dashboard}/mailBox`,
   emailEdit: `${MAIN_ROUTES.dashboard}/edit-email`,
