@@ -5,7 +5,7 @@ import { responsesInfo } from '../../../shared/types/responseType';
 import DropDown from '../../../shared/ui/DropDown';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 import { options } from '../../../shared/types/responseType';
-import Checkbox from '../../../../design-system/ui/Checkbox';
+import OptionSection from './OptionSection';
 
 interface ResponsesListProps {
     listType: 'summary' | 'query' | 'individual';
@@ -188,27 +188,7 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                                     errorMessage={''}
                                     className="mb-4"
                                 />
-                                {options.map((option) => {
-                                    const selectedChoice = response.selectedOptions[option.optionName];
-                                    return (
-                                        <div key={option.optionName} >
-                                            <p className="block mb-2 text-l">{option.optionName}</p>
-                                            <ul className="space-y-1">
-                                                {option.choices.map((choice) => (
-                                                    <li>
-                                                        <Checkbox
-                                                            label={choice as string}  
-                                                            checked={selectedChoice === choice}  
-                                                            onChange={() => { }} 
-                                                            disabled={selectedChoice != choice}  
-                                                        />
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    );
-                                })}
-
+                                <OptionSection responses={[response]} options={options} />
                             </div>
                         ))
                     ) : (
