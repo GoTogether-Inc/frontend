@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
-import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
+import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;

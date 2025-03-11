@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import EmailInput from '../../../../features/dashboard/ui/EmailInput';
 import { participantsInfo } from '../../../../shared/types/participantInfoType';
-import TimePicker from '../../../../features/event-manage/ui/TimePicker';
+import TimePicker from '../../../../features/event-manage/event-create/ui/TimePicker';
 import Button from '../../../../../design-system/ui/Button';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
 

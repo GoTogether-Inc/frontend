@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
-import FileUpload from '../../../features/event-manage/ui/FileUpload';
-import LinkInput from '../../../features/event-manage/ui/LinkInput';
-import TextEditor from '../../../features/event-manage/ui/TextEditor';
+import FileUpload from '../../../features/event-manage/event-create/ui/FileUpload';
+import LinkInput from '../../../features/event-manage/event-create/ui/LinkInput';
+import TextEditor from '../../../features/event-manage/event-create/ui/TextEditor';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 
 const EventDetailPage = () => {

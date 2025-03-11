@@ -1,6 +1,6 @@
-import profile from '../../../../public/assets/banners/1.png';
-import link from '../../../../public/assets/event-manage/details/Link.svg';
-import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
+import profile from '../../../../../public/assets/banners/1.png';
+import link from '../../../../../public/assets/event-manage/details/Link.svg';
+import kakao from '../../../../../public/assets/event-manage/details/KaKao.svg';
 
 interface ShareEventModalProp {
   closeModal: () => void;

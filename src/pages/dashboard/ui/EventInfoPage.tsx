@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
-import EventDatePicker from '../../../features/event-manage/ui/DatePicker';
+import EventDatePicker from '../../../features/event-manage/event-create/ui/DatePicker';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../shared/ui/SearchBar';
 import { useNavigate } from 'react-router-dom';

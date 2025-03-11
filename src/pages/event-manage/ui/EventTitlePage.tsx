@@ -1,6 +1,6 @@
 import React from 'react';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
-import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
+import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 const EventTitlePage = () => {
   const { formState, setFormState } = useFunnelState();

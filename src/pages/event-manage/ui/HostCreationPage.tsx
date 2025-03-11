@@ -3,7 +3,7 @@ import addImage from '../../../../public/assets/event-manage/creation/AddImage.s
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
 import React from 'react';
-import { FunnelState, useFunnelState } from '../../../features/event-manage/model/FunnelContext';
+import { FunnelState, useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 const HostCreationPage = () => {
   const { formState, setFormState } = useFunnelState();
