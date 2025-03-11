@@ -1,7 +1,7 @@
 import SuccessIcon from '../../../../public/assets/event-manage/creation/SuccessBox.svg';
-import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
-import EventCategory from '../../../features/event-manage/ui/EventCategory';
-import EventTag from '../../../features/event-manage/ui/EventTag';
+import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
+import EventCategory from '../../../features/event-manage/event-create/ui/EventCategory';
+import EventTag from '../../../features/event-manage/event-create/ui/EventTag';
 
 const EventTagPage = () => {
   const { formState, setFormState } = useFunnelState();

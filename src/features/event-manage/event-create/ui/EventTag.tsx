@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { FunnelState } from '../model/FunnelContext';
-import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
+import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
 
 interface EventTagProps {
   formState?: FunnelState['formState'];

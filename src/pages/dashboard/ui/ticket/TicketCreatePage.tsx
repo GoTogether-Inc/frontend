@@ -4,7 +4,7 @@ import { TwoOptions } from '../../../../../design-system/stories/ChoiceChip.stor
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
 import Button from '../../../../../design-system/ui/Button';
-import EventDatePicker from '../../../../features/event-manage/ui/DatePicker';
+import EventDatePicker from '../../../../features/event-manage/event-create/ui/DatePicker';
 
 const TicketCreatePage = () => {
   const [price, setPrice] = useState<number>(0);

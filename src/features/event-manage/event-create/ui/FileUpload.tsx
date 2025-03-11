@@ -1,4 +1,4 @@
-import FileUploadImage from '../../../../public/assets/event-manage/creation/FileUpload.svg';
+import FileUploadImage from '../../../../../public/assets/event-manage/creation/FileUpload.svg';
 
 const FileUpload = () => {
   return (

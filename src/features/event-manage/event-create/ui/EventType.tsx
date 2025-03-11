@@ -1,6 +1,6 @@
-import OnlineIcon from '../../../../public/assets/event-manage/creation/OnlineIcon.svg';
-import OfflineIcon from '../../../../public/assets/event-manage/creation/OfflineIcon.svg';
-import SearchBar from '../../../shared/ui/SearchBar';
+import OnlineIcon from '../../../../../public/assets/event-manage/creation/OnlineIcon.svg';
+import OfflineIcon from '../../../../../public/assets/event-manage/creation/OfflineIcon.svg';
+import SearchBar from '../../../../shared/ui/SearchBar';
 import { useFunnelState } from '../model/FunnelContext';
 
 interface EventTypeProps {

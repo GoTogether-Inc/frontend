@@ -11,7 +11,7 @@ import like from '../../../../public/assets/event-manage/details/Like.svg';
 import liked from '../../../../public/assets/event-manage/details/ClickedLike.svg';
 import TicketInfo from '../../../widgets/event/ui/TicketInfo';
 import link from '../../../../public/assets/event-manage/details/Link.svg';
-import ShareEventModal from '../../../features/event-manage/ui/ShareEventModal';
+import ShareEventModal from '../../../features/event-manage/event-create/ui/ShareEventModal';
 
 const EventDetailsPage = () => {
   const navigate = useNavigate();

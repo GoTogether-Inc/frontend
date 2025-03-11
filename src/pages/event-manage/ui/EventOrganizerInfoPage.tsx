@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { validations } from '../../../shared/lib/validation';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
-import { useFunnelState } from '../../../features/event-manage/model/FunnelContext';
+import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 interface FormInputs {
   email: string;

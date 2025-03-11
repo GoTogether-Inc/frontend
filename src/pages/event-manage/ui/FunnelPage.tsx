@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useFunnel } from '../../../features/event-manage/hooks/useFunnel';
-import EventFunnel from '../../../features/event-manage/ui/EventFunnel';
+import { useFunnel } from '../../../features/event-manage/event-create/hooks/useFunnel';
+import EventFunnel from '../../../features/event-manage/event-create/ui/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FunnelProvider } from '../../../features/event-manage/model/FunnelContext';
+import { FunnelProvider } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 const FunnelPage = () => {
   const { Funnel, Step, setStep, currentStep, steps } = useFunnel(0);
