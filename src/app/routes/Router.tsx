@@ -30,6 +30,7 @@ import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 import PaymentPage from '../../pages/payment/ui/PaymentPage';
 import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
 import TicketOptionPage from '../../pages/dashboard/ui/ticket/TicketOptionPage';
+import TicketOptionCreatePage from '../../pages/dashboard/ui/ticket/TicketOptionCreatePage';
 import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagementPage';
 import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
 
@@ -64,7 +65,8 @@ const dashboardRoutes = [
   { path: DASHBOARD_ROUTES.eventTag, element: <EventTagPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticketCreate, element: <TicketCreatePage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticket, element: <TicketListPage />, requiresAuth: false },
-  { path: DASHBOARD_ROUTES.ticketOption, element: <TicketOptionPage/>, requiersAuth: false },
+  { path: DASHBOARD_ROUTES.ticketOption, element: <TicketOptionPage />, requiersAuth: false },
+  { path: DASHBOARD_ROUTES.ticketOptionCreate, element: <TicketOptionCreatePage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.email, element: <EmailPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.mailBox, element: <MailBoxPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.emailEdit, element: <EmailEditPage />, requiresAuth: false },
