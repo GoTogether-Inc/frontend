@@ -20,9 +20,14 @@ const DropDown = ({ options, selectedValue, onSelect }: DropDownProps) => {
     <div className="relative">
       <button
         onClick={toggleDropdown}
-        className="flex justify-between p-2 text-left bg-white border border-placeholderText rounded-[2px] focus:outline-none sm:max-w-40 text-sm"
+        className="flex justify-between p-2 text-left bg-white border border-placeholderText rounded-[2px] focus:outline-none sm:min-w-40 text-sm"
       >
-      <span className="items-center">{selectedValue}▼</span>
+        <span className="flex items-center justify-between w-full">
+          <span>{selectedValue}</span>
+          <span>▼</span>
+        </span>
+
+
 
       </button>
       {open && (
