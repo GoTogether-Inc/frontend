@@ -1,10 +1,11 @@
 import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Trash from '../../../../../design-system/icons/Trash.svg';
 import { ThreeOptions } from '../../../../../design-system/stories/ChoiceChip.stories';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
+import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
 import ToggleButton from '../../../../../design-system/ui/buttons/ToggleButton';
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
@@ -14,12 +15,15 @@ const TicketOptionCreatePage = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [options, setOptions] = useState<string[]>(Array(3).fill(''));
   const [warningMsg, setWarningMsg] = useState('');
+  const [selectedChip, setSelectedChip] = useState('');
 
   const handleIsToggled = () => {
     setIsToggled(prev => !prev);
   };
 
-  {/*선택지 삭제*/}
+  {
+    /*선택지 삭제*/
+  }
   const handleClearOption = (index: number) => {
     if (options.length === 1) {
       setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
@@ -33,22 +37,33 @@ const TicketOptionCreatePage = () => {
     }
   };
 
-  {/*선택지 추가*/}
+  {
+    /*선택지 추가*/
+  }
   const handleAddOption = () => {
     const updateOptions = [...options, ''];
     setOptions(updateOptions);
 
-    if (updateOptions.length > 1 ){
+    if (updateOptions.length > 1) {
       setWarningMsg('');
     }
   };
 
-  {/*선택지 입력 업데이트*/}
+  {
+    /*선택지 입력 업데이트*/
+  }
   const handleInputChange = (index: number, value: string) => {
     const updateOptions = [...options];
     updateOptions[index] = value;
     setOptions(updateOptions);
   };
+
+  {
+    /*ChoiceChip 상태 변화값 감지*/
+  }
+  useEffect(() => {
+    console.log(`selectedChip 값 : ${selectedChip}`);
+  }, [selectedChip]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -81,7 +96,13 @@ const TicketOptionCreatePage = () => {
           <div className="w-32 md:w-56 my-1">
             <p className="block px-1 text-m font-semibold text-gray-700">응답을 어떤 형식으로 받을까요?</p>
             <p className="block px-1 mb-1 text-placeholderText text-11 md:text-13">한 개만 선택할 수 있습니다.</p>
-            <ChoiceChip {...ThreeOptions.args} />
+            {/* <ChoiceChip {...ThreeOptions.args} /> */}
+            <ChoiceChip
+              options={['객관식', '주관식', '여러 개 선택']}
+              onSelect={selected => {
+                setSelectedChip(selected);
+              }}
+            />
           </div>
         </div>
 
@@ -100,25 +121,34 @@ const TicketOptionCreatePage = () => {
 
         {/*설문지 입력란*/}
         <div>
-          <p className="block px-1 text-m font-semibold text-gray-700">설문지</p>
-          <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
           {warningMsg && <p className="text-red-500 text-xs mb-2">{warningMsg}</p>}
-          {options.map((option, index) => (
-            <DefaultTextField
-              placeholder="이름을 입력해주세요."
-              className="h-12"
-              key={index}
-              value={option}
-              onChange={e => handleInputChange(index, e.target.value)}
-              rightContent={
-                <IconButton
-                  size="medium"
-                  iconPath={<img src={Trash} alt="TrashIcon" />}
-                  onClick={() => handleClearOption(index)}
+          {(selectedChip === '객관식' || selectedChip === '여러 개 선택') && (
+            <>
+              <p className="block px-1 text-m font-semibold text-gray-700">설문지</p>
+              <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
+              {options.map((option, index) => (
+                <DefaultTextField
+                  placeholder="이름을 입력해주세요."
+                  className="h-12"
+                  key={index}
+                  value={option}
+                  onChange={e => handleInputChange(index, e.target.value)}
+                  rightContent={
+                    <IconButton
+                      size="medium"
+                      iconPath={<img src={Trash} alt="TrashIcon" />}
+                      onClick={() => handleClearOption(index)}
+                    />
+                  }
                 />
-              }
-            />
-          ))}
+              ))}
+            </>
+          )}
+          {selectedChip === '주관식' && (<></>
+            // <MultilineTextField
+            //   placeholder="잉? 여긴 없는건가??"
+            // />
+          )}
         </div>
 
         <div className="w-full ">
