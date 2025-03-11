@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import type { responsesData } from '../../../shared/types/responseType';
 import { responsesInfo } from '../../../shared/types/responseType';
+
 import DropDown from '../../../shared/ui/DropDown';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 import { options } from '../../../shared/types/responseType';
@@ -10,7 +12,8 @@ interface ResponsesListProps {
 }
 
 const ResponsesList = ({ listType }: ResponsesListProps) => {
-    const [responses, setResponses] = useState<any[]>([]);
+    const [responses, setResponses] = useState<responsesData[]>(() => responsesInfo);
+
     //질문 페이지
     const [selectedField, setSelectedField] = useState<'name' | 'phone' | 'email'>('name');
     const [queryPage, setQueryPage] = useState(1);
@@ -27,9 +30,6 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
     const individualPages = Math.ceil(filteredResponses.length / itemsPerPage2);
     const uniqueResponseNames = [...new Set(responses.map(response => response.name))]; 
 
-    useEffect(() => {
-        setResponses(responsesInfo);
-    }, []);
 
 
     const fieldMap: Record<string, 'name' | 'phone' | 'email'> = {
@@ -62,8 +62,9 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                     <p>응답이 없습니다.</p>
                 ) : (
                     paginatedResponses.map((response) => (
-                        <div className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3" key={response.ticketNum}>
-                            <p>{response[key]}</p>
+                        <div className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3" key={response.id}>
+                            <p>{typeof response[key] === 'object' ? JSON.stringify(response[key]) : response[key]}</p>
+
                         </div>
                     ))
                 )}
