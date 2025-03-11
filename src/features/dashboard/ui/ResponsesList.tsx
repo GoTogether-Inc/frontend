@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { responsesData } from '../../../shared/types/responseType';
 import { responsesInfo } from '../../../shared/types/responseType';
 
@@ -13,24 +13,36 @@ interface ResponsesListProps {
 
 const ResponsesList = ({ listType }: ResponsesListProps) => {
     const [responses, setResponses] = useState<responsesData[]>(() => responsesInfo);
+    const [itemsPerPage, setItemsPerPage] = useState(4);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const handlePrevPage = () => {
+        setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    };
 
-    //질문 페이지
+    const handleNextPage = () => {
+        setCurrentIndex((prev) => Math.min(prev + 1, filteredResponses.length - 1));
+    };
+
+    //질문
     const [selectedField, setSelectedField] = useState<'name' | 'phone' | 'email'>('name');
-    const [queryPage, setQueryPage] = useState(1);
-    const itemsPerPage = 4;
-    const queryPages = Math.ceil(responses.length / itemsPerPage);
-    //개별 조회 페이지
-    const [individualPage, setIndividualPage] = useState(1);
+
+    //개별 조회
     const [selectedResponse, setSelectedResponse] = useState<any | null>(null);
     const [selectedResponseName, setSelectedResponseName] = useState<string>();
     const filteredResponses = responses.filter(response =>
         selectedResponseName == response.name
     );
-    const itemsPerPage2 = 1;
-    const individualPages = Math.ceil(filteredResponses.length / itemsPerPage2);
-    const uniqueResponseNames = [...new Set(responses.map(response => response.name))]; 
+    const uniqueResponseNames = [...new Set(responses.map(response => response.name))];
 
-
+    useEffect(() => {
+        if (listType === 'individual') {
+            setItemsPerPage(1);
+        } else if (listType === 'summary') {
+            setItemsPerPage(4);
+        } else {
+            setItemsPerPage(10);
+        }
+    }, [listType]);
 
     const fieldMap: Record<string, 'name' | 'phone' | 'email'> = {
         '이름': 'name',
@@ -42,15 +54,11 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
         const response = responses.find(r => r.name === responseName);
         setSelectedResponse(response || null);
         setSelectedResponseName(responseName);
-        setIndividualPage(1);
+        setCurrentIndex(0);
     };
 
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
-        const paginatedResponses = responses.slice(
-            (queryPage - 1) * itemsPerPage,
-            queryPage * itemsPerPage
-        );
-
+        const currentPageResponses = responses.slice(currentIndex, currentIndex + itemsPerPage);
         return (
             <div className="bg-white p-4 flex flex-col gap-2 mb-4">
                 <div className="flex justify-between items-center text-xs bg-white px-2 md:px-3 py-3">
@@ -58,10 +66,10 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                     <p>응답 {responses.length}개</p>
                 </div>
 
-                {paginatedResponses.length === 0 ? (
+                {currentPageResponses.length === 0 ? (
                     <p>응답이 없습니다.</p>
                 ) : (
-                    paginatedResponses.map((response) => (
+                    currentPageResponses.map((response) => (
                         <div className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3" key={response.id}>
                             <p>{typeof response[key] === 'object' ? JSON.stringify(response[key]) : response[key]}</p>
 
@@ -83,22 +91,22 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                                 selectedValue={{ name: '이름', phone: '전화번호', email: '이메일' }[selectedField]}
                                 onSelect={(value) => {
                                     setSelectedField(fieldMap[value]);
-                                    setQueryPage(1);
+                                    setCurrentIndex(0);
                                 }}
                             />
                         </div>
                         <div className="flex items-center gap-2 ml-auto">
                             <button
-                                onClick={() => setQueryPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={queryPage === 1}
+                                onClick={() => setCurrentIndex((prev) => Math.max(prev - itemsPerPage, 0))}
+                                disabled={currentIndex === 0}
                                 className="px-3 py-1 border border-transparent disabled:opacity-50"
                             >
                                 ＜
                             </button>
-                            <span>{queryPage} / {queryPages}</span>
+                            <span>{Math.floor(currentIndex / itemsPerPage) + 1} / {Math.ceil(responses.length / itemsPerPage)}</span>
                             <button
-                                onClick={() => setQueryPage((prev) => Math.min(prev + 1, queryPages))}
-                                disabled={queryPage === queryPages}
+                                onClick={() => setCurrentIndex((prev) => Math.min(prev + itemsPerPage, responses.length - 1))}
+                                disabled={currentIndex + itemsPerPage >= responses.length}
                                 className="px-3 py-1 border border-transparent disabled:opacity-50"
                             >
                                 ＞
@@ -129,24 +137,25 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                         </div>
                         <div className="flex items-center gap-2 ml-auto">
                             <button
-                                onClick={() => setIndividualPage((prev) => Math.max(prev - 1, 1))}
-                                disabled={individualPage === 1}
+                                onClick={handlePrevPage}
+                                disabled={currentIndex === 0}
                                 className="px-3 py-1 border border-transparent disabled:opacity-50"
                             >
                                 ＜
                             </button>
-                            <span>{individualPage} / {individualPages}</span>
+                            <span>{Math.floor(currentIndex / itemsPerPage) + 1} / {Math.ceil(filteredResponses.length / itemsPerPage)}</span>
                             <button
-                                onClick={() => setIndividualPage((prev) => Math.min(prev + 1, individualPages))}
-                                disabled={individualPage === individualPages}
+                                onClick={handleNextPage}
+                                disabled={currentIndex + 1 >= filteredResponses.length}
                                 className="px-3 py-1 border border-transparent disabled:opacity-50"
                             >
                                 ＞
                             </button>
                         </div>
+
                     </div>
                     {filteredResponses.length > 0 ? (
-                        filteredResponses.slice((individualPage - 1) * itemsPerPage2, individualPage * itemsPerPage2).map((response) => (
+                        filteredResponses.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
                             <div className="p-4">
                                 <UnderlineTextField
                                     label="이름"
