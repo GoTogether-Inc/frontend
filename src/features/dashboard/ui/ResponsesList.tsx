@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { responsesInfo } from '../../../shared/types/responseType';
-import DropDown from '../../../../design-system/ui/DropDown';
+import DropDown from '../../../shared/ui/DropDown';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 import { options } from '../../../shared/types/responseType';
 import Checkbox from '../../../../design-system/ui/Checkbox';
