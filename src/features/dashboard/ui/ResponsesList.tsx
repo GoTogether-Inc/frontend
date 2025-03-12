@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import type { responsesData } from '../../../shared/types/responseType';
+import { useEffect} from 'react';
+import { useResponseStore } from '../model/ResponseStore';
 import { responsesInfo } from '../../../shared/types/responseType';
-
-import DropDown from '../../../shared/ui/DropDown';
+import ResponseFilter from './ResponseFilter';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 import { options } from '../../../shared/types/responseType';
 import OptionSection from './OptionSection';
@@ -12,27 +11,7 @@ interface ResponsesListProps {
 }
 
 const ResponsesList = ({ listType }: ResponsesListProps) => {
-    const [responses, setResponses] = useState<responsesData[]>(() => responsesInfo);
-    const [itemsPerPage, setItemsPerPage] = useState(4);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const handlePrevPage = () => {
-        setCurrentIndex((prev) => Math.max(prev - 1, 0));
-    };
-
-    const handleNextPage = () => {
-        setCurrentIndex((prev) => Math.min(prev + 1, filteredResponses.length - 1));
-    };
-
-    //질문
-    const [selectedField, setSelectedField] = useState<'name' | 'phone' | 'email'>('name');
-
-    //개별 조회
-    const [selectedResponse, setSelectedResponse] = useState<any | null>(null);
-    const [selectedResponseName, setSelectedResponseName] = useState<string>();
-    const filteredResponses = responses.filter(response =>
-        selectedResponseName == response.name
-    );
-    const uniqueResponseNames = [...new Set(responses.map(response => response.name))];
+    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse,uniqueResponseNames,itemsPerPage,currentIndex,setItemsPerPage,setCurrentIndex } = useResponseStore();
 
     useEffect(() => {
         if (listType === 'individual') {
@@ -44,26 +23,35 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
         }
     }, [listType]);
 
+    const queryOptions = ['이름', '전화번호', '이메일'];
     const fieldMap: Record<string, 'name' | 'phone' | 'email'> = {
         '이름': 'name',
         '전화번호': 'phone',
         '이메일': 'email',
     };
+    const fieldMapToKorean: Record<string, string> = {
+        'name': '이름',
+        'phone': '전화번호',
+        'email': '이메일',
+    };
+    const handleFieldChange = (field: string) => {
+        const mappedField = fieldMap[field];
+        setSelectedField(mappedField);
+    };
 
     const handleSelectResponse = (responseName: string) => {
-        const response = responses.find(r => r.name === responseName);
-        setSelectedResponse(response || null);
-        setSelectedResponseName(responseName);
-        setCurrentIndex(0);
+        const filteredResponses = response.filter((res) => res.name === responseName);
+        setSelectedResponse(filteredResponses);
+        setCurrentIndex(() => 0);
     };
 
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
-        const currentPageResponses = responses.slice(currentIndex, currentIndex + itemsPerPage);
+        const currentPageResponses = response.slice(currentIndex, currentIndex + itemsPerPage);
         return (
             <div className="bg-white p-4 flex flex-col gap-2 mb-4">
                 <div className="flex justify-between items-center text-xs bg-white px-2 md:px-3 py-3">
                     <p>{title}</p>
-                    <p>응답 {responses.length}개</p>
+                    <p>응답 {response.length}개</p>
                 </div>
 
                 {currentPageResponses.length === 0 ? (
@@ -72,7 +60,6 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                     currentPageResponses.map((response) => (
                         <div className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3" key={response.id}>
                             <p>{typeof response[key] === 'object' ? JSON.stringify(response[key]) : response[key]}</p>
-
                         </div>
                     ))
                 )}
@@ -82,41 +69,6 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
 
     return (
         <div>
-            {listType === 'query' && (
-                <div className="bg-white p-4 flex flex-col gap-2 mb-4">
-                    <div className="flex justify-between items-center">
-                        <div className="w-2/3">
-                            <DropDown
-                                options={['이름', '전화번호', '이메일']}
-                                selectedValue={{ name: '이름', phone: '전화번호', email: '이메일' }[selectedField]}
-                                onSelect={(value) => {
-                                    setSelectedField(fieldMap[value]);
-                                    setCurrentIndex(0);
-                                }}
-                            />
-                        </div>
-                        <div className="flex items-center gap-2 ml-auto">
-                            <button
-                                onClick={() => setCurrentIndex((prev) => Math.max(prev - itemsPerPage, 0))}
-                                disabled={currentIndex === 0}
-                                className="px-3 py-1 border border-transparent disabled:opacity-50"
-                            >
-                                ＜
-                            </button>
-                            <span>{Math.floor(currentIndex / itemsPerPage) + 1} / {Math.ceil(responses.length / itemsPerPage)}</span>
-                            <button
-                                onClick={() => setCurrentIndex((prev) => Math.min(prev + itemsPerPage, responses.length - 1))}
-                                disabled={currentIndex + itemsPerPage >= responses.length}
-                                className="px-3 py-1 border border-transparent disabled:opacity-50"
-                            >
-                                ＞
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {listType === 'query' && renderSection({ name: '이름', phone: '전화번호', email: '이메일' }[selectedField], selectedField)}
-
             {listType === 'summary' && (
                 <>
                     {renderSection('이름', 'name')}
@@ -124,39 +76,36 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                     {renderSection('이메일', 'email')}
                 </>
             )}
-
+            {listType === 'query' && (
+                <ResponseFilter
+                    responses={response}
+                    selectedField={fieldMapToKorean[selectedField]}
+                    setSelectedField={handleFieldChange}
+                    setCurrentIndex={setCurrentIndex}
+                    currentIndex={currentIndex}
+                    itemsPerPage={itemsPerPage}
+                    responsesLength={response.length}
+                    options={queryOptions}
+                />
+            )}
+            {listType === 'query' && renderSection({ name: '이름', phone: '전화번호', email: '이메일' }[selectedField], selectedField)}
             {listType === 'individual' && (
                 <div className="bg-white p-4 flex flex-col gap-2 mb-4">
-                    <div className="flex justify-between items-center">
-                        <div className="w-2/3">
-                            <DropDown
-                                options={uniqueResponseNames}
-                                selectedValue={selectedResponse ? selectedResponse.name : ''}
-                                onSelect={handleSelectResponse}
-                            />
-                        </div>
-                        <div className="flex items-center gap-2 ml-auto">
-                            <button
-                                onClick={handlePrevPage}
-                                disabled={currentIndex === 0}
-                                className="px-3 py-1 border border-transparent disabled:opacity-50"
-                            >
-                                ＜
-                            </button>
-                            <span>{Math.floor(currentIndex / itemsPerPage) + 1} / {Math.ceil(filteredResponses.length / itemsPerPage)}</span>
-                            <button
-                                onClick={handleNextPage}
-                                disabled={currentIndex + 1 >= filteredResponses.length}
-                                className="px-3 py-1 border border-transparent disabled:opacity-50"
-                            >
-                                ＞
-                            </button>
-                        </div>
+                    <ResponseFilter
+                        responses={response}
+                        selectedField={selectedResponse.length > 0 ? selectedResponse[0].name : ''}
+                        setSelectedField={handleSelectResponse}
+                        setCurrentIndex={setCurrentIndex}
+                        currentIndex={currentIndex}
+                        itemsPerPage={itemsPerPage}
+                        responsesLength={selectedResponse.length}
+                        options={uniqueResponseNames}
+                    />
 
-                    </div>
-                    {filteredResponses.length > 0 ? (
-                        filteredResponses.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
-                            <div className="p-4">
+                    {selectedResponse.length > 0 ? (
+                        selectedResponse.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
+                            
+                            <div className="p-4" key={response.id}>
                                 <UnderlineTextField
                                     label="이름"
                                     value={response.name}
