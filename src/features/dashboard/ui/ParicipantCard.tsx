@@ -2,6 +2,9 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import Checkbox from '../../../../design-system/ui/Checkbox';
 import { useParticipantStore } from '../model/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
+import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
+import { useNavigate } from 'react-router-dom';
+import { useResponseStore } from '../model/ResponseStore';
 
 interface ParticipantCardProps {
   participant: participantsData;
@@ -11,6 +14,8 @@ interface ParticipantCardProps {
 
 const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
   const { approvedParticipants, toggleApproveParticipant } = useParticipantStore();
+  const {setParticipantInfo} = useResponseStore();
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
       <div className="flex gap-2 md:gap-3">
@@ -26,9 +31,11 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-4">
-        {/* ver2에서 넣어야 할 버튼
-         <SecondaryButton label="확인하기" color="pink" size="small" /> */}
+      <div className="flex items-center justify-center gap-3">
+        {<SecondaryButton label="확인하기" color="pink" size="small" onClick={() => {
+                    setParticipantInfo(participant.name, participant.email); 
+                    navigate("/dashboard/responses-management"); 
+                }}/>}
         {participant.checkIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
 
         {approvedParticipants[participant.ticketNum] ? (

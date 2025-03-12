@@ -5,12 +5,20 @@ import SelectedResponseList from './SelectedResponseList';
 
 interface ResponsesListProps {
     listType: 'summary' | 'query' | 'individual';
+    
 }
 
-const ResponsesList = ({ listType }: ResponsesListProps) => {
+const ResponsesList = ({ listType}: ResponsesListProps) => {
     const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, uniqueResponseNames, itemsPerPage,
-        currentIndex, setCurrentIndex, queryOptions, fieldMapToKorean } = useResponseStore();
+        currentIndex, setCurrentIndex, queryOptions, fieldMapToKorean, isNavigated, participantName, participantEmail } = useResponseStore();
 
+        const filteredResponses = isNavigated
+        ? selectedResponse.filter(
+              (response) =>
+                  response.name === participantName && response.email === participantEmail
+          )
+        : selectedResponse;
+        
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
         const currentPageResponses = response.slice(currentIndex, currentIndex + itemsPerPage);
         const transTitle = fieldMapToKorean[title];
@@ -69,7 +77,7 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
                             itemsPerPage={itemsPerPage}
-                            responsesLength={selectedResponse.length}
+                            responsesLength={filteredResponses.length}
                             options={uniqueResponseNames}
                         />
                         <SelectedResponseList

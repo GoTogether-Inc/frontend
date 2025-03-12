@@ -16,9 +16,14 @@ interface Response {
     email: string;
 }
 
-const SelectedResponseList = ({ currentIndex, itemsPerPage }: SelectedResponseListProps) => {
-    const { selectedResponse } = useResponseStore();
-
+const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseListProps) => {
+    const { selectedResponse, isNavigated, participantName, participantEmail } = useResponseStore();
+    const filteredResponses = isNavigated
+        ? selectedResponse.filter(
+              (response) =>
+                  response.name === participantName && response.email === participantEmail
+          )
+        : selectedResponse;
     const fields = [
         { label: '이름', value: 'name', placeholder: '이름' },
         { label: '학년', value: 'grade', placeholder: '학년' },
@@ -29,8 +34,8 @@ const SelectedResponseList = ({ currentIndex, itemsPerPage }: SelectedResponseLi
 
     return (
         <div className="bg-white p-4 flex flex-col gap-2 mb-4">
-            {selectedResponse.length > 0 ? (
-                selectedResponse.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
+            {filteredResponses.length > 0 ? (
+                filteredResponses.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
                     <div className="p-4" key={response.id}>
                         {fields.map(({ label, value, placeholder }) => (
                             <UnderlineTextField
