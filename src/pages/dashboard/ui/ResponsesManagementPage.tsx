@@ -7,10 +7,17 @@ import { responsesInfo } from '../../../shared/types/responseType';
 
 const ResponsesManagementPage = () => {
     const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-    const { response, setResponses, setItemsPerPage } = useResponseStore();
+    const { response, setResponses, setItemsPerPage, setIsNavigated, setSelectedResponse, participantName } = useResponseStore();
     useEffect(() => {
         setResponses(responsesInfo);
     }, [setResponses]);
+    useEffect(() => {
+        if (participantName) {
+            setListType('individual');
+            setIsNavigated(true);
+            setSelectedResponse(participantName);
+        }
+    }, [participantName]);
     useEffect(() => {
         if (listType === 'summary') {
             setItemsPerPage(4);
@@ -30,7 +37,7 @@ const ResponsesManagementPage = () => {
                         setListType={setListType}
                     />
                 </div>
-                <ResponsesList listType={listType} />
+                <ResponsesList listType={listType}/>
             </div>
         </DashboardLayout>
     );

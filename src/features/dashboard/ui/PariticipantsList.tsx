@@ -37,7 +37,7 @@ const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListPro
         <div className="flex gap-2 md:gap-3">
           <Checkbox checked={all} onChange={toggleAll} label="" />
           <div className="flex items-center gap-15 md:gap-24">
-            <p>티켓 번호</p>
+            <p>주문 번호</p>
             <p>참여자 정보</p>
           </div>
         </div>
