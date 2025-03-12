@@ -9,7 +9,7 @@ interface ResponseFilterProps {
     currentIndex: number;
     itemsPerPage: number;
     responsesLength: number;
-    options: string[];  // 필드값 대신 옵션만 받음
+    options: string[];  
 }
 
 const ResponseFilter = ({

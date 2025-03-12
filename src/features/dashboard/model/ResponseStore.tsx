@@ -2,42 +2,55 @@ import { create } from 'zustand';
 import { responsesData } from '../../../shared/types/responseType';
 
 interface ResponseState {
-    response: responsesData[]; // 전체 응답 데이터
-    selectedField: 'name' | 'phone' | 'email'; // 선택된 필드 (질문)
-    selectedResponse: responsesData[]; // 선택된 응답자의 데이터
-    uniqueResponseNames: string[]; // 응답자 이름 배열 중복x (개별)
+    response: responsesData[]; 
+    selectedField: 'name' | 'phone' | 'email'; 
+    selectedResponse: responsesData[]; //선택된 응답자의 데이터
+    uniqueResponseNames: string[]; //응답자 이름 배열 중복x 
     itemsPerPage: number;
     currentIndex: number;
 
-    setResponses: (responses: responsesData[]) => void; // 응답 데이터 설정
-    setSelectedField: (field: 'name' | 'phone' | 'email') => void; // 필드 설정 함수
-    setSelectedResponse: (responses: responsesData[]) => void; // 응답자 선택 함수
-    setItemsPerPage: (items: number) => void; // 페이지당 항목 수 설정 함수
+    setResponses: (responses: responsesData[]) => void; 
+    setSelectedField: (field: 'name' | 'phone' | 'email') => void; 
+    setSelectedResponse: (responses: responsesData[]) => void; 
+    setItemsPerPage: (items: number) => void; 
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void; 
+
+    queryOptions: string[]; 
+    fieldMap: Record<string, 'name' | 'phone' | 'email'>; 
+    fieldMapToKorean: Record<string, string>; 
 }
 
 export const useResponseStore = create<ResponseState>((set) => ({
     response: [],
-    selectedField: 'name', // 기본적으로 선택된 필드 (이름)
-    selectedResponse: [], // 기본적으로 선택된 응답자 없음
+    selectedField: 'name', 
+    selectedResponse: [], 
     uniqueResponseNames: [],
     itemsPerPage: 4, 
     currentIndex: 0, 
 
-    // 응답 데이터 설정 함수
     setResponses: (response) => {
         set({
-            response, // 응답 데이터 업데이트
+            response, 
             uniqueResponseNames: [
-                ...new Set(response.map((response) => response.name)), // 응답자 이름 배열 중복 제거
+                ...new Set(response.map((response) => response.name)), 
             ],
         });
     },
 
-    // 필드 설정 함수
+    queryOptions: ['이름', '전화번호', '이메일'],
+    fieldMap: {
+        '이름': 'name',
+        '전화번호': 'phone',
+        '이메일': 'email',
+    },
+    fieldMapToKorean: {
+        'name': '이름',
+        'phone': '전화번호',
+        'email': '이메일',
+    },
+
     setSelectedField: (field) => set({ selectedField: field }),
 
-    // 응답자 선택 함수
     setSelectedResponse: (responses: responsesData[]) => {
         set({ selectedResponse: responses });
     },

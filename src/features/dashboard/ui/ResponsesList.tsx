@@ -11,7 +11,8 @@ interface ResponsesListProps {
 }
 
 const ResponsesList = ({ listType }: ResponsesListProps) => {
-    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse,uniqueResponseNames,itemsPerPage,currentIndex,setItemsPerPage,setCurrentIndex } = useResponseStore();
+    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, uniqueResponseNames,itemsPerPage,
+        currentIndex,setItemsPerPage,setCurrentIndex, queryOptions, fieldMap, fieldMapToKorean } = useResponseStore();
 
     useEffect(() => {
         if (listType === 'individual') {
@@ -23,17 +24,6 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
         }
     }, [listType]);
 
-    const queryOptions = ['이름', '전화번호', '이메일'];
-    const fieldMap: Record<string, 'name' | 'phone' | 'email'> = {
-        '이름': 'name',
-        '전화번호': 'phone',
-        '이메일': 'email',
-    };
-    const fieldMapToKorean: Record<string, string> = {
-        'name': '이름',
-        'phone': '전화번호',
-        'email': '이메일',
-    };
     const handleFieldChange = (field: string) => {
         const mappedField = fieldMap[field];
         setSelectedField(mappedField);
