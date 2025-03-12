@@ -3,15 +3,15 @@ import { responsesData } from '../../../shared/types/responseType';
 
 interface ResponseState {
     response: responsesData[]; 
-    selectedField: 'name' | 'phone' | 'email'; 
+    selectedField: string;
     selectedResponse: responsesData[]; //선택된 응답자의 데이터
     uniqueResponseNames: string[]; //응답자 이름 배열 중복x 
     itemsPerPage: number;
     currentIndex: number;
 
     setResponses: (responses: responsesData[]) => void; 
-    setSelectedField: (field: 'name' | 'phone' | 'email') => void; 
-    setSelectedResponse: (responses: responsesData[]) => void; 
+    setSelectedField: (field: string) => void;
+    setSelectedResponse: (responseName: string) => void; 
     setItemsPerPage: (items: number) => void; 
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void; 
 
@@ -49,10 +49,21 @@ export const useResponseStore = create<ResponseState>((set) => ({
         'email': '이메일',
     },
 
-    setSelectedField: (field) => set({ selectedField: field }),
+    setSelectedField: (field) => {
+        set((state) => {
+            const mappedField = state.fieldMap[field]; 
+            return { selectedField: mappedField }; 
+        });
+    },
 
-    setSelectedResponse: (responses: responsesData[]) => {
-        set({ selectedResponse: responses });
+    setSelectedResponse: (responseName) => {
+        set((state) => {
+            const filteredResponses = state.response.filter((res) => res.name === responseName);
+            return {
+                selectedResponse: filteredResponses,
+                currentIndex: 0, 
+            };
+        });
     },
 
     setItemsPerPage: (items) => set({ itemsPerPage: items }),

@@ -7,11 +7,20 @@ import { responsesInfo } from '../../../shared/types/responseType';
 
 const ResponsesManagementPage = () => {
     const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-    const {response,setResponses} = useResponseStore();
-     useEffect(() => {
-            setResponses(responsesInfo); 
-        }, [setResponses]);
-    return(
+    const { response, setResponses, setItemsPerPage } = useResponseStore();
+    useEffect(() => {
+        setResponses(responsesInfo);
+    }, [setResponses]);
+    useEffect(() => {
+        if (listType === 'summary') {
+            setItemsPerPage(4);
+        } else if (listType === 'query') {
+            setItemsPerPage(10);
+        } else {
+            setItemsPerPage(1);
+        }
+    }, [listType]);
+    return (
         <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
             <div className="flex flex-col px-2 md:px-4">
                 <h1 className="text-left font-semibold text-2xl py-4 md:py-6 pl-4">응답 {response.length}개</h1>
@@ -21,7 +30,7 @@ const ResponsesManagementPage = () => {
                         setListType={setListType}
                     />
                 </div>
-                <ResponsesList listType={listType}  />
+                <ResponsesList listType={listType} />
             </div>
         </DashboardLayout>
     );
