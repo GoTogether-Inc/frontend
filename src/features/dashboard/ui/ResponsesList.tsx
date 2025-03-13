@@ -71,7 +71,7 @@ const ResponsesList = ({ listType}: ResponsesListProps) => {
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
                             itemsPerPage={itemsPerPage}
-                            responsesLength={response.length}
+                            responsesLength={selectedResponse.length > 0 ? selectedResponse.length : response.length}
                             options={[{ v1: "전체", v2: "" }, ...response.map((res) => ({ v1: res.name, v2: res.email }))]}
                         />
                         <SelectedResponseList
