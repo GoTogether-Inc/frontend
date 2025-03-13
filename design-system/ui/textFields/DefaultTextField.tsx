@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ChangeEvent, forwardRef, ReactElement, KeyboardEvent } from 'react';
+import { ButtonHTMLAttributes, ChangeEvent, forwardRef, ReactElement, KeyboardEvent, FocusEvent } from 'react';
 
 type Button = ReactElement<ButtonHTMLAttributes<HTMLButtonElement>>;
 
@@ -10,6 +10,8 @@ interface DefaultTextFieldProps {
   rightContent?: Button;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   errorMessage?: string;
   className?: string;
@@ -26,6 +28,8 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
       rightContent,
       onChange,
       onKeyDown,
+      onFocus,
+      onBlur,
       placeholder = '',
       className = '',
       labelClassName = '',
@@ -45,6 +49,8 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            onFocus={onFocus}
+            onBlur={onBlur}
             placeholder={placeholder}
             {...rest}
             className={`w-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none ${className} ${
