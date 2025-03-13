@@ -3,9 +3,9 @@ import Header from '../../../../design-system/ui/Header';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { useForm } from 'react-hook-form';
-import { validations } from '../../../shared/lib/validation';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
+import { myPageSchema } from '../../../shared/lib/formValidation';
 
 const MyPage = () => {
   const userData = { email: 'aaa@naver.com', name: '고예진', phone: '01012345678' };
@@ -16,7 +16,10 @@ const MyPage = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({ defaultValues: { name: userData.name, phone: userData.phone } });
+  } = useForm({
+    defaultValues: { name: userData.name, phone: userData.phone },
+    ...myPageSchema,
+  });
 
   const handleSave = (data: { name: string; phone: string }) => {
     // 이름과 전화번호가 변경되었는지 확인하고 메시지 설정
@@ -52,7 +55,7 @@ const MyPage = () => {
                 placeholder={userData.name}
                 className=" h-8"
                 labelClassName="text-sm md:text-base font-normal"
-                {...register('name', validations.name)}
+                {...register('name')}
               />
               {errors.name && <span className=" text-sm text-red-500 whitespace-nowrap">{errors.name.message}</span>}
             </div>
@@ -62,7 +65,7 @@ const MyPage = () => {
                 placeholder={userData.phone}
                 className="h-8"
                 labelClassName="text-sm md:text-base font-normal"
-                {...register('phone', validations.phone)}
+                {...register('phone')}
               />
               {errors.phone && <span className="text-sm text-red-500 whitespace-nowrap">{errors.phone.message}</span>}
             </div>
