@@ -66,14 +66,13 @@ const ResponsesList = ({ listType}: ResponsesListProps) => {
                         <ResponseFilter
                             responses={response}
                             selectedField={selectedResponse.length > 0 ? 
-                                { name: selectedResponse[0].name, email: selectedResponse[0].email } : { name: '', email: '' }}
+                                { name: selectedResponse[0].name, email: selectedResponse[0].email } : { name: '전체', email: '' }}
                             setSelectedField={setSelectedResponse}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
                             itemsPerPage={itemsPerPage}
                             responsesLength={response.length}
-                            options={response.map((res) => ({ v1: res.name, v2: res.email }))}
-
+                            options={[{ v1: "전체", v2: "" }, ...response.map((res) => ({ v1: res.name, v2: res.email }))]}
                         />
                         <SelectedResponseList
                             currentIndex={currentIndex}
@@ -85,7 +84,6 @@ const ResponsesList = ({ listType}: ResponsesListProps) => {
                 return null;
         }
     };
-
     return (
         <div>
             {renderList()}
