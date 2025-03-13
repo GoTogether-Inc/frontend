@@ -3,13 +3,13 @@ import DropDown from '../../../shared/ui/DropDown';
 
 interface ResponseFilterProps {
     responses: responsesData[];
-    selectedField: string; 
-    setSelectedField: (field: string) => void; 
+    selectedField: { name: string; email: string }; 
+    setSelectedField: (name: string, email: string) => void; 
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void; 
     currentIndex: number;
     itemsPerPage: number;
     responsesLength: number;
-    options: string[];  
+    options: { v1: string; v2: string }[];    
 }
 
 const ResponseFilter = ({
@@ -27,10 +27,13 @@ const ResponseFilter = ({
                 <div className="w-2/3">
                     <DropDown
                         options={options}  
-                        selectedValue={selectedField} 
-                        onSelect={(value) => {
-                            setSelectedField(value); 
-                            setCurrentIndex(() => 0);  
+                        selectedValue={selectedField.name} 
+                        onSelect={(selectedName,selectedEmail) => {
+                            const selectedOption = options.find(opt => opt.v1 === selectedName && opt.v2 === selectedEmail);
+                            if (selectedOption) {
+                                setSelectedField(selectedOption.v1, selectedOption.v2); 
+                                setCurrentIndex(() => 0);  
+                            }
                         }}
                     />
                 </div>

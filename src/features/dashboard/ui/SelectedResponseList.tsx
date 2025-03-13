@@ -17,13 +17,8 @@ interface Response {
 }
 
 const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseListProps) => {
-    const { selectedResponse, isNavigated, participantName, participantEmail } = useResponseStore();
-    const filteredResponses = isNavigated
-        ? selectedResponse.filter(
-              (response) =>
-                  response.name === participantName && response.email === participantEmail
-          )
-        : selectedResponse;
+    const { response,selectedResponse} = useResponseStore();
+   
     const fields = [
         { label: '이름', value: 'name', placeholder: '이름' },
         { label: '학년', value: 'grade', placeholder: '학년' },
@@ -34,8 +29,8 @@ const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseLis
 
     return (
         <div className="bg-white p-4 flex flex-col gap-2 mb-4">
-            {filteredResponses.length > 0 ? (
-                filteredResponses.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
+            {selectedResponse.length > 0 ? (
+                selectedResponse.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
                     <div className="p-4" key={response.id}>
                         {fields.map(({ label, value, placeholder }) => (
                             <UnderlineTextField
@@ -52,7 +47,22 @@ const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseLis
                     </div>
                 ))
             ) : (
-                <p>선택된 응답자가 없습니다.</p>
+                response.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
+                    <div className="p-4" key={response.id}>
+                        {fields.map(({ label, value, placeholder }) => (
+                            <UnderlineTextField
+                                key={value}
+                                label={label}
+                                value={response[value as keyof Response]}
+                                onChange={() => { }}
+                                placeholder={placeholder}
+                                errorMessage={''}
+                                className="mb-4"
+                            />
+                        ))}
+                        <OptionSection responses={[response]} options={options} />
+                    </div>
+                ))
             )}
         </div>
     );

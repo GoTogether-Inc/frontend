@@ -4,18 +4,20 @@ import ResponsesFilterBar from '../../../widgets/dashboard/ui/ResponsesFilterBar
 import ResponsesList from '../../../features/dashboard/ui/ResponsesList';
 import { useResponseStore } from '../../../features/dashboard/model/ResponseStore';
 import { responsesInfo } from '../../../shared/types/responseType';
+import { useLocation } from 'react-router-dom';
 
 const ResponsesManagementPage = () => {
     const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-    const { response, setResponses, setItemsPerPage, setIsNavigated, setSelectedResponse, participantName } = useResponseStore();
+    const { response, setResponses, setItemsPerPage, setSelectedResponse } = useResponseStore();
+    const location = useLocation();
+    const { participantName, participantEmail } = location.state || {};
     useEffect(() => {
         setResponses(responsesInfo);
     }, [setResponses]);
     useEffect(() => {
         if (participantName) {
             setListType('individual');
-            setIsNavigated(true);
-            setSelectedResponse(participantName);
+            setSelectedResponse(participantName, participantEmail);
         }
     }, [participantName]);
     useEffect(() => {
@@ -37,7 +39,7 @@ const ResponsesManagementPage = () => {
                         setListType={setListType}
                     />
                 </div>
-                <ResponsesList listType={listType}/>
+                <ResponsesList listType={listType} />
             </div>
         </DashboardLayout>
     );

@@ -9,15 +9,8 @@ interface ResponsesListProps {
 }
 
 const ResponsesList = ({ listType}: ResponsesListProps) => {
-    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, uniqueResponseNames, itemsPerPage,
-        currentIndex, setCurrentIndex, queryOptions, fieldMapToKorean, isNavigated, participantName, participantEmail } = useResponseStore();
-
-        const filteredResponses = isNavigated
-        ? selectedResponse.filter(
-              (response) =>
-                  response.name === participantName && response.email === participantEmail
-          )
-        : selectedResponse;
+    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, itemsPerPage,
+        currentIndex, setCurrentIndex, queryOptions, fieldMapToKorean} = useResponseStore();
         
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
         const currentPageResponses = response.slice(currentIndex, currentIndex + itemsPerPage);
@@ -56,7 +49,7 @@ const ResponsesList = ({ listType}: ResponsesListProps) => {
                     <>
                         <ResponseFilter
                             responses={response}
-                            selectedField={fieldMapToKorean[selectedField]}
+                            selectedField={{ name: fieldMapToKorean[selectedField], email: "" }}
                             setSelectedField={setSelectedField}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
@@ -72,13 +65,15 @@ const ResponsesList = ({ listType}: ResponsesListProps) => {
                     <div>
                         <ResponseFilter
                             responses={response}
-                            selectedField={selectedResponse.length > 0 ? selectedResponse[0].name : ''}
+                            selectedField={selectedResponse.length > 0 ? 
+                                { name: selectedResponse[0].name, email: selectedResponse[0].email } : { name: '', email: '' }}
                             setSelectedField={setSelectedResponse}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
                             itemsPerPage={itemsPerPage}
-                            responsesLength={filteredResponses.length}
-                            options={uniqueResponseNames}
+                            responsesLength={response.length}
+                            options={response.map((res) => ({ v1: res.name, v2: res.email }))}
+
                         />
                         <SelectedResponseList
                             currentIndex={currentIndex}
