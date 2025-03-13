@@ -108,9 +108,9 @@ const TicketOptionCreatePage = () => {
 
         {/*필수 응답 토글*/}
         <div className="flex items-center justify-between mb-5">
-          <div className="w-32 md:w-56 my-1">
+          <div className="w-60 md:w-60 my-1">
             <p className="block px-1 text-sm font-semibold text-gray-700">필수로 선택하게 할까요?</p>
-            <p className="text-gray-400 text-xs">
+            <p className="text-gray-400 text-xs px-1">
               이 옵션을 키면 해당 질문에 응답을 해야만 티켓을 결제 할 수 있습니다.
             </p>
           </div>
@@ -121,11 +121,11 @@ const TicketOptionCreatePage = () => {
 
         {/*설문지 입력란*/}
         <div>
-          {warningMsg && <p className="text-red-500 text-xs mb-2">{warningMsg}</p>}
           {(selectedChip === '객관식' || selectedChip === '여러 개 선택') && (
             <>
               <p className="block px-1 text-m font-semibold text-gray-700">설문지</p>
               <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
+              {warningMsg && <p className="text-red-500 text-xs mb-2">{warningMsg}</p>}
               {options.map((option, index) => (
                 <DefaultTextField
                   placeholder="이름을 입력해주세요."
@@ -144,7 +144,8 @@ const TicketOptionCreatePage = () => {
               ))}
             </>
           )}
-          {selectedChip === '주관식' && (<></>
+          {selectedChip === '주관식' && (
+            <></>
             // <MultilineTextField
             //   placeholder="잉? 여긴 없는건가??"
             // />
