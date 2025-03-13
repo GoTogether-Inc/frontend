@@ -1,4 +1,4 @@
-import KakaoMap from '../../../../features/dashboard/ui/KakaoMap';
+import KakaoMap from '../../../../shared/ui/KakaoMap';
 
 const MapInfo = {
   LocationName: '서울특별시 강남구 00동',

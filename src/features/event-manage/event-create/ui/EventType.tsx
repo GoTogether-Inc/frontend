@@ -2,10 +2,17 @@ import OnlineIcon from '../../../../../public/assets/event-manage/creation/Onlin
 import OfflineIcon from '../../../../../public/assets/event-manage/creation/OfflineIcon.svg';
 import SearchBar from '../../../../shared/ui/SearchBar';
 import { useFunnelState } from '../model/FunnelContext';
+import KakaoMap from '../../../../shared/ui/KakaoMap';
 
 interface EventTypeProps {
   className?: string;
 }
+
+const MapInfo = {
+  LocationName: '서울특별시 강남구 00동',
+  lat: 37.4979,
+  lng: 126.795841,
+};
 
 const EventType = ({ className }: EventTypeProps) => {
   const { formState, setFormState } = useFunnelState();
@@ -47,6 +54,7 @@ const EventType = ({ className }: EventTypeProps) => {
         <div className="mt-6 space-y-2">
           <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
           <SearchBar placeholder="장소를 입력하세요." className="w-full" />
+          <KakaoMap lat={MapInfo.lat} lng={MapInfo.lng} />
         </div>
       )}
     </div>
