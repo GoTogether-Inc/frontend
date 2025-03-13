@@ -1,31 +1,33 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { validations } from '../../../shared/lib/validation';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
+import { OrganizerFormData, organizerZodValidation } from '../../../shared/lib/formValidation';
 
-interface FormInputs {
-  email: string;
-  phone: string;
+interface EventOrganizerInfoPageProps {
+  onValidationChange?: (isValid: boolean) => void;
 }
 
-const EventOrganizerInfoPage = () => {
+const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPageProps) => {
   const { formState, setFormState } = useFunnelState();
 
   const {
     register,
     watch,
-    formState: { errors },
-  } = useForm<FormInputs>({
+    formState: { errors, isValid },
+  } = useForm<OrganizerFormData>({
     mode: 'onChange',
     defaultValues: {
       email: formState.organizerEmail || '',
       phone: formState.organizerPhoneNumber || '',
     },
+    ...organizerZodValidation,
   });
 
   const phoneValue = watch('phone');
   const emailValue = watch('email');
+
+  onValidationChange?.(isValid);
 
   useEffect(() => {
     setFormState(prev => ({
@@ -43,7 +45,7 @@ const EventOrganizerInfoPage = () => {
         type="email"
         errorMessage={errors.email?.message}
         className="w-full"
-        {...register('email', { ...validations.email })}
+        {...register('email')}
       />
       <UnderlineTextField
         label="전화번호"
@@ -51,7 +53,7 @@ const EventOrganizerInfoPage = () => {
         type="tel"
         errorMessage={errors.phone?.message}
         className="w-full"
-        {...register('phone', { ...validations.phone })}
+        {...register('phone')}
       />
     </div>
   );
