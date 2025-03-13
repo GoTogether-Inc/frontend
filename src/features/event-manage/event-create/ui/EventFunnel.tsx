@@ -8,16 +8,29 @@ import EventTagPage from '../../../../pages/event-manage/ui/EventTagPage';
 import EventOrganizerInfoPage from '../../../../pages/event-manage/ui/EventOrganizerInfoPage';
 import EventRegisterLayout from '../../../../shared/ui/backgrounds/EventRegisterLayout';
 import { useNavigate } from 'react-router-dom';
-import { useFunnelState } from '../model/FunnelContext';
 import { EventFunnelInterface, StepNames } from '../../../../shared/types/funnelType';
+import { useFunnelState } from '../model/FunnelContext';
+import useEventCreation from '../hooks/useEventCreationHook';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
-  const { formState } = useFunnelState();
   const navigate = useNavigate();
+  const { formState } = useFunnelState();
+  const { mutate: createEvent } = useEventCreation();
 
   const handleNext = (nextStep: string) => {
-    console.log('이벤트 주최 데이터:', formState);
-    onNext(nextStep);
+    if (currentStep === 7) {
+      createEvent(formState, {
+        onSuccess: () => {
+          console.log('API 호출 성공');
+          navigate('/');
+        },
+        onError: error => {
+          console.error('API 호출 실패:', error);
+        },
+      });
+    } else {
+      onNext(nextStep);
+    }
   };
 
   return (
