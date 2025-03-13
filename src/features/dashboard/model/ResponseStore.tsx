@@ -4,49 +4,36 @@ import { responsesData } from '../../../shared/types/responseType';
 interface ResponseState {
     response: responsesData[];
     selectedField: string;
-    selectedResponse: responsesData[]; //선택된 응답자의 데이터
-    uniqueResponseNames: string[]; //응답자 이름 배열 중복x 
+    selectedResponse: responsesData[]; 
     itemsPerPage: number;
     currentIndex: number;
-    isNavigated: boolean;
 
     setResponses: (responses: responsesData[]) => void;
     setSelectedField: (field: string) => void;
-    setSelectedResponse: (responseName: string) => void;
+    setSelectedResponse: (responseName: string, responseEmail: string) => void;
     setItemsPerPage: (items: number) => void;
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void;
-    setIsNavigated: (status: boolean) => void;
 
-    queryOptions: string[];
+    queryOptions: { v1: string; v2: string }[];
     fieldMap: Record<string, 'name' | 'phone' | 'email'>;
     fieldMapToKorean: Record<string, string>;
 
-    participantName?: string;
-    participantEmail?: string;
-    setParticipantInfo: (participantName: string, participantEmail: string) => void;
 }
 
 export const useResponseStore = create<ResponseState>((set) => ({
     response: [],
     selectedField: 'name',
     selectedResponse: [],
-    uniqueResponseNames: [],
     itemsPerPage: 4,
     currentIndex: 0,
-    isNavigated: false,
-    participantName: '',
-    participantEmail: '',
 
-    setResponses: (response) => {
-        set({
-            response,
-            uniqueResponseNames: [
-                ...new Set(response.map((response) => response.name)),
-            ],
-        });
-    },
+    setResponses: (response) => { set({ response });},
 
-    queryOptions: ['이름', '전화번호', '이메일'],
+    queryOptions: [
+        { v1: "이름", v2: "" },
+        { v1: "전화번호", v2: "" },
+        { v1: "이메일", v2: "" }
+    ],
     fieldMap: {
         '이름': 'name',
         '전화번호': 'phone',
@@ -65,9 +52,9 @@ export const useResponseStore = create<ResponseState>((set) => ({
         });
     },
 
-    setSelectedResponse: (responseName) => {
+    setSelectedResponse: (responseName, responseEmail) => {
         set((state) => {
-            const filteredResponses = state.response.filter((res) => res.name === responseName);
+            const filteredResponses = state.response.filter((res) => res.name === responseName && res.email === responseEmail);
             return {
                 selectedResponse: filteredResponses,
                 currentIndex: 0,
@@ -80,13 +67,4 @@ export const useResponseStore = create<ResponseState>((set) => ({
         currentIndex: updateFn(state.currentIndex),
     })),
 
-    setIsNavigated: (status) => set({ isNavigated: status }),
-
-    setParticipantInfo: (participantName, participantEmail) => {
-        set({
-            participantName,
-            participantEmail
-        });
-    },
-    
 }));
