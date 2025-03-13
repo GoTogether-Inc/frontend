@@ -3,7 +3,7 @@ import { ENV } from '../../../config/env.config';
 import { ApiErrorResponse } from './apiResponse';
 
 export const axiosClient = axios.create({
-  baseURL: `${import.meta.env.VITE_REACT_APP_BASE_URL}`,
+  baseURL: '/api/v1',
   timeout: 3000,
   headers: {
     'Content-Type': 'application/json',
