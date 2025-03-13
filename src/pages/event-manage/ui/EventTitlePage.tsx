@@ -25,7 +25,9 @@ const EventTitlePage = ({ onValidationChange }: EventTitlePageProps) => {
 
   const titleValue = watch('title');
 
-  onValidationChange?.(isValid);
+  useEffect(() => {
+    onValidationChange?.(isValid);
+  }, [isValid, onValidationChange]);
 
   useEffect(() => {
     setFormState(prev => ({
