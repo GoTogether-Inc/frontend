@@ -5,9 +5,9 @@ import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Trash from '../../../../../design-system/icons/Trash.svg';
 import { ThreeOptions } from '../../../../../design-system/stories/ChoiceChip.stories';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
-import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
 import ToggleButton from '../../../../../design-system/ui/buttons/ToggleButton';
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
+import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import Button from '../../../../../design-system/ui/Button';
 
@@ -15,7 +15,7 @@ const TicketOptionCreatePage = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [options, setOptions] = useState<string[]>(Array(3).fill(''));
   const [warningMsg, setWarningMsg] = useState('');
-  const [selectedChip, setSelectedChip] = useState('');
+  const [selectedChip, setSelectedChip] = useState('객관식');
 
   const handleIsToggled = () => {
     setIsToggled(prev => !prev);
@@ -76,7 +76,7 @@ const TicketOptionCreatePage = () => {
           <p className="block px-1 text-m font-semibold text-gray-700">질문</p>
           <DefaultTextField
             placeholder="티셔츠 사이즈를 선택해주세요."
-            detail="티켓을 잘 지어낼 수 있는 이름을 써보세요. (무료 입장권, 얼리버드, 학생 전용 등)"
+            detail="티켓을 잘 지어낼 수 있는 질문을 써보세요. (무료 입장권, 얼리버드, 학생 전용 등)"
             className="h-12"
           />
         </div>
@@ -123,8 +123,8 @@ const TicketOptionCreatePage = () => {
         <div>
           {(selectedChip === '객관식' || selectedChip === '여러 개 선택') && (
             <>
-              <p className="block px-1 text-m font-semibold text-gray-700">설문지</p>
-              <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
+              <p className="block px-1 text-m font-semibold text-gray-700">옵션</p>
+              <p className="px-1 text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
               {warningMsg && <p className="text-red-500 text-xs mb-2">{warningMsg}</p>}
               {options.map((option, index) => (
                 <DefaultTextField
@@ -144,19 +144,21 @@ const TicketOptionCreatePage = () => {
               ))}
             </>
           )}
-          {selectedChip === '주관식' && (
-            <></>
-            // <MultilineTextField
-            //   placeholder="잉? 여긴 없는건가??"
-            // />
-          )}
+          {selectedChip === '주관식' && <div></div>} {/*수정해야할 부분*/}
         </div>
 
-        <div className="w-full ">
-          <Button label="임시버튼" onClick={handleAddOption} className="w-full h-12 rounded-full mt-4" />
+        <div className="w-full">
+          <TertiaryButton
+            label='+ 선택지 추가하기'
+            type='button'
+            color='black'
+            size='large'
+            onClick={handleAddOption}
+            className='w-full border border-dashed border-gray-500'
+          ></TertiaryButton>
         </div>
 
-        <div className="w-full ">
+        <div className="w-full">
           <Button label="저장하기" onClick={() => console.log('post 요청')} className="w-full h-12 rounded-full" />
         </div>
       </div>
