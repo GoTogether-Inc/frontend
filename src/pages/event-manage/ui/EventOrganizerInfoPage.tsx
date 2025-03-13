@@ -27,7 +27,9 @@ const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPagePr
   const phoneValue = watch('phone');
   const emailValue = watch('email');
 
-  onValidationChange?.(isValid);
+  useEffect(() => {
+    onValidationChange?.(isValid);
+  }, [isValid, onValidationChange]);
 
   useEffect(() => {
     setFormState(prev => ({
