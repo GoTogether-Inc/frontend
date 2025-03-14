@@ -7,9 +7,9 @@ export interface CreateEventRequest {
   endTime: string;
   bannerImageUrl: string;
   description: string;
-  referenceLinks: { title: string; url: string }[];
+  referenceLinks: { address: string; detailAddress: string; title: string; url: string }[];
   onlineType: 'ONLINE' | 'OFFLINE';
-  location: { lat: number; lng: number };
+  location: { address: string; detailAddress: string; lat: number; lng: number };
   category: string;
   hashtags: string[];
   organizerEmail: string;
