@@ -12,6 +12,7 @@ interface EventTypeProps {
 const EventType = ({ className }: EventTypeProps) => {
   const { formState, setFormState } = useFunnelState();
   const [address, setAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
 
   const handleTypeClick = (type: 'ONLINE' | 'OFFLINE') => {
     setFormState(prev => ({
@@ -24,10 +25,14 @@ const EventType = ({ className }: EventTypeProps) => {
     setAddress(address);
   };
 
+  const handleDetailAddressChange = (detailAddress: string) => {
+    setDetailAddress(detailAddress);
+  };
+
   const handleLocationChange = (lat: number, lng: number) => {
     setFormState(prev => ({
       ...prev,
-      location: { lat, lng },
+      location: { address, detailAddress, lat, lng },
     }));
   };
 
@@ -61,7 +66,12 @@ const EventType = ({ className }: EventTypeProps) => {
       {formState.onlineType === 'OFFLINE' && (
         <div className="mt-6 space-y-2">
           <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
-          <AddressSearch address={address} setAddress={handleAddressChange} onLocationChange={handleLocationChange} />
+          <AddressSearch
+            address={address}
+            setAddress={handleAddressChange}
+            onLocationChange={handleLocationChange}
+            onDetailAddressChange={handleDetailAddressChange}
+          />
           <KakaoMap lat={formState.location.lat} lng={formState.location.lng} />
         </div>
       )}

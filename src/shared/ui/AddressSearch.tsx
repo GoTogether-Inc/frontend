@@ -6,17 +6,21 @@ interface AddressSearchProps {
   address: string;
   setAddress: (address: string) => void;
   onLocationChange?: (lat: number, lng: number) => void;
+  onDetailAddressChange?: (detailAddress: string) => void;
 }
 
-export const AddressSearch = ({ address, setAddress, onLocationChange }: AddressSearchProps) => {
+export const AddressSearch = ({ address, setAddress, onLocationChange, onDetailAddressChange }: AddressSearchProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postcodeKey, setPostcodeKey] = useState(0);
+  const [detailAddress, setDetailAddress] = useState('');
 
   const handleComplete = (data: Address) => {
-    setAddress(data.address);
+    console.log('기본 주소:', data.address);
+    console.log('도로명 주소:', data.roadAddress);
+    setAddress(data.roadAddress || data.address);
     if (onLocationChange) {
       const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(data.address, (result, status) => {
+      geocoder.addressSearch(data.roadAddress || data.address, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const { y, x } = result[0];
           console.log('변환된 좌표:', { lat: parseFloat(y), lng: parseFloat(x) });
@@ -27,6 +31,14 @@ export const AddressSearch = ({ address, setAddress, onLocationChange }: Address
       });
     }
     setIsModalOpen(false);
+  };
+
+  const handleDetailAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDetailAddress(e.target.value);
+    console.log('상세 주소:', e.target.value);
+    if (onDetailAddressChange) {
+      onDetailAddressChange(e.target.value);
+    }
   };
 
   const openModal = () => {
@@ -42,15 +54,24 @@ export const AddressSearch = ({ address, setAddress, onLocationChange }: Address
 
   return (
     <>
-      <div className="flex items-center">
+      <div className="flex flex-col space-y-2">
+        <div className="flex items-center">
+          <input
+            type="text"
+            placeholder="주소를 입력해주세요"
+            value={address}
+            readOnly
+            className="flex-1 p-2 mr-2 border border-gray-300 rounded"
+          />
+          <SecondaryButton label="주소 검색" color="pink" size="large" onClick={openModal} />
+        </div>
         <input
           type="text"
-          placeholder="주소를 입력해주세요"
-          value={address}
-          readOnly
-          className="flex-1 p-2 mr-2 border border-gray-300 rounded"
+          placeholder="상세주소를 입력해주세요"
+          value={detailAddress}
+          onChange={handleDetailAddressChange}
+          className="w-full p-2 border border-gray-300 rounded"
         />
-        <SecondaryButton label="주소 검색" color="pink" size="large" onClick={openModal} />
       </div>
       {isModalOpen && (
         <div
