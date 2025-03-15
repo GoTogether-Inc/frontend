@@ -21,7 +21,6 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
     if (currentStep === 7) {
       createEvent(formState, {
         onSuccess: () => {
-          console.log('API 호출 성공');
           navigate('/');
         },
         onError: error => {
@@ -40,6 +39,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
           title="이벤트를 호스팅할 채널을 선택해주세요"
           onNext={() => handleNext(String(currentStep + 2))}
           onPrev={() => navigate(-1)}
+          requireValidation={true}
         >
           <HostSelectionPage onNext={handleNext} currentStep={currentStep} />
         </EventRegisterLayout>
