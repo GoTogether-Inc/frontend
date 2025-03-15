@@ -1,6 +1,9 @@
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import { responsesData } from '../../../shared/types/responseType';
 import DropDown from '../../../shared/ui/DropDown';
 import { createFieldMappings } from '../../lib/createFieldMappings';
+import rightButton from '../../../../public/assets/main/RightButton.svg';
+import leftButton from '../../../../public/assets/main/LeftButton.svg';
 
 interface ResponseFilterProps {
     responses: responsesData[];
@@ -46,21 +49,15 @@ const ResponseFilter = ({
                     />
                 </div>
                 <div className="flex items-center gap-2 ml-auto">
-                    <button
+                    <IconButton
+                        iconPath={<img src={leftButton} alt="왼쪽 버튼"/>}
                         onClick={() => setCurrentIndex((prev) => Math.max(prev - itemsPerPage, 0))}
-                        disabled={currentIndex === 0}
-                        className="px-3 py-1 border border-transparent disabled:opacity-50"
-                    >
-                        ＜
-                    </button>
+                    />
                     <span>{Math.floor(currentIndex / itemsPerPage) + 1} / {Math.ceil(responsesLength / itemsPerPage)}</span>
-                    <button
+                    <IconButton
+                        iconPath={<img src={rightButton} alt="오른쪽 버튼"/>}
                         onClick={() => setCurrentIndex((prev) => Math.min(prev + itemsPerPage, responsesLength - 1))}
-                        disabled={currentIndex + itemsPerPage >= responsesLength}
-                        className="px-3 py-1 border border-transparent disabled:opacity-50"
-                    >
-                        ＞
-                    </button>
+                    />
                 </div>
             </div>
         </div>
