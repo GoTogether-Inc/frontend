@@ -11,11 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import { EventFunnelInterface, StepNames } from '../../../../shared/types/funnelType';
 import { useFunnelState } from '../model/FunnelContext';
 import useEventCreation from '../hooks/useEventCreationHook';
+import useHostCreation from '../hooks/useHostCreation';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();
-  const { eventState } = useFunnelState();
+  const { eventState, hostState } = useFunnelState();
   const { mutate: createEvent } = useEventCreation();
+  const { mutate: createHost } = useHostCreation();
 
   const handleNext = (nextStep: string) => {
     if (currentStep === 7) {
@@ -30,6 +32,14 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
     } else {
       onNext(nextStep);
     }
+  };
+
+  const handleHostCreation = () => {
+    createHost(hostState, {
+      onSuccess: () => {
+        handleNext(String(currentStep + 1));
+      },
+    });
   };
 
   return (
@@ -47,8 +57,9 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.HostCreation}>
         <EventRegisterLayout
           title="채널을 새로 생성합니다"
-          onNext={() => handleNext(String(currentStep + 1))}
+          onNext={() => handleHostCreation()}
           onPrev={() => onPrev(String(currentStep - 1))}
+          requireValidation={true}
         >
           <HostCreationPage />
         </EventRegisterLayout>
