@@ -22,7 +22,8 @@ export const FunnelProvider = ({ children }: { children: ReactNode }) => {
     description: '',
     referenceLinks: [],
     onlineType: 'ONLINE',
-    location: { address: '', detailAddress: '', lat: 37.5665, lng: 126.978 },
+    address: '',
+    location: { lat: 37.5665, lng: 126.978 },
     category: '',
     hashtags: [],
   });

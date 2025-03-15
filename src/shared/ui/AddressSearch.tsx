@@ -17,10 +17,10 @@ export const AddressSearch = ({ address, setAddress, onLocationChange, onDetailA
   const handleComplete = (data: Address) => {
     console.log('기본 주소:', data.address);
     console.log('도로명 주소:', data.roadAddress);
-    setAddress(data.roadAddress || data.address);
+    setAddress(data.address);
     if (onLocationChange) {
       const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(data.roadAddress || data.address, (result, status) => {
+      geocoder.addressSearch(data.address, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const { y, x } = result[0];
           console.log('변환된 좌표:', { lat: parseFloat(y), lng: parseFloat(x) });
@@ -38,6 +38,10 @@ export const AddressSearch = ({ address, setAddress, onLocationChange, onDetailA
     console.log('상세 주소:', e.target.value);
     if (onDetailAddressChange) {
       onDetailAddressChange(e.target.value);
+      // 주소와 상세주소를 합쳐서 새로운 주소 설정
+      const fullAddress = `${address} ${e.target.value}`;
+      console.log('전체 주소:', fullAddress);
+      setAddress(fullAddress);
     }
   };
 

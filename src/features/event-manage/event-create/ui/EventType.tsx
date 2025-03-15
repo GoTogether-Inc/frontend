@@ -23,16 +23,24 @@ const EventType = ({ className }: EventTypeProps) => {
 
   const handleAddressChange = (address: string) => {
     setAddress(address);
+    setFormState(prev => ({
+      ...prev,
+      address: `${address} ${detailAddress}`.trim(),
+    }));
   };
 
   const handleDetailAddressChange = (detailAddress: string) => {
     setDetailAddress(detailAddress);
+    setFormState(prev => ({
+      ...prev,
+      address: `${address} ${detailAddress}`.trim(),
+    }));
   };
 
   const handleLocationChange = (lat: number, lng: number) => {
     setFormState(prev => ({
       ...prev,
-      location: { address, detailAddress, lat, lng },
+      location: { lat, lng },
     }));
   };
 
