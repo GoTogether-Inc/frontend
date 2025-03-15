@@ -1,23 +1,31 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { CreateEventRequest } from './eventCreation';
+import { HostCreationRequest } from './hostCreation';
 
 export interface FunnelState {
-  formState: CreateEventRequest;
-  setFormState: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+  hostState: HostCreationRequest;
+  eventState: CreateEventRequest;
+  setHostState: React.Dispatch<React.SetStateAction<FunnelState['hostState']>>;
+  setEventState: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
 const FunnelContext = createContext<FunnelState | undefined>(undefined);
 
 export const FunnelProvider = ({ children }: { children: ReactNode }) => {
-  const [formState, setFormState] = useState<FunnelState['formState']>({
-    hostChannelId: 0,
+  const [hostState, setHostState] = useState<FunnelState['hostState']>({
+    profileImageUrl: '',
+    hostChannelName: '',
+    hostEmail: '',
+    channelDescription: '',
+  });
+
+  const [eventState, setEventState] = useState<FunnelState['eventState']>({
+    id: 0,
     title: '',
     startDate: '',
-    startTime: '',
     endDate: '',
+    startTime: '',
     endTime: '',
-    organizerEmail: '',
-    organizerPhoneNumber: '',
     bannerImageUrl: '',
     description: '',
     referenceLinks: [],
@@ -26,9 +34,15 @@ export const FunnelProvider = ({ children }: { children: ReactNode }) => {
     location: { lat: 37.5665, lng: 126.978 },
     category: '',
     hashtags: [],
+    organizerEmail: '',
+    organizerPhoneNumber: '',
   });
 
-  return <FunnelContext.Provider value={{ formState, setFormState }}>{children}</FunnelContext.Provider>;
+  return (
+    <FunnelContext.Provider value={{ hostState, eventState, setHostState, setEventState }}>
+      {children}
+    </FunnelContext.Provider>
+  );
 };
 
 export const useFunnelState = () => {

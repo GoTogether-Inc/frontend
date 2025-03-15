@@ -9,7 +9,7 @@ interface EventOrganizerInfoPageProps {
 }
 
 const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPageProps) => {
-  const { formState, setFormState } = useFunnelState();
+  const { eventState, setEventState } = useFunnelState();
 
   const {
     register,
@@ -18,8 +18,8 @@ const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPagePr
   } = useForm<OrganizerFormData>({
     mode: 'onChange',
     defaultValues: {
-      email: formState.organizerEmail || '',
-      phone: formState.organizerPhoneNumber || '',
+      email: eventState.organizerEmail || '',
+      phone: eventState.organizerPhoneNumber || '',
     },
     ...organizerZodValidation,
   });
@@ -32,12 +32,12 @@ const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPagePr
   }, [isValid, onValidationChange]);
 
   useEffect(() => {
-    setFormState(prev => ({
+    setEventState(prev => ({
       ...prev,
       organizerEmail: emailValue,
       organizerPhoneNumber: phoneValue,
     }));
-  }, [emailValue, phoneValue, setFormState]);
+  }, [emailValue, phoneValue, setEventState]);
 
   return (
     <div className="flex flex-col gap-6 md:gap-7 p-5">

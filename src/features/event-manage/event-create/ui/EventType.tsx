@@ -10,12 +10,12 @@ interface EventTypeProps {
 }
 
 const EventType = ({ className }: EventTypeProps) => {
-  const { formState, setFormState } = useFunnelState();
+  const { eventState, setEventState } = useFunnelState();
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
 
   const handleTypeClick = (type: 'ONLINE' | 'OFFLINE') => {
-    setFormState(prev => ({
+    setEventState(prev => ({
       ...prev,
       onlineType: type,
     }));
@@ -23,7 +23,7 @@ const EventType = ({ className }: EventTypeProps) => {
 
   const handleAddressChange = (address: string) => {
     setAddress(address);
-    setFormState(prev => ({
+    setEventState(prev => ({
       ...prev,
       address: `${address} ${detailAddress}`.trim(),
     }));
@@ -31,14 +31,14 @@ const EventType = ({ className }: EventTypeProps) => {
 
   const handleDetailAddressChange = (detailAddress: string) => {
     setDetailAddress(detailAddress);
-    setFormState(prev => ({
+    setEventState(prev => ({
       ...prev,
       address: `${address} ${detailAddress}`.trim(),
     }));
   };
 
   const handleLocationChange = (lat: number, lng: number) => {
-    setFormState(prev => ({
+    setEventState(prev => ({
       ...prev,
       location: { lat, lng },
     }));
@@ -52,7 +52,7 @@ const EventType = ({ className }: EventTypeProps) => {
           <div
             onClick={() => handleTypeClick('ONLINE')}
             className={`flex flex-col justify-center items-center w-40 h-40 md:w-44 md:h-44 border rounded-[20px] cursor-pointer ${
-              formState.onlineType === 'ONLINE' ? 'border-main' : 'border-placeholderText'
+              eventState.onlineType === 'ONLINE' ? 'border-main' : 'border-placeholderText'
             }`}
           >
             <img src={OnlineIcon} alt="온라인 이모지" className="w-28 h-28 md:w-32 md:h-32" />
@@ -62,7 +62,7 @@ const EventType = ({ className }: EventTypeProps) => {
           <div
             onClick={() => handleTypeClick('OFFLINE')}
             className={`flex flex-col justify-center items-center w-40 h-40 md:w-44 md:h-44 border rounded-[20px] cursor-pointer ${
-              formState.onlineType === 'OFFLINE' ? 'border-main' : 'border-placeholderText'
+              eventState.onlineType === 'OFFLINE' ? 'border-main' : 'border-placeholderText'
             }`}
           >
             <img src={OfflineIcon} alt="오프라인 이모지" className="w-28 h-28 md:w-32 md:h-32" />
@@ -71,7 +71,7 @@ const EventType = ({ className }: EventTypeProps) => {
         </div>
       </div>
 
-      {formState.onlineType === 'OFFLINE' && (
+      {eventState.onlineType === 'OFFLINE' && (
         <div className="mt-6 space-y-2">
           <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
           <AddressSearch
@@ -80,7 +80,7 @@ const EventType = ({ className }: EventTypeProps) => {
             onLocationChange={handleLocationChange}
             onDetailAddressChange={handleDetailAddressChange}
           />
-          <KakaoMap lat={formState.location.lat} lng={formState.location.lng} />
+          <KakaoMap lat={eventState.location.lat} lng={eventState.location.lng} />
         </div>
       )}
     </div>

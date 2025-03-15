@@ -6,18 +6,18 @@ import { FunnelState } from '../model/FunnelContext';
 
 interface DatePickerProps {
   className?: string;
-  formState?: FunnelState['formState'];
-  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+  eventState?: FunnelState['eventState'];
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
   isLabel?: boolean;
 }
 
-const EventDatePicker = ({ className, formState, setFormState, isLabel = false }: DatePickerProps) => {
+const EventDatePicker = ({ className, eventState, setEventState, isLabel = false }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
-    formState?.startDate ? new Date(formState.startDate) : new Date()
+    eventState?.startDate ? new Date(eventState.startDate) : new Date()
   );
-  const [endDate, setEndDate] = useState<Date | null>(formState?.endDate ? new Date(formState.endDate) : new Date());
-  const [startTime, setStartTime] = useState<string>(formState?.startTime || '06:00');
-  const [endTime, setEndTime] = useState<string>(formState?.endTime || '23:00');
+  const [endDate, setEndDate] = useState<Date | null>(eventState?.endDate ? new Date(eventState.endDate) : new Date());
+  const [startTime, setStartTime] = useState<string>(eventState?.startTime || '06:00');
+  const [endTime, setEndTime] = useState<string>(eventState?.endTime || '23:00');
 
   const generateTimeOptions = () => {
     const options = [];
@@ -42,16 +42,16 @@ const EventDatePicker = ({ className, formState, setFormState, isLabel = false }
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    if (setFormState) {
-      setFormState(prev => ({
+    if (setEventState) {
+      setEventState(prev => ({
         ...prev,
-        startDate: startDate ? formatDate(startDate) : undefined,
-        endDate: endDate ? formatDate(endDate) : undefined,
+        startDate: startDate ? formatDate(startDate) : '',
+        endDate: endDate ? formatDate(endDate) : '',
         startTime,
         endTime,
       }));
     }
-  }, [startDate, endDate, startTime, endTime, setFormState]);
+  }, [startDate, endDate, startTime, endTime, setEventState]);
 
   return (
     <div className={`flex flex-col w-full ${className}`}>

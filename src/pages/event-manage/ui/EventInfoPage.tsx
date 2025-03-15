@@ -4,12 +4,12 @@ import LinkInput from '../../../features/event-manage/event-create/ui/LinkInput'
 import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 const EventInfoPage = () => {
-  const { formState, setFormState } = useFunnelState();
+  const { eventState, setEventState } = useFunnelState();
   return (
     <div className="w-full px-5 space-y-8">
       <FileUpload />
       <TextEditor />
-      <LinkInput formState={formState} setFormState={setFormState} />
+      <LinkInput eventState={eventState} setEventState={setEventState} />
     </div>
   );
 };

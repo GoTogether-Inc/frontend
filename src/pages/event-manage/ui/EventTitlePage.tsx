@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
@@ -9,7 +9,7 @@ interface EventTitlePageProps {
 }
 
 const EventTitlePage = ({ onValidationChange }: EventTitlePageProps) => {
-  const { formState, setFormState } = useFunnelState();
+  const { eventState, setEventState } = useFunnelState();
 
   const {
     register,
@@ -18,7 +18,7 @@ const EventTitlePage = ({ onValidationChange }: EventTitlePageProps) => {
   } = useForm<EventTitleFormData>({
     mode: 'onChange',
     defaultValues: {
-      title: formState.title || '',
+      title: eventState.title || '',
     },
     ...eventTitleZodValidation,
   });
@@ -30,11 +30,11 @@ const EventTitlePage = ({ onValidationChange }: EventTitlePageProps) => {
   }, [isValid, onValidationChange]);
 
   useEffect(() => {
-    setFormState(prev => ({
+    setEventState(prev => ({
       ...prev,
       title: titleValue,
     }));
-  }, [titleValue, setFormState]);
+  }, [titleValue, setEventState]);
 
   return (
     <div className="flex justify-start items-center w-full p-5">

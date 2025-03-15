@@ -4,7 +4,7 @@ import EventCategory from '../../../features/event-manage/event-create/ui/EventC
 import EventTag from '../../../features/event-manage/event-create/ui/EventTag';
 
 const EventTagPage = () => {
-  const { formState, setFormState } = useFunnelState();
+  const { eventState, setEventState } = useFunnelState();
 
   return (
     <div className="flex flex-col justify-start w-full px-5 space-y-5">
@@ -16,8 +16,8 @@ const EventTagPage = () => {
         </h2>
       </div>
 
-      <EventCategory formState={formState} setFormState={setFormState} />
-      <EventTag formState={formState} setFormState={setFormState} />
+      <EventCategory eventState={eventState} setEventState={setEventState} />
+      <EventTag eventState={eventState} setEventState={setEventState} />
     </div>
   );
 };

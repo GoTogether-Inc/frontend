@@ -6,10 +6,10 @@ import React from 'react';
 import { FunnelState, useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 const HostCreationPage = () => {
-  const { formState, setFormState } = useFunnelState();
+  const { hostState, setHostState } = useFunnelState();
   const handleChange =
-    (field: keyof FunnelState['formState']) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormState(prev => ({
+    (field: keyof FunnelState['hostState']) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setHostState(prev => ({
         ...prev,
         [field]: e.target.value,
       }));
@@ -26,7 +26,7 @@ const HostCreationPage = () => {
       <DefaultTextField
         label="채널 이름을 입력해주세요"
         placeholder="채널 이름을 입력해 주세요"
-        value={formState.hostChannelName}
+        value={hostState.hostChannelName}
         onChange={handleChange('hostChannelName')}
         className="h-12"
         labelClassName="sm:text-base md:text-lg"
@@ -35,7 +35,7 @@ const HostCreationPage = () => {
         label="대표 이메일"
         detail="주최하는 이벤트에 대해 문의 할 수 있는 메일로 작성해주세요"
         placeholder="example@example.com"
-        value={formState.hostEmail}
+        value={hostState.hostEmail}
         onChange={handleChange('hostEmail')}
         className="h-12"
         labelClassName="sm:text-base md:text-lg"
@@ -43,7 +43,7 @@ const HostCreationPage = () => {
       <MultilineTextField
         label="채널에 대한 설명"
         placeholder="채널에 대한 설명을 적어주세요"
-        value={formState.channelDescription}
+        value={hostState.channelDescription}
         onChange={handleChange('channelDescription')}
         className="h-20"
       />
