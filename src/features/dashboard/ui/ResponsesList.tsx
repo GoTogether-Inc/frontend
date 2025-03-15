@@ -5,18 +5,17 @@ import SelectedResponseList from './SelectedResponseList';
 
 interface ResponsesListProps {
     listType: 'summary' | 'query' | 'individual';
-    
+
 }
 
-const ResponsesList = ({ listType}: ResponsesListProps) => {
-    const { response,selectedField, setSelectedField, selectedResponse, setSelectedResponse, itemsPerPage,
-        currentIndex, setCurrentIndex,  fieldMapToKorean} = useResponseStore();
-    
-    const queryOptions = [
-        { v1: "이름", v2: "" },
-        { v1: "전화번호", v2: "" },
-        { v1: "이메일", v2: "" }
-    ];
+const ResponsesList = ({ listType }: ResponsesListProps) => {
+    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, itemsPerPage,
+        currentIndex, setCurrentIndex, fieldMapToKorean } = useResponseStore();
+    const queryOptions = response && response[0]
+        ? Object.keys(response[0])
+            .filter(key => key !== 'id' && key !== 'selectedOptions')
+            .map(key => ({ v1: fieldMapToKorean[key] || key, v2: key }))
+        : []; 
 
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
         const currentPageResponses = response.slice(currentIndex, currentIndex + itemsPerPage);
@@ -71,7 +70,7 @@ const ResponsesList = ({ listType}: ResponsesListProps) => {
                     <div>
                         <ResponseFilter
                             responses={response}
-                            selectedField={selectedResponse.length > 0 ? 
+                            selectedField={selectedResponse.length > 0 ?
                                 { name: selectedResponse[0].name, email: selectedResponse[0].email } : { name: '전체', email: '' }}
                             setSelectedField={setSelectedResponse}
                             setCurrentIndex={setCurrentIndex}
