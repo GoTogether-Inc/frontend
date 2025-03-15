@@ -9,7 +9,8 @@ export interface CreateEventRequest {
   description: string;
   referenceLinks: { address: string; detailAddress: string; title: string; url: string }[];
   onlineType: 'ONLINE' | 'OFFLINE';
-  location: { address: string; detailAddress: string; lat: number; lng: number };
+  address: string;
+  location: { lat: number; lng: number };
   category: string;
   hashtags: string[];
   organizerEmail: string;
