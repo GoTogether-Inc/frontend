@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 const ResponsesManagementPage = () => {
     const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-    const { response, setResponses, setItemsPerPage, setSelectedResponse } = useResponseStore();
+    const { response, setResponses, setSelectedResponse } = useResponseStore();
     const location = useLocation();
     const { participantName, participantEmail } = location.state || {};
     useEffect(() => {
@@ -20,15 +20,6 @@ const ResponsesManagementPage = () => {
             setSelectedResponse(participantName, participantEmail);
         }
     }, [participantName]);
-    useEffect(() => {
-        if (listType === 'summary') {
-            setItemsPerPage(4);
-        } else if (listType === 'query') {
-            setItemsPerPage(10);
-        } else {
-            setItemsPerPage(1);
-        }
-    }, [listType]);
     return (
         <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
             <div className="flex flex-col px-2 md:px-4">
