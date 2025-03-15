@@ -13,10 +13,6 @@ interface ResponseState {
     setSelectedResponse: (responseName: string, responseEmail: string) => void;
     setItemsPerPage: (items: number) => void;
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void;
-
-    fieldMap: Record<string, 'name' | 'phone' | 'email'>;
-    fieldMapToKorean: Record<string, string>;
-
 }
 
 export const useResponseStore = create<ResponseState>((set) => ({
@@ -33,22 +29,8 @@ export const useResponseStore = create<ResponseState>((set) => ({
         }));
     },
 
-    fieldMap: {
-        '이름': 'name',
-        '전화번호': 'phone',
-        '이메일': 'email',
-    },
-    fieldMapToKorean: {
-        'name': '이름',
-        'phone': '전화번호',
-        'email': '이메일',
-    },
-
     setSelectedField: (field) => {
-        set((state) => {
-            const mappedField = state.fieldMap[field];
-            return { selectedField: mappedField };
-        });
+        set({ selectedField: field });
     },
 
     setSelectedResponse: (responseName, responseEmail) => {
