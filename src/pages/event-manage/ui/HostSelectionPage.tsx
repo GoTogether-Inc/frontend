@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
 import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
   currentStep: number;
+  onValidationChange?: (isValid: boolean) => void;
 }
 
-const HostSelectionPage = ({ onNext, currentStep }: HostSelectionPageProps) => {
+const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSelectionPageProps) => {
   const { setFormState } = useFunnelState();
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -36,6 +37,10 @@ const HostSelectionPage = ({ onNext, currentStep }: HostSelectionPageProps) => {
       channelDescription: host.channelDescription,
     }));
   };
+
+  useEffect(() => {
+    onValidationChange?.(selected !== null);
+  }, [selected, onValidationChange]);
 
   return (
     <div className="flex flex-col w-full px-2">
