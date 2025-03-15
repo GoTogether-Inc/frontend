@@ -8,11 +8,11 @@ interface Category {
 }
 
 interface EventCategoryProps {
-  formState?: FunnelState['formState'];
-  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+  eventState?: FunnelState['eventState'];
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
-const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
+const EventCategory = ({ eventState, setEventState }: EventCategoryProps) => {
   const [open, setOpen] = useState(false);
 
   const categories: Category[] = [
@@ -23,16 +23,16 @@ const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    formState?.category
-      ? { id: formState.category, name: categories.find(c => c.id === formState.category)?.name || '' }
+    eventState?.category
+      ? { id: eventState.category, name: categories.find(c => c.id === eventState.category)?.name || '' }
       : null
   );
 
   const handleSelect = (category: Category) => {
     setSelectedCategory(category);
     setOpen(false);
-    if (setFormState) {
-      setFormState(prev => ({ ...prev, category: category.id }));
+    if (setEventState) {
+      setEventState(prev => ({ ...prev, category: category.id }));
     }
   };
 
@@ -58,7 +58,7 @@ const EventCategory = ({ formState, setFormState }: EventCategoryProps) => {
                 key={category.id}
                 onClick={() => handleSelect(category)}
                 className={`p-2 cursor-pointer hover:bg-dropdown transition-colors ${
-                  formState?.category === category.id ? 'bg-dropdown' : ''
+                  eventState?.category === category.id ? 'bg-dropdown' : ''
                 }`}
               >
                 {category.name}

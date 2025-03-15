@@ -5,12 +5,14 @@ import Link from '../../../../../public/assets/event-manage/creation/Link.svg';
 import { FunnelState } from '../model/FunnelContext';
 
 interface LinkInputProps {
-  formState?: FunnelState['formState'];
-  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+  eventState?: FunnelState['eventState'];
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
-const LinkInput = ({ formState, setFormState }: LinkInputProps) => {
-  const [links, setLinks] = useState<{ title: string; url: string }[]>(formState?.referenceLinks || []);
+const LinkInput = ({ eventState, setEventState }: LinkInputProps) => {
+  const [links, setLinks] = useState<{ title: string; url: string; address: string; detailAddress: string }[]>(
+    eventState?.referenceLinks || []
+  );
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
@@ -22,11 +24,13 @@ const LinkInput = ({ formState, setFormState }: LinkInputProps) => {
     const newLink = {
       title: '',
       url: '',
+      address: '',
+      detailAddress: '',
     };
     setLinks([...links, newLink]);
     setActiveInput({ field: null });
-    if (setFormState) {
-      setFormState(prev => ({
+    if (setEventState) {
+      setEventState(prev => ({
         ...prev,
         referenceLinks: [...prev.referenceLinks, newLink],
       }));
@@ -36,8 +40,8 @@ const LinkInput = ({ formState, setFormState }: LinkInputProps) => {
   const removeLink = (title: string) => {
     const updatedLinks = links.filter(link => link.title !== title);
     setLinks(updatedLinks);
-    if (setFormState) {
-      setFormState(prev => ({
+    if (setEventState) {
+      setEventState(prev => ({
         ...prev,
         referenceLinks: updatedLinks,
       }));
@@ -47,8 +51,8 @@ const LinkInput = ({ formState, setFormState }: LinkInputProps) => {
   const updateLink = (title: string, field: 'url' | 'title', value: string) => {
     const updatedLinks = links.map(link => (link.title === title ? { ...link, [field]: value } : link));
     setLinks(updatedLinks);
-    if (setFormState) {
-      setFormState(prev => ({
+    if (setEventState) {
+      setEventState(prev => ({
         ...prev,
         referenceLinks: updatedLinks,
       }));

@@ -14,12 +14,12 @@ import useEventCreation from '../hooks/useEventCreationHook';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();
-  const { formState } = useFunnelState();
+  const { eventState } = useFunnelState();
   const { mutate: createEvent } = useEventCreation();
 
   const handleNext = (nextStep: string) => {
     if (currentStep === 7) {
-      createEvent(formState, {
+      createEvent(eventState, {
         onSuccess: () => {
           navigate('/');
         },

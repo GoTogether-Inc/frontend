@@ -9,7 +9,7 @@ interface HostSelectionPageProps {
 }
 
 const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSelectionPageProps) => {
-  const { setFormState } = useFunnelState();
+  const { setHostState } = useFunnelState();
   const [selected, setSelected] = useState<number | null>(null);
 
   const [hostList] = useState([
@@ -29,7 +29,7 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
     channelDescription: string;
   }) => {
     setSelected(host.hostChannelId);
-    setFormState(prev => ({
+    setHostState(prev => ({
       ...prev,
       hostChannelId: host.hostChannelId,
       hostChannelName: host.hostChannelName,

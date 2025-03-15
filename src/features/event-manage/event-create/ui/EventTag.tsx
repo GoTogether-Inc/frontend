@@ -3,11 +3,11 @@ import { FunnelState } from '../model/FunnelContext';
 import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
 
 interface EventTagProps {
-  formState?: FunnelState['formState'];
-  setFormState?: React.Dispatch<React.SetStateAction<FunnelState['formState']>>;
+  eventState?: FunnelState['eventState'];
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
-const EventTag = ({ formState, setFormState }: EventTagProps) => {
+const EventTag = ({ eventState, setEventState }: EventTagProps) => {
   const [inputValue, setInputValue] = useState('');
   const MAX_TAGS = 5;
 
@@ -15,7 +15,7 @@ const EventTag = ({ formState, setFormState }: EventTagProps) => {
     setInputValue(e.target.value);
   };
 
-  const hashtags = formState?.hashtags || [];
+  const hashtags = eventState?.hashtags || [];
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && inputValue.trim()) {
@@ -26,9 +26,9 @@ const EventTag = ({ formState, setFormState }: EventTagProps) => {
       }
 
       const newTag = inputValue.trim();
-      if (!formState?.hashtags.includes(newTag)) {
-        if (setFormState) {
-          setFormState(prev => ({
+      if (!eventState?.hashtags.includes(newTag)) {
+        if (setEventState) {
+          setEventState(prev => ({
             ...prev,
             hashtags: [...prev.hashtags, newTag],
           }));
@@ -39,8 +39,8 @@ const EventTag = ({ formState, setFormState }: EventTagProps) => {
   };
 
   const removeHashtag = (tagToRemove: string) => {
-    if (setFormState) {
-      setFormState(prev => ({
+    if (setEventState) {
+      setEventState(prev => ({
         ...prev,
         hashtags: prev.hashtags.filter(tag => tag !== tagToRemove),
       }));
@@ -64,7 +64,7 @@ const EventTag = ({ formState, setFormState }: EventTagProps) => {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {formState?.hashtags.map((tag, index) => (
+        {eventState?.hashtags.map((tag, index) => (
           <div key={index} className="inline-flex items-center border border-main bg-dropdown px-3 py-1 rounded-[1px]">
             <span className="text-main mr-2">{tag}</span>
             <button onClick={() => removeHashtag(tag)} className="text-main focus:outline-none">
