@@ -42,7 +42,7 @@ const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListPro
           </div>
         </div>
         <div className="flex items-center gap-4">
-          {<p>참여자 정보</p>}
+          <p>참여자 정보</p>
           <p>체크인</p>
           <p className="mr-1 md:mr-2">승인</p>
         </div>
