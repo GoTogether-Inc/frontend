@@ -2,6 +2,7 @@ import { useResponseStore } from '../model/ResponseStore';
 import { responsesInfo } from '../../../shared/types/responseType';
 import ResponseFilter from './ResponseFilter';
 import SelectedResponseList from './SelectedResponseList';
+import { createFieldMappings } from '../../lib/createFieldMappings';
 
 interface ResponsesListProps {
     listType: 'summary' | 'query' | 'individual';
@@ -10,12 +11,18 @@ interface ResponsesListProps {
 
 const ResponsesList = ({ listType }: ResponsesListProps) => {
     const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, itemsPerPage,
-        currentIndex, setCurrentIndex, fieldMapToKorean } = useResponseStore();
+        currentIndex, setCurrentIndex } = useResponseStore();
+
+    const { fieldMap,fieldMapToKorean } = createFieldMappings(response);
+
     const queryOptions = response && response[0]
         ? Object.keys(response[0])
             .filter(key => key !== 'id' && key !== 'selectedOptions')
-            .map(key => ({ v1: fieldMapToKorean[key] || key, v2: key }))
-        : []; 
+            .map(key => ({
+                v1: fieldMap[key] || key,
+                v2: ""
+            }))
+        : [];
 
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
         const currentPageResponses = response.slice(currentIndex, currentIndex + itemsPerPage);
@@ -47,6 +54,8 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                         {renderSection('name', 'name')}
                         {renderSection('phone', 'phone')}
                         {renderSection('email', 'email')}
+                        {renderSection('grade', 'grade')}
+                        {renderSection('email', 'email')}
                     </>
                 );
             case 'query':
@@ -54,7 +63,7 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                     <>
                         <ResponseFilter
                             responses={response}
-                            selectedField={{ name: fieldMapToKorean[selectedField], email: "" }}
+                            selectedField={{ v1: fieldMapToKorean[selectedField], v2: "" }}
                             setSelectedField={setSelectedField}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
@@ -71,7 +80,7 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
                         <ResponseFilter
                             responses={response}
                             selectedField={selectedResponse.length > 0 ?
-                                { name: selectedResponse[0].name, email: selectedResponse[0].email } : { name: '전체', email: '' }}
+                                { v1: selectedResponse[0].name, v2: selectedResponse[0].email } : { v1: '전체', v2: '' }}
                             setSelectedField={setSelectedResponse}
                             setCurrentIndex={setCurrentIndex}
                             currentIndex={currentIndex}
