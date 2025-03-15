@@ -9,9 +9,15 @@ interface ResponsesListProps {
 }
 
 const ResponsesList = ({ listType}: ResponsesListProps) => {
-    const { response, selectedField, setSelectedField, selectedResponse, setSelectedResponse, itemsPerPage,
-        currentIndex, setCurrentIndex, queryOptions, fieldMapToKorean} = useResponseStore();
-        
+    const { response,selectedField, setSelectedField, selectedResponse, setSelectedResponse, itemsPerPage,
+        currentIndex, setCurrentIndex,  fieldMapToKorean} = useResponseStore();
+    
+    const queryOptions = [
+        { v1: "이름", v2: "" },
+        { v1: "전화번호", v2: "" },
+        { v1: "이메일", v2: "" }
+    ];
+
     const renderSection = (title: string, key: keyof typeof responsesInfo[0]) => {
         const currentPageResponses = response.slice(currentIndex, currentIndex + itemsPerPage);
         const transTitle = fieldMapToKorean[title];

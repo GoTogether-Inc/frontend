@@ -14,7 +14,6 @@ interface ResponseState {
     setItemsPerPage: (items: number) => void;
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void;
 
-    queryOptions: { v1: string; v2: string }[];
     fieldMap: Record<string, 'name' | 'phone' | 'email'>;
     fieldMapToKorean: Record<string, string>;
 
@@ -22,18 +21,18 @@ interface ResponseState {
 
 export const useResponseStore = create<ResponseState>((set) => ({
     response: [],
-    selectedField: 'name',
+    selectedField: '',
     selectedResponse: [],
     itemsPerPage: 4,
     currentIndex: 0,
 
-    setResponses: (response) => { set({ response });},
+    setResponses: (response) => { 
+        set(() => ({ 
+            response: response, 
+            selectedField: response.length > 0 ? Object.keys(response[0])[1] : '' 
+        }));
+    },
 
-    queryOptions: [
-        { v1: "이름", v2: "" },
-        { v1: "전화번호", v2: "" },
-        { v1: "이메일", v2: "" }
-    ],
     fieldMap: {
         '이름': 'name',
         '전화번호': 'phone',
