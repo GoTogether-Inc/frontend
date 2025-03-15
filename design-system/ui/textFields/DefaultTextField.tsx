@@ -11,6 +11,7 @@ interface DefaultTextFieldProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  errorMessage?: string;
   className?: string;
   labelClassName?: string;
 }
@@ -28,6 +29,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
       placeholder = '',
       className = '',
       labelClassName = '',
+      errorMessage,
       ...rest
     },
     ref
@@ -45,10 +47,13 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             {...rest}
-            className={`w-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none ${className}`}
+            className={`w-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none ${className} ${
+              errorMessage ? 'border-red-500' : ''
+            }`}
           />
           {rightContent && <div className="ml-3">{rightContent}</div>}
         </div>
+        {errorMessage && <p className="absolute px-1 text-10 md:text-xs text-red-500">{errorMessage}</p>}
       </div>
     );
   }

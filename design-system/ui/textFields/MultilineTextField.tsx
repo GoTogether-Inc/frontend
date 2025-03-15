@@ -9,10 +9,25 @@ interface MultilineTextFieldProps {
   disabled?: boolean;
   placeholder?: string;
   className?: string;
+  errorMessage?: string;
 }
 
 const MultilineTextField = forwardRef<HTMLTextAreaElement, MultilineTextFieldProps>(
-  ({ label, detail, value, onChange, onKeyDown, disabled = false, placeholder = '', className = '', ...rest }, ref) => {
+  (
+    {
+      label,
+      detail,
+      value,
+      onChange,
+      onKeyDown,
+      disabled = false,
+      placeholder = '',
+      className = '',
+      errorMessage,
+      ...rest
+    },
+    ref
+  ) => {
     return (
       <div className={`${className}`}>
         <label className="block px-1 font-semibold text-base lg:text-lg md:mb-2">{label}</label>
@@ -27,8 +42,11 @@ const MultilineTextField = forwardRef<HTMLTextAreaElement, MultilineTextFieldPro
           disabled={disabled}
           placeholder={placeholder}
           {...rest}
-          className={`w-full h-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none`}
+          className={`w-full h-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none ${
+            errorMessage ? 'border-red-500' : ''
+          }`}
         />
+        {errorMessage && <p className="absolute px-1 text-10 md:text-xs text-red-500">{errorMessage}</p>}
       </div>
     );
   }
