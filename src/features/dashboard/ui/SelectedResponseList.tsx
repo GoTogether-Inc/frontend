@@ -5,7 +5,6 @@ import { options } from '../../../shared/types/responseType';
 
 interface SelectedResponseListProps {
     currentIndex: number;
-    itemsPerPage: number;
 }
 interface Response {
     id: number;
@@ -16,7 +15,7 @@ interface Response {
     email: string;
 }
 
-const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseListProps) => {
+const SelectedResponseList = ({ currentIndex}: SelectedResponseListProps) => {
     const { response,selectedResponse} = useResponseStore();
    
     const fields = [
@@ -30,7 +29,7 @@ const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseLis
     return (
         <div className="bg-white p-4 flex flex-col gap-2 mb-4">
             {selectedResponse.length > 0 ? (
-                selectedResponse.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
+                selectedResponse.slice(currentIndex, currentIndex + 1).map((response) => (
                     <div className="p-4" key={response.id}>
                         {fields.map(({ label, value, placeholder }) => (
                             <UnderlineTextField
@@ -47,7 +46,7 @@ const SelectedResponseList = ({ currentIndex, itemsPerPage}: SelectedResponseLis
                     </div>
                 ))
             ) : (
-                response.slice(currentIndex, currentIndex + itemsPerPage).map((response) => (
+                response.slice(currentIndex, currentIndex + 1).map((response) => (
                     <div className="p-4" key={response.id}>
                         {fields.map(({ label, value, placeholder }) => (
                             <UnderlineTextField
