@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
 import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
+import useHostChannelList from '../../../widgets/event/hook/useHostChannelListHook';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
@@ -11,30 +12,17 @@ interface HostSelectionPageProps {
 const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSelectionPageProps) => {
   const { setHostState } = useFunnelState();
   const [selected, setSelected] = useState<number | null>(null);
+  const { data, isLoading, error } = useHostChannelList();
 
-  const [hostList] = useState([
-    {
-      hostChannelId: 1,
-      hostChannelName: '실1000',
-      hostEmail: 'example@example.com',
-      channelDescription: '어쩌구저쩌구',
-    },
-    { hostChannelId: 2, hostChannelName: '같이가요', hostEmail: 'test@test.com', channelDescription: '어쩌구저쩌구' },
-  ]);
+  console.log('Error:', error); // 에러 확인
+  console.log('Fetched data:', data); // 데이터 확인
 
-  const handleHostClick = (host: {
-    hostChannelId: number;
-    hostChannelName: string;
-    hostEmail: string;
-    channelDescription: string;
-  }) => {
-    setSelected(host.hostChannelId);
+  const handleHostClick = (host: { id: number; hostChannelName: string; profileImageUrl: string }) => {
+    setSelected(host.id);
     setHostState(prev => ({
       ...prev,
-      hostChannelId: host.hostChannelId,
+      hostChannelId: host.id,
       hostChannelName: host.hostChannelName,
-      hostEmail: host.hostEmail,
-      channelDescription: host.channelDescription,
     }));
   };
 
@@ -53,18 +41,20 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
         </button>
         <span className="font-bold text-base md:text-xl ml-4">채널 새로 만들기</span>
       </div>
-      {hostList.map(host => (
+      {data?.result.map(host => (
         <div
-          key={host.hostChannelId}
+          key={host.id}
           onClick={() => handleHostClick(host)}
           className={`flex justify-start items-center py-3 px-3 ${
-            selected === host.hostChannelId
+            selected === host.id
               ? 'bg-dropdown border border-main rounded-[5px]'
               : 'hover:bg-dropdown hover:border hover:border-main hover:rounded-[5px]'
           }`}
         >
-          <div className="w-12 h-12 bg-gray-400" />
-          <span className="font-bold text-base md:text-xl ml-4 ">{host.hostChannelName}</span>
+          <div className="w-12 h-12 bg-gray-400">
+            <img src={host.profileImageUrl} alt={host.hostChannelName} className="w-full h-full object-cover" />
+          </div>
+          <span className="font-bold text-base md:text-xl ml-4">{host.hostChannelName}</span>
         </div>
       ))}
     </div>
