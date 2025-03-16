@@ -7,6 +7,7 @@ export interface FunnelState {
   eventState: CreateEventRequest;
   setHostState: React.Dispatch<React.SetStateAction<FunnelState['hostState']>>;
   setEventState: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  setHostChannelId: (hostChannelId: number) => void;
 }
 
 const FunnelContext = createContext<FunnelState | undefined>(undefined);
@@ -20,7 +21,7 @@ export const FunnelProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [eventState, setEventState] = useState<FunnelState['eventState']>({
-    id: 0,
+    hostChannelId: 0,
     title: '',
     startDate: '',
     endDate: '',
@@ -31,15 +32,19 @@ export const FunnelProvider = ({ children }: { children: ReactNode }) => {
     referenceLinks: [],
     onlineType: 'ONLINE',
     address: '',
-    location: { lat: 37.5665, lng: 126.978 },
+    location: { lat: 0.0, lng: 0.0 },
     category: '',
     hashtags: [],
     organizerEmail: '',
     organizerPhoneNumber: '',
   });
 
+  const setHostChannelId = (hostChannelId: number) => {
+    setEventState(prev => ({ ...prev, hostChannelId }));
+  };
+
   return (
-    <FunnelContext.Provider value={{ hostState, eventState, setHostState, setEventState }}>
+    <FunnelContext.Provider value={{ hostState, eventState, setHostState, setEventState, setHostChannelId }}>
       {children}
     </FunnelContext.Provider>
   );
