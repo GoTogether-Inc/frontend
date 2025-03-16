@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface IconButtonProps {
   iconPath: React.ReactElement;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   size?: 'small' | 'medium' | 'large';
 }
 
