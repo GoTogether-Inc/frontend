@@ -37,7 +37,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
   const handleHostCreation = () => {
     createHost(hostState, {
       onSuccess: () => {
-        handleNext(String(currentStep + 1));
+        handleNext(String(currentStep - 1));
       },
     });
   };
