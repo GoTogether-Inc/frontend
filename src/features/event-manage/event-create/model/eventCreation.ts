@@ -1,5 +1,5 @@
 export interface CreateEventRequest {
-  id: number;
+  hostChannelId: number;
   title: string;
   startDate: string;
   endDate: string;
