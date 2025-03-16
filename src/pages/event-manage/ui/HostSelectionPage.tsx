@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
 import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
 import useHostChannelList from '../../../widgets/event/hook/useHostChannelListHook';
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
+import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
@@ -12,10 +14,7 @@ interface HostSelectionPageProps {
 const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSelectionPageProps) => {
   const { setHostState } = useFunnelState();
   const [selected, setSelected] = useState<number | null>(null);
-  const { data, isLoading, error } = useHostChannelList();
-
-  console.log('Error:', error); // 에러 확인
-  console.log('Fetched data:', data); // 데이터 확인
+  const { data } = useHostChannelList();
 
   const handleHostClick = (host: { id: number; hostChannelName: string; profileImageUrl: string }) => {
     setSelected(host.id);
@@ -24,6 +23,10 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
       hostChannelId: host.id,
       hostChannelName: host.hostChannelName,
     }));
+  };
+
+  const handleHostDelete = (hostId: number) => {
+    console.log(`Deleted host with ID: ${hostId}`);
   };
 
   useEffect(() => {
@@ -37,7 +40,10 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
         className="flex justify-start items-center px-3 py-4 mt-5 cursor-pointer"
       >
         <button className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-gray2 rounded-[4px]">
-          <img src={AddButton} alt="추가 버튼" className="w-6 h-6 md:w-7 md:h-7" />
+          <IconButton
+            iconPath={<img src={AddButton} alt="추가 버튼" className="w-6 h-6 md:w-7 md:h-7" />}
+            onClick={() => onNext(String(currentStep + 1))}
+          />
         </button>
         <span className="font-bold text-base md:text-xl ml-4">채널 새로 만들기</span>
       </div>
@@ -45,7 +51,7 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
         <div
           key={host.id}
           onClick={() => handleHostClick(host)}
-          className={`flex justify-start items-center py-3 px-3 ${
+          className={`relative flex justify-start items-center py-3 px-3 group ${
             selected === host.id
               ? 'bg-dropdown border border-main rounded-[5px]'
               : 'hover:bg-dropdown hover:border hover:border-main hover:rounded-[5px]'
@@ -55,6 +61,16 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
             <img src={host.profileImageUrl} alt={host.hostChannelName} className="w-full h-full object-cover" />
           </div>
           <span className="font-bold text-base md:text-xl ml-4">{host.hostChannelName}</span>
+
+          <div className="absolute top-1/2 right-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <IconButton
+              iconPath={<img src={CloseButton} alt="삭제" className="w-4 h-4" />}
+              onClick={e => {
+                e.stopPropagation();
+                handleHostDelete(host.id);
+              }}
+            />
+          </div>
         </div>
       ))}
     </div>
