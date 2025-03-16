@@ -16,6 +16,7 @@ interface DefaultTextFieldProps {
   errorMessage?: string;
   className?: string;
   labelClassName?: string;
+  disabled?: boolean;
 }
 
 const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
@@ -34,6 +35,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
       className = '',
       labelClassName = '',
       errorMessage,
+      disabled = false,
       ...rest
     },
     ref
@@ -52,6 +54,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
             onFocus={onFocus}
             onBlur={onBlur}
             placeholder={placeholder}
+            disabled={disabled}
             {...rest}
             className={`w-full border border-placeholderText rounded-[3px] px-2 py-1 outline-none placeholder:text-placeholderText text-xs font-light resize-none ${className} ${
               errorMessage ? 'border-red-500' : ''
