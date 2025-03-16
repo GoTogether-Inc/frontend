@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import createHost from '../api/hostCreation';
+import { createHost, deleteHost } from '../api/host';
 import { HostCreationRequest } from '../model/hostCreation';
 import { ApiResponse } from '../../../../shared/types/api/apiResponse';
 
-const useHostCreation = () => {
+export const useHostCreation = () => {
   return useMutation<ApiResponse<null>, Error, HostCreationRequest>({
     mutationFn: async (requestBody: HostCreationRequest) => {
       return await createHost(requestBody);
@@ -11,4 +11,10 @@ const useHostCreation = () => {
   });
 };
 
-export default useHostCreation;
+export const useHostDeletion = () => {
+  return useMutation<ApiResponse<null>, Error, number>({
+    mutationFn: async (hostChannelId: number) => {
+      return await deleteHost(hostChannelId);
+    },
+  });
+};
