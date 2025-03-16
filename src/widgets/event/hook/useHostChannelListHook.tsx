@@ -4,12 +4,12 @@ import { AxiosError } from 'axios';
 import { HostChannelListResponse } from '../model/hostChannelList';
 
 const useHostChannelList = () => {
-  const { data } = useQuery<HostChannelListResponse, AxiosError>({
+  const { data, refetch } = useQuery<HostChannelListResponse, AxiosError>({
     queryKey: ['hostChannelList'],
     queryFn: hostChannelList,
   });
 
-  return { data };
+  return { data, refetch };
 };
 
 export default useHostChannelList;

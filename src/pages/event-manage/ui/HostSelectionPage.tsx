@@ -4,6 +4,7 @@ import { useFunnelState } from '../../../features/event-manage/event-create/mode
 import useHostChannelList from '../../../widgets/event/hook/useHostChannelListHook';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
+import { useHostDeletion } from '../../../features/event-manage/event-create/hooks/useHostHook';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
@@ -12,9 +13,10 @@ interface HostSelectionPageProps {
 }
 
 const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSelectionPageProps) => {
-  const { setHostState } = useFunnelState();
+  const { setHostState, setHostChannelId } = useFunnelState();
   const [selected, setSelected] = useState<number | null>(null);
-  const { data } = useHostChannelList();
+  const { data, refetch } = useHostChannelList();
+  const { mutate: deleteHost } = useHostDeletion();
 
   const handleHostClick = (host: { id: number; hostChannelName: string; profileImageUrl: string }) => {
     setSelected(host.id);
@@ -23,10 +25,21 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
       hostChannelId: host.id,
       hostChannelName: host.hostChannelName,
     }));
+    setHostChannelId(host.id);
   };
 
-  const handleHostDelete = (hostId: number) => {
-    console.log(`Deleted host with ID: ${hostId}`);
+  const handleHostDelete = (hostChannelId: number) => {
+    deleteHost(hostChannelId, {
+      onSuccess: () => {
+        refetch();
+        if (selected === hostChannelId) {
+          setSelected(null);
+        }
+      },
+      onError: error => {
+        console.error('호스트 삭제 실패:', error);
+      },
+    });
   };
 
   useEffect(() => {
