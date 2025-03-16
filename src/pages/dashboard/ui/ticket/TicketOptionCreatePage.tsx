@@ -157,9 +157,9 @@ const TicketOptionCreatePage = () => {
                   {/*인풋 박스 클릭하거나 입력된 내용이 있을 때*/}
                   {(focusedIndex === index || option) && (
                     <>
-                      <div className="block bg-gray-100 p-1 my-3 rounded-[3px] px-4">
+                      <div className="block bg-gray-100 rounded-[3px] my-3 p-4">
                         <div className="flex items-center justify-between ">
-                          <div className="w-60 md:w-90 my-1">
+                          <div className="w-60 md:w-90">
                             <p className="text-m font-semibold text-gray-700">선택지에 대한 수량 제한 걸기</p>
                             <p className="text-gray-400 text-xs">
                               특정 숫자의 사람만 선택하게 하고 싶다면 해당 선택지를 눌러주세요.
@@ -168,7 +168,7 @@ const TicketOptionCreatePage = () => {
                           <ToggleButton isChecked={!limitToggled} onChange={handleLimitToggled} />
                         </div>
                         <div className="w-24">
-                          <DefaultTextField placeholder="0" disabled={limitToggled} className="h-10 !w-24 my-2" />
+                          <DefaultTextField placeholder="0" disabled={limitToggled} className="h-10 !w-24 mt-1" />
                         </div>
                       </div>
                     </>
