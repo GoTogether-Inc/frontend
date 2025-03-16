@@ -60,7 +60,7 @@ const ResponseFilter = ({
                         }}
                     />
                 </div>
-                <div className="flex items-center gap-2 ml-auto">
+                <div className="flex items-center gap-1 md:gap-2 ml-auto ">
                     <IconButton
                         iconPath={<img src={leftButton} alt="왼쪽 버튼" />}
                         onClick={() => {
@@ -71,7 +71,7 @@ const ResponseFilter = ({
                             }
                         }}
                     />
-                    <span>{Math.floor(currentIndex / 1) + 1} / {Math.ceil(responsesLength / 1)}</span>
+                    <span className='text-sm md:text-base w-10 text-center'>{Math.floor(currentIndex / 1) + 1} / {Math.ceil(responsesLength / 1)}</span>
                     <IconButton
                         iconPath={<img src={rightButton} alt="오른쪽 버튼" />}
                         onClick={() => {

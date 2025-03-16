@@ -31,14 +31,14 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
         return (
             <div className="bg-white p-4 flex flex-col gap-2 mb-4">
                 <div className="flex justify-between items-center text-xs bg-white px-2 md:px-3 py-3">
-                    <p>{transTitle}</p>
+                    <p className='text-base font-bold'>{transTitle}</p>
                     <p>응답 {response.length}개</p>
                 </div>
 
                 {response.length === 0 ? (
                     <p>응답이 없습니다.</p>
                 ) : (
-                    <div className={isSummaryPage ? "max-h-[185px] overflow-y-auto space-y-2" : "space-y-2"}>
+                    <div className={isSummaryPage ? "h-full max-h-48 overflow-y-auto space-y-2" : "h-full overflow-y-auto space-y-2"}>
                         {response.map((response) => (
                             <div className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3 gap-2" key={response.id}>
                                 <p>{typeof response[key] === 'object' ? JSON.stringify(response[key]) : response[key]}</p>

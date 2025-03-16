@@ -24,7 +24,7 @@ const OptionSection = ({ responses, options }: OptionSectionProps) => {
 
             return (
               <div key={option.optionName}>
-                <p className="block mb-2 text-l">{option.optionName}</p>
+                <p className="block mb-2 text-sm md:text-lg">{option.optionName}</p>
                 <ul className="space-y-1">
                   {option.choices.map((choice: string) => (
                     <li key={choice}>
