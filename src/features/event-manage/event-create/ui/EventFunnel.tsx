@@ -10,8 +10,8 @@ import EventRegisterLayout from '../../../../shared/ui/backgrounds/EventRegister
 import { useNavigate } from 'react-router-dom';
 import { EventFunnelInterface, StepNames } from '../../../../shared/types/funnelType';
 import { useFunnelState } from '../model/FunnelContext';
-import useEventCreation from '../hooks/useEventCreationHook';
-import useHostCreation from '../hooks/useHostCreation';
+import { useEventCreation } from '../hooks/useEventHook';
+import { useHostCreation } from '../hooks/useHostHook';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();
