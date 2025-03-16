@@ -2,10 +2,11 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ApiErrorResponse } from './apiResponse';
 
 export const axiosClient = axios.create({
-  baseURL: '/api/v1',
+  baseURL: 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/api/v1',
   timeout: 3000,
   headers: {
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${import.meta.env.VITE_HEADER_TOKEN}`,
   },
 });
 
@@ -41,7 +42,9 @@ axiosClient.interceptors.response.use(
     // 401(토큰 만료)일 경우 로그아웃 처리 or 토큰 갱신 가능
     if (errorInfo.status === 401) {
       localStorage.removeItem('access_token');
-      window.location.href = '/login'; // 로그인 페이지로 이동
+      import('../../../app/provider/AuthContext').then(({ useAuth }) => {
+        useAuth().openModal();
+      });
     }
 
     return Promise.reject(errorInfo);
