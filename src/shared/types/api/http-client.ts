@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ApiErrorResponse } from './apiResponse';
+import Cookies from 'js-cookie';
 
 export const axiosClient = axios.create({
   baseURL: 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/api/v1',
@@ -12,7 +13,7 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('access_token');
+    const token = Cookies.get('access_token');
     //zustand 사용함으로써 코드변경 할 듯 현재는 임시 입니다.
 
     if (token) {
