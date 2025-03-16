@@ -165,10 +165,10 @@ const TicketOptionCreatePage = () => {
                               특정 숫자의 사람만 선택하게 하고 싶다면 해당 선택지를 눌러주세요.
                             </p>
                           </div>
-                          <ToggleButton isChecked={limitToggled} onChange={handleLimitToggled} />
+                          <ToggleButton isChecked={!limitToggled} onChange={handleLimitToggled} />
                         </div>
-                        <div className="w-20">
-                          <DefaultTextField placeholder="0" className="h-10 !w-20 my-2" />
+                        <div className="w-24">
+                          <DefaultTextField placeholder="0" disabled={limitToggled} className="h-10 !w-24 my-2" />
                         </div>
                       </div>
                     </>
