@@ -23,7 +23,7 @@ const ResponsesManagementPage = () => {
     return (
         <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
             <div className="flex flex-col px-2 md:px-4">
-                <h1 className="text-left font-semibold text-2xl py-4 md:py-6 pl-4">응답 {response.length}개</h1>
+                <h1 className="text-left font-semibold md:text-2xl text-xl py-4 md:py-6 pl-4">응답 {response.length}개</h1>
                 <div className="flex justify-center">
                     <ResponsesFilterBar
                         listType={listType}

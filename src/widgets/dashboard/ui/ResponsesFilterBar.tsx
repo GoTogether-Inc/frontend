@@ -10,7 +10,7 @@ const ResponsesFilterBar = ({
   setListType,
 }: ResponsesFilterBarProps) => {
   return (
-    <div className="flex items-center justify-between text-15 md:text-sm py-2 flex gap-20 font-semibold">
+    <div className="flex items-center justify-between text-sm md:text-base py-2 flex gap-20 ">
         <TextButton
           label="요약"
           onClick={() => setListType('summary')}
