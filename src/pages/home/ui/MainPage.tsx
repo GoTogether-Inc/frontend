@@ -18,6 +18,7 @@ import leftButton from '../../../../public/assets/main/LeftButton.svg';
 import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
+import { useAuth } from '../../../app/provider/AuthContext';
 
 const MainPage = () => {
   const images = [
@@ -26,12 +27,12 @@ const MainPage = () => {
     { img: thirdPage, link: 'https://example.com/page3' },
   ];
 
-  const [modalOpen, setModalOpen] = useState(false);
   const [latestStartIndex, setLatestStartIndex] = useState<number>(0);
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
   const navigate = useNavigate();
+  const { isModalOpen, openModal, closeModal } = useAuth();
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
@@ -57,9 +58,9 @@ const MainPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => setModalOpen(true)} />}
+        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={openModal} />}
       />
-      <AnimatePresence>{modalOpen && <LoginModal onClose={() => setModalOpen(false)} />}</AnimatePresence>
+      <AnimatePresence>{isModalOpen && <LoginModal onClose={closeModal} />}</AnimatePresence>
 
       <div className="w-full px-6">
         <Banner images={images} interval={5000} />
