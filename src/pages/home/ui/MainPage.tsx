@@ -18,7 +18,7 @@ import leftButton from '../../../../public/assets/main/LeftButton.svg';
 import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
-import { useAuth } from '../../../app/provider/AuthContext';
+import useAuthStore from '../../../app/provider/authStore';
 
 const MainPage = () => {
   const images = [
@@ -32,7 +32,7 @@ const MainPage = () => {
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useAuth();
+  const { isModalOpen, openModal, closeModal } = useAuthStore();
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
