@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ApiErrorResponse } from './apiResponse';
 import Cookies from 'js-cookie';
+import useAuthStore from '../../../app/provider/authStore';
 
 export const axiosClient = axios.create({
   baseURL: 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/api/v1',
@@ -43,9 +44,8 @@ axiosClient.interceptors.response.use(
     // 401(토큰 만료)일 경우 로그아웃 처리 or 토큰 갱신 가능
     if (errorInfo.status === 401) {
       Cookies.remove('access_token');
-      import('../../../app/provider/AuthContext').then(({ useAuth }) => {
-        useAuth().openModal();
-      });
+
+      useAuthStore.getState().openModal();
     }
 
     return Promise.reject(errorInfo);
