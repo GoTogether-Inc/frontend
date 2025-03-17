@@ -42,7 +42,7 @@ axiosClient.interceptors.response.use(
 
     // 401(토큰 만료)일 경우 로그아웃 처리 or 토큰 갱신 가능
     if (errorInfo.status === 401) {
-      localStorage.removeItem('access_token');
+      Cookies.remove('access_token');
       import('../../../app/provider/AuthContext').then(({ useAuth }) => {
         useAuth().openModal();
       });
