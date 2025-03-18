@@ -30,6 +30,7 @@ import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 import PaymentPage from '../../pages/payment/ui/PaymentPage';
 import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
 import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagementPage';
+import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -72,6 +73,7 @@ const dashboardRoutes = [
 const paymentRoutes = [
   { path: PAYMENT_ROUTES.cardRegister, element: <CardRegisterPage />, requiresAuth: false },
   { path: PAYMENT_ROUTES.ticketConfirm, element: <TicketConfirmPage />, requiresAuth: false },
+  { path: PAYMENT_ROUTES.ticketOptionResponse, element: <TicketOptionResponsePage />, requiresAuth: false },
 ];
 
 const routesConfig = [...mainRoutes, ...joinRoutes, ...menuRoutes, ...dashboardRoutes, ...paymentRoutes];

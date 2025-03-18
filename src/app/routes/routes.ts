@@ -47,4 +47,5 @@ export const PAYMENT_ROUTES = {
   payment: `${MAIN_ROUTES.payment}`,
   cardRegister: `${MAIN_ROUTES.payment}/cardRegister`,
   ticketConfirm: `${MAIN_ROUTES.payment}/ticket-confirm`,
+  ticketOptionResponse: `${MAIN_ROUTES.payment}/ticket-option-response`,
 };
