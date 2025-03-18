@@ -36,7 +36,7 @@ const TicketOptionCreatePage = () => {
     /*선택지 삭제*/
   }
   const handleClearOption = (index: number) => {
-    if (options.length === 1 || options[index] === '') {
+    if (options.length === 1) {
       setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
     } else {
       const updateOptions = options.filter((_, i) => i !== index);
@@ -75,6 +75,15 @@ const TicketOptionCreatePage = () => {
   useEffect(() => {
     console.log(`selectedChip 값 : ${selectedChip}`);
   }, [selectedChip]);
+
+  // 선택지 입력 시 경고 메시지 제거
+  useEffect(() => {
+    if (options.length === 1 && options[0].trim() !== '') {
+      setWarningMsg('');
+    } else if (options.length === 1 && options[0].trim() === '') {
+      setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
+    }
+  }, [options]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
