@@ -1,26 +1,7 @@
 import { TOption } from "../dashboard/model/TicketOptionStore";
 import { useTicketOptionStore } from "../dashboard/model/TicketOptionStore";
 import Checkbox from "../../../design-system/ui/Checkbox";
-export const options: TOption[] = [
-    {
-        type: 'text',
-        optionName: '성함을 알려주세요.',
-        required: true,
-        choices: ['']
-    },
-    {
-        type: 'single',
-        optionName: '티셔츠 사이즈 선택해주세요.',
-        required: true,
-        choices: ['S', 'M', 'L', 'XL']
-    },
-    {
-        type: 'multiple',
-        optionName: '선택해주세요.',
-        required: false,
-        choices: ['1', '2', '3', '4']
-    },
-]
+
 interface TicketOptionProps {
     options: TOption[];
 }
@@ -28,13 +9,15 @@ const TicketOption = ({ options }: TicketOptionProps) => {
     const { currentPage, selectedOptions, setOption } = useTicketOptionStore();
     const currentSelectedOptions = selectedOptions[currentPage] || {};
 
+    //text
     const handleInputChange = (optionName: string, value: string) => {
         setOption(currentPage, optionName, value);
     };
+    //single
     const handleRadioChange = (optionName: string, value: string) => {
         setOption(currentPage, optionName, value);
     };
-
+    //multiple
     const handleCheckboxChange = (optionName: string, value: string) => {
         const prevValues = (currentSelectedOptions[optionName] as string[]) || [];
         const newValues = prevValues.includes(value)
@@ -90,3 +73,25 @@ const TicketOption = ({ options }: TicketOptionProps) => {
     );
 };
 export default TicketOption;
+
+// 임의 데이터
+export const options: TOption[] = [
+    {
+        type: 'text',
+        optionName: '성함을 알려주세요.',
+        required: true,
+        choices: ['']
+    },
+    {
+        type: 'single',
+        optionName: '티셔츠 사이즈 선택해주세요.',
+        required: true,
+        choices: ['S', 'M', 'L', 'XL']
+    },
+    {
+        type: 'multiple',
+        optionName: '선택해주세요.',
+        required: false,
+        choices: ['1', '2', '3', '4']
+    },
+]
