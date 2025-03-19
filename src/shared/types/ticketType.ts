@@ -4,7 +4,6 @@ export interface TicketType {
   ticketName: string;
   ticketDescription: string;
   ticketPrice: number;
-  tickAmount: number;
   availableQuantity: number;
   startDate: Date;
   endDate: Date;
@@ -19,7 +18,6 @@ export const TicketMockData: TicketType[] = [
     ticketName: 'VIP 티켓',
     ticketDescription: 'VIP 전용 좌석과 웰컴 패키지가 포함된 티켓입니다.',
     ticketPrice: 150000,
-    tickAmount: 1,
     availableQuantity: 50,
     startDate: new Date('2024-03-01'),
     endDate: new Date('2024-03-10'),
@@ -32,7 +30,6 @@ export const TicketMockData: TicketType[] = [
     ticketName: '일반 티켓',
     ticketDescription: '일반 입장권으로, 자유롭게 행사 참여가 가능합니다.',
     ticketPrice: 50000,
-    tickAmount: 2,
     availableQuantity: 200,
     startDate: new Date('2024-03-01'),
     endDate: new Date('2024-03-10'),
@@ -45,7 +42,6 @@ export const TicketMockData: TicketType[] = [
     ticketName: '학생 할인 티켓',
     ticketDescription: '학생증 제시 시 할인 적용된 티켓입니다.',
     ticketPrice: 30000,
-    tickAmount: 3,
     availableQuantity: 100,
     startDate: new Date('2024-03-05'),
     endDate: new Date('2024-03-10'),
