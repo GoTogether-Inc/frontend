@@ -14,7 +14,7 @@ interface TicketOptionLayoutProps {
 const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps) => {
     const navigate = useNavigate();
     const {currentPage, setCurrentPage,resetOptions} = useTicketOptionStore();
-    const centerContent = ticketAmount > 1 ? `티켓 옵션 선택 (${currentPage}/${ticketAmount})` : "티켓 옵션 선택";
+    const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
 
     //페이지
     const pageIndicator = Array(ticketAmount).fill(" . ");
@@ -36,7 +36,7 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
     return (
         <div className="relative flex flex-col">
             {/* 헤더 영역 */}
-            <div className="w-full h-24 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[20px] z-10">
+            <div className="w-full h-28 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[20px] z-10">
                 <Header
                     leftButtonLabel="<"
                     leftButtonClassName="text-2xl z-30 font-semibold"
@@ -45,7 +45,7 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
                     color="white"
                 />
                 {ticketAmount > 1 && (
-                    <div className="flex justify-center gap-2 mt-2">
+                    <div className="flex justify-center gap-2 mt-4 md:mt-12">
                         {Array.from({ length: ticketAmount }, (_, index) => (
                             <img
                                 key={index}
@@ -71,7 +71,7 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
                 </div>
             </div>
 
-            <div className="flex flex-col mt-8 mx-auto w-[80%]">
+            <div className="flex flex-col mt-8 mx-auto w-[85%]">
                 <p className="font-bold text-sm md:text-base">추가 옵션</p>
                 <p className="text-xs md:text-sm text-gray-500 mt-2">
                     구매하는 티켓에 추가적으로 선택할 수 있는 옵션들이 있습니다.
@@ -79,7 +79,7 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
             </div>
 
             {/* 내용 영역 */}
-            <div className="flex flex-col w-[80%] mx-auto mt-4">
+            <div className="flex flex-col w-[85%] mx-auto mt-4">
                 {children}
                 <div className="flex flex-grow" />
                 <div className="w-full p-6">
