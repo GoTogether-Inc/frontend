@@ -24,16 +24,31 @@ interface DragAreaProps {
 
 const DragArea = ({ data, setData, droppableId }: DragAreaProps) => {
   const column = data.columns[droppableId];
+  const isOptionsArea = droppableId === 'options';
 
   return (
-    <div className="p-2 m-8 border-2 border-gray-300 rounded-lg">
-      <p className="text-sm font-bold p-4">{column.title}</p>
-      <Droppable droppableId={droppableId}>
-        {provided => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
+    <div className="w-full py-2">
+      {/* <p className="text-sm font-bold p-4">{column.title}</p> */}
+      <Droppable droppableId={droppableId} isDropDisabled={isOptionsArea}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={`grid grid-cols-2 gap-4 h-36 ${
+              !isOptionsArea && snapshot.isDraggingOver ? 'bg-gray-200' : 'bg-white'
+            }`}
+          >
             {column.taskIds.map((taskId, index) => {
               const task = data.tasks[taskId];
-              return <DraggableList key={task.id} id={task.id} content={task.content} index={index} />;
+              return (
+                <DraggableList
+                  key={task.id}
+                  id={task.id}
+                  content={task.content}
+                  index={index}
+                  isDragDisabled={isOptionsArea}
+                />
+              );
             })}
             {provided.placeholder}
           </div>
