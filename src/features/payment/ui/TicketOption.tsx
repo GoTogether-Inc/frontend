@@ -1,6 +1,6 @@
-import { TOption } from "../dashboard/model/TicketOptionStore";
-import { useTicketOptionStore } from "../dashboard/model/TicketOptionStore";
-import Checkbox from "../../../design-system/ui/Checkbox";
+import { TOption } from "../../dashboard/model/TicketOptionStore";
+import { useTicketOptionStore } from "../../dashboard/model/TicketOptionStore";
+import Checkbox from "../../../../design-system/ui/Checkbox";
 
 interface TicketOptionProps {
     options: TOption[];

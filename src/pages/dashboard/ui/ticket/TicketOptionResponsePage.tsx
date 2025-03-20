@@ -1,4 +1,4 @@
-import TicketOption, { options } from "../../../../features/payment/TicketOption";
+import TicketOption, { options } from "../../../../features/payment/ui/TicketOption";
 import TicketOptionLayout from "../../../../shared/ui/backgrounds/TicketOptionLayout";
 
 const TicketOptionResponsePage = () => {
