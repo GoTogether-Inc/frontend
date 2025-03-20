@@ -4,17 +4,18 @@ interface DraggableListProps {
   id: string; // task의 id
   content: string; // task의 content
   index: number; // 드래그앤드롭 위치 추적용
+  isDragDisabled?: boolean;
 }
 
-const DraggableList = ({ id, content, index }: DraggableListProps) => {
+const DraggableList = ({ id, content, index, isDragDisabled = false }: DraggableListProps) => {
   return (
-    <Draggable draggableId={id} index={index}>
-      {provided => (
+    <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
+      {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="p-2 mb-2 border border-gray-300 rounded-lg bg-white"
+          className={`p-4 mb-2 bg-white rounded border ${snapshot.isDragging ? 'shadow-lg' : ''}`}
         >
           {content}
         </div>
