@@ -3,7 +3,7 @@ import TicketOptionLayout from "../../../../shared/ui/backgrounds/TicketOptionLa
 
 const TicketOptionResponsePage = () => {
     return (
-        <TicketOptionLayout ticketAmount={1}>
+        <TicketOptionLayout ticketAmount={4}>
             <TicketOption options={options}>
             </TicketOption>
         </TicketOptionLayout>

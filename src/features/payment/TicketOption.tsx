@@ -9,21 +9,16 @@ const TicketOption = ({ options }: TicketOptionProps) => {
     const { currentPage, selectedOptions, setOption } = useTicketOptionStore();
     const currentSelectedOptions = selectedOptions[currentPage] || {};
 
-    //text
-    const handleInputChange = (optionName: string, value: string) => {
-        setOption(currentPage, optionName, value);
-    };
-    //single
-    const handleRadioChange = (optionName: string, value: string) => {
-        setOption(currentPage, optionName, value);
-    };
-    //multiple
-    const handleCheckboxChange = (optionName: string, value: string) => {
-        const prevValues = (currentSelectedOptions[optionName] as string[]) || [];
-        const newValues = prevValues.includes(value)
-            ? prevValues.filter((v) => v !== value)  
-            : [...prevValues, value];  
-        setOption(currentPage, optionName, newValues);
+    const handleChange = (type: string, optionName: string, value: string) => {
+        if (type === "text" || type === "single") {
+            setOption(currentPage, optionName, value);
+        } else if (type === "multiple") {
+            const prevValues = (currentSelectedOptions[optionName] as string[]) || [];
+            const newValues = prevValues.includes(value)
+                ? prevValues.filter((v) => v !== value)
+                : [...prevValues, value];
+            setOption(currentPage, optionName, newValues);
+        }
     };
 
     return (
@@ -40,32 +35,30 @@ const TicketOption = ({ options }: TicketOptionProps) => {
                             className="w-full p-2 border rounded-md mt-2"
                             placeholder="입력해주세요"
                             value={currentSelectedOptions[option.optionName] || ""}
-                            onChange={(e) => handleInputChange(option.optionName, e.target.value)}
+                            onChange={(e) => handleChange("text", option.optionName, e.target.value)}
                         />
                     )}
 
                     {option.type === "single" &&
                         option.choices.map((choice) => (
-                            <label key={choice} className="block mt-2">
-                                <Checkbox
-                                    key={choice}
-                                    label={choice}
-                                    checked={currentSelectedOptions[option.optionName] === choice}
-                                    onChange={() => handleRadioChange(option.optionName, choice)}
-                                />
-                            </label>
+                            <Checkbox
+                                key={choice}
+                                label={choice}
+                                checked={currentSelectedOptions[option.optionName] === choice}
+                                onChange={() => handleChange("single", option.optionName, choice)}
+                                className="block mt-2"
+                            />
                         ))}
 
                     {option.type === "multiple" &&
                         option.choices.map((choice) => (
-                            <label key={choice} className="block mt-2">
-                                <Checkbox
-                                    key={choice}
-                                    label={choice}
-                                    checked={(currentSelectedOptions[option.optionName] as string[])?.includes(choice)}
-                                    onChange={() => handleCheckboxChange(option.optionName, choice)}
-                                />
-                            </label>
+                            <Checkbox
+                                key={choice}
+                                label={choice}
+                                checked={(currentSelectedOptions[option.optionName] as string[])?.includes(choice)}
+                                onChange={() => handleChange("multiple", option.optionName, choice)}
+                                className="block mt-2"
+                            />
                         ))}
                 </div>
             ))}

@@ -13,7 +13,7 @@ interface TicketOptionLayoutProps {
 
 const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps) => {
     const navigate = useNavigate();
-    const {currentPage, setCurrentPage,resetOptions} = useTicketOptionStore();
+    const {currentPage, setCurrentPage} = useTicketOptionStore();
     const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
 
     //페이지
@@ -26,11 +26,9 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
     const handleNextPage = () => {
         if (isLastPage) {
             {/* 데이터 전송 추가 */}
-            resetOptions(currentPage);
         } else {
             setCurrentPage(currentPage + 1);
             {/* 데이터 전송 추가 */}
-            resetOptions(currentPage);
         }
     };
     return (

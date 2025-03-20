@@ -13,7 +13,6 @@ interface TicketOptionState {
 
     selectedOptions: { [index: number]: { [key: string]: string | string[] } };
     setOption: (index: number, optionName: string, value: string | string[]) => void;
-    resetOptions: (index: number) => void;
 }
 
 export const useTicketOptionStore = create<TicketOptionState>((set) => ({
@@ -31,11 +30,4 @@ export const useTicketOptionStore = create<TicketOptionState>((set) => ({
             return { selectedOptions: updatedSelectedOptions };
         });
     },
-    resetOptions: (index) =>
-        set((state) => ({
-            selectedOptions: {
-                ...state.selectedOptions,
-                [index]: {},
-            },
-        })),
 }));
