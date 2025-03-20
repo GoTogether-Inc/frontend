@@ -1,5 +1,5 @@
 import React from 'react';
-import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
+// import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
@@ -12,6 +12,7 @@ import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import Button from '../../../../../design-system/ui/Button';
 
 const TicketOptionCreatePage = () => {
+  const navigate = useNavigate();
   const [answerToggled, setAnswerToggled] = useState(false);
   const [limitToggled, setLimitToggled] = useState(false);
   const [numActivated, setNumActivated] = useState(true);
@@ -208,7 +209,7 @@ const TicketOptionCreatePage = () => {
         </div>
 
         <div className="w-full mt-14 mb-20">
-          <Button label="저장하기" onClick={() => console.log('post 요청')} className="w-full h-12 rounded-full" />
+          <Button label="저장하기" onClick={() => navigate('/dashboard/ticket/option/attach')} className="w-full h-12 rounded-full" />
         </div>
       </div>
     </DashboardLayout>

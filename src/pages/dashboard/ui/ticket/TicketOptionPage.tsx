@@ -3,14 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg'
-import { DASHBOARD_ROUTES } from "../../../../app/routes/routes";
 
 const TicketOptionPage = () => {
   const navigate = useNavigate();
-
-  const navigateToTicketOptionCreate = () => {
-    navigate(DASHBOARD_ROUTES.ticketOptionCreate);
-  };
 
   return(
     <DashboardLayout centerContent="WOOACON 2024">
@@ -22,7 +17,7 @@ const TicketOptionPage = () => {
         <div className="flex items-center bg-gray3 rounded-lg w-72 h-12 gap-5 mb-10">
           <HorizontalCardButton
             iconPath={<img src={AddButton} alt="추가 버튼" />}
-            onClick={navigateToTicketOptionCreate}
+            onClick={() => navigate('/dashboard/ticket/option/create')}
             label="티켓 새로 생성하기"
             className="text-sm mx-auto"
           />
