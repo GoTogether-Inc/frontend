@@ -62,11 +62,11 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
                     <div className="flex gap-4">
                         <img src={ticket} alt="ticket logo" className="w-7" />
                         <div>
-                            <p className="font-bold text-sm md:text-base">콘서트 티켓</p>
+                            <p className="font-bold text-base md:text-lg">콘서트 티켓</p>
                         </div>
                     </div>
                 </div>
-                <div className="mt-1">
+                <div>
                     <p className="text-xs md:text-sm">티켓에 대한 설명.티켓에 대한 설명.티켓에 대한 설명.티켓에 대한 설명.티켓에 대티켓에 대한 설명.티켓에 대한 설명.티켓에 대한 설명.티켓에 대한 설명.한 설명.</p>
                 </div>
             </div>
