@@ -33,6 +33,7 @@ import TicketOptionPage from '../../pages/dashboard/ui/ticket/TicketOptionPage';
 import TicketOptionCreatePage from '../../pages/dashboard/ui/ticket/TicketOptionCreatePage';
 import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagementPage';
 import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
+import TicketOptionAttachPage from '../../pages/dashboard/ui/ticket/TicketOptionAttachPage';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -67,6 +68,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_ROUTES.ticket, element: <TicketListPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticketOption, element: <TicketOptionPage />, requiersAuth: false },
   { path: DASHBOARD_ROUTES.ticketOptionCreate, element: <TicketOptionCreatePage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.ticketOptionAttach, element: <TicketOptionAttachPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.email, element: <EmailPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.mailBox, element: <MailBoxPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.emailEdit, element: <EmailEditPage />, requiresAuth: false },
