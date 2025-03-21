@@ -117,7 +117,11 @@ const CardRegisterPage = () => {
         </div>
         <div className="flex flex-grow" />
         <form onSubmit={handleSubmit(onSubmit)} className="py-5">
-          <Button label="저장하기" onClick={() => console.log()} className="rounded-full w-full h-12" />
+          <Button
+            label="저장하기"
+            onClick={() => console.log('카드 정보 저장 버튼 클릭됨')}
+            className="rounded-full w-full h-12"
+          />{' '}
         </form>
       </div>
     </TicketHostLayout>
