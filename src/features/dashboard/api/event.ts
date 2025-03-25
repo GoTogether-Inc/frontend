@@ -6,5 +6,5 @@ export const getEventInfo = async (eventId: string) => {
       eventId: eventId,
     },
   });
-  return response.data;
+  return response.data.result;
 };
