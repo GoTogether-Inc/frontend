@@ -15,7 +15,7 @@ const DraggableList = ({ id, content, index, isDragDisabled = false }: Draggable
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`p-4 mb-2 bg-white rounded border ${snapshot.isDragging ? 'shadow-lg' : ''}`}
+          className={`p-4 rounded border w-full h-[3rem] flex items-center ${snapshot.isDragging ? 'bg-gray-100' : 'bg-white'}`}
         >
           {content}
         </div>

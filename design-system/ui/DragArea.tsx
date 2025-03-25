@@ -1,52 +1,53 @@
 import DraggableList from './DraggableList';
 import { Droppable } from '@hello-pangea/dnd';
 
-interface Task {
+interface OptionTitle {
   id: string;
   content: string;
 }
 
 interface DragAreaProps {
   data: {
-    tasks: { [key: string]: Task };
-    columns: {
+    options: { [key: string]: OptionTitle };
+    dragAreas: {
       [key: string]: {
         id: string;
         title: string;
-        taskIds: string[];
+        optionIds: string[];
       };
     };
-    columnOrder: string[];
+    dragAreaOrder: string[];
   };
   setData: React.Dispatch<React.SetStateAction<DragAreaProps['data']>>;
   droppableId: string;
 }
 
 const DragArea = ({ data, setData, droppableId }: DragAreaProps) => {
-  const column = data.columns[droppableId];
+  const dragArea = data.dragAreas[droppableId];
   const isOptionsArea = droppableId === 'options';
+  const isTicketArea = droppableId === 'ticket';
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full">
       {/* <p className="text-sm font-bold p-4">{column.title}</p> */}
       <Droppable droppableId={droppableId} isDropDisabled={isOptionsArea}>
-        {(provided, snapshot) => (
+        {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={`grid grid-cols-2 gap-4 h-36 ${
-              !isOptionsArea && snapshot.isDraggingOver ? 'bg-gray-200' : 'bg-white'
+            className={`h-[10rem] ${
+              isOptionsArea ? 'grid grid-cols-2 gap-4' : isTicketArea ? 'bg-pink-100 flex flex-col justify-between' : 'grid grid-cols-2 gap-4'
             }`}
           >
-            {column.taskIds.map((taskId, index) => {
-              const task = data.tasks[taskId];
+            {dragArea.optionIds.map((optionId, index) => {
+              const option = data.options[optionId];
               return (
                 <DraggableList
-                  key={task.id}
-                  id={task.id}
-                  content={task.content}
+                  key={option.id}
+                  id={option.id}
+                  content={option.content}
                   index={index}
-                  isDragDisabled={isOptionsArea}
+                  // isDragDisabled={isOptionsArea}
                 />
               );
             })}

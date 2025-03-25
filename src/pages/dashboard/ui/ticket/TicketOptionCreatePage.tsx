@@ -35,7 +35,6 @@ const TicketOptionCreatePage = () => {
     setAnswerToggled(prev => !prev);
   };
 
-
   const handleLimitToggled = (index: number) => {
     setOptionsConfig(prev => {
       const updated = [...prev];
@@ -164,10 +163,11 @@ const TicketOptionCreatePage = () => {
             <p className="block text-m font-semibold text-gray-700">응답을 어떤 형식으로 받을까요?</p>
             <p className="block mb-1 text-placeholderText text-11 md:text-13">한 개만 선택할 수 있습니다.</p>
             <ChoiceChip
-              options={['객관식', '주관식', '여러 개 선택']}
+              options={['객관식', '여러 개 선택', '자유로운 텍스트']}
               onSelect={selected => {
                 setSelectedChip(selected);
               }}
+              className="!text-xs"
             />
           </div>
         </div>
@@ -248,7 +248,7 @@ const TicketOptionCreatePage = () => {
               ))}
             </>
           )}
-          {selectedChip === '주관식' && <div></div>} {/*수정해야할 부분*/}
+          {selectedChip === '자유로운 텍스트' && <div></div>} {/*수정해야할 부분*/}
         </div>
 
         <div className="w-full">
