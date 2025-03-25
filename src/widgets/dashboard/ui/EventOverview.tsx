@@ -16,12 +16,10 @@ const EventOverview = ({ eventInfo }: { eventInfo?: dashboardData }) => {
           <span>
             {' '}
             {/*@TODO 포맷팅?*/}
-            {eventInfo?.eventStartDate} {eventInfo?.eventStartTime}
+            {eventInfo ? `${eventInfo.eventStartDate} ${eventInfo.eventStartTime}` : '날짜 정보 없음'}
           </span>
           <span>&gt;</span>
-          <span>
-            {eventInfo?.eventEndDate} {eventInfo?.eventEndTime}
-          </span>
+          <span>{eventInfo ? `${eventInfo.eventEndDate} ${eventInfo.eventEndTime}` : '날짜 정보 없음'} </span>
         </div>
       </div>
     </div>
