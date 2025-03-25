@@ -66,7 +66,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_ROUTES.eventTag, element: <EventTagPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticketCreate, element: <TicketCreatePage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticket, element: <TicketListPage />, requiresAuth: false },
-  { path: DASHBOARD_ROUTES.ticketOption, element: <TicketOptionPage />, requiersAuth: false },
+  { path: DASHBOARD_ROUTES.ticketOption, element: <TicketOptionPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticketOptionCreate, element: <TicketOptionCreatePage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.email, element: <EmailPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.mailBox, element: <MailBoxPage />, requiresAuth: false },
