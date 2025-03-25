@@ -35,7 +35,7 @@ export interface dashboardData {
 }
 
 export const menuLists = [
-  { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: '/dashboard/' },
+  { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/` },
   { text: '이벤트 기본 정보', icon: eventInfo, clickedIcon: clickedEventInfo, path: '/dashboard/eventInfo' },
   { text: '이벤트 상세와 사진', icon: eventDetail, clickedIcon: clickedEventDetail, path: '/dashboard/eventDetail' },
   { text: '이벤트 태그 정보', icon: tag, clickedIcon: clickedTag, path: '/dashboard/eventTag' },
