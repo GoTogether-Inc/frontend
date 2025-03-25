@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ParticipantsList from '../../../features/dashboard/ui/PariticipantsList';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../shared/ui/SearchBar';
@@ -6,7 +6,7 @@ import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
 import ParticipantsFilterBar from '../../../widgets/dashboard/ui/ParticipantsFilterBar';
 import EmailModal from '../../../widgets/dashboard/ui/EmailModal';
 import SelectTicketModal from '../../../widgets/dashboard/ui/SelectTicketModal';
-import { participantsInfo } from '../../../shared/types/participantInfoType';
+import { useParticipants } from '../../../features/dashboard/hook/useParticipants';
 
 const ParticipantsManagementPage = () => {
   const [filterModalOpen, setfilterModalOpen] = useState(false);
@@ -14,6 +14,8 @@ const ParticipantsManagementPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const [listType, setListType] = useState<'all' | 'approved' | 'pending'>('all');
   const [filter, setFilter] = useState<string[]>([]);
+
+  const { participants } = useParticipants();
 
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
@@ -33,7 +35,7 @@ const ParticipantsManagementPage = () => {
           setFilterModalOpen={setfilterModalOpen}
           setEmailModalOpen={setEmailModalOpen}
         />
-        <ParticipantsList listType={listType} selectedFilter={filter} />
+        <ParticipantsList listType={listType} selectedFilter={filter} participants={participants} />
       </div>
       {filterModalOpen && (
         <ButtonModal
@@ -51,7 +53,7 @@ const ParticipantsManagementPage = () => {
             setEmailModalOpen(false);
             setTicketModalOpen(true);
           }}
-          allParticipantEmails={participantsInfo.map(p => p.email)}
+          allParticipantEmails={participants.map(p => p.email)}
         />
       )}
       {ticketModalOpen && (
