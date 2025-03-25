@@ -6,9 +6,10 @@ interface ChoiceChipProps {
   onSelect: (selected: string) => void;
   className?: string;
   labelClassName?: string;
+  buttonClassName?: string;
 }
 
-const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '' }: ChoiceChipProps) => {
+const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '', buttonClassName = '' }: ChoiceChipProps) => {
   const [selected, setSelected] = useState(options[0]);
 
   const handleClick = (option: string) => {
@@ -26,6 +27,7 @@ const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '' }
             className={`
             flex justify-center items-center sm:text-xs md:text-sm lg:text-base px-2 rounded-full
             ${selected === option ? 'bg-white text-black' : 'text-black bg-transparent'}
+            ${buttonClassName}
           `}
             onClick={() => handleClick(option)}
           >
