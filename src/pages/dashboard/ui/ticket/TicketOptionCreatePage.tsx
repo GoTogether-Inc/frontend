@@ -167,7 +167,7 @@ const TicketOptionCreatePage = () => {
               onSelect={selected => {
                 setSelectedChip(selected);
               }}
-              className="!text-xs"
+              buttonClassName={"!text-xs"}
             />
           </div>
         </div>
