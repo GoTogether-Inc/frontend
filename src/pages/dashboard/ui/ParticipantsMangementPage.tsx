@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ParticipantsList from '../../../features/dashboard/ui/PariticipantsList';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../shared/ui/SearchBar';
