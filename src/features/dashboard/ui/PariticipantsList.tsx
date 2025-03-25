@@ -60,7 +60,7 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
         filteredParticipants.map(participant => (
           <ParticipantCard
             key={participant.id}
-            participant={participants}
+            participant={participant}
             checked={selectedParticipants[participant.orderNumber] || false}
             onChange={() => toggleParticipant(participant.orderNumber)}
           />
