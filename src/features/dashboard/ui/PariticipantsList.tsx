@@ -1,35 +1,42 @@
 import { useEffect } from 'react';
 import Checkbox from '../../../../design-system/ui/Checkbox';
-import { participantsInfo } from '../../../shared/types/participantInfoType';
 import ParticipantCard from './ParicipantCard';
 import { useParticipantStore } from '../model/ParticipantStore';
+import { participantsData } from '../../../shared/types/participantInfoType';
 
 interface ParticipantsListProps {
   listType: 'all' | 'approved' | 'pending';
   selectedFilter: string[];
+  participants: participantsData[];
 }
 
-const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListProps) => {
-  const { all, participants, initializeParticipants, toggleAll, toggleParticipant } = useParticipantStore();
+const ParticipantsList = ({ listType, selectedFilter = [], participants }: ParticipantsListProps) => {
+  const {
+    all,
+    participants: selectedParticipants,
+    initializeParticipants,
+    toggleAll,
+    toggleParticipant,
+  } = useParticipantStore();
 
   useEffect(() => {
-    initializeParticipants(participantsInfo);
+    initializeParticipants(participants);
   }, [initializeParticipants]);
 
-  const filteredParticipants = participantsInfo.filter(participant => {
-    if (listType === 'approved' && !participant.approved) return false;
-    if (listType === 'pending' && participant.approved) return false;
+  const filteredParticipants = participants.filter(participants => {
+    if (listType === 'approved' && !participants.approved) return false;
+    if (listType === 'pending' && participants.approved) return false;
 
     if (selectedFilter.length === 0 || selectedFilter.includes('전체')) return true;
-    if (selectedFilter.includes('체크인 완료') && participant.checkIn) return true;
-    if (selectedFilter.includes('체크인 전') && !participant.checkIn) return true;
+    if (selectedFilter.includes('체크인 완료') && participants.checkIn) return true;
+    if (selectedFilter.includes('체크인 전') && !participants.checkIn) return true;
 
     return false;
   });
 
   useEffect(() => {
-    initializeParticipants(participantsInfo);
-  }, [participantsInfo, initializeParticipants]);
+    initializeParticipants(participants);
+  }, [participants, initializeParticipants]);
 
   return (
     <div className="flex flex-col gap-2 mb-4">
@@ -52,10 +59,10 @@ const ParticipantsList = ({ listType, selectedFilter = [] }: ParticipantsListPro
       ) : (
         filteredParticipants.map(participant => (
           <ParticipantCard
-            key={participant.ticketNum}
-            participant={participant}
-            checked={participants[participant.ticketNum] || false}
-            onChange={() => toggleParticipant(participant.ticketNum)}
+            key={participant.id}
+            participant={participants}
+            checked={selectedParticipants[participant.orderNumber] || false}
+            onChange={() => toggleParticipant(participant.orderNumber)}
           />
         ))
       )}
