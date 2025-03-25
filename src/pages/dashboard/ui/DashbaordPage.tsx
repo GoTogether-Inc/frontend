@@ -8,21 +8,13 @@ import { useGetEventHook } from '../../../features/dashboard/hook/useGetEventHoo
 
 const DashboardPage = () => {
   const { eventInfo } = useGetEventHook();
-  console.log(eventInfo);
-
-  const eventTimeData = {
-    StartDate: eventInfo?.eventStartDate,
-    StartTime: eventInfo?.eventStartTime,
-    EndDate: eventInfo?.eventEndDate,
-    EndTime: eventInfo?.eventEndTime,
-  };
 
   return (
     <DashboardLayout centerContent="대시보드" pinkBg={true}>
       <div className="flex flex-col mt-8 md:mt-13 px-7 gap-4">
         <h1 className="text-2xl font-bold">{eventInfo?.eventName}</h1>
         <CheckList />
-        <EventOverview eventTimeData={eventTimeData} />
+        <EventOverview eventInfo={eventInfo} />
         <div className="flex w-full justify-between gap-3">
           <TicketRevenue
             icon={<img src={ticket} alt="티켓" className="w-8 md:w-9" />}
