@@ -25,7 +25,7 @@ const TicketDatePicker = ({ className, ticketState, setTicketState, isLabel = fa
     for (let i = 0; i < 24; i++) {
       for (let j = 0; j < 4; j++) {
         const hour = i.toString().padStart(2, '0');
-        const minute = (j * 15).toString().padEnd(2, '0');
+        const minute = (j * 15).toString().padStart(2, '0');
         options.push(`${hour}:${minute}`);
       }
     }
@@ -44,7 +44,6 @@ const TicketDatePicker = ({ className, ticketState, setTicketState, isLabel = fa
 
   useEffect(() => {
     if (setTicketState) {
-      // Update state only when values change
       setTicketState(prev => {
         const newStartDate = startDate ? formatDate(startDate) : '';
         const newEndDate = endDate ? formatDate(endDate) : '';
@@ -54,7 +53,6 @@ const TicketDatePicker = ({ className, ticketState, setTicketState, isLabel = fa
           prev.startTime !== startTime ||
           prev.endTime !== endTime
         ) {
-          // Call the parent function to pass updated values
           onDateChange({
             startDate: newStartDate,
             endDate: newEndDate,
@@ -69,7 +67,7 @@ const TicketDatePicker = ({ className, ticketState, setTicketState, isLabel = fa
             endTime,
           };
         }
-        return prev; // Return previous state if no change
+        return prev; 
       });
     }
   }, [startDate, endDate, startTime, endTime, setTicketState, onDateChange]);

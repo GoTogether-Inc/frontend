@@ -21,12 +21,6 @@ const TicketCreatePage = () => {
     startTime: '',
     endTime: '',
   });
-  const [eventState, setEventState] = useState({
-    startDate: '',
-    endDate: '',
-    startTime: '',
-    endTime: '',
-  });
 
   const handleTicketTypeChange = (type: string) => {
     let mappedType: string;
@@ -44,6 +38,9 @@ const TicketCreatePage = () => {
   // 필드값 업데이트
   const handleInputChange = (field: keyof CreateTicketRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    if ((field === 'ticketPrice' || field === 'availableQuantity') && Number(value) < 0) {
+      return;
+    }
     setTicketData((prev) => ({
       ...prev,
       [field]: field === 'ticketPrice' || field === 'availableQuantity' ? Number(value) : value,
@@ -52,7 +49,6 @@ const TicketCreatePage = () => {
 
   // 시간 업데이트
   const handleDateChange = (dates: { startDate: string; endDate: string; startTime: string; endTime: string }) => {
-    setEventState(dates);
     setTicketData((prevState) => ({
       ...prevState,
       startDate: dates.startDate,
@@ -76,11 +72,17 @@ const TicketCreatePage = () => {
 
   // API 호출
   const handleSaveClick = async () => {
+    if (!ticketData.ticketName || !ticketData.ticketDescription || ticketData.ticketPrice < 0 || !ticketData.availableQuantity) {
+      alert('모든 필수 입력 항목을 작성해주세요.');
+      return;
+    }
     try {
       const response = await createTicket(ticketData);
       console.log('티켓 저장 성공:', response);
+      alert('티켓이 성공적으로 저장되었습니다.');
     } catch (err) {
       console.error('티켓 저장에 실패했습니다.', err);
+      alert('티켓 저장에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -97,7 +99,7 @@ const TicketCreatePage = () => {
         <div>
           <div className="w-32 md:w-40 my-1">
             <p className="font-semibold px-1 mb-1 text-gray-700">티켓 종류</p>
-            <ChoiceChip {...TwoOptions.args} onSelect={handleTicketTypeChange}/>
+            <ChoiceChip {...TwoOptions.args} onSelect={handleTicketTypeChange} />
           </div>
           <p className="block px-1 mb-1 text-placeholderText text-11 md:text-13">
             참가자가 선착순으로 발행된 티켓을 구매합니다.
@@ -139,13 +141,11 @@ const TicketCreatePage = () => {
         {/*캘린더가 들어갈 자리*/}
         <div className="flex flex-col gap-2">
           <p className="px-1 text-gray-700 font-semibold">판매 기간</p>
-          <TicketDatePicker isLabel={true} ticketState={eventState} 
-            setTicketState={setEventState} onDateChange={handleDateChange}/>
+          <TicketDatePicker isLabel={true} ticketState={ticketData}
+            setTicketState={setTicketData} onDateChange={handleDateChange} />
         </div>
+        
         <div className="flex-grow"></div>
-        <div className="ticket-data-output">
-          <pre>{JSON.stringify(ticketData, null, 2)}</pre>
-        </div>
 
         <div className="w-full ">
           <Button label="저장하기" onClick={handleSaveClick} className="w-full h-12 rounded-full" />
@@ -156,4 +156,3 @@ const TicketCreatePage = () => {
 };
 
 export default TicketCreatePage;
-
