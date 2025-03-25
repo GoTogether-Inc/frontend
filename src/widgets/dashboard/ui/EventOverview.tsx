@@ -1,4 +1,4 @@
-const EventOverview = () => {
+const EventOverview = ({ eventTimeData }) => {
   return (
     <div className="flex flex-col w-full h-full bg-white shadow-md rounded-[10px] gap-5 px-4 py-6">
       <div>
@@ -11,9 +11,15 @@ const EventOverview = () => {
           <span className="block md:inline">{`이벤트`}</span>
         </h4>
         <div className="flex gap-2">
-          <span>10월 22일 오후 06:00</span>
+          <span>
+            {eventTimeData.StartDate}
+            {eventTimeData.StartTime}
+          </span>
           <span>&gt;</span>
-          <span>10월 22일 오후 09:00</span>
+          <span>
+            {eventTimeData.EndDate}
+            {eventTimeData.EndTime}
+          </span>
         </div>
       </div>
     </div>
