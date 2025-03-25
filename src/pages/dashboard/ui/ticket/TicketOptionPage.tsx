@@ -9,56 +9,52 @@ import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.s
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
 import Tag from '../../../../../public/assets/dashboard/ticket/emailIcon.svg';
 
-interface Task {
+interface OptionTitle {
   id: string;
   content: string;
 }
 
-interface Column {
+interface DragAreaTitle {
   id: string;
   title: string;
-  taskIds: string[];
+  optionIds: string[];
 }
 
 interface Data {
-  tasks: { [key: string]: Task };
-  columns: { [key: string]: Column };
-  columnOrder: string[];
+  options: { [key: string]: OptionTitle };
+  dragAreas: { [key: string]: DragAreaTitle };
+  dragAreaOrder: string[];
 }
 
 const TicketOptionPage = () => {
-  const [aTest, setATest] = useState(false);
-  const [bTest, setBTest] = useState(true);
-
-  console.log(`Console aTest : ${aTest}`);
-  console.log(`Console bTest : ${bTest}`);
-
   const navigate = useNavigate();
   const [data, setData] = useState<Data>({
-    tasks: {
-      'task-1': { id: 'task-1', content: '티셔츠 사이즈' },
-      'task-2': { id: 'task-2', content: '음식 선호도' },
+    options: {
+      'option-1': { id: 'option-1', content: '티셔츠 사이즈' },
+      'option-2': { id: 'option-2', content: '음식 선호도' },
+      'option-3': { id: 'option-3', content: '좋아하는 색깔' },
     },
-    columns: {
+    dragAreas: {
       options: {
         // 옵션 영역
         id: 'options',
         title: '옵션',
-        taskIds: ['task-1', 'task-2'],
+        optionIds: ['option-1', 'option-2', 'option-3'],
       },
       ticket: {
         // 티켓 영역
         id: 'ticket',
         title: '티켓',
-        taskIds: [],
+        optionIds: [],
       },
     },
-    columnOrder: ['options', 'ticket'],
+    dragAreaOrder: ['options', 'ticket'],
   });
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { source, destination, draggableId } = result;
 
+    // 드래그 앤 드롭 영역이 아닌 곳에 드롭할 때
     if (!destination) {
       return;
     }
@@ -71,18 +67,19 @@ const TicketOptionPage = () => {
 
       // ticket 영역 내에서만 순서 변경 가능
       if (source.droppableId === 'ticket') {
-        const column = data.columns[source.droppableId];
-        const newTaskIds = Array.from(column.taskIds);
-        newTaskIds.splice(source.index, 1);
-        newTaskIds.splice(destination.index, 0, draggableId);
+        const dragArea = data.dragAreas[source.droppableId];
+        const newOptionIds = Array.from(dragArea.optionIds);
+
+        newOptionIds.splice(source.index, 1);
+        newOptionIds.splice(destination.index, 0, draggableId);
 
         setData(prev => ({
           ...prev,
-          columns: {
-            ...prev.columns,
+          dragAreas: {
+            ...prev.dragAreas,
             [source.droppableId]: {
-              ...column,
-              taskIds: newTaskIds,
+              ...dragArea,
+              optionIds: newOptionIds,
             },
           },
         }));
@@ -92,19 +89,19 @@ const TicketOptionPage = () => {
 
     // options에서 ticket으로 이동할 때
     if (source.droppableId === 'options' && destination.droppableId === 'ticket') {
-      const sourceColumn = data.columns[source.droppableId];
-      const destColumn = data.columns[destination.droppableId];
+      // const sourceDragArea = data.dragAreas[source.droppableId];
+      const destDragArea = data.dragAreas[destination.droppableId];
 
       // ticket 영역의 마지막에 추가
-      const newDestTaskIds = [...destColumn.taskIds, draggableId];
+      const newDestOptionIds = [...destDragArea.optionIds, draggableId];
 
       setData(prev => ({
         ...prev,
-        columns: {
-          ...prev.columns,
+        dragAreas: {
+          ...prev.dragAreas,
           [destination.droppableId]: {
-            ...destColumn,
-            taskIds: newDestTaskIds,
+            ...destDragArea,
+            optionIds: newDestOptionIds,
           },
         },
       }));
@@ -123,7 +120,9 @@ const TicketOptionPage = () => {
           {/* 옵션 영역 */}
           <div className="mb-8">
             <IconText iconPath={<img src={Tag} alt="추가 버튼" />} children="옵션" />
-            <DragArea data={data} setData={setData} droppableId="options" />
+            <div className="my-2">
+              <DragArea data={data} setData={setData} droppableId="options" />
+            </div>
 
             <div className="flex items-center bg-gray-300 rounded-lg w-48 h-12 gap-5 mb-10">
               <HorizontalCardButton
@@ -141,7 +140,13 @@ const TicketOptionPage = () => {
               <img src={Ticket} alt="티켓" />
               <p className="font-bold text-base md:text-lg">티켓</p>
             </div>
-            <DragArea data={data} setData={setData} droppableId="ticket" />
+            <div className="w-1/2 p-2 bg-pink-100 rounded-lg">
+              <div className="flex flex-row justify-between items-end">
+                <p className="pb-2 font-bold text-base md:text-lg">일반</p>
+                <p className="pb-2 font-bold text-gray-400 text-xs">설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개</p>
+              </div>
+              <DragArea data={data} setData={setData} droppableId="ticket" />
+            </div>
           </div>
         </DragDropContext>
       </div>
