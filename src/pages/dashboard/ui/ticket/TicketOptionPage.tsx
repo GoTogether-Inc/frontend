@@ -27,6 +27,12 @@ interface Data {
 }
 
 const TicketOptionPage = () => {
+  const [aTest, setATest] = useState(false);
+  const [bTest, setBTest] = useState(true);
+
+  console.log(`Console aTest : ${aTest}`);
+  console.log(`Console bTest : ${bTest}`);
+
   const navigate = useNavigate();
   const [data, setData] = useState<Data>({
     tasks: {

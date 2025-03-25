@@ -14,10 +14,20 @@ import Button from '../../../../../design-system/ui/Button';
 const TicketOptionCreatePage = () => {
   const navigate = useNavigate();
   const [answerToggled, setAnswerToggled] = useState(false);
-  const [limitToggled, setLimitToggled] = useState(false);
-  const [numActivated, setNumActivated] = useState(true);
+
+  const [optionsConfig, setOptionsConfig] = useState(
+    Array(3)
+      .fill(null)
+      .map(() => ({
+        limitToggled: false,
+        numActivated: true,
+        quantity: '',
+      }))
+  );
+
   const [options, setOptions] = useState<string[]>(Array(3).fill(''));
   const [warningMsg, setWarningMsg] = useState('');
+  const [warningMsg2, setWarningMsg2] = useState('');
   const [selectedChip, setSelectedChip] = useState('객관식');
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
@@ -25,40 +35,51 @@ const TicketOptionCreatePage = () => {
     setAnswerToggled(prev => !prev);
   };
 
-  const handleLimitToggled = () => {
-    setLimitToggled(prev => !prev);
-    setNumActivated(prev => !prev);
-  };
 
-  console.log(`AnswerToggled : ${answerToggled}`);
-  console.log(`LimitToggled : ${limitToggled}`);
+  const handleLimitToggled = (index: number) => {
+    setOptionsConfig(prev => {
+      const updated = [...prev];
+      const option = updated[index];
+
+      updated[index] = {
+        ...option,
+        limitToggled: !option.limitToggled,
+        numActivated: !option.numActivated,
+      };
+
+      return updated;
+    });
+  };
 
   {
     /*선택지 삭제*/
   }
   const handleClearOption = (index: number) => {
-    if (options.length === 1) {
-      setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
-    } else {
-      const updateOptions = options.filter((_, i) => i !== index);
-      setOptions(updateOptions);
-
-      if (updateOptions.length > 1) {
-        setWarningMsg('');
-      }
-    }
+    setOptions(prev => prev.filter((_, i) => i !== index));
+    setOptionsConfig(prev => prev.filter((_, i) => i !== index));
   };
 
   {
     /*선택지 추가*/
   }
   const handleAddOption = () => {
-    const updateOptions = [...options, ''];
-    setOptions(updateOptions);
+    setOptions(prev => {
+      const updated = [...prev, ''];
 
-    if (updateOptions.length > 1) {
-      setWarningMsg('');
-    }
+      if (updated.length > 1) {
+        setWarningMsg('');
+      }
+      return updated;
+    });
+
+    setOptionsConfig(prev => [
+      ...prev,
+      {
+        limitToggled: false,
+        numActivated: true,
+        quantity: '',
+      },
+    ]);
   };
 
   {
@@ -70,21 +91,44 @@ const TicketOptionCreatePage = () => {
     setOptions(updateOptions);
   };
 
+  const handleQuantityChange = (index: number, value: string) => {
+    setOptionsConfig(prev => {
+      const updated = [...prev];
+
+      // 토글 ON일 때만 수정 허용
+      if (updated[index].limitToggled) {
+        updated[index].quantity = value; // 문자열 그대로 저장
+      }
+
+      return updated;
+    });
+  };
+
   {
-    /*ChoiceChip 상태 변화값 감지*/
+    /*선택지 입력 시 경고 메시지 제거*/
   }
   useEffect(() => {
-    console.log(`selectedChip 값 : ${selectedChip}`);
-  }, [selectedChip]);
+    const hasValidOption = options.some(opt => opt.trim() !== '');
 
-  // 선택지 입력 시 경고 메시지 제거
-  useEffect(() => {
-    if (options.length === 1 && options[0].trim() !== '') {
-      setWarningMsg('');
-    } else if (options.length === 1 && options[0].trim() === '') {
+    if (!hasValidOption) {
       setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
+    } else {
+      setWarningMsg('');
     }
   }, [options]);
+
+  {
+    /*수량 입력 시 경고 메시지 제거*/
+  }
+  useEffect(() => {
+    const hasEmptyQuantity = optionsConfig.some(config => config.limitToggled && config.quantity.trim() === '');
+
+    if (hasEmptyQuantity) {
+      setWarningMsg2('수량을 입력해주세요.');
+    } else {
+      setWarningMsg2('');
+    }
+  }, [optionsConfig]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -172,7 +216,7 @@ const TicketOptionCreatePage = () => {
                     <p className="mt-1 text-red-500 text-xs">이름을 입력해주세요.</p>
                   )}
                   {/*인풋 박스 클릭하거나 입력된 내용이 있을 때*/}
-                  {(focusedIndex === index || option) && (
+                  {(focusedIndex === index || option || optionsConfig[index].limitToggled) && (
                     <>
                       <div className="block bg-gray-100 rounded-[3px] my-3 p-4">
                         <div className="flex items-center justify-between ">
@@ -182,11 +226,21 @@ const TicketOptionCreatePage = () => {
                               특정 숫자의 사람만 선택하게 하고 싶다면 해당 선택지를 눌러주세요.
                             </p>
                           </div>
-                          <ToggleButton isChecked={limitToggled} onChange={handleLimitToggled} />
+                          <ToggleButton
+                            isChecked={optionsConfig[index].limitToggled}
+                            onChange={() => handleLimitToggled(index)}
+                          />
                         </div>
                         <div className="w-24">
-                          <DefaultTextField placeholder="0" disabled={numActivated} className="h-10 !w-24 mt-1" />
+                          <DefaultTextField
+                            placeholder="0"
+                            value={optionsConfig[index].quantity}
+                            disabled={!optionsConfig[index].limitToggled} // 토글 OFF면 수정 불가
+                            onChange={e => handleQuantityChange(index, e.target.value)}
+                            className="h-10 !w-24 mt-1"
+                          />
                         </div>
+                        {warningMsg2 && <p className="text-red-500 text-xs mt-1">{warningMsg2}</p>}
                       </div>
                     </>
                   )}
@@ -209,7 +263,11 @@ const TicketOptionCreatePage = () => {
         </div>
 
         <div className="w-full mt-14 mb-20">
-          <Button label="저장하기" onClick={() => navigate('/dashboard/ticket/option')} className="w-full h-12 rounded-full" />
+          <Button
+            label="저장하기"
+            onClick={() => navigate('/dashboard/ticket/option')}
+            className="w-full h-12 rounded-full"
+          />
         </div>
       </div>
     </DashboardLayout>
