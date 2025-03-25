@@ -2,16 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 import { getParticipants } from '../../../features/dashboard/api/participants';
 import { useParams } from 'react-router-dom';
 
-export const useParticipants = (tags = 'all', page = 1, size = 10) => {
-  const { Id } = useParams();
-  const eventId = Number(Id);
+export const useParticipants = (tags = 'all', page = 0, size = 10) => {
+  const { id } = useParams();
+  const eventId = Number(id);
 
   const {
     data: participantInfo,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['participants', eventId, tags, page, size],
+    queryKey: ['participants'],
     queryFn: () => getParticipants({ eventId, tags, page, size }),
   });
 
