@@ -1,6 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getParticipants } from '../../../features/dashboard/api/participants';
 import { useParams } from 'react-router-dom';
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
+import { AxiosError } from 'axios';
+import { approveParticipants } from '../../../features/dashboard/api/participants';
+import { useParticipantStore } from '../model/ParticipantStore';
 
 export const useParticipants = (tags = 'all', page = 0, size = 10) => {
   const { id } = useParams();
@@ -20,4 +24,15 @@ export const useParticipants = (tags = 'all', page = 0, size = 10) => {
     isLoading,
     error,
   };
+};
+
+export const useApproveParticipants = (orderId: number) => {
+  const { toggleApproveParticipant } = useParticipantStore();
+
+  return useMutation<ApiResponse<string>, AxiosError, { orderId: number }>({
+    mutationFn: () => approveParticipants({ orderId }),
+    onSuccess: () => {
+      toggleApproveParticipant(orderId);
+    },
+  });
 };

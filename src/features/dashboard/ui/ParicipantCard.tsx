@@ -4,6 +4,7 @@ import { useParticipantStore } from '../model/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
+import { useApproveParticipants } from '../hook/useParticipants';
 
 interface ParticipantCardProps {
   participant: participantsData;
@@ -12,8 +13,10 @@ interface ParticipantCardProps {
 }
 
 const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
-  const { approvedParticipants, toggleApproveParticipant } = useParticipantStore();
+  const { approvedParticipants } = useParticipantStore();
   const navigate = useNavigate();
+
+  const { mutate: approveParticipant } = useApproveParticipants(participant.orderNumber);
 
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
@@ -56,7 +59,7 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
             type="button"
             size="small"
             color="pink"
-            onClick={() => toggleApproveParticipant(participant.orderNumber)}
+            onClick={() => approveParticipant({ orderId: participant.orderNumber })}
           />
         )}
       </div>
