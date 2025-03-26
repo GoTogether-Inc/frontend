@@ -9,7 +9,7 @@ export const getParticipants = async ({ eventId = 1, tags = 'all', page = 0, siz
 
 export const approveParticipants = async ({ orderId }: { orderId: number }) => {
   try {
-    const response = await axiosClient.post('/host-channels/dashboard/participant-management/approve', { orderId });
+    const response = await axiosClient.patch('/host-channels/dashboard/participant-management/approve', { orderId });
 
     return response.data;
   } catch (error) {
