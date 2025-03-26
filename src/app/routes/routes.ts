@@ -39,7 +39,7 @@ export const DASHBOARD_ROUTES = {
   email: `${MAIN_ROUTES.dashboard}/email`,
   mailBox: `${MAIN_ROUTES.dashboard}/mailBox`,
   emailEdit: `${MAIN_ROUTES.dashboard}/edit-email`,
-  participantsMangement: `${MAIN_ROUTES.dashboard}/participants-mangement`,
+  participantsMangement: `${MAIN_ROUTES.dashboard}/participants-management`,
   responsesManagement: `${MAIN_ROUTES.dashboard}/responses-management`,
 };
 

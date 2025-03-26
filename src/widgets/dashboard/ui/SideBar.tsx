@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import Header from '../../../../design-system/ui/Header';
 import menuBar from '../../../../public/assets/dashboard/menu/MenuBar.svg';
-import { menuLists } from '../../../shared/types/dashboardType';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
+import { getMenuLists } from '../../../shared/types/dashboardType';
 
 const SideBar = ({ onClose }: { onClose: () => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id } = useParams();
   const [selectedIcon, setSelectedIcon] = useState<string>('');
+
+  const menuLists = id ? getMenuLists(id) : [];
 
   const handleMenuClick = (menuText: string, path: string) => {
     if (location.pathname === path) {

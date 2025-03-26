@@ -34,18 +34,23 @@ export interface dashboardData {
   ticketOption: boolean;
 }
 
-export const menuLists = [
-  { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/` },
-  { text: '이벤트 기본 정보', icon: eventInfo, clickedIcon: clickedEventInfo, path: '/dashboard/eventInfo' },
-  { text: '이벤트 상세와 사진', icon: eventDetail, clickedIcon: clickedEventDetail, path: '/dashboard/eventDetail' },
-  { text: '이벤트 태그 정보', icon: tag, clickedIcon: clickedTag, path: '/dashboard/eventTag' },
-  { text: '티켓 생성하기', icon: ticket, clickedIcon: clickedTicket, path: '/dashboard/ticket' },
-  { text: '이메일 예약 발송', icon: email, clickedIcon: clickedEmail, path: '/dashboard/email' },
-  { text: '보낸 이메일', icon: sentEmail, clickedIcon: clickedSentEmail, path: '/dashboard/mailBox' },
+export const getMenuLists = (id: string | number) => [
+  { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/${id}` },
+  { text: '이벤트 기본 정보', icon: eventInfo, clickedIcon: clickedEventInfo, path: `/dashboard/${id}/eventInfo` },
+  {
+    text: '이벤트 상세와 사진',
+    icon: eventDetail,
+    clickedIcon: clickedEventDetail,
+    path: `/dashboard/${id}/eventDetail`,
+  },
+  { text: '이벤트 태그 정보', icon: tag, clickedIcon: clickedTag, path: `/dashboard/${id}/eventTag` },
+  { text: '티켓 생성하기', icon: ticket, clickedIcon: clickedTicket, path: `/dashboard/${id}/ticket` },
+  { text: '이메일 예약 발송', icon: email, clickedIcon: clickedEmail, path: `/dashboard/${id}/email` },
+  { text: '보낸 이메일', icon: sentEmail, clickedIcon: clickedSentEmail, path: `/dashboard/${id}/mailBox` },
   {
     text: '구매/참가자 관리',
     icon: participants,
     clickedIcon: clickedParticipants,
-    path: '/dashboard/participants-mangement',
+    path: `/dashboard/${id}/participants-management`,
   },
 ];
