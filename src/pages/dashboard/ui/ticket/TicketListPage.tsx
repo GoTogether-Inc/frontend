@@ -1,11 +1,20 @@
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
-import { TicketMockData } from '../../../../shared/types/ticketType';
 import TicketItem from '../../../../widgets/dashboard/ui/TicketItem';
 import { useNavigate } from 'react-router-dom';
 import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
+import { useEffect, useState } from 'react';
+import { readTicket } from '../../../../features/ticket/api/ticket';
+
+export interface ReadTicket {
+  ticketId: number;
+  ticketName: string;
+  ticketDescription: string;
+  ticketPrice: number;
+  availableQuantity: number;
+}
 
 const TicketListPage = () => {
   const navigate = useNavigate();
@@ -13,6 +22,26 @@ const TicketListPage = () => {
   const navigateToTicketCreate = () => {
     navigate(DASHBOARD_ROUTES.ticketCreate);
   };
+
+  const [tickets, setTickets] = useState<ReadTicket[]>([]); 
+  const eventId = 1; //수정 필요
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const data = await readTicket.getAll(eventId);
+        if (data.isSuccess && Array.isArray(data.result)) {
+          setTickets(data.result);
+        } else {
+          setTickets([]);
+        }
+      } catch (error) {
+        console.error("티켓 데이터를 불러오는 중 오류 발생:", error);
+        setTickets([]);
+      }
+    };
+    fetchTickets();
+  }, [eventId]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -40,8 +69,8 @@ const TicketListPage = () => {
             <img src={Ticket} />
             <p className="font-bold text-base md:text-lg">티켓</p>
           </div>
-          {TicketMockData.length > 0 ? (
-            TicketMockData.map(value => <TicketItem key={value.eventId} ticket={value} />)
+          {tickets.length > 0 ? (
+            tickets.map(value => <TicketItem key={value.ticketId} ticket={value} />)
           ) : (
             <div className="text-gray5 font-thin">현재 등록된 티켓이 없습니다.</div>
           )}
