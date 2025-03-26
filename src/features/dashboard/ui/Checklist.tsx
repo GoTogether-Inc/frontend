@@ -1,14 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import check from '../../../../public/assets/dashboard/main/Check.svg';
-import { menuLists } from '../../../shared/types/dashboardType';
+import { getMenuLists } from '../../../shared/types/dashboardType';
+import { useParams } from 'react-router-dom';
 // import completeCheck from '../../../../public/assets/dashboard/main/Check(complete).svg';
 
-const checkLists = menuLists
-  .filter(item => ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기'].includes(item.text))
-  .map(items => ({ text: items.text, path: items.path }));
-
 const CheckList = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const menuLists = id ? getMenuLists(id) : []; // id가 있을 때만 리스트 생성
+
+  const checkLists = menuLists
+    .filter(item => ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기'].includes(item.text))
+    .map(items => ({ text: items.text, path: items.path }));
+
   return (
     <div className="flex flex-col w-full h-full bg-white shadow-md rounded-[10px] gap-4 px-4 py-6">
       <div className="flex flex-col">
