@@ -14,3 +14,10 @@ export const readTicket = {
         return response.data;
     },
 }
+
+export const deleteTicket = {
+    remove: async (ticketId: number) => {
+        const response = await axiosClient.delete(`/tickets/${ticketId}`);
+        return response.data;
+    },
+}
