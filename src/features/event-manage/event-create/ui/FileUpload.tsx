@@ -1,6 +1,6 @@
 import FileUploadImage from '../../../../../public/assets/event-manage/creation/FileUpload.svg';
 import { useRef, useState } from 'react';
-import { upuploadFile } from '../hooks/usePresignedUrlHook';
+import { uploadFile } from '../hooks/usePresignedUrlHook';
 
 const FileUpload = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -19,7 +19,7 @@ const FileUpload = () => {
     }
 
     try {
-      const imageUrl = await upuploadFile(file);
+      const imageUrl = await uploadFile(file);
       setPreviewUrl(imageUrl);
     } catch (error) {
       console.error('파일 업로드 실패:', error);
