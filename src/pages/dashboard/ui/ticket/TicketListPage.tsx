@@ -42,7 +42,7 @@ const TicketListPage = () => {
     };
     fetchTickets();
   }, [eventId]);
-
+  
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="mt-8 px-7">
@@ -70,7 +70,7 @@ const TicketListPage = () => {
             <p className="font-bold text-base md:text-lg">티켓</p>
           </div>
           {tickets.length > 0 ? (
-            tickets.map(value => <TicketItem key={value.ticketId} ticket={value} />)
+            tickets.map(value => <TicketItem key={value.ticketId} ticket={value}/>)
           ) : (
             <div className="text-gray5 font-thin">현재 등록된 티켓이 없습니다.</div>
           )}
