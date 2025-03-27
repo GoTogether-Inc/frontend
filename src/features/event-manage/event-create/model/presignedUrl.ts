@@ -3,5 +3,5 @@ export interface PresignedUrlRequest {
 }
 
 export interface PresignedUrlResponse {
-  result: string;
+  preSignedUrl: string;
 }
