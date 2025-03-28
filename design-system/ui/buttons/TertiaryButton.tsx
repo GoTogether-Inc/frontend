@@ -30,3 +30,5 @@ const TertiaryButton = ({ label, type, color, size, onClick, className }: Tertia
 };
 
 export default TertiaryButton;
+
+

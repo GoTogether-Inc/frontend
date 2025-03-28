@@ -20,13 +20,13 @@ interface DragAreaProps {
   };
   setData: React.Dispatch<React.SetStateAction<DragAreaProps['data']>>;
   droppableId: string;
+  answerToggled: boolean;
 }
 
-const DragArea = ({ data, setData, droppableId }: DragAreaProps) => {
+const DragArea = ({ data, setData, droppableId, answerToggled }: DragAreaProps) => {
   const dragArea = data.dragAreas[droppableId];
   const isOptionsArea = droppableId === 'options';
   const isTicketArea = droppableId === 'ticket';
-
   return (
     <div className="w-full">
       {/* <p className="text-sm font-bold p-4">{column.title}</p> */}
@@ -47,6 +47,7 @@ const DragArea = ({ data, setData, droppableId }: DragAreaProps) => {
                   id={option.id}
                   content={option.content}
                   index={index}
+                  answerToggled={answerToggled}
                   // isDragDisabled={isOptionsArea}
                 />
               );
