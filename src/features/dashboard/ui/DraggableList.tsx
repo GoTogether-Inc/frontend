@@ -5,9 +5,10 @@ interface DraggableListProps {
   content: string; // task의 content
   index: number; // 드래그앤드롭 위치 추적용
   isDragDisabled?: boolean;
+  answerToggled: boolean;
 }
 
-const DraggableList = ({ id, content, index, isDragDisabled = false }: DraggableListProps) => {
+const DraggableList = ({ id, content, index, isDragDisabled = false, answerToggled }: DraggableListProps) => {
   return (
     <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
       {(provided, snapshot) => (
@@ -18,6 +19,7 @@ const DraggableList = ({ id, content, index, isDragDisabled = false }: Draggable
           className={`p-4 rounded border w-full h-[3rem] flex items-center ${snapshot.isDragging ? 'bg-gray-100' : 'bg-white'}`}
         >
           {content}
+          {answerToggled && <div className="w-full h-full bg-red-500">123</div>}
         </div>
       )}
     </Draggable>

@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import IconText from '../../../../../design-system/ui/texts/IconText';
-import DragArea from '../../../../../design-system/ui/DragArea';
+import DragArea from '../../../../features/dashboard/ui/DragArea';
 import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
 import Tag from '../../../../../public/assets/dashboard/ticket/emailIcon.svg';
@@ -28,6 +29,9 @@ interface Data {
 
 const TicketOptionPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const answerToggled = location.state?.answerToggled;
+  
   const [data, setData] = useState<Data>({
     options: {
       'option-1': { id: 'option-1', content: '티셔츠 사이즈' },
@@ -121,7 +125,7 @@ const TicketOptionPage = () => {
           <div className="mb-8">
             <IconText iconPath={<img src={Tag} alt="추가 버튼" />} children="옵션" />
             <div className="my-2">
-              <DragArea data={data} setData={setData} droppableId="options" />
+              <DragArea data={data} setData={setData} droppableId="options" answerToggled={answerToggled} />
             </div>
 
             <div className="flex items-center bg-gray-300 rounded-lg w-48 h-12 gap-5 mb-10">
@@ -142,10 +146,10 @@ const TicketOptionPage = () => {
             </div>
             <div className="w-1/2 p-2 bg-pink-100 rounded-lg">
               <div className="flex flex-row justify-between items-end">
-                <p className="pb-2 font-bold text-base md:text-lg">일반</p>
+                <p className="pb-2 text-base md:text-s">일반</p>
                 <p className="pb-2 font-bold text-gray-400 text-xs">설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개</p>
               </div>
-              <DragArea data={data} setData={setData} droppableId="ticket" />
+              <DragArea data={data} setData={setData} droppableId="ticket" answerToggled={answerToggled} />
             </div>
           </div>
         </DragDropContext>

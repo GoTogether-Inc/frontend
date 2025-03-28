@@ -265,7 +265,7 @@ const TicketOptionCreatePage = () => {
         <div className="w-full mt-14 mb-20">
           <Button
             label="저장하기"
-            onClick={() => navigate('/dashboard/ticket/option')}
+            onClick={() => navigate('/dashboard/ticket/option', { state: { answerToggled } })}
             className="w-full h-12 rounded-full"
           />
         </div>
