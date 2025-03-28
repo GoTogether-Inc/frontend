@@ -19,9 +19,9 @@ const TicketItem = ({ ticket }: { ticket: ReadTicket }) => {
     }
   };
   return (
-    <div className="relative overflow-hidden w-full">
+    <div className="relative overflow-hidden w-full mb-4">
       <motion.div
-        className="flex items-center bg-white p-4"
+        className="flex items-center bg-gray-100 p-4 rounded-lg"
         drag="x"
         dragConstraints={{ left: -100, right: 0 }}
         onDragStart={() => setIsDragging(true)}
@@ -50,7 +50,7 @@ const TicketItem = ({ ticket }: { ticket: ReadTicket }) => {
 
       {/* 삭제 버튼  */}
       <motion.button
-        className="absolute right-0 top-0 bottom-0 bg-red-500 text-white px-4 flex items-center justify-center transition-transform"
+        className="absolute right-0 top-0 bottom-0 bg-red-500 text-white rounded-lg px-4 flex items-center justify-center transition-transform"
         initial={{ x: '100%' }}
         animate={{ x: isDragging ? 0 : 'calc(100% + 1px)' }}
         transition={{ duration: 0 }}
