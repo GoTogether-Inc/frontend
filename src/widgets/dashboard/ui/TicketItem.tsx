@@ -23,7 +23,7 @@ const TicketItem = ({ ticket }: { ticket: ReadTicket }) => {
       <motion.div
         className="flex items-center bg-gray-100 p-4 rounded-lg"
         drag="x"
-        dragConstraints={{ left: -100, right: 0 }}
+        dragConstraints={{ left: -80, right: 0 }}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={(event, info) => {
           if (info.offset.x < -50) {
