@@ -1,11 +1,13 @@
 import FileUploadImage from '../../../../../public/assets/event-manage/creation/FileUpload.svg';
 import { useRef, useState } from 'react';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
+import { useFunnelState } from '../model/FunnelContext';
 
 const FileUpload = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { setEventState } = useFunnelState();
 
   const handleFileUpload = async (file: File) => {
     if (file.size > 500 * 1024) {
@@ -13,14 +15,15 @@ const FileUpload = () => {
       return;
     }
 
-    if (!['image/jpeg', 'image/png'].includes(file.type)) {
-      alert('jpg, png 파일만 업로드 가능합니다.');
+    if (!['image/jpg', 'image/jpeg', 'image/png'].includes(file.type)) {
+      alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
       return;
     }
 
     try {
       const imageUrl = await uploadFile(file);
       setPreviewUrl(imageUrl);
+      setEventState(prev => ({ ...prev, bannerImageUrl: imageUrl }));
     } catch (error) {
       console.error('파일 업로드 실패:', error);
     }
@@ -55,7 +58,7 @@ const FileUpload = () => {
   return (
     <div className="flex flex-col justify-start gap-1">
       <h1 className="font-bold text-black text-lg">배너 사진 첨부</h1>
-      <h2 className="text-placeholderText text-xs md:text-sm">500kB 이하의 jpg, png 파일만 등록할 수 있습니다.</h2>
+      <h2 className="text-placeholderText text-xs md:text-sm">500kB 이하의 jpeg, png 파일만 등록할 수 있습니다.</h2>
       <div
         className={`flex flex-col items-center justify-center h-44 border border-dashed ${
           isDragging ? 'border-main bg-dropdown' : 'border-placeholderText bg-gray3'
