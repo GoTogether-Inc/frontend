@@ -1,7 +1,8 @@
 // 사진 첨부는 추후에...
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { uploadFile } from '../hooks/usePresignedUrlHook';
 
 const formats = [
   'font',
@@ -25,23 +26,55 @@ const formats = [
 
 const TextEditor = () => {
   const [content, setContent] = useState('');
+  const quillRef = useRef<ReactQuill | null>(null);
+
+  const imageHandler = async () => {
+    if (!quillRef.current) return;
+
+    const quillInstance = quillRef.current.getEditor();
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      try {
+        const imageUrl = await uploadFile(file);
+        const range = quillInstance.getSelection();
+        if (range) {
+          quillInstance.insertEmbed(range.index, 'image', imageUrl);
+          console.log('이미지 첨부 성공:', imageUrl);
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        alert('이미지 업로드에 실패했습니다.');
+      }
+    };
+  };
 
   const handleChange = (value: string) => {
-    const newText = value.replace(/<\/?[^>]+(>|$)/g, ''); // 태그 제거
-    setContent(newText);
-    console.log(newText);
+    setContent(value);
+    console.log(value);
   };
 
   const modules = useMemo(() => {
     return {
-      toolbar: [
-        [{ header: [1, 2, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-        ['link', 'image'],
-        [{ align: [] }, { color: [] }, { background: [] }],
-        ['clean'],
-      ],
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, false] }],
+          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['link', 'image'],
+          [{ align: [] }, { color: [] }, { background: [] }],
+          ['clean'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
     };
   }, []);
 
@@ -51,6 +84,7 @@ const TextEditor = () => {
       <ReactQuill
         theme="snow"
         value={content}
+        ref={quillRef}
         modules={modules}
         formats={formats}
         onChange={handleChange}
