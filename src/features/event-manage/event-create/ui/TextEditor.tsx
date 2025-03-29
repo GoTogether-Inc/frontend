@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
+import { useFunnelState } from '../model/FunnelContext';
 
 const formats = [
   'font',
@@ -27,6 +28,7 @@ const formats = [
 const TextEditor = () => {
   const [content, setContent] = useState('');
   const quillRef = useRef<ReactQuill | null>(null);
+  const { setEventState } = useFunnelState();
 
   const imageHandler = async () => {
     if (!quillRef.current) return;
@@ -46,7 +48,6 @@ const TextEditor = () => {
         const range = quillInstance.getSelection();
         if (range) {
           quillInstance.insertEmbed(range.index, 'image', imageUrl);
-          console.log('이미지 첨부 성공:', imageUrl);
         }
       } catch (error) {
         console.error('이미지 업로드 실패:', error);
@@ -57,7 +58,7 @@ const TextEditor = () => {
 
   const handleChange = (value: string) => {
     setContent(value);
-    console.log(value);
+    setEventState(prev => ({ ...prev, description: value }));
   };
 
   const modules = useMemo(() => {
