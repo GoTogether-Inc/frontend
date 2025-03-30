@@ -1,31 +1,74 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import QRcode from '../../../../design-system/icons/QrCode.svg';
-import { trendingEvents } from '../../../shared/types/eventCardType';
 import EventCard from '../../../shared/ui/EventCard';
+import { readMyTickets } from '../../../features/ticket/api/order';
+import completed from '../../../../public/assets/menu/completed.svg';
+import pending from  '../../../../public/assets/menu/pending.svg';
 
+type Ticket = {
+  id: number;
+  eventId: number;
+  bannerImageUrl: string;
+  title: string;
+  hostChannelName: string;
+  eventAddress: string;
+  startDate: string;
+  ticketName: string;
+  ticketStatus: "COMPLETED" | "PENDING" | "CANCELED";
+  remainDays: string;
+};
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [myTickets, setMyTickets] = useState<Ticket[]>([]);
+  const hash = ["#Tech", "#Innovation"];
+
+
+  useEffect(() => {
+    const fetchMyTickets = async () => {
+      try {
+        const response = await readMyTickets.get(0, 10);
+        setMyTickets(response.result || []);
+      } catch (error) {
+        console.error("티켓 목록 불러오기 실패:", error);
+      }
+    };
+    fetchMyTickets();
+  }, []);
+  useEffect(() => {
+    console.log(myTickets);
+  }, [myTickets]);
+
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" showText={true}>
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-6 mt-28 md:grid-cols-2 lg:grid-cols-2 pb-4">
-        {trendingEvents.map((event, index) => (
+        {myTickets.map((ticket, index) => (
           <EventCard
             key={index}
-            img={event.img}
-            eventTitle={event.eventTitle}
-            dDay={event.dDay}
-            host={event.host}
-            eventDate={event.eventDate}
-            location={event.location}
-            hashtags={event.hashtags}
+            img={ticket.bannerImageUrl}
+            eventTitle={ticket.title}
+            dDay={ticket.remainDays}
+            host={ticket.hostChannelName}
+            eventDate={ticket.startDate}
+            location={ticket.eventAddress}
+            hashtags={hash}
             onClick={() => setIsModalOpen(true)}
-          />
+          >
+            <p className="flex items-center text-xs text-gray-500">
+              <img
+                src={ticket.ticketStatus === 'COMPLETED' ? completed : pending}
+                alt={ticket.ticketStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
+                className="w-4 h-4 mr-1"
+              />
+              {ticket.ticketStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
+            </p>
+
+          </EventCard>
         ))}
       </div>
 

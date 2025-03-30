@@ -11,9 +11,10 @@ interface EventCardProps {
   location: string;
   hashtags: string[];
   onClick?: () => void;
+  children?: React.ReactNode;
 }
 
-const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags, onClick }: EventCardProps) => {
+const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags, onClick, children }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -34,6 +35,8 @@ const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags,
         <p className="text-xs text-gray-500">{host}</p>
         <p className="text-xs text-gray-500">{eventDate}</p>
         <p className="text-xs text-gray-500">{location}</p>
+        {/* 승인 여부 표시 */}
+        {children}
         {/* 해시태그 */}
         <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
           {hashtags.map((tag, index) => (
