@@ -6,8 +6,9 @@ import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import QRcode from '../../../../design-system/icons/QrCode.svg';
 import EventCard from '../../../shared/ui/EventCard';
 import { readMyTickets } from '../../../features/ticket/api/order';
-import completed from '../../../../public/assets/menu/completed.svg';
-import pending from  '../../../../public/assets/menu/pending.svg';
+import completedImg from '../../../../public/assets/menu/Completed.svg';
+import pendingImg from  '../../../../public/assets/menu/Pending.svg';
+import ticketImg from '../../../../public/assets/menu/Ticket.svg';
 
 type Ticket = {
   id: number;
@@ -59,14 +60,18 @@ const MyTicketPage = () => {
             hashtags={hash}
             onClick={() => setIsModalOpen(true)}
           >
-            <p className="flex items-center text-xs text-gray-500">
+            <div className="flex items-center text-xs text-gray-500">
+              <img src={ticketImg} alt="날짜" className="w-3 h-3 mr-1" />
+              {ticket.ticketName}
+            </div>
+            <div className="flex items-center text-xs text-gray-500">
               <img
-                src={ticket.ticketStatus === 'COMPLETED' ? completed : pending}
+                src={ticket.ticketStatus === 'COMPLETED' ? completedImg : pendingImg}
                 alt={ticket.ticketStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
-                className="w-4 h-4 mr-1"
+                className="w-3 h-3 mr-1"
               />
               {ticket.ticketStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
-            </p>
+            </div>
 
           </EventCard>
         ))}

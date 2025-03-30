@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import TertiaryButton from '../../../design-system/ui/buttons/TertiaryButton';
 import Countdown from '../../../design-system/ui/texts/Countdown';
+import dateImg from '../../../public/assets/event-manage/details/Date.svg';
+import locationImg from '../../../public/assets/event-manage/details/Location.svg'
 
 interface EventCardProps {
   img: string;
@@ -33,8 +35,17 @@ const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags,
         </div>
 
         <p className="text-xs text-gray-500">{host}</p>
-        <p className="text-xs text-gray-500">{eventDate}</p>
-        <p className="text-xs text-gray-500">{location}</p>
+
+        <div className="flex items-center text-xs text-gray-500">
+          <img src={dateImg} alt="날짜" className="w-3 h-3 mr-1" />
+          {eventDate}
+        </div>
+
+        <div className="flex items-center text-xs text-gray-500">
+          <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
+          {location}
+        </div>
+
         {/* 승인 여부 표시 */}
         {children}
         {/* 해시태그 */}
