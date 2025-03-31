@@ -1,5 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import DraggableList from './DraggableList';
 import { Droppable } from '@hello-pangea/dnd';
+import AddButton2 from '../../../../public/assets/dashboard/ticket/AddButton2.svg';
+import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
 
 interface OptionTitle {
   id: string;
@@ -21,22 +24,28 @@ interface DragAreaProps {
   setData: React.Dispatch<React.SetStateAction<DragAreaProps['data']>>;
   droppableId: string;
   answerToggled: boolean;
+  renderAddButton?: boolean;
 }
 
-const DragArea = ({ data, setData, droppableId, answerToggled }: DragAreaProps) => {
+const DragArea = ({ data, setData, droppableId, answerToggled, renderAddButton = true }: DragAreaProps) => {
+  const navigate = useNavigate();
   const dragArea = data.dragAreas[droppableId];
   const isOptionsArea = droppableId === 'options';
   const isTicketArea = droppableId === 'ticket';
+
   return (
     <div className="w-full">
-      {/* <p className="text-sm font-bold p-4">{column.title}</p> */}
       <Droppable droppableId={droppableId} isDropDisabled={isOptionsArea}>
-        {(provided) => (
+        {provided => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={`h-[10rem] ${
-              isOptionsArea ? 'grid grid-cols-2 gap-4' : isTicketArea ? 'bg-pink-100 flex flex-col justify-between' : 'grid grid-cols-2 gap-4'
+            className={`min-h-[10rem] ${
+              isOptionsArea
+                ? 'grid grid-cols-2 gap-2'
+                : isTicketArea
+                ? 'bg-pink-100 flex flex-col justify-between'
+                : 'grid grid-cols-2 gap-4'
             }`}
           >
             {dragArea.optionIds.map((optionId, index) => {
@@ -52,6 +61,18 @@ const DragArea = ({ data, setData, droppableId, answerToggled }: DragAreaProps) 
                 />
               );
             })}
+            {renderAddButton && isOptionsArea && (
+              <div className="col-span-1 flex items-center h-[3rem] bg-deDayBgLight rounded">
+                <HorizontalCardButton
+                  iconPath={<img src={AddButton2} alt="추가 버튼" />}
+                  className="text-sm !font-normal !justify-start [&>div]:!justify-start"
+                  label="티켓 설문 새로 생성하기"
+                  onClick={() => {
+                    navigate('/dashboard/ticket/option/create');
+                  }}
+                />
+              </div>
+            )}
             {provided.placeholder}
           </div>
         )}
