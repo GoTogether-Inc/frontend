@@ -165,7 +165,7 @@ const TicketOptionCreatePage = () => {
             <p className="block text-m font-semibold text-gray-700">응답을 어떤 형식으로 받을까요?</p>
             <p className="block mb-1 text-placeholderText text-11 md:text-13">한 개만 선택할 수 있습니다.</p>
             <ChoiceChip
-              options={['객관식', '여러 개 선택', '자유로운 텍스트']}
+              options={['객관식', '여러개 선택', '자유로운 텍스트']}
               onSelect={selected => {
                 setSelectedChip(selected);
               }}
@@ -267,7 +267,7 @@ const TicketOptionCreatePage = () => {
         <div className="w-full mt-14 mb-20">
           <Button
             label="저장하기"
-            onClick={() => navigate('/dashboard/ticket/option', { state: { answerToggled } })}
+            onClick={() => navigate('/dashboard/ticket/option', { state: { answerToggled, responseFormat: selectedChip } })}
             className="w-full h-12 rounded-full"
           />
         </div>

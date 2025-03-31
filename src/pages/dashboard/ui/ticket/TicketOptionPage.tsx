@@ -28,7 +28,7 @@ const TicketOptionPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const answerToggled = location.state?.answerToggled;
-
+  const responseFormat = location.state?.responseFormat;
   const [data, setData] = useState<Data>({
     options: {
       'option-1': { id: 'option-1', content: '티셔츠 사이즈' },
@@ -113,7 +113,7 @@ const TicketOptionPage = () => {
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="mt-8 px-7">
         <div className="text-center text-xl font-bold mb-5">티켓에 추가 옵션 부착 하기</div>
-        <p className="text-gray-400 text-xs mb-5">
+        <p className="text-placeholderText text-xs mb-5">
           티켓에 구매하기 전 설문에 응답받기 위해서는 다음 항목을 각 티켓으로 드래그 앤 드롭 해보세요.
         </p>
 
@@ -128,6 +128,7 @@ const TicketOptionPage = () => {
                 setData={setData}
                 droppableId="options"
                 answerToggled={answerToggled}
+                responseFormat={responseFormat}
                 renderAddButton={true}
               />
             </div>
@@ -146,7 +147,7 @@ const TicketOptionPage = () => {
                   설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개
                 </p>
               </div>
-              <DragArea data={data} setData={setData} droppableId="ticket" answerToggled={answerToggled} />
+              <DragArea data={data} setData={setData} droppableId="ticket" answerToggled={answerToggled} responseFormat={responseFormat} />
             </div>
           </div>
         </DragDropContext>

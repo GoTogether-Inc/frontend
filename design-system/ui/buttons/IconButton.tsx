@@ -15,7 +15,7 @@ const IconButton = ({ size = 'medium', iconPath, onClick }: IconButtonProps) => 
 
   return (
     <button className={`inline-flex items-center justify-center ${sizeClasses[size]}`} onClick={onClick}>
-      <div className="w-1/2 h-1/2">{iconPath}</div>
+      <div className="flex items-center justify-center w-1/2 h-1/2">{iconPath}</div>
     </button>
   );
 };
