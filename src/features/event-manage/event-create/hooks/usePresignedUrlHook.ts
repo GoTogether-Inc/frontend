@@ -24,7 +24,7 @@ export const putS3Image = async ({ url, file }: { url: string; file: File }) => 
     console.log('업로드할 URL:', url);
     await axios.put(url, file, {
       headers: {
-        'Content-Type': 'image/jpeg',
+        'Content-Type': file.type,
       },
     });
   } catch (error) {
