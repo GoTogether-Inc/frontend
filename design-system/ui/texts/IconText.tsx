@@ -18,7 +18,7 @@ const IconText = ({ size = 'medium', iconPath, children, className }: IconTextPr
 
   return (
     <button className={`${flexRowStart}`}>
-      <div className={`w-ful h-full ${sizeClasses[size]}`}>{iconPath}</div>
+      <div className={`w-full h-full ${sizeClasses[size]}`}>{iconPath}</div>
       <span className={`text-left whitespace-nowrap ${className}`}>{children}</span>
     </button>
   );

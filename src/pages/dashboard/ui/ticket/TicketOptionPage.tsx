@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
-import { useNavigate } from 'react-router-dom';
-import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import IconText from '../../../../../design-system/ui/texts/IconText';
 import DragArea from '../../../../features/dashboard/ui/DragArea';
-import AddButton2 from '../../../../../public/assets/dashboard/ticket/AddButton2.svg';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
-import Tag from '../../../../../public/assets/dashboard/ticket/emailIcon.svg';
+import Option from '../../../../../public/assets/dashboard/ticket/Option.svg';
 
 interface OptionTitle {
   id: string;
@@ -31,7 +28,7 @@ const TicketOptionPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const answerToggled = location.state?.answerToggled;
-  
+
   const [data, setData] = useState<Data>({
     options: {
       'option-1': { id: 'option-1', content: '티셔츠 사이즈' },
@@ -123,17 +120,15 @@ const TicketOptionPage = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           {/* 옵션 영역 */}
           <div className="mb-8">
-            <IconText iconPath={<img src={Tag} alt="추가 버튼" />} children="옵션" />
+            <IconText iconPath={<img src={Option} alt="추가 버튼" />} children="옵션" 
+            className='font-bold pl-2'/>
             <div className="my-2">
-              <DragArea data={data} setData={setData} droppableId="options" answerToggled={answerToggled} />
-            </div>
-
-            <div className="flex items-center bg-deDayBgLight rounded-lg w-48 h-12 gap-5 mb-10">
-              <HorizontalCardButton
-                iconPath={<img src={AddButton2} alt="추가 버튼" />}
-                onClick={() => navigate('/dashboard/ticket/option/create')}
-                label="티켓 새로 생성하기"
-                className="text-sm mx-auto !font-normal"
+              <DragArea
+                data={data}
+                setData={setData}
+                droppableId="options"
+                answerToggled={answerToggled}
+                renderAddButton={true}
               />
             </div>
           </div>
@@ -141,13 +136,15 @@ const TicketOptionPage = () => {
           {/* 티켓 영역 */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <img src={Ticket} alt="티켓" />
-              <p className="font-bold text-base md:text-lg">티켓</p>
+              <IconText iconPath={<img src={Ticket} alt="추가 버튼" />} children="티켓" 
+            className='font-bold pl-2'/>
             </div>
             <div className="w-1/2 p-2 bg-pink-100 rounded-lg">
               <div className="flex flex-row justify-between items-end">
                 <p className="pb-2 text-base md:text-s">일반</p>
-                <p className="pb-2 font-bold text-gray-400 text-xs">설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개</p>
+                <p className="pb-2 font-bold text-gray-400 text-xs">
+                  설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개
+                </p>
               </div>
               <DragArea data={data} setData={setData} droppableId="ticket" answerToggled={answerToggled} />
             </div>
