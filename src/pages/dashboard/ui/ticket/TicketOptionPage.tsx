@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import IconText from '../../../../../design-system/ui/texts/IconText';
 import DragArea from '../../../../features/dashboard/ui/DragArea';
-import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
+import AddButton2 from '../../../../../public/assets/dashboard/ticket/AddButton2.svg';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
 import Tag from '../../../../../public/assets/dashboard/ticket/emailIcon.svg';
 
@@ -128,12 +128,12 @@ const TicketOptionPage = () => {
               <DragArea data={data} setData={setData} droppableId="options" answerToggled={answerToggled} />
             </div>
 
-            <div className="flex items-center bg-gray-300 rounded-lg w-48 h-12 gap-5 mb-10">
+            <div className="flex items-center bg-deDayBgLight rounded-lg w-48 h-12 gap-5 mb-10">
               <HorizontalCardButton
-                iconPath={<img src={AddButton} alt="추가 버튼" />}
+                iconPath={<img src={AddButton2} alt="추가 버튼" />}
                 onClick={() => navigate('/dashboard/ticket/option/create')}
                 label="티켓 새로 생성하기"
-                className="text-sm mx-auto"
+                className="text-sm mx-auto !font-normal"
               />
             </div>
           </div>
