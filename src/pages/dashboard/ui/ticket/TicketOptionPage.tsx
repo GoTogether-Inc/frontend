@@ -129,21 +129,21 @@ const TicketOptionPage = () => {
                 droppableId="options"
                 answerToggled={answerToggled}
                 responseFormat={responseFormat}
-                renderAddButton={true}
+                ticketSurveyAddButton={true}
               />
             </div>
           </div>
 
           {/* 티켓 영역 */}
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center mb-2">
               <IconText iconPath={<img src={Ticket} alt="추가 버튼" />} children="티켓" 
             className='font-bold pl-2'/>
             </div>
-            <div className="w-1/2 p-2 bg-pink-100 rounded-lg">
+            <div className="w-1/2 p-2 bg-main bg-opacity-5 rounded-lg">
               <div className="flex flex-row justify-between items-end">
-                <p className="pb-2 text-base md:text-s">일반</p>
-                <p className="pb-2 font-bold text-gray-400 text-xs">
+                <p className="pl-2 pb-2 text-base md:text-s">일반</p>
+                <p className="pr-2 pb-2 font-bold text-gray-400 text-xs">
                   설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개
                 </p>
               </div>

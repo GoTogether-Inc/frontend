@@ -25,10 +25,17 @@ interface DragAreaProps {
   droppableId: string;
   answerToggled: boolean;
   responseFormat: string;
-  renderAddButton?: boolean;
+  ticketSurveyAddButton?: boolean;
 }
 
-const DragArea = ({ data, setData, droppableId, answerToggled, responseFormat, renderAddButton = true }: DragAreaProps) => {
+const DragArea = ({
+  data,
+  setData,
+  droppableId,
+  answerToggled,
+  responseFormat,
+  ticketSurveyAddButton = true,
+}: DragAreaProps) => {
   const navigate = useNavigate();
   const dragArea = data.dragAreas[droppableId];
   const isOptionsArea = droppableId === 'options';
@@ -41,12 +48,12 @@ const DragArea = ({ data, setData, droppableId, answerToggled, responseFormat, r
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className={`min-h-[10rem] ${
+            className={`${
               isOptionsArea
-                ? 'grid grid-cols-2 gap-2'
+                ? 'h-80 grid grid-cols-2 gap-2 grid-flow-row content-start'
                 : isTicketArea
-                ? 'bg-pink-100 flex flex-col justify-between'
-                : 'grid grid-cols-2 gap-4'
+                ? 'h-48 bg-opacity-5 flex flex-col justify-between'
+                : 'grid grid-cols-2 gap-4 auto-rows-auto'
             }`}
           >
             {dragArea.optionIds.map((optionId, index) => {
@@ -59,12 +66,13 @@ const DragArea = ({ data, setData, droppableId, answerToggled, responseFormat, r
                   index={index}
                   answerToggled={answerToggled}
                   responseFormat={responseFormat}
+                  droppableId={droppableId}
                   // isDragDisabled={isOptionsArea}
                 />
               );
             })}
-            {renderAddButton && isOptionsArea && (
-              <button className="col-span-1 flex items-center h-[3rem] bg-deDayBgLight rounded">
+            {ticketSurveyAddButton && isOptionsArea && (
+              <button className="col-span-1 flex items-center h-[3.5rem] bg-deDayBgLight rounded">
                 <HorizontalCardButton
                   iconPath={<img src={AddButton2} alt="추가 버튼" />}
                   className="text-sm  !justify-start [&>div]:!justify-start"
