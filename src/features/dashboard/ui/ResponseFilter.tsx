@@ -1,7 +1,7 @@
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import { responsesData } from '../../../shared/types/responseType';
 import DropDown from '../../../shared/ui/DropDown';
-import { createFieldMappings } from '../../lib/createFieldMappings';
+import { createFieldMappings } from '../../../shared/lib/createFieldMappings';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
 
