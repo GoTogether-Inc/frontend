@@ -10,6 +10,8 @@ import Option from '../../../../../public/assets/dashboard/ticket/Option.svg';
 interface OptionTitle {
   id: string;
   content: string;
+  answerToggled: boolean;
+  responseFormat: string;
 }
 
 interface DragAreaTitle {
@@ -37,9 +39,9 @@ const TicketOptionPage = () => {
   // 기본 초기 데이터
   const defaultData: Data = {
     options: {
-      'option-1': { id: 'option-1', content: '티셔츠 사이즈' },
-      'option-2': { id: 'option-2', content: '음식 선호도' },
-      'option-3': { id: 'option-3', content: '좋아하는 색깔' },
+      'option-1': { id: 'option-1', content: '티셔츠 사이즈', answerToggled: false, responseFormat: '객관식' },
+      'option-2': { id: 'option-2', content: '음식 선호도', answerToggled: false, responseFormat: '객관식' },
+      'option-3': { id: 'option-3', content: '좋아하는 색깔', answerToggled: false, responseFormat: '객관식' },
     },
     dragAreas: {
       options: {
@@ -67,7 +69,12 @@ const TicketOptionPage = () => {
       ...initialData,
       options: {
         ...initialData.options,
-        [newOption.id]: newOption,
+        [newOption.id]: {
+          id: newOption.id,
+          content: newOption.content,
+          answerToggled: newOption.answerToggled,
+          responseFormat: newOption.responseFormat,
+        },
       },
       dragAreas: {
         ...initialData.dragAreas,
@@ -92,6 +99,7 @@ const TicketOptionPage = () => {
       return;
     }
 
+    // 같은 영역 내에서의 이동
     if (destination.droppableId === source.droppableId) {
       // options 영역 내에서는 이동 불가
       if (source.droppableId === 'options') {
@@ -122,22 +130,38 @@ const TicketOptionPage = () => {
 
     // options에서 ticket으로 이동할 때
     if (source.droppableId === 'options' && destination.droppableId === 'ticket') {
-      // const sourceDragArea = data.dragAreas[source.droppableId];
       const destDragArea = data.dragAreas[destination.droppableId];
+      const sourceOption = data.options[draggableId];
+      const newDestOptionIds = Array.from(destDragArea.optionIds);
 
-      // ticket 영역의 마지막에 추가
-      const newDestOptionIds = [...destDragArea.optionIds, draggableId];
+      // 새로운 ID 생성 (원본 ID + 타임스탬프)
+      const newId = `${draggableId}-${Date.now()}`;
 
-      setData(prev => ({
-        ...prev,
-        dragAreas: {
-          ...prev.dragAreas,
-          [destination.droppableId]: {
-            ...destDragArea,
-            optionIds: newDestOptionIds,
+      // 이미 ticket 영역에 있는지 확인
+      if (!newDestOptionIds.includes(newId)) {
+        // ticket 영역의 지정된 위치에 추가
+        newDestOptionIds.splice(destination.index, 0, newId);
+
+        setData(prev => ({
+          ...prev,
+          options: {
+            ...prev.options,
+            // 새로운 ID로 옵션 복사본 생성하고 원본과 연결
+            [newId]: {
+              ...sourceOption,
+              id: newId,
+              originalId: draggableId, // 원본 ID 저장
+            },
           },
-        },
-      }));
+          dragAreas: {
+            ...prev.dragAreas,
+            [destination.droppableId]: {
+              ...destDragArea,
+              optionIds: newDestOptionIds,
+            },
+          },
+        }));
+      }
     }
   };
 
@@ -156,6 +180,50 @@ const TicketOptionPage = () => {
       navigate(location.pathname, { state: newState, replace: true });
     }
   }, []);
+
+  // TicketOptionPage.tsx 내부에서 수정
+  useEffect(() => {
+    if (newOption) {
+      if (location.state?.isEditing) {
+        // 수정 모드에서는 모든 데이터 업데이트
+        setData(prev => ({
+          ...prev,
+          options: {
+            ...prev.options,
+            [newOption.id]: {
+              ...prev.options[newOption.id],
+              content: newOption.content,
+              answerToggled: newOption.answerToggled,
+              responseFormat: newOption.responseFormat,
+              options: newOption.options,
+              optionsConfig: newOption.optionsConfig,
+            },
+          },
+        }));
+      } else if (!data.options[newOption.id]) {
+        // 새 옵션인 경우 (기존 로직 유지)
+        setData(prev => ({
+          ...prev,
+          options: {
+            ...prev.options,
+            [newOption.id]: newOption,
+          },
+          dragAreas: {
+            ...prev.dragAreas,
+            options: {
+              ...prev.dragAreas.options,
+              optionIds: [...prev.dragAreas.options.optionIds, newOption.id],
+            },
+          },
+        }));
+      }
+
+      // state에서 newOption 제거 (기존 코드 유지)
+      const newState = { ...location.state };
+      delete newState.newOption;
+      navigate(location.pathname, { state: newState, replace: true });
+    }
+  }, [newOption]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">

@@ -7,6 +7,8 @@ import HorizontalCardButton from '../../../../design-system/ui/buttons/Horizonta
 interface OptionTitle {
   id: string;
   content: string;
+  answerToggled: boolean;
+  responseFormat: string;
 }
 
 interface DragAreaProps {
@@ -52,8 +54,8 @@ const DragArea = ({
               isOptionsArea
                 ? 'h-80 grid grid-cols-2 gap-2 grid-flow-row content-start'
                 : isTicketArea
-                ? 'h-48 bg-opacity-5 flex flex-col justify-between'
-                : 'grid grid-cols-2 gap-4 auto-rows-auto'
+                ? 'h-48 bg-opacity-5 flex flex-col gap-2'
+                : 'h-80 grid grid-cols-2 gap-2 grid-flow-row content-start'
             }`}
           >
             {dragArea.optionIds.map((optionId, index) => {
@@ -64,10 +66,10 @@ const DragArea = ({
                   id={option.id}
                   content={option.content}
                   index={index}
-                  answerToggled={answerToggled}
-                  responseFormat={responseFormat}
+                  answerToggled={option.answerToggled}
+                  responseFormat={option.responseFormat}
                   droppableId={droppableId}
-                  // isDragDisabled={isOptionsArea}
+                  isDragDisabled={false}
                 />
               );
             })}
