@@ -4,10 +4,6 @@ import { getMenuLists } from '../../../shared/types/dashboardType';
 import { useParams } from 'react-router-dom';
 // import completeCheck from '../../../../public/assets/dashboard/main/Check(complete).svg';
 
-const checkLists = menuLists
-  .filter(item => ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기', '티켓에 추가 옵션 부착'].includes(item.text))
-  .map(items => ({ text: items.text, path: items.path }));
-
 const CheckList = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,7 +11,9 @@ const CheckList = () => {
   const menuLists = id ? getMenuLists(id) : []; // id가 있을 때만 리스트 생성
 
   const checkLists = menuLists
-    .filter(item => ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기'].includes(item.text))
+    .filter(item =>
+      ['이벤트 기본 정보', '이벤트 상세와 사진', '티켓 생성하기', '티켓에 추가 옵션 부착'].includes(item.text)
+    )
     .map(items => ({ text: items.text, path: items.path }));
 
   return (
