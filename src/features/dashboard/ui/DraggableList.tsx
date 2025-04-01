@@ -12,6 +12,7 @@ interface DraggableListProps {
   answerToggled: boolean;
   responseFormat: string;
   droppableId: string;
+  onDelete: (id: string) => void;
 }
 
 const DraggableList = ({
@@ -22,6 +23,7 @@ const DraggableList = ({
   answerToggled,
   responseFormat,
   droppableId,
+  onDelete,
 }: DraggableListProps) => {
   const navigate = useNavigate();
 
@@ -74,7 +76,7 @@ const DraggableList = ({
                   {responseFormat}
                 </div>
               </div>
-              <IconButton iconPath={<img className="w-3 h-3" src={DeleteIcon} />} onClick={() => {}} size="small" />
+              <IconButton iconPath={<img className="w-3 h-3" src={DeleteIcon} />} onClick={() => onDelete(id)} size="small" />
             </div>
           )}
         </div>

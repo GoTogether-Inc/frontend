@@ -43,6 +43,21 @@ const DragArea = ({
   const isOptionsArea = droppableId === 'options';
   const isTicketArea = droppableId === 'ticket';
 
+  const handleDelete = (id: string) => {
+    if(isTicketArea) {
+      setData(prev => ({
+        ...prev,
+        dragAreas: {
+          ...prev.dragAreas,
+          ticket: {
+            ...prev.dragAreas.ticket,
+            optionIds: prev.dragAreas.ticket.optionIds.filter(optionId => optionId !== id),
+          },
+        },
+      }));
+    }
+  };
+
   return (
     <div className="w-full">
       <Droppable droppableId={droppableId} isDropDisabled={isOptionsArea}>
@@ -70,6 +85,7 @@ const DragArea = ({
                   responseFormat={option.responseFormat}
                   droppableId={droppableId}
                   isDragDisabled={false}
+                  onDelete={handleDelete}
                 />
               );
             })}
