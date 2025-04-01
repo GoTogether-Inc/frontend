@@ -293,7 +293,7 @@ const TicketOptionCreatePage = () => {
   // 옵션 리스트 수정 시 초기 설정
   useEffect(() => {
     if (isEditing && editOption) {
-      console.log('Editing mode:', editOption); // 디버깅용
+      console.log('Editing mode:', editOption);
 
       // 기본 필드 설정
       setQuestionTitle(editOption.content);
@@ -309,11 +309,28 @@ const TicketOptionCreatePage = () => {
         if (option) {
           // 옵션 타입에 따라 적절한 상태 업데이트
           if (option.responseFormat === '객관식') {
-            setSingleOptions(option.options || []);
-            setSingleOptionsConfig(option.optionsConfig || []);
+            // 저장된 옵션이 있으면 사용하고, 없으면 3개의 빈 옵션으로 초기화
+            setSingleOptions(option.options?.length > 0 ? option.options : Array(3).fill(''));
+            setSingleOptionsConfig(
+              option.optionsConfig?.length > 0
+                ? option.optionsConfig
+                : Array(3).fill({
+                    limitToggled: false,
+                    numActivated: true,
+                    quantity: '',
+                  })
+            );
           } else if (option.responseFormat === '여러개 선택') {
-            setMultiOptions(option.options || []);
-            setMultiOptionsConfig(option.optionsConfig || []);
+            setMultiOptions(option.options?.length > 0 ? option.options : Array(3).fill(''));
+            setMultiOptionsConfig(
+              option.optionsConfig?.length > 0
+                ? option.optionsConfig
+                : Array(3).fill({
+                    limitToggled: false,
+                    numActivated: true,
+                    quantity: '',
+                  })
+            );
           }
         }
       }
