@@ -4,10 +4,10 @@ import ProfileCircle from '../../../../../design-system/ui/Profile';
 import { trendingEvents } from '../../../../shared/types/eventCardType';
 import EventCard from '../../../../shared/ui/EventCard';
 import { useState } from 'react';
-import { hostInfo } from '../../../../shared/types/hostInfoType';
-
+import { useMyHost } from '../../../../widgets/menu/hook/useMyHostHook';
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
+  const { data } = useMyHost();
 
   const handleProfileClick = (hostId: number) => {
     setSelectedHostId(hostId);
@@ -18,11 +18,11 @@ const MyHostPage = () => {
   return (
     <TicketHostLayout image={HostLogo} centerContent="내 호스트">
       <div className="flex space-x-5 mt-24 mx-5 overflow-x-auto scrollbar-hide">
-        {hostInfo.map(profile => (
+        {data?.result.map(profile => (
           <ProfileCircle
             key={profile.id}
             id={profile.id}
-            name={profile.name}
+            name={profile.hostChannelName}
             profile="hostProfile"
             onClick={() => handleProfileClick(profile.id)}
             className="md:w-20 md:h-20 w-16 h-16 hover:border hover:border-main"
