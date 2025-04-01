@@ -18,9 +18,10 @@ interface QrModalProps {
   location: string; // 이벤트 장소
   ticketName: string; // 티켓 이름
   price: number; // 티켓 가격
-  isApproved: boolean; // 티켓 승인 여부
+  orderStatus: string; // 티켓 승인 여부
   isCheckIn: boolean; // 참가자 체크인 여부
   isCountdownChecked: boolean;
+  remainDays: "진행중" | "D-1" | "D-7" | "false"; //d-day
   onClick: () => void;
 }
 
@@ -35,9 +36,11 @@ const QrModal = ({
   location,
   ticketName,
   price,
-  isApproved,
+  orderStatus,
   isCheckIn,
   isCountdownChecked,
+  remainDays,
+
   onClick,
 }: QrModalProps) => {
   const formattedPrice = price.toLocaleString();
@@ -57,7 +60,7 @@ const QrModal = ({
         <div className={`${flexColumn} justify-start px-6 ${isChecked ? '' : 'opacity-50'}`}>
           <div className={`${flexRowSpaceBetweenCenter} w-full mt-[22%]`}>
             <h1 className="truncate max-w-48 mr-2 font-semibold">{title}</h1>
-            <Countdown children={`${isCountdownChecked ? 'D-5' : '완료'}`} isChecked={isCountdownChecked} />
+            <Countdown children={remainDays} isChecked={isCountdownChecked} />
           </div>
           <h2 className="text-deDayTextDark text-xs font-medium mb-2">{hostName}</h2>
           <div className="space-y-1 text-deDayTextDark">
@@ -84,7 +87,7 @@ const QrModal = ({
             <IconText
               size="xSmall"
               iconPath={<img src={qr_check} alt="qr_check" />}
-              children={isApproved ? '승인 됨' : '승인 안됨'}
+              children={orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
               className="text-11"
             ></IconText>
             <IconText

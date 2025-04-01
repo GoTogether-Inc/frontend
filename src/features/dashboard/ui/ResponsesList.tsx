@@ -2,7 +2,7 @@ import { useResponseStore } from '../model/ResponseStore';
 import { responsesInfo } from '../../../shared/types/responseType';
 import ResponseFilter from './ResponseFilter';
 import SelectedResponseList from './SelectedResponseList';
-import { createFieldMappings } from '../../lib/createFieldMappings';
+import { createFieldMappings } from '../../../shared/lib/createFieldMappings';
 import { useEffect } from 'react';
 
 interface ResponsesListProps {
