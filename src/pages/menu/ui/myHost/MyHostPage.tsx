@@ -4,10 +4,10 @@ import ProfileCircle from '../../../../../design-system/ui/Profile';
 import { trendingEvents } from '../../../../shared/types/eventCardType';
 import EventCard from '../../../../shared/ui/EventCard';
 import { useState } from 'react';
-import { useMyHost } from '../../../../widgets/menu/hook/useMyHostHook';
+import useHostChannelList from '../../../../entities/hook/useHostChannelListHook';
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
-  const { data } = useMyHost();
+  const { data } = useHostChannelList();
 
   const handleProfileClick = (hostId: number) => {
     setSelectedHostId(hostId);
