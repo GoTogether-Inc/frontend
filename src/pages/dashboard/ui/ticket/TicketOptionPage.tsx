@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
@@ -29,7 +29,13 @@ const TicketOptionPage = () => {
   const location = useLocation();
   const answerToggled = location.state?.answerToggled;
   const responseFormat = location.state?.responseFormat;
-  const [data, setData] = useState<Data>({
+  const newOption = location.state?.newOption;
+
+  // localStorage에서 저장된 데이터 가져오기
+  const savedData = localStorage.getItem('ticketOptions');
+
+  // 기본 초기 데이터
+  const defaultData: Data = {
     options: {
       'option-1': { id: 'option-1', content: '티셔츠 사이즈' },
       'option-2': { id: 'option-2', content: '음식 선호도' },
@@ -50,7 +56,33 @@ const TicketOptionPage = () => {
       },
     },
     dragAreaOrder: ['options', 'ticket'],
-  });
+  };
+
+  // localStorage에 저장된 데이터가 있으면 사용, 없으면 기본값 사용
+  let initialData: Data = savedData ? JSON.parse(savedData) : defaultData;
+
+  // 새로운 옵션이 있고, 이미 존재하지 않는 경우에만 추가
+  if (newOption && !initialData.options[newOption.id]) {
+    initialData = {
+      ...initialData,
+      options: {
+        ...initialData.options,
+        [newOption.id]: newOption,
+      },
+      dragAreas: {
+        ...initialData.dragAreas,
+        options: {
+          ...initialData.dragAreas.options,
+          optionIds: [...initialData.dragAreas.options.optionIds, newOption.id],
+        },
+      },
+    };
+
+    // 업데이트된 데이터를 localStorage에 저장
+    localStorage.setItem('ticketOptions', JSON.stringify(initialData));
+  }
+
+  const [data, setData] = useState<Data>(initialData);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
@@ -109,6 +141,22 @@ const TicketOptionPage = () => {
     }
   };
 
+  // useEffect에서 location.state가 바뀌었을 때만 실행되도록 수정
+  useEffect(() => {
+    // 데이터가 변경될 때 localStorage에 저장
+    localStorage.setItem('ticketOptions', JSON.stringify(data));
+  }, [data]);
+
+  // newOption 상태를 초기화 (페이지 이동 후 돌아올 때 중복 추가 방지)
+  useEffect(() => {
+    if (location.state && location.state.newOption) {
+      // state에서 newOption 제거
+      const newState = { ...location.state };
+      delete newState.newOption;
+      navigate(location.pathname, { state: newState, replace: true });
+    }
+  }, []);
+
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="mt-8 px-7">
@@ -120,8 +168,7 @@ const TicketOptionPage = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           {/* 옵션 영역 */}
           <div className="mb-8">
-            <IconText iconPath={<img src={Option} alt="추가 버튼" />} children="옵션" 
-            className='font-bold pl-2'/>
+            <IconText iconPath={<img src={Option} alt="추가 버튼" />} children="옵션" className="font-bold pl-2" />
             <div className="my-2">
               <DragArea
                 data={data}
@@ -137,8 +184,7 @@ const TicketOptionPage = () => {
           {/* 티켓 영역 */}
           <div>
             <div className="flex items-center mb-2">
-              <IconText iconPath={<img src={Ticket} alt="추가 버튼" />} children="티켓" 
-            className='font-bold pl-2'/>
+              <IconText iconPath={<img src={Ticket} alt="추가 버튼" />} children="티켓" className="font-bold pl-2" />
             </div>
             <div className="w-1/2 p-2 bg-main bg-opacity-5 rounded-lg">
               <div className="flex flex-row justify-between items-end">
@@ -147,7 +193,13 @@ const TicketOptionPage = () => {
                   설문 {Object.keys(data.dragAreas.ticket.optionIds).length}개
                 </p>
               </div>
-              <DragArea data={data} setData={setData} droppableId="ticket" answerToggled={answerToggled} responseFormat={responseFormat} />
+              <DragArea
+                data={data}
+                setData={setData}
+                droppableId="ticket"
+                answerToggled={answerToggled}
+                responseFormat={responseFormat}
+              />
             </div>
           </div>
         </DragDropContext>

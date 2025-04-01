@@ -11,8 +11,6 @@ import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButt
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import Button from '../../../../../design-system/ui/Button';
 
-
-
 const TicketOptionCreatePage = () => {
   const navigate = useNavigate();
   const [answerToggled, setAnswerToggled] = useState(false);
@@ -30,8 +28,10 @@ const TicketOptionCreatePage = () => {
   const [options, setOptions] = useState<string[]>(Array(3).fill(''));
   const [warningMsg, setWarningMsg] = useState('');
   const [warningMsg2, setWarningMsg2] = useState('');
+  const [warningMsg3, setWarningMsg3] = useState('');
   const [selectedChip, setSelectedChip] = useState('객관식');
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const [questionTitle, setQuestionTitle] = useState('');
 
   const handleAnswerToggled = () => {
     setAnswerToggled(prev => !prev);
@@ -105,6 +105,44 @@ const TicketOptionCreatePage = () => {
     });
   };
 
+  const handleSave = () => {
+    let isValid = true;
+
+    // 질문 유효성 검사
+    if (questionTitle.trim() === '') {
+      setWarningMsg3('질문을 입력해주세요.');
+      isValid = false;
+    }
+
+    // 객관식 & 여러개 선택 옵션 유효성 검사
+    if (selectedChip === '객관식' || selectedChip === '여러개 선택') {
+      const hasValidOption = options.some(opt => opt.trim() !== '');
+      if (!hasValidOption) {
+        setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
+        isValid = false;
+      }
+    }
+
+    if (isValid) {
+      const newOptionId = `option-${Date.now()}`;
+
+      const newOption = {
+        id: newOptionId,
+        content: questionTitle,
+      };
+
+      navigate('/dashboard/ticket/option', {
+        state: {
+          answerToggled,
+          responseFormat: selectedChip,
+          newOption: newOption,
+        },
+      });
+    } else {
+      window.alert('필수 입력 사항을 확인해주세요');
+    }
+  };
+
   {
     /*선택지 입력 시 경고 메시지 제거*/
   }
@@ -131,6 +169,13 @@ const TicketOptionCreatePage = () => {
     }
   }, [optionsConfig]);
 
+  /*질문 입력시 경고 메시지 제거*/
+  useEffect(() => {
+    if (questionTitle.trim() !== '') {
+      setWarningMsg3('');
+    }
+  }, [questionTitle]);
+
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="mt-8 px-7">
@@ -145,6 +190,7 @@ const TicketOptionCreatePage = () => {
             detail="티켓을 잘 지어낼 수 있는 질문을 써보세요. (무료 입장권, 얼리버드, 학생 전용 등)"
             className="h-12 mb-5"
             detailClassName="px-0"
+            onChange={e => setQuestionTitle(e.target.value)}
           />
         </div>
 
@@ -169,7 +215,7 @@ const TicketOptionCreatePage = () => {
               onSelect={selected => {
                 setSelectedChip(selected);
               }}
-              buttonClassName={"!text-xs"}
+              buttonClassName={'!text-xs'}
             />
           </div>
         </div>
@@ -187,9 +233,9 @@ const TicketOptionCreatePage = () => {
           </div>
         </div>
 
-        {/*설문지 입력란*/}
+        {/*옵션 입력란*/}
         <div>
-          {(selectedChip === '객관식' || selectedChip === '여러 개 선택') && (
+          {(selectedChip === '객관식' || selectedChip === '여러개 선택') && (
             <>
               <p className="block text-m font-semibold text-gray-700">옵션</p>
               <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
@@ -248,26 +294,27 @@ const TicketOptionCreatePage = () => {
                   )}
                 </React.Fragment>
               ))}
+              <div className="w-full">
+                <TertiaryButton
+                  label="+ 선택지 추가하기"
+                  type="button"
+                  color="black"
+                  size="large"
+                  onClick={handleAddOption}
+                  className="w-full border border-dashed border-gray-500 my-1.5"
+                />
+              </div>
             </>
           )}
           {selectedChip === '자유로운 텍스트' && <div></div>} {/*수정해야할 부분*/}
         </div>
 
-        <div className="w-full">
-          <TertiaryButton
-            label="+ 선택지 추가하기"
-            type="button"
-            color="black"
-            size="large"
-            onClick={handleAddOption}
-            className="w-full border border-dashed border-gray-500 my-1.5"
-          />
-        </div>
-
         <div className="w-full mt-14 mb-20">
           <Button
             label="저장하기"
-            onClick={() => navigate('/dashboard/ticket/option', { state: { answerToggled, responseFormat: selectedChip } })}
+            onClick={() => {
+              handleSave();
+            }}
             className="w-full h-12 rounded-full"
           />
         </div>

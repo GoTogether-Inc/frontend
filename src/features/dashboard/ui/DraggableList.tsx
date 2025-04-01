@@ -28,11 +28,11 @@ const DraggableList = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`pl-4 rounded border w-full h-[3.5rem] ${snapshot.isDragging ? 'bg-gray-100' : 'bg-white'}`}
+          className={`pl-3 rounded border w-full h-[3.5rem] ${snapshot.isDragging ? 'bg-gray-100' : 'bg-white'}`}
         >
           {droppableId === 'options' ? (
             <div className="h-full flex justify-between items-center">
-              {content}
+              {content.length > 6 ? content.slice(0, 6) + '...' : content}
               <div className="flex flex-col justify-center items-center h-full text-placeholderText text-13">
                 {answerToggled && <div className="flex items-center justify-center">필수응답</div>}
                 <div className="flex items-center justify-center">{responseFormat}</div>
@@ -42,9 +42,11 @@ const DraggableList = ({
           ) : (
             <div className="h-full flex flex-row justify-between items-start">
               <div className="h-full flex flex-col justify-center">
-                {content}
+                {content.length > 8 ? content.slice(0, 8) + '...' : content}
                 <div className="flex flex-row text-placeholderText text-13">
-                  {answerToggled && <div>필수응답</div>}
+                  {answerToggled && (
+                    <div className="mr-1">필수응답{responseFormat ? "," : ""}</div>
+                  )}
                   {responseFormat}
                 </div>
               </div>
