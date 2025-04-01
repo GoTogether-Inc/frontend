@@ -35,6 +35,7 @@ const MyHostPage = () => {
         {hostDetail?.result?.events?.map(event => (
           <EventCard
             key={event.id}
+            id={event.id}
             img={event.bannerImageUrl}
             eventTitle={event.title}
             // dDay={event.dDay}
