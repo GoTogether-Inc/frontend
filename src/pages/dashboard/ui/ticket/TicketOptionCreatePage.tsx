@@ -11,11 +11,20 @@ import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButt
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import Button from '../../../../../design-system/ui/Button';
 
+// 인터페이스 정의 추가
+interface OptionConfig {
+  limitToggled: boolean;
+  numActivated: boolean;
+  quantity: string;
+}
+
 const TicketOptionCreatePage = () => {
   const navigate = useNavigate();
   const [answerToggled, setAnswerToggled] = useState(false);
 
-  const [optionsConfig, setOptionsConfig] = useState(
+  // 객관식 옵션
+  const [singleOptions, setSingleOptions] = useState<string[]>(Array(3).fill(''));
+  const [singleOptionsConfig, setSingleOptionsConfig] = useState(
     Array(3)
       .fill(null)
       .map(() => ({
@@ -25,7 +34,18 @@ const TicketOptionCreatePage = () => {
       }))
   );
 
-  const [options, setOptions] = useState<string[]>(Array(3).fill(''));
+  // 여러개 선택 옵션
+  const [multiOptions, setMultiOptions] = useState<string[]>(Array(3).fill(''));
+  const [multiOptionsConfig, setMultiOptionsConfig] = useState(
+    Array(3)
+      .fill(null)
+      .map(() => ({
+        limitToggled: false,
+        numActivated: true,
+        quantity: '',
+      }))
+  );
+
   const [warningMsg, setWarningMsg] = useState('');
   const [warningMsg2, setWarningMsg2] = useState('');
   const [warningMsg3, setWarningMsg3] = useState('');
@@ -33,12 +53,62 @@ const TicketOptionCreatePage = () => {
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [questionTitle, setQuestionTitle] = useState('');
 
+  // 현재 활성화된 옵션과 설정 가져오기 (선택된 타입에 따라)
+  /*get function*/
+  const getActiveOptions = () => {
+    return selectedChip === '객관식' ? singleOptions : multiOptions;
+  };
+
+  const getActiveOptionsConfig = () => {
+    return selectedChip === '객관식' ? singleOptionsConfig : multiOptionsConfig;
+  };
+
+  /*set function*/
+  const setActiveOptions = (newOptionsOrUpdater: string[] | ((prev: string[]) => string[])) => {
+    if (typeof newOptionsOrUpdater === 'function') {
+      // 함수가 전달된 경우 (updater function)
+      const updaterFn = newOptionsOrUpdater;
+      if (selectedChip === '객관식') {
+        setSingleOptions(prev => updaterFn(prev));
+      } else {
+        setMultiOptions(prev => updaterFn(prev));
+      }
+    } else {
+      // 직접 값이 전달된 경우
+      if (selectedChip === '객관식') {
+        setSingleOptions(newOptionsOrUpdater);
+      } else {
+        setMultiOptions(newOptionsOrUpdater);
+      }
+    }
+  };
+
+  const setActiveOptionsConfig = (newConfigOrUpdater: OptionConfig[] | ((prev: OptionConfig[]) => OptionConfig[])) => {
+    if (typeof newConfigOrUpdater === 'function') {
+      // 함수가 전달된 경우 (updater function)
+      const updaterFn = newConfigOrUpdater;
+      if (selectedChip === '객관식') {
+        setSingleOptionsConfig(prev => updaterFn(prev));
+      } else {
+        setMultiOptionsConfig(prev => updaterFn(prev));
+      }
+    } else {
+      // 직접 값이 전달된 경우
+      if (selectedChip === '객관식') {
+        setSingleOptionsConfig(newConfigOrUpdater);
+      } else {
+        setMultiOptionsConfig(newConfigOrUpdater);
+      }
+    }
+  };
+
+  /*handler function*/
   const handleAnswerToggled = () => {
-    setAnswerToggled(prev => !prev);
+    setAnswerToggled((prev: boolean) => !prev);
   };
 
   const handleLimitToggled = (index: number) => {
-    setOptionsConfig(prev => {
+    setActiveOptionsConfig((prev: OptionConfig[]) => {
       const updated = [...prev];
       const option = updated[index];
 
@@ -56,15 +126,15 @@ const TicketOptionCreatePage = () => {
     /*선택지 삭제*/
   }
   const handleClearOption = (index: number) => {
-    setOptions(prev => prev.filter((_, i) => i !== index));
-    setOptionsConfig(prev => prev.filter((_, i) => i !== index));
+    setActiveOptions((prev: string[]) => prev.filter((_, i) => i !== index));
+    setActiveOptionsConfig((prev: OptionConfig[]) => prev.filter((_, i) => i !== index));
   };
 
   {
     /*선택지 추가*/
   }
   const handleAddOption = () => {
-    setOptions(prev => {
+    setActiveOptions((prev: string[]) => {
       const updated = [...prev, ''];
 
       if (updated.length > 1) {
@@ -73,7 +143,7 @@ const TicketOptionCreatePage = () => {
       return updated;
     });
 
-    setOptionsConfig(prev => [
+    setActiveOptionsConfig((prev: OptionConfig[]) => [
       ...prev,
       {
         limitToggled: false,
@@ -87,13 +157,15 @@ const TicketOptionCreatePage = () => {
     /*선택지 입력 업데이트*/
   }
   const handleInputChange = (index: number, value: string) => {
-    const updateOptions = [...options];
-    updateOptions[index] = value;
-    setOptions(updateOptions);
+    setActiveOptions((prev: string[]) => {
+      const updated = [...prev];
+      updated[index] = value;
+      return updated;
+    });
   };
 
   const handleQuantityChange = (index: number, value: string) => {
-    setOptionsConfig(prev => {
+    setActiveOptionsConfig((prev: OptionConfig[]) => {
       const updated = [...prev];
 
       // 토글 ON일 때만 수정 허용
@@ -116,7 +188,7 @@ const TicketOptionCreatePage = () => {
 
     // 객관식 & 여러개 선택 옵션 유효성 검사
     if (selectedChip === '객관식' || selectedChip === '여러개 선택') {
-      const hasValidOption = options.some(opt => opt.trim() !== '');
+      const hasValidOption = getActiveOptions().some(opt => opt.trim() !== '');
       if (!hasValidOption) {
         setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
         isValid = false;
@@ -147,27 +219,29 @@ const TicketOptionCreatePage = () => {
     /*선택지 입력 시 경고 메시지 제거*/
   }
   useEffect(() => {
-    const hasValidOption = options.some(opt => opt.trim() !== '');
+    const activeOptions = getActiveOptions();
+    const hasValidOption = activeOptions.some(opt => opt.trim() !== '');
 
     if (!hasValidOption) {
       setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
     } else {
       setWarningMsg('');
     }
-  }, [options]);
+  }, [singleOptions, multiOptions, selectedChip]);
 
   {
     /*수량 입력 시 경고 메시지 제거*/
   }
   useEffect(() => {
-    const hasEmptyQuantity = optionsConfig.some(config => config.limitToggled && config.quantity.trim() === '');
+    const activeOptionsConfig = getActiveOptionsConfig();
+    const hasEmptyQuantity = activeOptionsConfig.some(config => config.limitToggled && config.quantity.trim() === '');
 
     if (hasEmptyQuantity) {
       setWarningMsg2('수량을 입력해주세요.');
     } else {
       setWarningMsg2('');
     }
-  }, [optionsConfig]);
+  }, [singleOptionsConfig, multiOptionsConfig, selectedChip]);
 
   /*질문 입력시 경고 메시지 제거*/
   useEffect(() => {
@@ -214,6 +288,10 @@ const TicketOptionCreatePage = () => {
               options={['객관식', '여러개 선택', '자유로운 텍스트']}
               onSelect={selected => {
                 setSelectedChip(selected);
+                // 선택 변경 시 에러 메시지 초기화
+                setWarningMsg('');
+                setWarningMsg2('');
+                setFocusedIndex(null);
               }}
               buttonClassName={'!text-xs'}
             />
@@ -240,7 +318,7 @@ const TicketOptionCreatePage = () => {
               <p className="block text-m font-semibold text-gray-700">옵션</p>
               <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
               {warningMsg && <p className="text-red-500 text-xs mb-2">{warningMsg}</p>}
-              {options.map((option, index) => (
+              {getActiveOptions().map((option, index) => (
                 <React.Fragment key={index}>
                   {' '}
                   {/*index 값 공유*/}
@@ -264,7 +342,7 @@ const TicketOptionCreatePage = () => {
                     <p className="mt-1 text-red-500 text-xs">이름을 입력해주세요.</p>
                   )}
                   {/*인풋 박스 클릭하거나 입력된 내용이 있을 때*/}
-                  {(focusedIndex === index || option || optionsConfig[index].limitToggled) && (
+                  {(focusedIndex === index || option || getActiveOptionsConfig()[index].limitToggled) && (
                     <>
                       <div className="block bg-gray-100 rounded-[3px] my-3 p-4">
                         <div className="flex items-center justify-between ">
@@ -275,15 +353,15 @@ const TicketOptionCreatePage = () => {
                             </p>
                           </div>
                           <ToggleButton
-                            isChecked={optionsConfig[index].limitToggled}
+                            isChecked={getActiveOptionsConfig()[index].limitToggled}
                             onChange={() => handleLimitToggled(index)}
                           />
                         </div>
                         <div className="w-24">
                           <DefaultTextField
                             placeholder="0"
-                            value={optionsConfig[index].quantity}
-                            disabled={!optionsConfig[index].limitToggled} // 토글 OFF면 수정 불가
+                            value={getActiveOptionsConfig()[index].quantity}
+                            disabled={!getActiveOptionsConfig()[index].limitToggled} // 토글 OFF면 수정 불가
                             onChange={e => handleQuantityChange(index, e.target.value)}
                             className="h-10 !w-24 mt-1"
                           />
