@@ -21,7 +21,7 @@ interface QrModalProps {
   orderStatus: string; // 티켓 승인 여부
   isCheckIn: boolean; // 참가자 체크인 여부
   isCountdownChecked: boolean;
-  remainDays: "진행중" | "D-1" | "D-7" | "false"; //d-day
+  remainDays: string; //d-day
   onClick: () => void;
 }
 
