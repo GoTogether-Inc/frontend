@@ -20,7 +20,7 @@ type Ticket = {
   startDate: string;
   ticketName: string;
   orderStatus: "COMPLETED" | "PENDING" | "CANCELED";
-  remainDays: "진행중" | "D-1" | "D-7" | "false";
+  remainDays: string;
   ticketPrice: number;
   ticketQrCode: string;
   checkIn: boolean;
