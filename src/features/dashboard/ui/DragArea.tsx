@@ -44,7 +44,7 @@ const DragArea = ({
   const isTicketArea = droppableId === 'ticket';
 
   const handleDelete = (id: string) => {
-    if(isTicketArea) {
+    if (isTicketArea) {
       setData(prev => ({
         ...prev,
         dragAreas: {
@@ -69,7 +69,7 @@ const DragArea = ({
               isOptionsArea
                 ? 'h-80 grid grid-cols-2 gap-2 grid-flow-row content-start'
                 : isTicketArea
-                ? 'h-48 bg-opacity-5 flex flex-col gap-2 overflow-y-auto [&>*]:flex-shrink-0'
+                ? 'h-48 bg-opacity-5 flex flex-col gap-2 overflow-y-auto [&>*]:flex-shrink-0 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent hover:scrollbar-thumb-gray-300'
                 : 'h-80 grid grid-cols-2 gap-2 grid-flow-row content-start'
             }`}
           >
