@@ -5,6 +5,7 @@ import dateImg from '../../../public/assets/event-manage/details/Date.svg';
 import locationImg from '../../../public/assets/event-manage/details/Location.svg'
 
 interface EventCardProps {
+  id: number;
   img: string;
   eventTitle: string;
   dDay?: string;
@@ -16,7 +17,7 @@ interface EventCardProps {
   children?: React.ReactNode;
 }
 
-const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags, onClick, children }: EventCardProps) => {
+const EventCard = ({ id, img, eventTitle, dDay, host, eventDate, location, hashtags, onClick }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -66,7 +67,7 @@ const EventCard = ({ img, eventTitle, dDay, host, eventDate, location, hashtags,
             size="small"
             onClick={event => {
               event?.stopPropagation();
-              navigate('/dashboard');
+              navigate(`/dashboard/${id}`);
             }}
             className="w-31.5 md:w-33 mt-2"
           />
