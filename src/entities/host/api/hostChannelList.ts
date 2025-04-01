@@ -1,4 +1,4 @@
-import { axiosClient } from '../../shared/types/api/http-client';
+import { axiosClient } from '../../../shared/types/api/http-client';
 import { HostChannelListResponse } from '../model/hostChannelList';
 
 const hostChannelList = async () => {

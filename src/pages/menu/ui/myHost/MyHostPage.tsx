@@ -4,7 +4,7 @@ import ProfileCircle from '../../../../../design-system/ui/Profile';
 import { trendingEvents } from '../../../../shared/types/eventCardType';
 import EventCard from '../../../../shared/ui/EventCard';
 import { useState } from 'react';
-import useHostChannelList from '../../../../entities/hook/useHostChannelListHook';
+import useHostChannelList from '../../../../entities/host/hook/useHostChannelListHook';
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
   const { data } = useHostChannelList();
