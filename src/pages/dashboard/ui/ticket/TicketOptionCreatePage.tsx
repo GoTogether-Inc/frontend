@@ -1,6 +1,6 @@
 import React from 'react';
 // import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Trash from '../../../../../design-system/icons/Trash.svg';
@@ -20,7 +20,20 @@ interface OptionConfig {
 
 const TicketOptionCreatePage = () => {
   const navigate = useNavigate();
-  const [answerToggled, setAnswerToggled] = useState(false);
+  const location = useLocation();
+
+  const isEditing = location.state?.isEditing || false;
+  const editOption = location.state?.editOption;
+
+  const [warningMsg, setWarningMsg] = useState('');
+  const [warningMsg2, setWarningMsg2] = useState('');
+  const [warningMsg3, setWarningMsg3] = useState('');
+
+  const [questionTitle, setQuestionTitle] = useState(editOption?.content || '');
+  const [answerToggled, setAnswerToggled] = useState(editOption?.answerToggled || false);
+  const [selectedChip, setSelectedChip] = useState(editOption?.responseFormat || '객관식');
+
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   // 객관식 옵션
   const [singleOptions, setSingleOptions] = useState<string[]>(Array(3).fill(''));
@@ -45,13 +58,6 @@ const TicketOptionCreatePage = () => {
         quantity: '',
       }))
   );
-
-  const [warningMsg, setWarningMsg] = useState('');
-  const [warningMsg2, setWarningMsg2] = useState('');
-  const [warningMsg3, setWarningMsg3] = useState('');
-  const [selectedChip, setSelectedChip] = useState('객관식');
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [questionTitle, setQuestionTitle] = useState('');
 
   // 현재 활성화된 옵션과 설정 가져오기 (선택된 타입에 따라)
   /*get function*/
@@ -126,7 +132,20 @@ const TicketOptionCreatePage = () => {
     /*선택지 삭제*/
   }
   const handleClearOption = (index: number) => {
-    setActiveOptions((prev: string[]) => prev.filter((_, i) => i !== index));
+    const activeOptions = getActiveOptions();
+
+    // 선택지가 1개일 때는 삭제 불가하고 경고 메시지 표시
+    if (activeOptions.length <= 1) {
+      setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
+      return;
+    }
+
+    setActiveOptions((prev: string[]) => {
+      const updated = prev.filter((_, i) => i !== index);
+      setWarningMsg(''); // 삭제 후 경고 메시지 제거
+      return updated;
+    });
+
     setActiveOptionsConfig((prev: OptionConfig[]) => prev.filter((_, i) => i !== index));
   };
 
@@ -160,6 +179,15 @@ const TicketOptionCreatePage = () => {
     setActiveOptions((prev: string[]) => {
       const updated = [...prev];
       updated[index] = value;
+
+      // 모든 선택지가 비어있는지 확인
+      const hasValidOption = updated.some(opt => opt.trim() !== '');
+      if (!hasValidOption) {
+        setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
+      } else {
+        setWarningMsg('');
+      }
+
       return updated;
     });
   };
@@ -184,8 +212,6 @@ const TicketOptionCreatePage = () => {
     if (questionTitle.trim() === '') {
       setWarningMsg3('질문을 입력해주세요.');
       isValid = false;
-
-      // 오류가 있는 field로 스크롤 이동
       document.querySelector('.질문-입력란')?.scrollIntoView({ behavior: 'smooth' });
     } else {
       setWarningMsg3('');
@@ -193,7 +219,8 @@ const TicketOptionCreatePage = () => {
 
     // 객관식 & 여러개 선택 옵션 유효성 검사
     if (selectedChip === '객관식' || selectedChip === '여러개 선택') {
-      const hasValidOption = getActiveOptions().some(opt => opt.trim() !== '');
+      const activeOptions = getActiveOptions();
+      const hasValidOption = activeOptions.some(opt => opt.trim() !== '');
       if (!hasValidOption) {
         setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
         isValid = false;
@@ -203,11 +230,16 @@ const TicketOptionCreatePage = () => {
     }
 
     if (isValid) {
-      const newOptionId = `option-${Date.now()}`;
+      const newOptionId = isEditing ? editOption.id : `option-${Date.now()}`;
 
       const newOption = {
         id: newOptionId,
         content: questionTitle,
+        answerToggled,
+        responseFormat: selectedChip,
+        options: selectedChip === '객관식' ? singleOptions : selectedChip === '여러개 선택' ? multiOptions : [],
+        optionsConfig:
+          selectedChip === '객관식' ? singleOptionsConfig : selectedChip === '여러개 선택' ? multiOptionsConfig : [],
       };
 
       navigate('/dashboard/ticket/option', {
@@ -215,6 +247,7 @@ const TicketOptionCreatePage = () => {
           answerToggled,
           responseFormat: selectedChip,
           newOption: newOption,
+          isEditing: isEditing,
         },
       });
     } else {
@@ -257,6 +290,36 @@ const TicketOptionCreatePage = () => {
     }
   }, [questionTitle]);
 
+  // 옵션 리스트 수정 시 초기 설정
+  useEffect(() => {
+    if (isEditing && editOption) {
+      console.log('Editing mode:', editOption); // 디버깅용
+
+      // 기본 필드 설정
+      setQuestionTitle(editOption.content);
+      setAnswerToggled(editOption.answerToggled);
+      setSelectedChip(editOption.responseFormat);
+
+      // localStorage에서 전체 데이터 가져오기
+      const savedData = localStorage.getItem('ticketOptions');
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        const option = parsedData.options[editOption.id];
+
+        if (option) {
+          // 옵션 타입에 따라 적절한 상태 업데이트
+          if (option.responseFormat === '객관식') {
+            setSingleOptions(option.options || []);
+            setSingleOptionsConfig(option.optionsConfig || []);
+          } else if (option.responseFormat === '여러개 선택') {
+            setMultiOptions(option.options || []);
+            setMultiOptionsConfig(option.optionsConfig || []);
+          }
+        }
+      }
+    }
+  }, [isEditing, editOption]);
+
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="mt-8 px-7">
@@ -271,6 +334,7 @@ const TicketOptionCreatePage = () => {
             detail="티켓을 잘 지어낼 수 있는 질문을 써보세요. (무료 입장권, 얼리버드, 학생 전용 등)"
             className={`h-12 ${!warningMsg3 ? 'mb-5' : ''}`}
             detailClassName="px-0"
+            value={questionTitle}
             onChange={e => setQuestionTitle(e.target.value)}
           />
           {warningMsg3 && <p className="text-red-500 text-xs mt-1 mb-5">{warningMsg3}</p>}
@@ -336,7 +400,6 @@ const TicketOptionCreatePage = () => {
                     value={option}
                     onChange={e => handleInputChange(index, e.target.value)}
                     onFocus={() => setFocusedIndex(index)}
-                    // onBlur={() => setFocusedIndex(null)}
                     rightContent={
                       <IconButton
                         size="medium"
