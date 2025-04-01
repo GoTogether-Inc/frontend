@@ -7,7 +7,7 @@ import locationImg from '../../../public/assets/event-manage/details/Location.sv
 interface EventCardProps {
   img: string;
   eventTitle: string;
-  dDay: string;
+  dDay?: string;
   host: string;
   eventDate: string;
   location: string;
