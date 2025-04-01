@@ -72,7 +72,7 @@ const DragArea = ({
               );
             })}
             {ticketSurveyAddButton && isOptionsArea && (
-              <button className="col-span-1 flex items-center h-[3.5rem] bg-deDayBgLight rounded">
+              <div className="col-span-1 flex items-center h-[3.5rem] bg-deDayBgLight rounded">
                 <HorizontalCardButton
                   iconPath={<img src={AddButton2} alt="추가 버튼" />}
                   className="text-sm  !justify-start [&>div]:!justify-start"
@@ -81,7 +81,7 @@ const DragArea = ({
                     navigate('/dashboard/ticket/option/create');
                   }}
                 />
-              </button>
+              </div>
             )}
             {provided.placeholder}
           </div>
