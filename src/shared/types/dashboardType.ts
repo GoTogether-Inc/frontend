@@ -8,6 +8,8 @@ import tag from '../../../public/assets/dashboard/menu/Tag(black).svg';
 import clickedTag from '../../../public/assets/dashboard/menu/Tag(pink).svg';
 import ticket from '../../../public/assets/dashboard/menu/Ticket(black).svg';
 import clickedTicket from '../../../public/assets/dashboard/menu/Ticket(pink).svg';
+import option from '../../../public/assets/dashboard/ticket/option(black).svg';
+import clickedOption from '../../../public/assets/dashboard/ticket/option(pink).svg';
 import email from '../../../public/assets/dashboard/menu/Email(black).svg';
 import clickedEmail from '../../../public/assets/dashboard/menu/Email(pink).svg';
 import sentEmail from '../../../public/assets/dashboard/menu/SentMail(black).svg';
@@ -37,6 +39,7 @@ export interface dashboardData {
 export const getMenuLists = (id: string | number) => [
   { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/${id}` },
   { text: '이벤트 기본 정보', icon: eventInfo, clickedIcon: clickedEventInfo, path: `/dashboard/${id}/eventInfo` },
+  { text: '티켓에 추가 옵션 부착', icon: option, clickedIcon: clickedOption, path: '/dashboard/ticket/option' }, // icon, clickedIcon에 들어갈 .svg 알아보기
   {
     text: '이벤트 상세와 사진',
     icon: eventDetail,
