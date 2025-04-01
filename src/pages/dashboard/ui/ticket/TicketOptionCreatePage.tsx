@@ -184,6 +184,11 @@ const TicketOptionCreatePage = () => {
     if (questionTitle.trim() === '') {
       setWarningMsg3('질문을 입력해주세요.');
       isValid = false;
+
+      // 오류가 있는 field로 스크롤 이동
+      document.querySelector('.질문-입력란')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      setWarningMsg3('');
     }
 
     // 객관식 & 여러개 선택 옵션 유효성 검사
@@ -192,6 +197,8 @@ const TicketOptionCreatePage = () => {
       if (!hasValidOption) {
         setWarningMsg('최소 한 개 이상의 선택지를 만들어주세요.');
         isValid = false;
+      } else {
+        setWarningMsg('');
       }
     }
 
@@ -262,10 +269,11 @@ const TicketOptionCreatePage = () => {
           <DefaultTextField
             placeholder="티셔츠 사이즈를 선택해주세요."
             detail="티켓을 잘 지어낼 수 있는 질문을 써보세요. (무료 입장권, 얼리버드, 학생 전용 등)"
-            className="h-12 mb-5"
+            className={`h-12 ${!warningMsg3 ? 'mb-5' : ''}`}
             detailClassName="px-0"
             onChange={e => setQuestionTitle(e.target.value)}
           />
+          {warningMsg3 && <p className="text-red-500 text-xs mt-1 mb-5">{warningMsg3}</p>}
         </div>
 
         {/*상세 설명 입력란*/}
