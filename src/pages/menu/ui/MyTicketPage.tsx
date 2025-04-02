@@ -3,7 +3,6 @@ import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
 import { useEffect, useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
-import QRcode from '../../../../design-system/icons/QrCode.svg';
 import EventCard from '../../../shared/ui/EventCard';
 import { readMyTickets } from '../../../features/ticket/api/order';
 import completedImg from '../../../../public/assets/menu/Completed.svg';
@@ -86,7 +85,7 @@ const MyTicketPage = () => {
             <QrModal
               isChecked={true}
               iconPath1={<img src={QRbackground} alt="QRbackground" />}
-              iconPath2={<img src={QRcode} alt="QRcode" />}
+              ticketQrCode = {selectedTicket.ticketQrCode}
               title={selectedTicket.title}
               hostName={selectedTicket.hostChannelName}
               date={selectedTicket.startDate}
