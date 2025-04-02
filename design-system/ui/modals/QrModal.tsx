@@ -10,7 +10,7 @@ import qr_check from '../../icons/QrCheck.svg';
 interface QrModalProps {
   isChecked: boolean; // QR 상태
   iconPath1?: React.ReactElement; // 모달 배경 이미지
-  iconPath2?: React.ReactElement; // QR 이미지
+  ticketQrCode: string;
   className?: string;
   title: string; // 이벤트명
   hostName: string; // 주최명
@@ -28,7 +28,7 @@ interface QrModalProps {
 const QrModal = ({
   isChecked,
   iconPath1,
-  iconPath2,
+  ticketQrCode,
   className,
   title,
   hostName,
@@ -56,7 +56,9 @@ const QrModal = ({
     <div className={`${flexColumnCenter} h-screen ${className}`}>
       <div>
         {iconPath1 && <div className="w-full">{iconPath1}</div>}
-        {iconPath2 && <div className={`ml-[8%] -mt-[176%] ${isChecked ? '' : 'opacity-50'}`}>{iconPath2}</div>}
+        <div className={`ml-[5%] -mt-[180%] ${isChecked ? '' : 'opacity-50'}`}>
+          <img src={`data:image/png;base64,${ticketQrCode}`} alt="QR Code" className="w-60 h-60" />
+        </div>
         <div className={`${flexColumn} justify-start px-6 ${isChecked ? '' : 'opacity-50'}`}>
           <div className={`${flexRowSpaceBetweenCenter} w-full mt-[22%]`}>
             <h1 className="truncate max-w-48 mr-2 font-semibold">{title}</h1>
