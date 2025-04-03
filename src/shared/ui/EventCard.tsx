@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TertiaryButton from '../../../design-system/ui/buttons/TertiaryButton';
 import Countdown from '../../../design-system/ui/texts/Countdown';
 import dateImg from '../../../public/assets/event-manage/details/Date.svg';
-import locationImg from '../../../public/assets/event-manage/details/Location.svg'
+import locationImg from '../../../public/assets/event-manage/details/Location.svg';
 
 interface EventCardProps {
   id: number;
@@ -17,7 +17,18 @@ interface EventCardProps {
   children?: React.ReactNode;
 }
 
-const EventCard = ({ id, img, eventTitle, dDay, host, eventDate, location, hashtags, onClick }: EventCardProps) => {
+const EventCard = ({
+  id,
+  img,
+  eventTitle,
+  dDay,
+  host,
+  eventDate,
+  location,
+  hashtags,
+  onClick,
+  children,
+}: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
