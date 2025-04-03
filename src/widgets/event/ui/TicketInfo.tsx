@@ -53,20 +53,40 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
   };
 
   // 구매 API 호출
-  const orderTicket = async (ticketId: number, eventId: number, ticketCnt: number)=>{
+  const orderTicket = async (ticketId: number, eventId: number, ticketCnt: number) => {
     try {
       const requestData: OrderTicketRequest = {
         ticketId,
         eventId,
         ticketCnt,
       };
-
+  
       const response = await orderTickets(requestData);
   
+      console.log("API 응답:", response);
+  
       if (response.isSuccess) {
-        console.log("티켓 구매 성공:", response);
-        alert("티켓 구매가 완료되었습니다!");
-        navigate('/payment/ticket-confirm');
+        let orderIds: number[] = [];
+  
+        if (typeof response.result === "string") {
+  
+          const match = response.result.match(/\[.*?\]/);
+          if (match) {
+            orderIds = match[0]
+              .replace(/\[|\]/g, "")  
+              .split(",")            
+              .map((id: string) => Number(id.trim())); 
+          }
+
+          console.log(orderIds);
+        }
+        if (orderIds.length > 0) {
+          navigate('/payment/ticket-confirm', { state: { orderIds } });
+        } else {
+          console.error("orderId를 파싱할 수 없습니다.", response.result);
+          alert("주문 정보를 불러올 수 없습니다.");
+        }
+        
       } else {
         console.error("티켓 구매 실패:", response.message);
         alert(`구매 실패: ${response.message}`);
@@ -75,7 +95,8 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
       console.error("티켓 구매 중 오류 발생:", error);
       alert("티켓 구매 중 오류가 발생했습니다.");
     }
-  }
+  };
+  
   return (
     <div className="w-full h-full">
       {tickets.map(ticket => (
