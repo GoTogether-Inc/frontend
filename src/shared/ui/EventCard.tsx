@@ -62,7 +62,7 @@ const EventCard = ({
         {children}
         {/* 해시태그 */}
         <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
-          {hashtags.map((tag, index) => (
+          {(hashtags ?? []).map((tag, index) => (
             <span key={index} className="flex items-center justify-center h-6 px-2 mr-2 bg-gray-200 rounded last:mr-0">
               {tag}
             </span>

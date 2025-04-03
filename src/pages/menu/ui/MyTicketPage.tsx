@@ -11,19 +11,22 @@ import ticketImg from '../../../../public/assets/menu/Ticket.svg';
 
 type Ticket = {
   id: number;
-  eventId: number;
-  bannerImageUrl: string;
-  title: string;
-  hostChannelName: string;
-  address: string;
-  startDate: string;
-  ticketName: string;
-  orderStatus: "COMPLETED" | "PENDING" | "CANCELED";
-  remainDays: string;
-  ticketPrice: number;
+  event: {
+    id: number;
+    bannerImageUrl: string;
+    title: string;
+    hostChannelName: string;
+    address: string;
+    startDate: string;
+    remainDays: string;
+    hashtags: string[];
+    onlineType: "ONLINE" | "OFFLINE"; // onlineType 추가
+  };
   ticketQrCode: string;
+  ticketName: string;
+  ticketPrice: number;
+  orderStatus: "COMPLETED" | "PENDING" | "CANCELED";
   checkIn: boolean;
-  hashtags: [];
 };
 
 const MyTicketPage = () => {
@@ -36,6 +39,7 @@ const MyTicketPage = () => {
       try {
         const response = await readMyTickets.get(0, 10);
         setMyTickets(response.result || []);
+        console.log(response.result);
       } catch (error) {
         console.error("티켓 목록 불러오기 실패:", error);
       }
@@ -50,13 +54,13 @@ const MyTicketPage = () => {
         {myTickets.map((ticket, index) => (
           <EventCard
             key={index}
-            img={ticket.bannerImageUrl}
-            eventTitle={ticket.title}
-            dDay={ticket.remainDays}
-            host={ticket.hostChannelName}
-            eventDate={ticket.startDate}
-            location={ticket.address}
-            hashtags={ticket.hashtags}
+            img={ticket.event.bannerImageUrl}
+            eventTitle={ticket.event.title}
+            dDay={ticket.event.remainDays}
+            host={ticket.event.hostChannelName}
+            eventDate={ticket.event.startDate}
+            location={ticket.event.address}
+            hashtags={ticket.event.hashtags}
             onClick={() => {
               setSelectedTicket(ticket);
               setIsModalOpen(true);
@@ -86,16 +90,16 @@ const MyTicketPage = () => {
               isChecked={true}
               iconPath1={<img src={QRbackground} alt="QRbackground" />}
               ticketQrCode = {selectedTicket.ticketQrCode}
-              title={selectedTicket.title}
-              hostName={selectedTicket.hostChannelName}
-              date={selectedTicket.startDate}
-              location={selectedTicket.address}
+              title={selectedTicket.event.title}
+              hostName={selectedTicket.event.hostChannelName}
+              date={selectedTicket.event.startDate}
+              location={selectedTicket.event.address}
               ticketName={selectedTicket.ticketName}
               price={selectedTicket.ticketPrice}
               orderStatus={selectedTicket.orderStatus}
               isCheckIn={selectedTicket.checkIn}
               isCountdownChecked={true}
-              remainDays={selectedTicket.remainDays}
+              remainDays={selectedTicket.event.remainDays}
               onClick={() => setIsModalOpen(false)}
             />
           </div>
