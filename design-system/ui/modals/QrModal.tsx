@@ -68,19 +68,19 @@ const QrModal = ({
           <div className="space-y-1 text-deDayTextDark">
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_calendar} alt="qr_calendar" />}
+              iconPath={<img src={qr_calendar} alt="qr_calendar" className='mr-1'/>}
               children={formattedDate}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_location} alt="qr_location" />}
+              iconPath={<img src={qr_location} alt="qr_location" className='mr-1'/>}
               children={location}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_ticket} alt="qr_ticket" />}
+              iconPath={<img src={qr_ticket} alt="qr_ticket" className='mr-1'/>}
               children={ticketName}
               className="text-11"
             ></IconText>
@@ -88,13 +88,13 @@ const QrModal = ({
             <hr />
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_check} alt="qr_check" />}
+              iconPath={<img src={qr_check} alt="qr_check" className='mr-1'/>}
               children={orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_check} alt="qr_check" />}
+              iconPath={<img src={qr_check} alt="qr_check" className='mr-1'/>}
               children={isCheckIn ? '체크인 완료' : '체크인 미완료'}
               className="text-11"
             ></IconText>
