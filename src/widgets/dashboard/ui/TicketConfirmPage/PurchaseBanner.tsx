@@ -2,7 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import CheckIcon from '../../../../../public/assets/dashboard/ticket/checkIcon.svg';
 
-const PurchaseBanner = ({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
+interface PurchaseBannerPrpos {
+  title: string;
+  startDate: string;
+  startTime: string;
+  ticketName: string;
+  quantity: number;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const PurchaseBanner = ({ title,startDate, startTime, ticketName, quantity, setIsModalOpen }: PurchaseBannerPrpos) => {
   const navigate = useNavigate();
   //@TODO:api연동하면서 props 변경
 
@@ -18,14 +26,14 @@ const PurchaseBanner = ({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<Rea
       <div className="w-full h-3 bg-white clip-bottom-banner"></div>
       <div className="bg-white p-5 flex flex-col gap-5">
         <div>
-          <p className="text-pink-500 font-bold md:text-2xl text-xl">WOOACON 2024</p>
+          <p className="text-pink-500 font-bold md:text-2xl text-xl">{title}</p>
           <p className="text-gray-700 mt-5 flex gap-3">
             <span className="font-semibold text-gray-400">일정</span>
-            2025년 4월 24일, 14시 20분
+            {startDate}, {startTime}
           </p>
           <p className="text-gray-700 flex gap-3">
             <span className="font-semibold text-gray-400">상품</span>
-            일반 티켓, 2인
+            {ticketName}, {quantity}인
           </p>
         </div>
 
