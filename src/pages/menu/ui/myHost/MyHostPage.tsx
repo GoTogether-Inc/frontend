@@ -38,10 +38,10 @@ const MyHostPage = () => {
             id={event.id}
             img={event.bannerImageUrl}
             eventTitle={event.title}
-            // dDay={event.dDay}
+            dDay={event.remainDays}
             host={event.hostChannelName}
             eventDate={event.startDate}
-            location={event.address}
+            location={event.onlineType}
             hashtags={event.hashtags}
           />
         ))}

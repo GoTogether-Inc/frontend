@@ -5,7 +5,9 @@ interface Event {
   hostChannelName: string;
   startDate: string;
   address: string;
+  onlineType: string;
   hashtags: string[];
+  remainDays: string;
 }
 
 export interface HostDetailRequest {
