@@ -3,11 +3,15 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import { readTicket } from '../../../features/ticket/api/ticket';
 import { ReadTicket } from '../../../pages/dashboard/ui/ticket/TicketListPage';
+import { OrderTicketRequest } from '../../../features/ticket/model/OrderCreation';
+import { orderTickets } from '../../../features/ticket/api/order';
+import { useNavigate } from 'react-router-dom';
 
 const TicketInfo = ({ eventId }: { eventId: number }) => {
   const limitNum = 4;
   const [tickets, setTickets] = useState<ReadTicket[]>([]);
   const [quantity, setQuantity] = useState<{ [key: number]: number }>({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -48,6 +52,30 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
     }));
   };
 
+  // 구매 API 호출
+  const orderTicket = async (ticketId: number, eventId: number, ticketCnt: number)=>{
+    try {
+      const requestData: OrderTicketRequest = {
+        ticketId,
+        eventId,
+        ticketCnt,
+      };
+
+      const response = await orderTickets(requestData);
+  
+      if (response.isSuccess) {
+        console.log("티켓 구매 성공:", response);
+        alert("티켓 구매가 완료되었습니다!");
+        navigate('/payment/ticket-confirm');
+      } else {
+        console.error("티켓 구매 실패:", response.message);
+        alert(`구매 실패: ${response.message}`);
+      }
+    } catch (error) {
+      console.error("티켓 구매 중 오류 발생:", error);
+      alert("티켓 구매 중 오류가 발생했습니다.");
+    }
+  }
   return (
     <div className="w-full h-full">
       {tickets.map(ticket => (
@@ -78,7 +106,7 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
                   className="flex justify-center items-center bg-white w-6 h-6 md:w-7 md:h-7"
                 />
               </div>
-              <TertiaryButton label="구매하기" type="button" color="black" size="large" className="w-22 h-8" />
+              <TertiaryButton label="구매하기" type="button" color="black" size="large" className="w-22 h-8" onClick={() => orderTicket(ticket.ticketId, eventId, quantity[ticket.ticketId])} />
             </div>
           </div>
         </div>
