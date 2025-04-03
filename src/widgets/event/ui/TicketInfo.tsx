@@ -1,34 +1,57 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import { TicketMockData } from '../../../shared/types/ticketType';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
+import { readTicket } from '../../../features/ticket/api/ticket';
+import { ReadTicket } from '../../../pages/dashboard/ui/ticket/TicketListPage';
 
-const TicketInfo = () => {
+const TicketInfo = ({ eventId }: { eventId: number }) => {
   const limitNum = 4;
-  const [quantity, setQuantity] = useState(
-    TicketMockData.reduce((acc, ticket) => {
-      acc[ticket.eventId] = 1;
-      return acc;
-    }, {} as { [key: string]: number })
-  );
+  const [tickets, setTickets] = useState<ReadTicket[]>([]);
+  const [quantity, setQuantity] = useState<{ [key: number]: number }>({});
 
-  const handleIncrement = (eventId: number) => {
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const data = await readTicket.getAll(eventId);
+        if (data.isSuccess && Array.isArray(data.result)) {
+          setTickets(data.result);
+        } else {
+          setTickets([]);
+        }
+      } catch (error) {
+        console.error("티켓 데이터를 불러오는 중 오류 발생:", error);
+        setTickets([]);
+      }
+    };
+    fetchTickets();
+  }, [eventId]);
+  useEffect(() => {
+    if (tickets.length > 0) {
+      const initialQuantity: { [key: number]: number } = {};
+      tickets.forEach(ticket => {
+        initialQuantity[ticket.ticketId] = 1;
+      });
+      setQuantity(initialQuantity);
+    }
+  }, [tickets]);
+  const handleIncrement = (ticketId: number) => {
     setQuantity(prev => ({
       ...prev,
-      [eventId]: prev[eventId] < limitNum ? prev[eventId] + 1 : prev[eventId],
+      [ticketId]: prev[ticketId] < limitNum ? prev[ticketId] + 1 : prev[ticketId],
     }));
   };
-  const handleDecrement = (eventId: number) => {
+
+  const handleDecrement = (ticketId: number) => {
     setQuantity(prev => ({
       ...prev,
-      [eventId]: prev[eventId] > 1 ? prev[eventId] - 1 : prev[eventId],
+      [ticketId]: prev[ticketId] > 1 ? prev[ticketId] - 1 : prev[ticketId],
     }));
   };
 
   return (
     <div className="w-full h-full">
-      {TicketMockData.map(ticket => (
-        <div key={ticket.eventId} className="bg-gray1 px-3 py-3 md:px-6 md:py-4 rounded-[10px] mb-3">
+      {tickets.map(ticket => (
+        <div key={ticket.ticketId} className="bg-gray1 px-3 py-3 md:px-6 md:py-4 rounded-[10px] mb-3">
           <div className="flex justify-between items-center">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2 md:gap-4">
@@ -45,13 +68,13 @@ const TicketInfo = () => {
               <div className="flex gap-1 md:gap-2">
                 <TextButton
                   label="-"
-                  onClick={() => handleDecrement(ticket.eventId)}
+                  onClick={() => handleDecrement(ticket.ticketId)}
                   className="flex justify-center items-center bg-white w-6 h-6 md:w-7 md:h-7"
                 />
-                <span>{quantity[ticket.eventId]}</span>
+                <span>{quantity[ticket.ticketId]}</span>
                 <TextButton
                   label="+"
-                  onClick={() => handleIncrement(ticket.eventId)}
+                  onClick={() => handleIncrement(ticket.ticketId)}
                   className="flex justify-center items-center bg-white w-6 h-6 md:w-7 md:h-7"
                 />
               </div>
