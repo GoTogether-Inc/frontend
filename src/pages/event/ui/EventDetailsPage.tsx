@@ -15,6 +15,7 @@ import participantsImg from '../../../../public/assets/event-manage/details/Peop
 import dateImg from '../../../../public/assets/event-manage/details/Date.svg';
 import timeImg from '../../../../public/assets/event-manage/details/Time.svg';
 import locationImg from '../../../../public/assets/event-manage/details/Location.svg';
+import KakaoMap from '../../../shared/ui/KakaoMap';
 
 interface ReadEvent {
   id: number;
@@ -90,10 +91,10 @@ const EventDetailsPage = () => {
         rightContent={<img src={Search} alt="검색" className="w-4" />}
       />
       {event ? (
-      <>
-        <img src={event.bannerImageUrl} alt="이벤트 배너" className="w-full h-64 mb-6" />
-        <div className="flex flex-col gap-3 px-4 md:px-6">
-          
+        <>
+          <img src={event.bannerImageUrl} alt="이벤트 배너" className="w-full h-64 mb-6" />
+          <div className="flex flex-col gap-3 px-4 md:px-6">
+
             <div key={event.id} className="flex flex-col gap-2">
               <h1 className="text-xl md:text-2xl font-bold">{event.title}</h1>
               <div className="flex justify-between items-center gap-1">
@@ -128,30 +129,30 @@ const EventDetailsPage = () => {
               </div>
               <span className="text-sm md:text-base py-3">{event.description}</span>
             </div>
-         
 
-          <h2 className="font-bold text-xl">위치</h2>
-          <div className="w-full h-48 bg-gray2" />
 
-          <OrganizerInfo
+            <h2 className="font-bold text-xl">위치</h2>
+            <KakaoMap lat={event.location.lat} lng={event.location.lng} />
+
+            <OrganizerInfo
               name={event.hostChannelName}
               description={event.hostChannelDescription}
               phone={event.organizerPhoneNumber}
               email={event.organizerEmail}
             />
 
-          <h2 className="font-bold text-xl">티켓 옵션</h2>
-          <TicketInfo eventId={event.id}/>
+            <h2 className="font-bold text-xl">티켓 옵션</h2>
+            <TicketInfo eventId={event.id} />
 
-          <div className="flex flex-col gap-2">
-            <h2 className="font-bold text-xl">관련 링크</h2>
-            <div className="flex items-center gap-3 mb-4">
-              <img src={link} alt="링크 이모지" />
-              <span>공식 웹사이트</span>
+            <div className="flex flex-col gap-2">
+              <h2 className="font-bold text-xl">관련 링크</h2>
+              <div className="flex items-center gap-3 mb-4">
+                <img src={link} alt="링크 이모지" />
+                <span>공식 웹사이트</span>
+              </div>
             </div>
           </div>
-        </div>
-      </>
+        </>
       ) : (
         <div className="flex justify-center items-center h-screen">로딩 중...</div>
       )}
