@@ -81,7 +81,7 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
           console.log(orderIds);
         }
         if (orderIds.length > 0) {
-          navigate('/payment/ticket-confirm', { state: { orderIds } });
+          navigate('/payment/ticket-confirm', { state: { orderIds,ticketId, eventId } });
         } else {
           console.error("orderId를 파싱할 수 없습니다.", response.result);
           alert("주문 정보를 불러올 수 없습니다.");
