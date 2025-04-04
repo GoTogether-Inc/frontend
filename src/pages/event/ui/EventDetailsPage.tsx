@@ -80,7 +80,6 @@ const EventDetailsPage = () => {
     fetchEventDetail();
   }, []);
 
-
   return (
     <>
       <Header

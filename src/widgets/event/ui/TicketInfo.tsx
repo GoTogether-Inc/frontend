@@ -77,8 +77,6 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
               .split(",")            
               .map((id: string) => Number(id.trim())); 
           }
-
-          console.log(orderIds);
         }
         if (orderIds.length > 0) {
           navigate('/payment/ticket-confirm', { state: { orderIds,ticketId, eventId } });

@@ -6,7 +6,7 @@ import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
 import PurchaseBanner from '../../../../widgets/dashboard/ui/TicketConfirmPage/PurchaseBanner';
 import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
-import { readTicket } from '../../../../features/ticket/api/order';
+import { cancleTickets, readTicket } from '../../../../features/ticket/api/order';
 
 type Ticket = {
   id: number;
@@ -34,11 +34,12 @@ const TicketConfirmPage = () => {
   const eventId = location.state?.eventId;
   const ticketId = location.state?.ticketId;
 
+  console.log(ticketId, eventId, orderIds);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   useEffect(() => {
     const fetchOrderTicket = async () => {
       try {
-        const response = await readTicket(ticketId, eventId);
+        const response = await readTicket.getDetail(ticketId, eventId);
         setTicket(response.result || []);
       } catch (error) {
         console.error("구매한 티켓 정보 불러오기 실패:", error);
@@ -49,7 +50,16 @@ const TicketConfirmPage = () => {
   const handlePreviousButton = () => {
     navigate(-1);
   };
-
+  const cancleOrderTicket = async (orderIds: number[]) => {
+    for (const orderId of orderIds) {
+      try {
+        const response = await cancleTickets(orderId);
+        console.log("티켓 취소 API 응답:", response);
+      } catch (error) {
+        console.error(`orderId ${orderId} 취소 실패:`, error);
+      }
+    }
+  }
   return (
     <>
       <Header
@@ -65,23 +75,22 @@ const TicketConfirmPage = () => {
             <PurchaseBanner setIsModalOpen={setIsModalOpen} title={ticket.title} startDate={ticket.startDate} startTime={ticket.startTime} ticketName={ticket.ticketName} quantity={orderIds.length} />
             <OrganizerInfo name={ticket.hostChannelName} description={ticket.hostChannelDescription} phone={ticket.organizerPhoneNumber} email={ticket.organizerEmail} bgColor='bg-white' />
             <div className="p-5 bg-white flex flex-col gap-2 rounded-[10px]">
-            <p className="font-bold md:text-2xl text-xl">오시는 길</p>
-            <p>{ticket.eventAddress}</p>
-            <KakaoMap lat={ticket.location.lat} lng={ticket.location.lng} />
+              <p className="font-bold md:text-2xl text-xl">오시는 길</p>
+              <p>{ticket.eventAddress}</p>
+              <KakaoMap lat={ticket.location.lat} lng={ticket.location.lng} />
+            </div>
           </div>
-          </div>
-          
         </>
       ) : (
         <p className="text-center text-gray-500">티켓 정보를 불러오는 중...</p>
       )}
       {isModalOpen && (
         <EmailDeleteMoal
-          mainText="WOOACON 2024의 일반 티켓 2매 구매를 취소하시겠습니까?. 취소 후에는 복구가 불가능합니다."
+          mainText={`${ticket?.title}의 ${ticket?.ticketName} ${orderIds.length}매 구매를 취소하시겠습니까?. 취소 후에는 복구가 불가능합니다.`}
           approveButtonText="티켓 취소"
           rejectButtonText="뒤로가기"
           onClose={() => setIsModalOpen(false)}
-          onClick={() => navigate('/menu/myticket')}
+          onClick={() => { cancleOrderTicket(orderIds),navigate('/menu/myticket') }}
         />
       )}
     </>

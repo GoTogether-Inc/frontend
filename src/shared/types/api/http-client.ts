@@ -31,7 +31,9 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   (response: AxiosResponse) => {
     if (response.config.method === 'post' || response.config.method === 'put') {
-      console.log('서버로 전송된 데이터:', JSON.parse(response.config.data));
+      if (response.config.data) {
+        console.log('서버로 전송된 데이터:', JSON.parse(response.config.data));
+      }
     }
     return response;
   },

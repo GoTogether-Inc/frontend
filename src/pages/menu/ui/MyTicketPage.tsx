@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import EventCard from '../../../shared/ui/EventCard';
-import { readMyTickets } from '../../../features/ticket/api/order';
+import { readTicket } from '../../../features/ticket/api/order';
 import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
@@ -37,7 +37,7 @@ const MyTicketPage = () => {
   useEffect(() => {
     const fetchMyTickets = async () => {
       try {
-        const response = await readMyTickets.get(0, 10);
+        const response = await readTicket.getAll(0, 10);
         setMyTickets(response.result || []);
         console.log(response.result);
       } catch (error) {
