@@ -11,13 +11,18 @@ import { readTicket } from '../../../../features/ticket/api/order';
 type Ticket = {
   id: number;
   title: string;
-  hostChannelName: string;
-  eventAddress: string;
   startDate: string;
+  startTime: string;
+  ticketName: string;
+  ticketCnt: number;
+  hostChannelName: string;
+  hostChannelDescription: string;
+  organizerEmail: string;
+  organizerPhoneNumber: string;
+  eventAddress: string;
+  location: { lng: number, lat: number };
   remainDays: string;
   ticketQrCode: string;
-  ticketName: string;
-  ticketPrice: number;
   orderStatus: "COMPLETED" | "PENDING" | "CANCELED";
 };
 
@@ -26,13 +31,14 @@ const TicketConfirmPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const orderIds: number[] = location.state?.orderIds || [];
-  const orderId = orderIds[0];
+  const eventId = location.state?.eventId;
+  const ticketId = location.state?.ticketId;
 
   const [ticket, setTicket] = useState<Ticket | null>(null);
   useEffect(() => {
     const fetchOrderTicket = async () => {
       try {
-        const response = await readTicket(orderId);
+        const response = await readTicket(ticketId, eventId);
         setTicket(response.result || []);
       } catch (error) {
         console.error("구매한 티켓 정보 불러오기 실패:", error);
@@ -56,10 +62,15 @@ const TicketConfirmPage = () => {
       {ticket ? (
         <>
           <div className="bg-gray-100 p-3 min-h-screen flex flex-col gap-3">
-            <PurchaseBanner setIsModalOpen={setIsModalOpen} title={ticket.title} startDate={ticket.startDate} startTime={''} ticketName={ticket.ticketName} quantity={orderIds.length} />
-            <OrganizerInfo name={ticket.hostChannelName} description={'ss'} phone={'ss'} email={'ss'} bgColor='bg-white' />
-            <KakaoMap lat={0} lng={0} /> 
+            <PurchaseBanner setIsModalOpen={setIsModalOpen} title={ticket.title} startDate={ticket.startDate} startTime={ticket.startTime} ticketName={ticket.ticketName} quantity={orderIds.length} />
+            <OrganizerInfo name={ticket.hostChannelName} description={ticket.hostChannelDescription} phone={ticket.organizerPhoneNumber} email={ticket.organizerEmail} bgColor='bg-white' />
+            <div className="p-5 bg-white flex flex-col gap-2 rounded-[10px]">
+            <p className="font-bold md:text-2xl text-xl">오시는 길</p>
+            <p>{ticket.eventAddress}</p>
+            <KakaoMap lat={ticket.location.lat} lng={ticket.location.lng} />
           </div>
+          </div>
+          
         </>
       ) : (
         <p className="text-center text-gray-500">티켓 정보를 불러오는 중...</p>
