@@ -39,7 +39,6 @@ const MyTicketPage = () => {
       try {
         const response = await readTicket.getAll(0, 10);
         setMyTickets(response.result || []);
-        console.log(response.result);
       } catch (error) {
         console.error("티켓 목록 불러오기 실패:", error);
       }
@@ -53,6 +52,7 @@ const MyTicketPage = () => {
       <div className="grid grid-cols-2 gap-4 mx-6 mt-28 md:grid-cols-2 lg:grid-cols-2 pb-4">
         {myTickets.map((ticket) => (
           <EventCard
+            key={ticket.id}
             id={ticket.id}
             img={ticket.event.bannerImageUrl}
             eventTitle={ticket.event.title}
@@ -83,13 +83,13 @@ const MyTicketPage = () => {
         ))}
       </div>
 
-      {isModalOpen && selectedTicket &&(
+      {isModalOpen && selectedTicket && (
         <div className="fixed top-0 left-0 w-full h-full z-20">
           <div className="relative mx-auto w-full max-w-lg bg-black bg-opacity-30">
             <QrModal
               isChecked={true}
               iconPath1={<img src={QRbackground} alt="QRbackground" />}
-              ticketQrCode = {selectedTicket.ticketQrCode}
+              ticketQrCode={selectedTicket.ticketQrCode}
               title={selectedTicket.event.title}
               hostName={selectedTicket.event.hostChannelName}
               date={selectedTicket.event.startDate}
