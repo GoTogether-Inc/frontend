@@ -65,36 +65,20 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
   
       console.log("API 응답:", response);
   
-      if (response.isSuccess) {
-        let orderIds: number[] = [];
+      if (response.isSuccess && Array.isArray(response.result)) {
+        const orderIds = response.result;
   
-        if (typeof response.result === "string") {
-  
-          const match = response.result.match(/\[.*?\]/);
-          if (match) {
-            orderIds = match[0]
-              .replace(/\[|\]/g, "")  
-              .split(",")            
-              .map((id: string) => Number(id.trim())); 
-          }
-        }
-        if (orderIds.length > 0) {
-          navigate('/payment/ticket-confirm', { state: { orderIds,ticketId, eventId } });
-        } else {
-          console.error("orderId를 파싱할 수 없습니다.", response.result);
-          alert("주문 정보를 불러올 수 없습니다.");
-        }
-        
+        navigate('/payment/ticket-confirm', { state: { orderIds, ticketId, eventId } });
       } else {
-        console.error("티켓 구매 실패:", response.message);
-        alert(`구매 실패: ${response.message}`);
+        alert("주문 정보를 불러올 수 없습니다.");
       }
+  
     } catch (error) {
-      console.error("티켓 구매 중 오류 발생:", error);
       alert("티켓 구매 중 오류가 발생했습니다.");
     }
   };
   
+
   return (
     <div className="w-full h-full">
       {tickets.map(ticket => (

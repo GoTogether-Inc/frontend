@@ -34,7 +34,6 @@ const TicketConfirmPage = () => {
   const eventId = location.state?.eventId;
   const ticketId = location.state?.ticketId;
 
-  console.log(ticketId, eventId, orderIds);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   useEffect(() => {
     const fetchOrderTicket = async () => {
@@ -90,7 +89,7 @@ const TicketConfirmPage = () => {
           approveButtonText="티켓 취소"
           rejectButtonText="뒤로가기"
           onClose={() => setIsModalOpen(false)}
-          onClick={() => { cancleOrderTicket(orderIds),navigate('/menu/myticket') }}
+          onClick={() => { cancleOrderTicket(orderIds).then(() => { navigate('/menu/myticket'); }); }}
         />
       )}
     </>
