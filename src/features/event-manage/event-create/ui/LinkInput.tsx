@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import { useFunnelState } from '../model/FunnelContext';
 import AddButton from '../../../../../public/assets/event-manage/creation/AddBtn.svg';
 import CloseButton from '../../../../../public/assets/event-manage/creation/CloseBtn.svg';
 import Link from '../../../../../public/assets/event-manage/creation/Link.svg';
-import { FunnelState } from '../model/FunnelContext';
 
 interface LinkInputProps {
-  eventState?: FunnelState['eventState'];
-  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  useFunnel?: boolean;
 }
 
-const LinkInput = ({ eventState, setEventState }: LinkInputProps) => {
-  const [links, setLinks] = useState<{ title: string; url: string; address: string; detailAddress: string }[]>(
-    eventState?.referenceLinks || []
-  );
+interface Link {
+  title: string;
+  url: string;
+  address: string;
+  detailAddress: string;
+}
+
+const LinkInput = ({ useFunnel = false }: LinkInputProps) => {
+  const [links, setLinks] = useState<Link[]>([]);
+  const { setEventState } = useFunnelState();
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
@@ -27,35 +32,27 @@ const LinkInput = ({ eventState, setEventState }: LinkInputProps) => {
       address: '',
       detailAddress: '',
     };
-    setLinks([...links, newLink]);
-    setActiveInput({ field: null });
-    if (setEventState) {
-      setEventState(prev => ({
-        ...prev,
-        referenceLinks: [...prev.referenceLinks, newLink],
-      }));
+    const newLinks = [...links, newLink];
+    setLinks(newLinks);
+    if (useFunnel) {
+      setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
     }
   };
 
-  const removeLink = (title: string) => {
-    const updatedLinks = links.filter(link => link.title !== title);
-    setLinks(updatedLinks);
-    if (setEventState) {
-      setEventState(prev => ({
-        ...prev,
-        referenceLinks: updatedLinks,
-      }));
+  const removeLink = (index: number) => {
+    const newLinks = links.filter((_, i) => i !== index);
+    setLinks(newLinks);
+    if (useFunnel) {
+      setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
     }
   };
 
-  const updateLink = (title: string, field: 'url' | 'title', value: string) => {
-    const updatedLinks = links.map(link => (link.title === title ? { ...link, [field]: value } : link));
-    setLinks(updatedLinks);
-    if (setEventState) {
-      setEventState(prev => ({
-        ...prev,
-        referenceLinks: updatedLinks,
-      }));
+  const updateLink = (index: number, field: keyof Link, value: string) => {
+    const newLinks = [...links];
+    newLinks[index] = { ...newLinks[index], [field]: value };
+    setLinks(newLinks);
+    if (useFunnel) {
+      setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
     }
   };
 
@@ -77,7 +74,7 @@ const LinkInput = ({ eventState, setEventState }: LinkInputProps) => {
               <input
                 type="text"
                 value={link.title}
-                onChange={e => updateLink(link.title, 'title', e.target.value)}
+                onChange={e => updateLink(index, 'title', e.target.value)}
                 className="w-full min-w-[3rem] md:min-w-[6rem] h-8 text-placeholderText ml-1 outline-none bg-transparent text-sm md:text-base"
                 placeholder="참조링크"
                 autoFocus={activeInput.field === link.title && activeInput.field === 'title'}
@@ -94,7 +91,7 @@ const LinkInput = ({ eventState, setEventState }: LinkInputProps) => {
               <input
                 type="text"
                 value={link.url}
-                onChange={e => updateLink(link.title, 'url', e.target.value)}
+                onChange={e => updateLink(index, 'url', e.target.value)}
                 className="w-full min-w-[10rem] md:min-w-[15rem] h-8 text-placeholderText ml-2 outline-none bg-transparent text-sm md:text-base"
                 placeholder="URL을 입력하세요"
                 autoFocus={activeInput.field === 'url'}
@@ -104,7 +101,7 @@ const LinkInput = ({ eventState, setEventState }: LinkInputProps) => {
                 <button
                   onClick={e => {
                     e.stopPropagation();
-                    removeLink(link.title);
+                    removeLink(index);
                   }}
                   className="absolute top-1/2 right-2 transform -translate-y-1/2"
                 >
