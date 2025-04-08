@@ -9,7 +9,7 @@ import SearchTextField from '../../../../design-system/ui/textFields/SearchTextF
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCardButton';
 import EventCard from '../../../shared/ui/EventCard';
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { closingSoonEvents, latestEvents, trendingEvents } from '../../../shared/types/eventCardType';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
@@ -19,6 +19,8 @@ import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
 import useAuthStore from '../../../app/provider/authStore';
+import { eventApi } from '../../../shared/api/eventApi';
+import { EventItem } from '../../../shared/types/api/event';
 
 const MainPage = () => {
   const images = [
@@ -27,10 +29,17 @@ const MainPage = () => {
     { img: thirdPage, link: 'https://example.com/page3' },
   ];
 
+  const [latestEvents, setLatestEvents] = useState<EventItem[]>([]);
+  const [trendingEvents, setTrendingEvents] = useState<EventItem[]>([]);
+  const [closingSoonEvents, setClosingSoonEvents] = useState<EventItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [latestStartIndex, setLatestStartIndex] = useState<number>(0);
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
+
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useAuthStore();
 
@@ -43,6 +52,34 @@ const MainPage = () => {
   const handlePrev = (setStartIndex: SetStartIndex, currentIndex: number, eventsLength: number): void => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
+
+  // 태그별 이벤트 불러오기
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const [latest, trending, closing] = await Promise.all([
+          eventApi.getEventByTag('current'),
+          eventApi.getEventByTag('popular'),
+          eventApi.getEventByTag('deadline'),
+        ]);
+
+        setLatestEvents(latest.result);
+        setTrendingEvents(trending.result);
+        setClosingSoonEvents(closing.result);
+      } catch (error) {
+        setError('이벤트를 불러오는데 실패했습니다.');
+        console.error('Error fetching events:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (error) {
+    return <div className="text-center p-4">{error}</div>;
+  }
 
   return (
     <div className="flex flex-col items-center pb-24">
@@ -78,6 +115,8 @@ const MainPage = () => {
           ))}
         </div>
       </div>
+
+      {isLoading ? <div className="text-center p-4">이벤트 불러오는 중...ㅎ</div> : <></>}
       {/* 최신 이벤트 섹션 */}
       <div className="relative w-full px-6">
         <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">최신 이벤트</h2>
@@ -89,17 +128,18 @@ const MainPage = () => {
                 ? latestEvents.slice(0, (latestStartIndex + maxCardsToShow) % latestEvents.length)
                 : []
             )
-            .map((event, index) => (
+            .map(event => (
               <EventCard
-                key={index}
-                img={event.img}
-                eventTitle={event.eventTitle}
-                dDay={event.dDay}
-                host={event.host}
-                eventDate={event.eventDate}
-                location={event.location}
+                key={event.id}
+                id={event.id}
+                img={event.bannerImageUrl}
+                eventTitle={event.title}
+                dDay={event.remainDays}
+                host={event.hostChannelName}
+                eventDate={event.startDate}
+                location={event.address}
                 hashtags={event.hashtags}
-                onClick={() => navigate('/event-details')}
+                onClick={() => navigate(`/event-details/${event.id}`)}
               />
             ))}
         </div>
@@ -125,16 +165,19 @@ const MainPage = () => {
                 ? trendingEvents.slice(0, (trendingStartIndex + maxCardsToShow) % trendingEvents.length)
                 : []
             )
-            .map((event, index) => (
+            .map(event => (
               <EventCard
-                key={index}
-                img={event.img}
-                eventTitle={event.eventTitle}
-                dDay={event.dDay}
-                host={event.host}
-                eventDate={event.eventDate}
-                location={event.location}
+                key={event.id}
+                id={event.id}
+                img={event.bannerImageUrl}
+                
+                eventTitle={event.title}
+                dDay={event.remainDays}
+                host={event.hostChannelName}
+                eventDate={event.startDate}
+                location={event.address}
                 hashtags={event.hashtags}
+                onClick={() => `/event-details/${event.id}`}
               />
             ))}
         </div>
@@ -163,16 +206,18 @@ const MainPage = () => {
                 ? closingSoonEvents.slice(0, (closingStartIndex + maxCardsToShow) % closingSoonEvents.length)
                 : []
             )
-            .map((event, index) => (
+            .map((event) => (
               <EventCard
-                key={index}
-                img={event.img}
-                eventTitle={event.eventTitle}
-                dDay={event.dDay}
-                host={event.host}
-                eventDate={event.eventDate}
-                location={event.location}
+                key={event.id}
+                id={event.id}
+                img={event.bannerImageUrl}
+                eventTitle={event.title}
+                dDay={event.remainDays}
+                host={event.hostChannelName}
+                eventDate={event.startDate}
+                location={event.address}
                 hashtags={event.hashtags}
+                onClick={() => `/event-details/${event.id}`}
               />
             ))}
         </div>
