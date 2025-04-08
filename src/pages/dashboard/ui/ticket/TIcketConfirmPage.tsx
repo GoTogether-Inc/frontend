@@ -6,7 +6,7 @@ import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
 import PurchaseBanner from '../../../../widgets/dashboard/ui/TicketConfirmPage/PurchaseBanner';
 import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
-import { cancleTickets, readTicket } from '../../../../features/ticket/api/order';
+import { cancelTickets, readTicket } from '../../../../features/ticket/api/order';
 
 type Ticket = {
   id: number;
@@ -52,7 +52,7 @@ const TicketConfirmPage = () => {
   const cancleOrderTicket = async (orderIds: number[]) => {
     for (const orderId of orderIds) {
       try {
-        const response = await cancleTickets(orderId);
+        const response = await cancelTickets(orderId);
         console.log("티켓 취소 API 응답:", response);
       } catch (error) {
         console.error(`orderId ${orderId} 취소 실패:`, error);
