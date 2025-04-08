@@ -31,8 +31,8 @@ const TicketConfirmPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const orderIds: number[] = location.state?.orderIds || [];
-  const eventId = location.state?.eventId;
-  const ticketId = location.state?.ticketId;
+  const eventId = location.state?.eventId || 0;
+  const ticketId = location.state?.ticketId || 0;
 
   const [ticket, setTicket] = useState<Ticket | null>(null);
   useEffect(() => {
