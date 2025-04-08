@@ -3,7 +3,11 @@ import { useRef, useState } from 'react';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
 import { useFunnelState } from '../model/FunnelContext';
 
-const FileUpload = () => {
+interface FileUploadProps {
+  useFunnel?: boolean;
+}
+
+const FileUpload = ({ useFunnel = false }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +27,9 @@ const FileUpload = () => {
     try {
       const imageUrl = await uploadFile(file);
       setPreviewUrl(imageUrl);
-      setEventState(prev => ({ ...prev, bannerImageUrl: imageUrl }));
+      if (useFunnel) {
+        setEventState(prev => ({ ...prev, bannerImageUrl: imageUrl }));
+      }
     } catch (error) {
       console.error('파일 업로드 실패:', error);
     }

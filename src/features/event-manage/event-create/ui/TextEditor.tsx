@@ -5,6 +5,10 @@ import 'react-quill/dist/quill.snow.css';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
 import { useFunnelState } from '../model/FunnelContext';
 
+interface TextEditorProps {
+  useFunnel?: boolean;
+}
+
 const formats = [
   'font',
   'header',
@@ -25,7 +29,7 @@ const formats = [
   'h1',
 ];
 
-const TextEditor = () => {
+const TextEditor = ({ useFunnel = false }: TextEditorProps) => {
   const [content, setContent] = useState('');
   const quillRef = useRef<ReactQuill | null>(null);
   const { setEventState } = useFunnelState();
@@ -51,33 +55,37 @@ const TextEditor = () => {
         }
       } catch (error) {
         console.error('이미지 업로드 실패:', error);
-        alert('이미지 업로드에 실패했습니다.');
       }
     };
   };
 
-  const handleChange = (value: string) => {
-    setContent(value);
-    setEventState(prev => ({ ...prev, description: value }));
-  };
-
-  const modules = useMemo(() => {
-    return {
+  const modules = useMemo(
+    () => ({
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, 4, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          [{ font: [] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ color: [] }, { background: [] }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ align: [] }],
           ['link', 'image'],
-          [{ align: [] }, { color: [] }, { background: [] }],
           ['clean'],
         ],
         handlers: {
           image: imageHandler,
         },
       },
-    };
-  }, []);
+    }),
+    []
+  );
+
+  const handleChange = (value: string) => {
+    setContent(value);
+    if (useFunnel) {
+      setEventState(prev => ({ ...prev, description: value }));
+    }
+  };
 
   return (
     <div className="flex flex-col justify-start gap-2 mb-4">
