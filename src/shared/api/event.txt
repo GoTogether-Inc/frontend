@@ -1,0 +1,311 @@
+< 이벤트 생성 >
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Request Body
+{
+  "hostChannelId": 0,
+  "title": "string",
+  "startDate": "2024-12-25",
+  "endDate": "2024-12-31",
+  "startTime": "15:30",
+  "endTime": "20:00",
+  "bannerImageUrl": "string",
+  "description": "string",
+  "referenceLinks": [
+    {
+      "title": "string",
+      "url": "string"
+    }
+  ],
+  "onlineType": "ONLINE",     [ ONLINE, OFFLINE ]
+  "address": "string",
+  "location": {
+    "lat": 123.00,
+    "lng": 123.00
+  },
+  "category": "DEVELOPMENT_STUDY",   [	DEVELOPMENT_STUDY, NETWORKING, HACKATHON, CONFERENCE]
+  "hashtags": [
+    "string", "string2"
+  ],
+  "organizerEmail": "string",
+  "organizerPhoneNumber": "string"
+}
+
+
+< 이벤트 상세 조회 >
+
+- Path Variable
+"eventId" : 1
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Response Body
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "OK",
+  "result": {
+    "id": 1,
+    "bannerImageUrl": "https://example.com/banner.jpg",
+    "title": "Spring Boot Workshop",
+    "participantCount": 2,
+    "startDate": "2025-04-02",
+    "endDate": "2025-03-22",
+    "startTime": "23:23",
+    "endTime": "23:23",
+    "address": "Seoul, South Korea",
+    "location": {
+      "lat": 37.5665,
+      "lng": 126.978
+    },
+    "description": "Learn Spring Boot from scratch.",
+    "hostChannelName": "테커",
+    "hostChannelDescription": "string",
+    "organizerEmail": "event@techtalks.com",
+    "organizerPhoneNumber": "010-5678-1234",
+    "referenceLinks": [
+      {
+        "title": "Spring Boot Docs",
+        "url": "https://spring.io/guides"
+      }
+    ],
+    "category": "DEVELOPMENT_STUDY",
+    "onlineType": "OFFLINE",
+    "status": "PROGRESS",
+    "hashtags": [
+      "SpringBoot"
+    ]
+  }
+}
+
+
+< 이벤트 수정 >
+
+- Path Variable
+"eventId" : 1
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Request Body{
+  "title": "string",
+  "startDate": "2024-12-25",
+  "endDate": "2024-12-31",
+  "startTime": "15:30",
+  "endTime": "20:00",
+  "bannerImageUrl": "string",
+  "description": "string",
+  "referenceLinks": {
+    "additionalProp1": "string",
+    "additionalProp2": "string",
+    "additionalProp3": "string"
+  },
+  "onlineType": "ONLINE",     [ ONLINE, OFFLINE ]
+  "address": "string",
+  "location": {
+    "lat": 123.00,
+    "lng": 123.00
+  },
+  "category": "DEVELOPMENT_STUDY",   [	DEVELOPMENT_STUDY, NETWORKING, HACKATHON, CONFERENCE]
+  "hashtags": [
+    "string", "string2"
+  ],
+  "hostEmail": "string",
+  "hostPhoneNumber": "string"
+}
+
+
+< 이벤트 삭제 >
+
+- Path Variable
+"eventId" : 1
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Response Body
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "OK",
+  "result": "이벤트 삭제 성공"
+}
+
+
+< 최신 이벤트 조회 >
+
+- Query Variable
+"tags" : "current"
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Response Body
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "OK",
+  "result": [
+    {
+      "id": 21,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    },
+    {
+      "id": 20,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    }
+  ]
+}
+
+
+< 가장 인기있는 이벤트 조회 >
+
+- Query Variable
+"tags" : "popular"
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Response Body
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "OK",
+  "result": [
+    {
+      "id": 21,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    },
+    {
+      "id": 20,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    }
+  ]
+}
+
+
+< 마감 임박 이벤트 조회 >
+
+- Query Variable
+"tags" : "deadline"
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Request Body
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "OK",
+  "result": [
+    {
+      "id": 21,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    },
+    {
+      "id": 20,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    }
+  ]
+}
+
+
+< 이벤트 검색 >
+
+- Query Variable
+"keyword" : "검색어"
+
+- Request Headers
+"Authorization" : "ACCESS_TOKEN",
+
+- Response Body
+{
+  "isSuccess": true,
+  "code": "200",
+  "message": "OK",
+  "result": [
+    {
+      "id": 21,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    },
+    {
+      "id": 20,
+      "bannerImageUrl": "string",
+      "title": "string",
+      "hostChannelName": "테커",
+      "startDate": "2025-04-02",
+      "address": "string",
+      "onlineType": "ONLINE",
+      "hashtags": [
+        "string"
+      ],
+      "remainDays": "D-1"
+    }
+  ]
+}
