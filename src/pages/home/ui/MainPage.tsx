@@ -11,7 +11,6 @@ import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCar
 import EventCard from '../../../shared/ui/EventCard';
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { closingSoonEvents, latestEvents, trendingEvents } from '../../../shared/types/eventCardType';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
