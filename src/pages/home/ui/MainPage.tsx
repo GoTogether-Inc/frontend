@@ -32,7 +32,7 @@ const MainPage = () => {
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal } = useAuthStore();
+  const { isModalOpen, openModal, closeModal} = useAuthStore();
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
@@ -51,12 +51,12 @@ const MainPage = () => {
           <SearchTextField
             iconPath={<img src={searchIcon} alt="Search" />}
             onClick={() => navigate('/search')}
-            onChange={() => {}}
+            onChange={() => { }}
             placeholder="입력해주세요"
           />
         }
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
-        leftButtonClick={() => {}}
+        leftButtonClick={() => { }}
         leftButtonLabel="같이가요"
         rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={openModal} />}
       />
@@ -91,6 +91,7 @@ const MainPage = () => {
             )
             .map((event, index) => (
               <EventCard
+                id={index}
                 key={index}
                 img={event.img}
                 eventTitle={event.eventTitle}
@@ -127,6 +128,7 @@ const MainPage = () => {
             )
             .map((event, index) => (
               <EventCard
+                id={index}
                 key={index}
                 img={event.img}
                 eventTitle={event.eventTitle}
@@ -165,6 +167,7 @@ const MainPage = () => {
             )
             .map((event, index) => (
               <EventCard
+                id={index}
                 key={index}
                 img={event.img}
                 eventTitle={event.eventTitle}
