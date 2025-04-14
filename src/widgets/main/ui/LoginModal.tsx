@@ -9,6 +9,12 @@ interface LoginModalProps {
 }
 
 const LoginModal = ({ onClose }: LoginModalProps) => {
+  const kakaoLogin = () => {
+    window.location.href = 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao';
+  };
+  const gooleLogin = () => {
+    window.location.href = 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google';
+  }
   return (
     <motion.div
       initial={{ y: '-100vh', opacity: 0 }}
@@ -30,7 +36,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
             <HorizontalCardButton
               iconPath={<img src={kakao} alt="카카오 아이콘" className="" />}
               label="카카오 로그인"
-              onClick={() => {}}
+              onClick={kakaoLogin}
               className="mx-auto my-auto"
             />
           </div>
@@ -38,7 +44,7 @@ const LoginModal = ({ onClose }: LoginModalProps) => {
             <HorizontalCardButton
               iconPath={<img src={google} alt="구글 아이콘" className="" />}
               label="Google 로그인"
-              onClick={() => {}}
+              onClick={gooleLogin}
               className="mx-auto my-auto"
             />
           </div>
