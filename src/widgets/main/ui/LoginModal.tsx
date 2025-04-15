@@ -10,11 +10,11 @@ interface LoginModalProps {
 
 const LoginModal = ({ onClose }: LoginModalProps) => {
   const kakaoLogin = () => {
-    window.location.href = 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao';
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
   };
   const gooleLogin = () => {
-    window.location.href = 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google';
-  }
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/google`;
+  };
   return (
     <motion.div
       initial={{ y: '-100vh', opacity: 0 }}
