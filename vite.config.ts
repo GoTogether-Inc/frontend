@@ -8,7 +8,7 @@ import autoprefixer from 'autoprefixer';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
-  const API_BASE_URL = `${env.VITE_API_BASE_URL ?? 'http://ec2-3-35-48-123.ap-northeast-2.compute.amazonaws.com:8080'}`;
+  const API_BASE_URL = `${env.VITE_API_BASE_URL ?? 'http://api.gotogether.io.kr:8080'}`;
 
   return {
     plugins: [react()],
@@ -18,6 +18,8 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
+      host: true,
+      allowedHosts: ['gotogether.io.kr'],
       proxy: {
         '/api/v1': {
           target: API_BASE_URL,
