@@ -4,16 +4,15 @@ import Button from '../../../design-system/ui/Button';
 import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTextField';
 import { useNavigate } from 'react-router-dom';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
+import { useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
 
-const existingNames = ['김원영']; // 중복 이름 예시
-const existingPhones = ['01012345678']; // 중복 연락처 예시
-const existingEmails = ['example@example.com']; // 중복 이메일 예시
+const { data } = useUserInfo();
+const { mutate: updateUser} = useUserUpdate();
 
 const InfoInputPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: 'onChange',
@@ -21,15 +20,30 @@ const InfoInputPage = () => {
   });
   const navigate = useNavigate();
 
-  const nameValue = watch('name');
-  const phoneValue = watch('phone');
-  const emailValue = watch('email');
+  const nameValue = data?.name;
+  const phoneValue = data?.phoneNumber;
+  const emailValue = data?.email;
 
   // 버튼 활성화 조건
   const isButtonEnabled = nameValue && phoneValue && emailValue && isValid;
 
-  const onSubmit: SubmitHandler<FormData> = data => {
-    console.log('제출 데이터:', data);
+  const onSubmit: SubmitHandler<FormData> = formData => {
+    const updatedData = {
+      id: data?.id || 0,        
+      name: data?.name || "",    
+      email: data?.email || "",  
+      phoneNumber: formData.phone,  
+    };
+    updateUser(updatedData, {
+      onSuccess: () => {
+        alert('정보가 성공적으로 업데이트되었습니다.');
+        navigate('/'); 
+      },
+      onError: (err) => {
+        alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
+        console.error(err);
+      },
+    });
     alert('정보 입력 완료!');
   };
 
@@ -54,13 +68,10 @@ const InfoInputPage = () => {
         <UnderlineTextField
           label="이름"
           placeholder="이름"
+          value={nameValue}
           errorMessage={errors.name?.message}
           className="text-xl"
-          {...register('name', {
-            validate: {
-              notDuplicate: value => !existingNames.includes(value) || '이미 존재하는 이름입니다.',
-            },
-          })}
+          {...register('name')}
         />
 
         {/* 연락처 필드 */}
@@ -70,25 +81,18 @@ const InfoInputPage = () => {
           type="tel"
           errorMessage={errors.phone?.message}
           className="text-xl"
-          {...register('phone', {
-            validate: {
-              notDuplicate: value => !existingPhones.includes(value) || '이미 존재하는 연락처입니다.',
-            },
-          })}
+          {...register('phone')}
         />
 
         {/* 이메일 필드 */}
         <UnderlineTextField
           label="이메일"
           placeholder="이메일"
+          value={emailValue}
           type="email"
           errorMessage={errors.email?.message}
           className="text-xl"
-          {...register('email', {
-            validate: {
-              notDuplicate: value => !existingEmails.includes(value) || '이미 존재하는 이메일입니다.',
-            },
-          })}
+          {...register('email')}
         />
       </form>
       <div className="flex flex-grow" />
