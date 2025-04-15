@@ -10,9 +10,11 @@ interface LoginModalProps {
 
 const LoginModal = ({ onClose }: LoginModalProps) => {
   const kakaoLogin = () => {
+    onClose();
     window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
   };
   const gooleLogin = () => {
+    onClose();
     window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/google`;
   };
   return (
