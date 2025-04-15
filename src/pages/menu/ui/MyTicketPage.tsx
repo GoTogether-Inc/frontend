@@ -8,9 +8,6 @@ import { readTicket } from '../../../features/ticket/api/order';
 import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
-import useAuthStore from '../../../app/provider/authStore';
-import Cookies from 'js-cookie';
-
 type Ticket = {
   id: number;
   event: {
@@ -35,22 +32,7 @@ const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [myTickets, setMyTickets] = useState<Ticket[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-  const { setAccessToken, setRefreshToken } = useAuthStore();
-  useEffect(() => {
-    const accessToken = Cookies.get('access-token');
-    const refreshToken = Cookies.get('refresh-token');
-  
-    console.log("access-token:", accessToken);
-    console.log("refresh-token:", refreshToken);
-  
-    if (accessToken) {
-      setAccessToken(accessToken);
-    }
-    if (refreshToken) {
-      setRefreshToken(refreshToken);
-    }
-  }, []);
-  
+
   useEffect(() => {
     const fetchMyTickets = async () => {
       try {
