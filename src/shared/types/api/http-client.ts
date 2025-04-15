@@ -4,24 +4,16 @@ import Cookies from 'js-cookie';
 import useAuthStore from '../../../app/provider/authStore';
 
 export const axiosClient = axios.create({
-  baseURL: 'http://api.gotogether.io.kr:8080/api/v1',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 3000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-    //Authorization: `Bearer `,
   },
 });
 
 axiosClient.interceptors.request.use(
   config => {
-    //const token = Cookies.get('access_token');
-    //zustand 사용함으로써 코드변경 할 듯 현재는 임시 입니다.
-    // const token = useAuthStore.getState().accessToken;
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
-
     return config;
   },
   (error: AxiosError) => {
