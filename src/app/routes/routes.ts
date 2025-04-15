@@ -17,6 +17,7 @@ export const JOIN_ROUTES = {
   // 회원가입 관련 페이지
   agreement: '/join/agreement', // 이용약관 페이지
   infoInput: '/join/info-input', // 정보입력 페이지
+  authCallback: '/authCallback' 
 };
 
 export const MENU_ROUTES = {

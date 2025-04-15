@@ -34,6 +34,7 @@ import TicketOptionCreatePage from '../../pages/dashboard/ui/ticket/TicketOption
 import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagementPage';
 import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
 import TicketOptionAttachPage from '../../pages/dashboard/ui/ticket/TicketOptionAttachPage';
+import AuthCallback from '../../pages/join/AuthCallback';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -48,6 +49,7 @@ const mainRoutes = [
 const joinRoutes = [
   { path: JOIN_ROUTES.agreement, element: <AgreementPage />, requiresAuth: false },
   { path: JOIN_ROUTES.infoInput, element: <InfoInputPage />, requiresAuth: false },
+  { path: JOIN_ROUTES.authCallback, element: <AuthCallback />, requiresAuth: false },
 ];
 
 const menuRoutes = [

@@ -26,13 +26,12 @@ const MainPage = () => {
     { img: secondPage, link: 'https://example.com/page2' },
     { img: thirdPage, link: 'https://example.com/page3' },
   ];
-
   const [latestStartIndex, setLatestStartIndex] = useState<number>(0);
   const [trendingStartIndex, setTrendingStartIndex] = useState<number>(0);
   const [closingStartIndex, setClosingStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
   const navigate = useNavigate();
-  const { isModalOpen, openModal, closeModal} = useAuthStore();
+  const { isModalOpen, openModal, closeModal, isLoggedIn, name} = useAuthStore();
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
@@ -43,7 +42,7 @@ const MainPage = () => {
   const handlePrev = (setStartIndex: SetStartIndex, currentIndex: number, eventsLength: number): void => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
-
+  
   return (
     <div className="flex flex-col items-center pb-24">
       <Header
@@ -58,7 +57,7 @@ const MainPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => { }}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={openModal} />}
+        rightContent={<SecondaryButton size="large" color="black" label={isLoggedIn ? `${name}님`  : '로그인'} onClick={openModal} />}
       />
       <AnimatePresence>{isModalOpen && <LoginModal onClose={closeModal} />}</AnimatePresence>
 

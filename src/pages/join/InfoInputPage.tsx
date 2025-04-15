@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
 import { useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
 
-const { data } = useUserInfo();
-const { mutate: updateUser} = useUserUpdate();
-
 const InfoInputPage = () => {
+  const { data, isLoading } = useUserInfo();
+  const { mutate: updateUser } = useUserUpdate();
   const {
     register,
     handleSubmit,
@@ -29,15 +28,15 @@ const InfoInputPage = () => {
 
   const onSubmit: SubmitHandler<FormData> = formData => {
     const updatedData = {
-      id: data?.id || 0,        
-      name: data?.name || "",    
-      email: data?.email || "",  
-      phoneNumber: formData.phone,  
+      id: data?.id || 0,
+      name: data?.name || "",
+      email: data?.email || "",
+      phoneNumber: formData.phone,
     };
     updateUser(updatedData, {
       onSuccess: () => {
         alert('정보가 성공적으로 업데이트되었습니다.');
-        navigate('/'); 
+        navigate('/');
       },
       onError: (err) => {
         alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
@@ -53,7 +52,9 @@ const InfoInputPage = () => {
   console.log('email:', emailValue, errors.email?.message);
   console.log('isValid:', isValid);
   console.log('isButtonEnabled:', isButtonEnabled);
-
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
   return (
     <div className="relative flex flex-col w-full h-screen border ">
       <Header
