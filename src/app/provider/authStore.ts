@@ -2,10 +2,12 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface AuthStore {
-  accessToken: string | null;
-  refreshToken: string | null;
-  setAccessToken: (token: string | null) => void;
-  setRefreshToken: (token: string | null) => void;
+  isLoggedIn: boolean;
+  login: () => void;
+  logout: () => void;
+
+  name: string | null;
+  setName: (name: string) => void;
 
   isModalOpen: boolean;
   openModal: () => void;
@@ -15,13 +17,17 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
-      accessToken: null,
-      refreshToken: null,
-      setAccessToken: (token) => set({ accessToken: token }),
-      setRefreshToken: (token) => set({ refreshToken: token }),
+      isLoggedIn: false,
       isModalOpen: false,
+
       openModal: () => set({ isModalOpen: true }),
       closeModal: () => set({ isModalOpen: false }),
+
+      login: () => set({ isLoggedIn: true }),
+      logout: () => set({ isLoggedIn: false }),
+
+      name: null,
+      setName: (name) => set({ name }),
     }), { name: 'auth-storage' }
   )
 );
