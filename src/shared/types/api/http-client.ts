@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import useAuthStore from '../../../app/provider/authStore';
 
 export const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
   timeout: 3000,
   withCredentials: true,
   headers: {
