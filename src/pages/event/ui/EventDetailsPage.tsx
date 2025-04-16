@@ -47,7 +47,7 @@ const EventDetailsPage = () => {
   const [clickedLike, setClickedLike] = useState(false);
 
   const [event, setEvent] = useState<ReadEvent | null>(null);
-  const eventId = 1; //수정 필요
+  const eventId = 21; //수정 필요
 
   const handleShareClick = (title: string) => {
     setTitle(title);
