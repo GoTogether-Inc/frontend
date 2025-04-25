@@ -7,20 +7,19 @@ const AuthCallback = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const status = searchParams.get('status'); // 'new' or 'existing'
-    const { login, setName, closeModal,isModalOpen } = useAuthStore();
+    const { login, setName, isModalOpen } = useAuthStore();
     const { data } = useUserInfo();
 
     useEffect(() => {
         const handleAuth = async () => {
             try {
                 login();
-                closeModal();
                 if (status === 'new') {
-                    navigate('/join/agreement');
+                    //navigate('/join/agreement');
                 } else {
                     setName(data?.name || "바보");
                     console.log(isModalOpen);
-                    navigate('/');
+                    //navigate('/');
                 }
             } catch (error) {
                 console.error('인증 처리 실패', error);

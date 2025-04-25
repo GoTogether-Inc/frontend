@@ -12,6 +12,7 @@ const InfoInputPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: 'onChange',
@@ -22,9 +23,11 @@ const InfoInputPage = () => {
   const nameValue = data?.name;
   const phoneValue = data?.phoneNumber;
   const emailValue = data?.email;
+  const phoneInput = watch('phone');
+  
 
   // 버튼 활성화 조건
-  const isButtonEnabled = nameValue && phoneValue && emailValue && isValid;
+  const isButtonEnabled = nameValue && phoneInput && emailValue && isValid;
 
   const onSubmit: SubmitHandler<FormData> = formData => {
     const updatedData = {
