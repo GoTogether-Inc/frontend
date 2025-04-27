@@ -27,7 +27,7 @@ const AuthCallback = () => {
             }
         };
         handleAuth();
-    }, []);
+    }, [data, navigate, login, status, setName, isModalOpen]);
 
     return <div className="text-center mt-32 text-lg font-bold">로그인 중입니다...</div>;
 };
