@@ -24,7 +24,7 @@ export const useAuthStore = create<AuthStore>()(
       closeModal: () => set({ isModalOpen: false }),
 
       login: () => set({ isLoggedIn: true }),
-      logout: () => set({ isLoggedIn: false }),
+      logout: () => set({ isLoggedIn: false, name: null }),
 
       name: null,
       setName: (name) => set({ name }),

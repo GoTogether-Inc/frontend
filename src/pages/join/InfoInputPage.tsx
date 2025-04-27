@@ -21,7 +21,6 @@ const InfoInputPage = () => {
   const navigate = useNavigate();
 
   const nameValue = data?.name;
-  const phoneValue = data?.phoneNumber;
   const emailValue = data?.email;
   const phoneInput = watch('phone');
   
@@ -46,15 +45,8 @@ const InfoInputPage = () => {
         console.error(err);
       },
     });
-    alert('정보 입력 완료!');
   };
 
-  // 디버깅 추가
-  console.log('name:', nameValue, errors.name?.message);
-  console.log('phone:', phoneValue, errors.phone?.message);
-  console.log('email:', emailValue, errors.email?.message);
-  console.log('isValid:', isValid);
-  console.log('isButtonEnabled:', isButtonEnabled);
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
