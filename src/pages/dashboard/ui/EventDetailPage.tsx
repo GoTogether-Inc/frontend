@@ -7,6 +7,7 @@ import TextEditor from '../../../features/event-manage/event-create/ui/TextEdito
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
+import { formatEventRequest } from '../../../shared/lib/formatEventRequest';
 
 const EventDetailPage = () => {
   const navigate = useNavigate();
@@ -27,30 +28,16 @@ const EventDetailPage = () => {
 
   const handleSave = () => {
     if (!data?.result.id) return;
-    const existing = data.result;
+
+    const formatData = formatEventRequest(data.result);
 
     mutate(
       {
-        title: existing.title,
-        organizerEmail: existing.organizerEmail,
-        organizerPhoneNumber: existing.organizerPhoneNumber,
-        onlineType: existing.onlineType,
-        address: existing.address,
+        ...formatData,
+        bannerImageUrl,
+        description,
+        referenceLinks,
         hostChannelId: 1,
-        bannerImageUrl: bannerImageUrl || existing.bannerImageUrl,
-        startDate: existing.startDate,
-        endDate: existing.endDate,
-        startTime: existing.startTime,
-        endTime: existing.endTime,
-        location: existing.location,
-        description: description || existing.description,
-        referenceLinks: referenceLinks || existing.referenceLinks,
-        category: existing.category,
-        hashtags: existing.hashtags,
-        status: existing.status,
-        hostChannelName: existing.hostChannelName,
-        hostChannelDescription: existing.hostChannelDescription,
-        participantCount: existing.participantCount,
       },
       {
         onSuccess: () => {
