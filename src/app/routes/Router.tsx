@@ -35,6 +35,7 @@ import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagement
 import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
 import TicketOptionAttachPage from '../../pages/dashboard/ui/ticket/TicketOptionAttachPage';
 import AuthCallback from '../../pages/join/AuthCallback';
+import LogoutPage from '../../pages/join/LogoutPage';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -59,6 +60,7 @@ const menuRoutes = [
   { path: MENU_ROUTES.hostEdit, element: <HostEditPage />, requiresAuth: false },
   { path: MENU_ROUTES.myPage, element: <MyPage />, requiresAuth: false },
   { path: MENU_ROUTES.hostInfo, element: <HostInfoPage />, requiresAuth: false },
+  { path: MENU_ROUTES.logout, element: <LogoutPage />, requiresAuth: false },
 ];
 
 const dashboardRoutes = [
