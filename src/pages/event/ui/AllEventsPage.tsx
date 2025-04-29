@@ -3,8 +3,7 @@ import Header from '../../../../design-system/ui/Header';
 import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
-import EventCard from '../../../shared/ui/EventCard';
-import { trendingEvents } from '../../../shared/types/eventCardType';
+import EventList from '../../../features/event-manage/event-list/ui/EventList';
 import { useNavigate } from 'react-router-dom';
 
 const AllEventsPage = () => {
@@ -27,20 +26,7 @@ const AllEventsPage = () => {
         rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
       />
       {/* 이벤트 카드 목록 */}
-      <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
-        {trendingEvents.map((event, index) => (
-          <EventCard
-            key={index}
-            img={event.img}
-            eventTitle={event.eventTitle}
-            dDay={event.dDay}
-            host={event.host}
-            eventDate={event.eventDate}
-            location={event.location}
-            hashtags={event.hashtags}
-          />
-        ))}
-      </div>
+      <EventList />
       <BottomBar />
     </div>
   );
