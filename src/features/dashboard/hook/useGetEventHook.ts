@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { getEventInfo } from '../api/event';
+import { getHostDashboard } from '../api/event';
 import { dashboardData } from '../../../shared/types/dashboardType';
 
 export const useGetEventHook = () => {
@@ -8,7 +8,7 @@ export const useGetEventHook = () => {
 
   const { data: eventInfo } = useQuery<dashboardData>({
     queryKey: ['eventInfo', id],
-    queryFn: () => getEventInfo(id as string),
+    queryFn: () => getHostDashboard(id as string),
   });
 
   return { eventInfo };
