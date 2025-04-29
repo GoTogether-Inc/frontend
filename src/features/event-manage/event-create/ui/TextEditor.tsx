@@ -1,10 +1,12 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
 import { FunnelState } from '../model/FunnelContext';
 
 interface TextEditorProps {
+  value?: string;
+  onChange?: (value: string) => void;
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
@@ -28,7 +30,7 @@ const formats = [
   'h1',
 ];
 
-const TextEditor = ({ setEventState }: TextEditorProps) => {
+const TextEditor = ({ value, onChange, setEventState }: TextEditorProps) => {
   const [content, setContent] = useState('');
   const quillRef = useRef<ReactQuill | null>(null);
 
@@ -80,10 +82,15 @@ const TextEditor = ({ setEventState }: TextEditorProps) => {
 
   const handleChange = (value: string) => {
     setContent(value);
+    onChange?.(value);
     if (setEventState) {
       setEventState(prev => ({ ...prev, description: value }));
     }
   };
+
+  useEffect(() => {
+    setContent(value ?? '');
+  }, [value]);
 
   return (
     <div className="flex flex-col justify-start gap-2 mb-4">
