@@ -7,11 +7,14 @@ import SearchBar from '../../../shared/ui/SearchBar';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
+import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
+import { OnlineType } from '../../../features/dashboard/model/event';
 
 const EventInfoPage = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('');
   const { data } = useEventDetail();
+  const { mutate } = useUpdateEventHook();
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
@@ -23,6 +26,45 @@ const EventInfoPage = () => {
   const [phone, setPhone] = useState('');
   const [onlineType, setOnlineType] = useState('');
   const [address, setAddress] = useState('');
+
+  const handleSave = () => {
+    if (!data?.result.id) return;
+    const existing = data.result;
+
+    mutate(
+      {
+        title,
+        organizerEmail: email || existing.organizerEmail,
+        organizerPhoneNumber: phone || existing.organizerPhoneNumber,
+        onlineType: selectedOption as OnlineType,
+        address: address || existing.address,
+        hostChannelId: 1,
+        bannerImageUrl: existing.bannerImageUrl,
+        startDate: existing.startDate,
+        endDate: existing.endDate,
+        startTime: existing.startTime,
+        endTime: existing.endTime,
+        location: existing.location,
+        description: existing.description,
+        referenceLinks: existing.referenceLinks,
+        category: existing.category,
+        hashtags: existing.hashtags,
+        status: existing.status,
+        hostChannelName: existing.hostChannelName,
+        hostChannelDescription: existing.hostChannelDescription,
+        participantCount: existing.participantCount,
+      },
+      {
+        onSuccess: () => {
+          alert('이벤트 정보가 저장되었습니다.');
+          navigate(`/dashboard/${data?.result.id}`);
+        },
+        onError: () => {
+          alert('저장에 실패했습니다.');
+        },
+      }
+    );
+  };
 
   // 초기 데이터 채우기
   useEffect(() => {
@@ -38,7 +80,7 @@ const EventInfoPage = () => {
   }, [data]);
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent={title}>
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 기본 정보</h1>
         <DefaultTextField
@@ -81,11 +123,7 @@ const EventInfoPage = () => {
         )}
       </div>
       <div className="w-full p-7">
-        <Button
-          label="저장하기"
-          onClick={() => navigate('/dashbord/eventDetail')}
-          className="w-full h-12 rounded-full"
-        />
+        <Button label="저장하기" onClick={handleSave} className="w-full h-12 rounded-full" />
       </div>
     </DashboardLayout>
   );
