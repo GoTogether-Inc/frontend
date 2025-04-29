@@ -3,6 +3,7 @@ import { EventNormalResponse, EventDetailResponse } from '../model/eventResponse
 import { EventTag, EventCategory, PaginationParams } from '../model/eventMeta';
 import { EventCreate, EventUpdate } from '../model/eventRequest';
 import { EventResponse } from '../model/eventResponse';
+import { EventItem } from '../model/event';
 import { EventDetailRequest } from '../model/event';
 
 export const eventDetail = async (dto: EventDetailRequest) => {
@@ -16,6 +17,22 @@ export const searchEvents = async (keyword: string, { page, size }: PaginationPa
     `/events/search?keyword=${keyword}&page=${page}&size=${size}`
   );
   return response.data;
+};
+
+// 전체 이벤트 목록 조회 (무한 스크롤)
+export const getAllEventsInfinite = async ({
+  page,
+  size,
+  tag,
+}: PaginationParams & { tag?: EventTag }): Promise<{ items: EventItem[]; hasNextPage: boolean }> => {
+  const response = await axiosClient.get<EventNormalResponse>(
+    `/events${tag ? `?tags=${tag}` : ''}${tag ? '&' : '?'}page=${page}&size=${size}`
+  );
+
+  return {
+    items: response.data.result,
+    hasNextPage: response.data.result.length === size,
+  };
 };
 
 // 태그별 이벤트 목록 조회 (최신, 인기, 마감 / 기본 정보)
@@ -47,13 +64,13 @@ export const createEvent = async (eventData: EventCreate): Promise<EventResponse
   return response.data;
 };
 
-  // 이벤트 수정 (PUT)
-  updateEvent: async (eventId: number, eventData: EventUpdate): Promise<EventResponse<string>> => {
-    const response = await axiosClient.put<EventResponse<string>>(`/events/${eventId}`, eventData);
-    return response.data;
-  }
+// 이벤트 수정 (PUT)
+updateEvent: async (eventId: number, eventData: EventUpdate): Promise<EventResponse<string>> => {
+  const response = await axiosClient.put<EventResponse<string>>(`/events/${eventId}`, eventData);
+  return response.data;
+};
 
-  // 이벤트 삭제 (DELETE)
+// 이벤트 삭제 (DELETE)
 export const deleteEvent = async (eventId: number): Promise<EventResponse<string>> => {
   const response = await axiosClient.delete<EventResponse<string>>(`/events/${eventId}`);
   return response.data;

@@ -45,7 +45,7 @@ axiosClient.interceptors.response.use(
           `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/refresh`,
           {},
           {
-            withCredentials: true, 
+            withCredentials: true,
           }
         );
         // 새 토큰이 쿠키에 재설정되었으므로 원래 요청 재시도
