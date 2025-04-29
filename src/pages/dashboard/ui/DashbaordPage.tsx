@@ -4,7 +4,7 @@ import TicketRevenue from '../../../widgets/dashboard/ui/TicketRevenue';
 import ticket from '../../../../public/assets/dashboard/main/Ticket(white).svg';
 import cash from '../../../../public/assets/dashboard/main/Cash.svg';
 import CheckList from '../../../features/dashboard/ui/Checklist';
-import { useGetEventHook } from '../../../features/dashboard/hook/useGetEventHook';
+import { useGetEventHook } from '../../../features/dashboard/hook/useEventHook';
 const DashboardPage = () => {
   const { eventInfo } = useGetEventHook();
 

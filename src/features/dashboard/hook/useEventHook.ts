@@ -6,9 +6,11 @@ import { dashboardData } from '../../../shared/types/dashboardType';
 export const useGetEventHook = () => {
   const { id } = useParams();
 
+  const eventId = Number(id);
+
   const { data: eventInfo } = useQuery<dashboardData>({
-    queryKey: ['eventInfo', id],
-    queryFn: () => getHostDashboard(id as string),
+    queryKey: ['eventInfo', eventId],
+    queryFn: () => getHostDashboard(eventId),
   });
 
   return { eventInfo };
