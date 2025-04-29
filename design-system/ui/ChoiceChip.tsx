@@ -1,20 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+interface ChoiceChipOption {
+  label?: string; // UI에 보여질 한국어
+  value?: string; // 서버에서 오는 값
+}
 
 interface ChoiceChipProps {
   label?: string;
-  options: string[];
+  value?: string;
+  options: ChoiceChipOption[];
   onSelect: (selected: string) => void;
   className?: string;
   labelClassName?: string;
   buttonClassName?: string;
 }
 
-const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '', buttonClassName = '' }: ChoiceChipProps) => {
-  const [selected, setSelected] = useState(options[0]);
+const ChoiceChip = ({
+  label,
+  options,
+  onSelect,
+  className,
+  labelClassName = '',
+  buttonClassName = '',
+  value,
+}: ChoiceChipProps) => {
+  const [selected, setSelected] = useState(value || options[0]);
 
-  const handleClick = (option: string) => {
-    setSelected(option);
-    onSelect(option);
+  useEffect(() => {
+    if (value) {
+      setSelected(value);
+    }
+  }, [value]);
+
+  const handleClick = (optionValue: string) => {
+    setSelected(optionValue);
+    onSelect(optionValue);
   };
 
   return (
@@ -26,12 +46,12 @@ const ChoiceChip = ({ label, options, onSelect, className, labelClassName = '', 
             key={index}
             className={`
             flex justify-center items-center sm:text-xs md:text-sm lg:text-base px-2 rounded-full
-            ${selected === option ? 'bg-white text-black' : 'text-black bg-transparent'}
+            ${selected === option.value ? 'bg-white text-black' : 'text-black bg-transparent'}
             ${buttonClassName}
           `}
-            onClick={() => handleClick(option)}
+            onClick={() => handleClick(option.value || '')}
           >
-            {option}
+            {option.label}
           </button>
         ))}
       </div>
