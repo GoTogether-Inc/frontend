@@ -12,7 +12,6 @@ const InfoInputPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: 'onChange',
@@ -22,11 +21,6 @@ const InfoInputPage = () => {
 
   const nameValue = data?.name;
   const emailValue = data?.email;
-  const phoneInput = watch('phone');
-  
-
-  // 버튼 활성화 조건
-  const isButtonEnabled = nameValue && phoneInput && emailValue && isValid;
 
   const onSubmit: SubmitHandler<FormData> = formData => {
     const updatedData = {
@@ -73,7 +67,7 @@ const InfoInputPage = () => {
         {/* 연락처 필드 */}
         <UnderlineTextField
           label="연락처"
-          placeholder={`"-" 없이 번호만 입력해주세요`}
+          placeholder={"전화번호를 010-1234-5678 형식으로 입력해주세요."}
           type="tel"
           errorMessage={errors.phone?.message}
           className="text-xl"
@@ -96,7 +90,7 @@ const InfoInputPage = () => {
         <Button
           label="시작하기"
           onClick={handleSubmit(onSubmit)}
-          disabled={!isButtonEnabled}
+          disabled={!isValid}
           className="w-full h-12 rounded-full"
         />
       </div>

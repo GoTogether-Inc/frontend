@@ -15,11 +15,11 @@ const AuthCallback = () => {
             try {
                 login();
                 if (status === 'new') {
-                    //navigate('/join/agreement');
+                    navigate('/join/agreement');
                 } else {
-                    setName(data?.name || "바보");
+                    setName(data?.name || "사용자");
                     console.log(isModalOpen);
-                    //navigate('/');
+                    navigate('/');
                 }
             } catch (error) {
                 console.error('인증 처리 실패', error);
