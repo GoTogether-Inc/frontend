@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../../../design-system/ui/Header';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 import { myPageSchema } from '../../../shared/lib/formValidation';
+import { useUserInfo,useUserUpdate } from '../../../features/join/hooks/useUserHook';
+import useAuthStore from '../../../app/provider/authStore';
 
 const MyPage = () => {
-  const userData = { email: 'aaa@naver.com', name: '고예진', phone: '01012345678' };
+  const {data} = useUserInfo();
+  const { mutate: updateUser } = useUserUpdate();
+  const { setName } = useAuthStore();
 
   const [isChanged, setIsChanged] = useState<string>('');
   const {
@@ -17,24 +21,46 @@ const MyPage = () => {
     formState: { errors },
     setValue,
   } = useForm({
-    defaultValues: { name: userData.name, phone: userData.phone },
+    defaultValues: { name: data?.name || '', phone: data?.phoneNumber || ''},
     ...myPageSchema,
   });
+  useEffect(() => {
+    if (data) {
+      setValue('name', data.name);
+      setValue('phone', data.phoneNumber);
+    }
+  }, [data, setValue]);
 
-  const handleSave = (data: { name: string; phone: string }) => {
+  const onSubmit:  SubmitHandler<{ name: string; phone: string }> = (formData) => {
+    const { name, phone } = formData;
+    const updatedData = {
+      id: data?.id || 0,
+      name: name || '',
+      email: data?.email || '',
+      phoneNumber: phone || '',
+    };
+    updateUser(updatedData, {
+      onSuccess: () => {
+        setName(data?.name || "사용자");
+        alert('정보가 성공적으로 업데이트되었습니다.');
+      },
+      onError: (err) => {
+        alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
+        console.error(err);
+      },
+    });
     // 이름과 전화번호가 변경되었는지 확인하고 메시지 설정
     let changeMessage = '';
-    if (data.name !== userData.name && data.phone !== userData.phone) {
-      changeMessage = `${data.name}, ${data.phone}으로 변경되었습니다`;
-    } else if (data.name !== userData.name) {
-      changeMessage = `${data.name}으로 변경되었습니다`;
-    } else if (data.phone !== userData.phone) {
-      changeMessage = `${data.phone}으로 변경되었습니다`;
+    if (name !== data?.name && phone !== data?.phoneNumber) {
+      changeMessage = `${name}, ${phone}으로 변경되었습니다`;
+    } else if (name !== data?.name) {
+      changeMessage = `${name}으로 변경되었습니다`;
+    } else if (phone !== data?.phoneNumber) {
+      changeMessage = `${phone}으로 변경되었습니다`;
     }
 
     setIsChanged(changeMessage); // 변경 상태 업데이트
-    setValue('name', data.name); // Reset name field value
-    setValue('phone', data.phone);
+
   };
   return (
     <div>
@@ -44,15 +70,15 @@ const MyPage = () => {
           <h1 className="text-xl font-bold">기본 정보</h1>
           <div className="flex flex-col">
             <span className="text-sm md:text-base font-normal">이메일</span>
-            <span className="text-sm md:text-base font-light">{userData.email}</span>
+            <span className="text-sm md:text-base font-light">{data?.email}</span>
           </div>
         </div>
-        <form onSubmit={handleSubmit(handleSave)} className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <div className="flex gap-3">
             <div className="flex flex-col gap-2">
               <DefaultTextField
                 label="이름"
-                placeholder={userData.name}
+                placeholder={data?.name}
                 className=" h-8"
                 labelClassName="text-sm md:text-base font-normal"
                 {...register('name')}
@@ -62,7 +88,7 @@ const MyPage = () => {
             <div className="flex flex-col gap-2">
               <DefaultTextField
                 label="전화번호"
-                placeholder={userData.phone}
+                placeholder={data?.phoneNumber}
                 className="h-8"
                 labelClassName="text-sm md:text-base font-normal"
                 {...register('phone')}
