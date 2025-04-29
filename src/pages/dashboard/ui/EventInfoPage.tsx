@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
-import { OnlineType } from '../../../features/dashboard/model/event';
+import { formatEventRequest } from '../../../shared/lib/formatEventRequest';
+import { OnlineType } from '../../../shared/types/baseEventType';
 
 const EventInfoPage = () => {
   const navigate = useNavigate();
@@ -29,30 +30,17 @@ const EventInfoPage = () => {
 
   const handleSave = () => {
     if (!data?.result.id) return;
-    const existing = data.result;
+
+    const formatData = formatEventRequest(data.result);
 
     mutate(
       {
+        ...formatData,
         title,
-        organizerEmail: email || existing.organizerEmail,
-        organizerPhoneNumber: phone || existing.organizerPhoneNumber,
+        organizerEmail: email,
+        organizerPhoneNumber: phone,
         onlineType: selectedOption as OnlineType,
-        address: address || existing.address,
-        hostChannelId: 1,
-        bannerImageUrl: existing.bannerImageUrl,
-        startDate: existing.startDate,
-        endDate: existing.endDate,
-        startTime: existing.startTime,
-        endTime: existing.endTime,
-        location: existing.location,
-        description: existing.description,
-        referenceLinks: existing.referenceLinks,
-        category: existing.category,
-        hashtags: existing.hashtags,
-        status: existing.status,
-        hostChannelName: existing.hostChannelName,
-        hostChannelDescription: existing.hostChannelDescription,
-        participantCount: existing.participantCount,
+        address,
       },
       {
         onSuccess: () => {
