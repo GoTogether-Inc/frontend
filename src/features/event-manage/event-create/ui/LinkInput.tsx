@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FunnelState } from '../model/FunnelContext';
 import AddButton from '../../../../../public/assets/event-manage/creation/AddBtn.svg';
 import CloseButton from '../../../../../public/assets/event-manage/creation/CloseBtn.svg';
 import Link from '../../../../../public/assets/event-manage/creation/Link.svg';
 
 interface LinkInputProps {
+  value?: Link[];
+  onChange?: (links: Link[]) => void;
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
-interface Link {
+export interface Link {
   title: string;
   url: string;
   address: string;
   detailAddress: string;
 }
 
-const LinkInput = ({ setEventState }: LinkInputProps) => {
+const LinkInput = ({ value, onChange, setEventState }: LinkInputProps) => {
   const [links, setLinks] = useState<Link[]>([]);
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
@@ -24,6 +26,12 @@ const LinkInput = ({ setEventState }: LinkInputProps) => {
     field: null,
   });
 
+  const updateAll = (newLinks: Link[]) => {
+    setLinks(newLinks);
+    onChange?.(newLinks);
+    setEventState?.(prev => ({ ...prev, referenceLinks: newLinks }));
+  };
+
   const addNewLink = () => {
     const newLink = {
       title: '',
@@ -31,29 +39,23 @@ const LinkInput = ({ setEventState }: LinkInputProps) => {
       address: '',
       detailAddress: '',
     };
-    const newLinks = [...links, newLink];
-    setLinks(newLinks);
-    if (setEventState) {
-      setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
-    }
+    updateAll([...links, newLink]);
   };
 
   const removeLink = (index: number) => {
     const newLinks = links.filter((_, i) => i !== index);
-    setLinks(newLinks);
-    if (setEventState) {
-      setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
-    }
+    updateAll(newLinks);
   };
 
   const updateLink = (index: number, field: keyof Link, value: string) => {
     const newLinks = [...links];
     newLinks[index] = { ...newLinks[index], [field]: value };
-    setLinks(newLinks);
-    if (setEventState) {
-      setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
-    }
+    updateAll(newLinks);
   };
+
+  useEffect(() => {
+    setLinks(value ?? []);
+  }, [value]);
 
   return (
     <div className="flex flex-col gap-1">

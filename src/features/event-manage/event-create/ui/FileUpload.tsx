@@ -1,13 +1,15 @@
 import FileUploadImage from '../../../../../public/assets/event-manage/creation/FileUpload.svg';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
 import { FunnelState } from '../model/FunnelContext';
 
 interface FileUploadProps {
+  value?: string;
+  onChange?: (url: string) => void;
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
-const FileUpload = ({ setEventState }: FileUploadProps) => {
+const FileUpload = ({ value, onChange, setEventState }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +28,7 @@ const FileUpload = ({ setEventState }: FileUploadProps) => {
     try {
       const imageUrl = await uploadFile(file);
       setPreviewUrl(imageUrl);
+      onChange?.(imageUrl);
       if (setEventState) {
         setEventState(prev => ({ ...prev, bannerImageUrl: imageUrl }));
       }
@@ -59,6 +62,10 @@ const FileUpload = ({ setEventState }: FileUploadProps) => {
     const file = e.target.files?.[0];
     if (file) handleFileUpload(file);
   };
+
+  useEffect(() => {
+    if (value) setPreviewUrl(value);
+  }, [value]);
 
   return (
     <div className="flex flex-col justify-start gap-1">
