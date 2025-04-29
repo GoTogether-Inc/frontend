@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ApiErrorResponse } from './apiResponse';
 import Cookies from 'js-cookie';
 import useAuthStore from '../../../app/provider/authStore';
@@ -36,7 +36,7 @@ axiosClient.interceptors.response.use(
       message: error.response?.data?.message || error.message,
     };
 
-    const originalRequest = error.config as any;
+    const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     // 401(토큰 만료)일 경우 로그아웃 처리 or 토큰 갱신 가능
     if (errorInfo.status === 401) {
