@@ -28,6 +28,7 @@ export const MENU_ROUTES = {
   hostEdit: `${MAIN_ROUTES.menu}/hostEdit/:id`,
   myPage: `${MAIN_ROUTES.menu}/myPage`,
   hostInfo: `${MAIN_ROUTES.menu}/hostInfo/:id`,
+  logout: `${MAIN_ROUTES.menu}/logout`,
 };
 
 export const DASHBOARD_ROUTES = {

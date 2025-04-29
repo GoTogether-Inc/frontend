@@ -30,17 +30,32 @@ axiosClient.interceptors.response.use(
     }
     return response;
   },
-  (error: AxiosError<ApiErrorResponse>) => {
+  async (error: AxiosError<ApiErrorResponse>) => {
     const errorInfo = {
       status: error.response?.status || 'NETWORK_ERROR',
       message: error.response?.data?.message || error.message,
     };
 
+    const originalRequest = error.config as any;
+
     // 401(토큰 만료)일 경우 로그아웃 처리 or 토큰 갱신 가능
     if (errorInfo.status === 401) {
-      Cookies.remove('access_token');
-
-      useAuthStore.getState().openModal();
+      try {
+        await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/refresh`,
+          {},
+          {
+            withCredentials: true, 
+          }
+        );
+        // 새 토큰이 쿠키에 재설정되었으므로 원래 요청 재시도
+        return axiosClient(originalRequest);
+      } catch (refreshError) {
+        // 리프레시 실패 시 로그아웃 처리
+        Cookies.remove('access_token');
+        useAuthStore.getState().openModal();
+        return Promise.reject(refreshError);
+      }
     }
 
     return Promise.reject(errorInfo);
