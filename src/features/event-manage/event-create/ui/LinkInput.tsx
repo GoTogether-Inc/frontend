@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 import AddButton from '../../../../../public/assets/event-manage/creation/AddBtn.svg';
 import CloseButton from '../../../../../public/assets/event-manage/creation/CloseBtn.svg';
 import Link from '../../../../../public/assets/event-manage/creation/Link.svg';
 
 interface LinkInputProps {
-  useFunnel?: boolean;
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
 interface Link {
@@ -15,9 +15,8 @@ interface Link {
   detailAddress: string;
 }
 
-const LinkInput = ({ useFunnel = false }: LinkInputProps) => {
+const LinkInput = ({ setEventState }: LinkInputProps) => {
   const [links, setLinks] = useState<Link[]>([]);
-  const { setEventState } = useFunnelState();
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
@@ -34,7 +33,7 @@ const LinkInput = ({ useFunnel = false }: LinkInputProps) => {
     };
     const newLinks = [...links, newLink];
     setLinks(newLinks);
-    if (useFunnel) {
+    if (setEventState) {
       setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
     }
   };
@@ -42,7 +41,7 @@ const LinkInput = ({ useFunnel = false }: LinkInputProps) => {
   const removeLink = (index: number) => {
     const newLinks = links.filter((_, i) => i !== index);
     setLinks(newLinks);
-    if (useFunnel) {
+    if (setEventState) {
       setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
     }
   };
@@ -51,7 +50,7 @@ const LinkInput = ({ useFunnel = false }: LinkInputProps) => {
     const newLinks = [...links];
     newLinks[index] = { ...newLinks[index], [field]: value };
     setLinks(newLinks);
-    if (useFunnel) {
+    if (setEventState) {
       setEventState(prev => ({ ...prev, referenceLinks: newLinks }));
     }
   };

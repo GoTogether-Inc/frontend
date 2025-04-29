@@ -1,12 +1,11 @@
-// 사진 첨부는 추후에...
 import { useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 
 interface TextEditorProps {
-  useFunnel?: boolean;
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
 const formats = [
@@ -29,10 +28,9 @@ const formats = [
   'h1',
 ];
 
-const TextEditor = ({ useFunnel = false }: TextEditorProps) => {
+const TextEditor = ({ setEventState }: TextEditorProps) => {
   const [content, setContent] = useState('');
   const quillRef = useRef<ReactQuill | null>(null);
-  const { setEventState } = useFunnelState();
 
   const imageHandler = async () => {
     if (!quillRef.current) return;
@@ -82,7 +80,7 @@ const TextEditor = ({ useFunnel = false }: TextEditorProps) => {
 
   const handleChange = (value: string) => {
     setContent(value);
-    if (useFunnel) {
+    if (setEventState) {
       setEventState(prev => ({ ...prev, description: value }));
     }
   };

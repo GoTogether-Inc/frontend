@@ -1,17 +1,16 @@
 import FileUploadImage from '../../../../../public/assets/event-manage/creation/FileUpload.svg';
 import { useRef, useState } from 'react';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 
 interface FileUploadProps {
-  useFunnel?: boolean;
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
 }
 
-const FileUpload = ({ useFunnel = false }: FileUploadProps) => {
+const FileUpload = ({ setEventState }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { setEventState } = useFunnelState();
 
   const handleFileUpload = async (file: File) => {
     if (file.size > 500 * 1024) {
@@ -27,7 +26,7 @@ const FileUpload = ({ useFunnel = false }: FileUploadProps) => {
     try {
       const imageUrl = await uploadFile(file);
       setPreviewUrl(imageUrl);
-      if (useFunnel) {
+      if (setEventState) {
         setEventState(prev => ({ ...prev, bannerImageUrl: imageUrl }));
       }
     } catch (error) {
