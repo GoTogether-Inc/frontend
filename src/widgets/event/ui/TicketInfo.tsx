@@ -1,43 +1,26 @@
 import { useEffect, useState } from 'react';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
-import { readTicket } from '../../../features/ticket/api/ticket';
-import { ReadTicket } from '../../../pages/dashboard/ui/ticket/TicketListPage';
 import { OrderTicketRequest } from '../../../features/ticket/model/OrderCreation';
 import { orderTickets } from '../../../features/ticket/api/order';
 import { useNavigate } from 'react-router-dom';
+import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
 
 const TicketInfo = ({ eventId }: { eventId: number }) => {
   const limitNum = 4;
-  const [tickets, setTickets] = useState<ReadTicket[]>([]);
+  const { data, isError, isLoading } = useTickets(eventId);
   const [quantity, setQuantity] = useState<{ [key: number]: number }>({});
   const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const data = await readTicket.getAll(eventId);
-        if (data.isSuccess && Array.isArray(data.result)) {
-          setTickets(data.result);
-        } else {
-          setTickets([]);
-        }
-      } catch (error) {
-        console.error("티켓 데이터를 불러오는 중 오류 발생:", error);
-        setTickets([]);
-      }
-    };
-    fetchTickets();
-  }, [eventId]);
-  useEffect(() => {
-    if (tickets.length > 0) {
+    if (data && data.isSuccess) {
       const initialQuantity: { [key: number]: number } = {};
-      tickets.forEach(ticket => {
+      data.result.forEach(ticket => {
         initialQuantity[ticket.ticketId] = 1;
       });
       setQuantity(initialQuantity);
     }
-  }, [tickets]);
+  }, [data]);
+
   const handleIncrement = (ticketId: number) => {
     setQuantity(prev => ({
       ...prev,
@@ -60,28 +43,29 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
         eventId,
         ticketCnt,
       };
-  
+
       const response = await orderTickets(requestData);
-  
+
       console.log("API 응답:", response);
-  
+
       if (response.isSuccess && Array.isArray(response.result)) {
         const orderIds = response.result;
-  
+
         navigate('/payment/ticket-confirm', { state: { orderIds, ticketId, eventId } });
       } else {
         alert("주문 정보를 불러올 수 없습니다.");
       }
-  
+
     } catch (error) {
       alert("티켓 구매 중 오류가 발생했습니다.");
     }
   };
-  
+  if (isLoading) return <div>Loading...</div>;
+  if (isError || !data || !data.isSuccess) return <div>티켓 정보를 불러올 수 없습니다.</div>;
 
   return (
     <div className="w-full h-full">
-      {tickets.map(ticket => (
+      {data.result.map(ticket => (
         <div key={ticket.ticketId} className="bg-gray1 px-3 py-3 md:px-6 md:py-4 rounded-[10px] mb-3">
           <div className="flex justify-between items-center">
             <div className="flex flex-col gap-2">

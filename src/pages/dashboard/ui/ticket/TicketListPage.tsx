@@ -1,48 +1,24 @@
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
 import TicketItem from '../../../../widgets/dashboard/ui/TicketItem';
-import { useNavigate } from 'react-router-dom';
-import { DASHBOARD_ROUTES } from '../../../../app/routes/routes';
+import { useNavigate, useParams } from 'react-router-dom';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
-import { useEffect, useState } from 'react';
-import { readTicket } from '../../../../features/ticket/api/ticket';
-
-export interface ReadTicket {
-  ticketId: number;
-  ticketName: string;
-  ticketDescription: string;
-  ticketPrice: number;
-  availableQuantity: number;
-}
+import { useTickets } from '../../../../features/ticket/hooks/useTicketHook';
 
 const TicketListPage = () => {
   const navigate = useNavigate();
 
   const navigateToTicketCreate = () => {
-    navigate(DASHBOARD_ROUTES.ticketCreate);
+    navigate(`/dashboard/${id}/ticket/create`);
   };
+  const { id } = useParams();
+  const eventId = id ? parseInt(id) : 1;
+  const { data, isLoading, isError } = useTickets(eventId);
 
-  const [tickets, setTickets] = useState<ReadTicket[]>([]); 
-  const eventId = 1; //수정 필요
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>티켓 정보를 불러오는 중 오류가 발생했습니다.</div>;
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const data = await readTicket.getAll(eventId);
-        if (data.isSuccess && Array.isArray(data.result)) {
-          setTickets(data.result);
-        } else {
-          setTickets([]);
-        }
-      } catch (error) {
-        console.error("티켓 데이터를 불러오는 중 오류 발생:", error);
-        setTickets([]);
-      }
-    };
-    fetchTickets();
-  }, [eventId]);
-  
   return (
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="mt-8 px-7">
@@ -69,8 +45,8 @@ const TicketListPage = () => {
             <img src={Ticket} />
             <p className="font-bold text-base md:text-lg">티켓</p>
           </div>
-          {tickets.length > 0 ? (
-            tickets.map(value => <TicketItem key={value.ticketId} ticket={value}/>)
+          {data?.isSuccess && data?.result.length > 0 ? (
+            data.result.map(value => <TicketItem key={value.ticketId} ticket={value} />)
           ) : (
             <div className="text-gray5 font-thin">현재 등록된 티켓이 없습니다.</div>
           )}

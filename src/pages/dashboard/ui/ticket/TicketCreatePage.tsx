@@ -5,12 +5,18 @@ import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
 import Button from '../../../../../design-system/ui/Button';
 import TicketDatePicker from '../../../../features/ticket/model/TicketDatePicker';
-import { createTicket } from '../../../../features/ticket/api/ticket';
-import { CreateTicketRequest } from '../../../../features/ticket/model/ticketCreation';
+import { CreateTicketRequest } from '../../../../features/ticket/model/ticketInformation';
+import { useCreateTicket } from '../../../../features/ticket/hooks/useTicketHook';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const TicketCreatePage = () => {
+  const navigate = useNavigate();
+  const { mutate: createTicket } = useCreateTicket();
+  const { id } = useParams();
+  const eventId = Number(id);
+  
   const [ticketData, setTicketData] = useState<CreateTicketRequest>({
-    eventId: 1,
+    eventId: eventId,
     ticketType: 'FIRST_COME',
     ticketName: '',
     ticketDescription: '',
@@ -76,14 +82,8 @@ const TicketCreatePage = () => {
       alert('모든 필수 입력 항목을 작성해주세요.');
       return;
     }
-    try {
-      const response = await createTicket(ticketData);
-      console.log('티켓 저장 성공:', response);
-      alert('티켓이 성공적으로 저장되었습니다.');
-    } catch (err) {
-      console.error('티켓 저장에 실패했습니다.', err);
-      alert('티켓 저장에 실패했습니다. 다시 시도해주세요.');
-    }
+    createTicket(ticketData);
+    navigate(`/dashboard/${id}/ticket`);
   };
 
   return (

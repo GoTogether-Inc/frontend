@@ -1,23 +1,13 @@
 import AvailableTicket from '../../../../public/assets/dashboard/ticket/Ticket(gray).svg';
 import PersonIcon from '../../../../public/assets/dashboard/ticket/PersonIcon.svg';
-import { ReadTicket } from '../../../pages/dashboard/ui/ticket/TicketListPage';
 import { motion } from "framer-motion";
 import { useState } from 'react';
-import { deleteTicket } from '../../../features/ticket/api/ticket';
+import { ReadTicketResponse } from '../../../features/ticket/model/ticketInformation';
+import { useDeleteTicket } from '../../../features/ticket/hooks/useTicketHook';
 
-const TicketItem = ({ ticket }: { ticket: ReadTicket }) => {
+const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const handleDelete = async () => {
-    const isConfirmed = window.confirm("티켓을 삭제하시겠습니까?");
-    if (!isConfirmed) return;
-    try {
-      await deleteTicket.remove(ticket.ticketId);
-      alert("티켓이 삭제되었습니다.");
-      window.location.reload();
-    } catch (error) {
-      console.error("티켓 삭제 중 오류 발생:", error);
-    }
-  };
+  const { mutate: handleDelete} = useDeleteTicket();
   return (
     <div className="relative overflow-hidden w-full mb-4">
       <motion.div
@@ -54,7 +44,7 @@ const TicketItem = ({ ticket }: { ticket: ReadTicket }) => {
         initial={{ x: '100%' }}
         animate={{ x: isDragging ? 0 : 'calc(100% + 1px)' }}
         transition={{ duration: 0 }}
-        onClick={handleDelete}
+        onClick={() => handleDelete(ticket.ticketId)}
       >
         삭제
       </motion.button>

@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { CreateTicketRequest } from './ticketCreation';
+import { CreateTicketRequest } from './ticketInformation';
 
 export interface TicketState {
   ticketState: CreateTicketRequest;
