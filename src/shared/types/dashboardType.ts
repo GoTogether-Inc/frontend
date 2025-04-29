@@ -39,7 +39,6 @@ export interface dashboardData {
 export const getMenuLists = (id: string | number) => [
   { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/${id}` },
   { text: '이벤트 기본 정보', icon: eventInfo, clickedIcon: clickedEventInfo, path: `/dashboard/${id}/eventInfo` },
-  { text: '티켓에 추가 옵션 부착', icon: option, clickedIcon: clickedOption, path: '/dashboard/ticket/option' }, // icon, clickedIcon에 들어갈 .svg 알아보기
   {
     text: '이벤트 상세와 사진',
     icon: eventDetail,
@@ -48,6 +47,7 @@ export const getMenuLists = (id: string | number) => [
   },
   { text: '이벤트 태그 정보', icon: tag, clickedIcon: clickedTag, path: `/dashboard/${id}/eventTag` },
   { text: '티켓 생성하기', icon: ticket, clickedIcon: clickedTicket, path: `/dashboard/${id}/ticket` },
+  { text: '티켓에 추가 옵션 부착', icon: option, clickedIcon: clickedOption, path: `/dashboard/${id}/ticket/option` },
   { text: '이메일 예약 발송', icon: email, clickedIcon: clickedEmail, path: `/dashboard/${id}/email` },
   { text: '보낸 이메일', icon: sentEmail, clickedIcon: clickedSentEmail, path: `/dashboard/${id}/mailBox` },
   {
