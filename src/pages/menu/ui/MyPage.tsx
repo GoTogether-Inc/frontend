@@ -10,7 +10,7 @@ import { useUserInfo,useUserUpdate } from '../../../features/join/hooks/useUserH
 import useAuthStore from '../../../app/provider/authStore';
 
 const MyPage = () => {
-  const {data} = useUserInfo();
+  const {data, isLoading, error} = useUserInfo();
   const { mutate: updateUser } = useUserUpdate();
   const { setName } = useAuthStore();
 
@@ -41,7 +41,7 @@ const MyPage = () => {
     };
     updateUser(updatedData, {
       onSuccess: () => {
-        setName(data?.name || "사용자");
+        setName(name);
         alert('정보가 성공적으로 업데이트되었습니다.');
       },
       onError: (err) => {
@@ -62,6 +62,12 @@ const MyPage = () => {
     setIsChanged(changeMessage); // 변경 상태 업데이트
 
   };
+  if (isLoading) {
+    return <div>로딩 중...</div>; 
+  }
+  if (error) {
+    return <div>정보를 불러오는데 실패했습니다. 다시 시도해주세요.</div>;
+  }
   return (
     <div>
       <Header leftButtonLabel="마이페이지" leftButtonClassName="font-bold text-2xl" />
