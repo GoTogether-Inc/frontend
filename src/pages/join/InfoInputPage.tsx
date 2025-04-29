@@ -6,23 +6,27 @@ import { useNavigate } from 'react-router-dom';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
 import { useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
 import useAuthStore from '../../app/provider/authStore';
+import { useEffect } from 'react';
 
 const InfoInputPage = () => {
   const { data, isLoading } = useUserInfo();
-  const { login, setName} = useAuthStore();
+  const { login, setName } = useAuthStore();
   const { mutate: updateUser } = useUserUpdate();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    reset,
   } = useForm<FormData>({
     mode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+    },
     ...zodValidation,
   });
   const navigate = useNavigate();
-
-  const nameValue = data?.name;
-  const emailValue = data?.email;
 
   const onSubmit: SubmitHandler<FormData> = formData => {
     const updatedData = {
@@ -44,7 +48,15 @@ const InfoInputPage = () => {
       },
     });
   };
-
+  useEffect(() => {
+    if (data) {
+      reset({
+        name: data.name || '',
+        email: data.email || '',
+        phone: '',
+      });
+    }
+  }, [data, reset]);
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
@@ -62,7 +74,6 @@ const InfoInputPage = () => {
         <UnderlineTextField
           label="이름"
           placeholder="이름"
-          value={nameValue}
           errorMessage={errors.name?.message}
           className="text-xl"
           {...register('name')}
@@ -82,7 +93,6 @@ const InfoInputPage = () => {
         <UnderlineTextField
           label="이메일"
           placeholder="이메일"
-          value={emailValue}
           type="email"
           errorMessage={errors.email?.message}
           className="text-xl"
