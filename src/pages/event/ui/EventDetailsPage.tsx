@@ -10,35 +10,13 @@ import liked from '../../../../public/assets/event-manage/details/ClickedLike.sv
 import TicketInfo from '../../../widgets/event/ui/TicketInfo';
 import link from '../../../../public/assets/event-manage/details/Link.svg';
 import ShareEventModal from '../../../features/event-manage/event-create/ui/ShareEventModal';
-import { readEventDetail } from '../../../features/event-manage/event-create/api/event';
 import participantsImg from '../../../../public/assets/event-manage/details/People.svg';
 import dateImg from '../../../../public/assets/event-manage/details/Date.svg';
 import timeImg from '../../../../public/assets/event-manage/details/Time.svg';
 import locationImg from '../../../../public/assets/event-manage/details/Location.svg';
 import KakaoMap from '../../../shared/ui/KakaoMap';
-
-interface ReadEvent {
-  id: number;
-  bannerImageUrl: string;
-  title: string;
-  participantCount: number;
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-  address: string;
-  location: { lat: number; lng: number };
-  description: string;
-  hostChannelName: string;
-  hostChannelDescription: string;
-  organizerEmail: string;
-  organizerPhoneNumber: string;
-  referenceLinks: { title: string; url: string };
-  category: string;
-  onlineType: string;
-  status: string;
-  hashtags: string[];
-}
+import { eventDetail } from '../../../entities/event/api/event';
+import { EventDetailResponse } from '../../../entities/event/model/event';
 
 const EventDetailsPage = () => {
   const navigate = useNavigate();
@@ -46,8 +24,8 @@ const EventDetailsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickedLike, setClickedLike] = useState(false);
 
-  const [event, setEvent] = useState<ReadEvent | null>(null);
-  const eventId = 21; //수정 필요
+  const [event, setEvent] = useState<EventDetailResponse | null>(null);
+  const eventId = 1; //수정 필요
 
   const handleShareClick = (title: string) => {
     setTitle(title);
@@ -71,8 +49,8 @@ const EventDetailsPage = () => {
   useEffect(() => {
     const fetchEventDetail = async () => {
       try {
-        const response = await readEventDetail(eventId);
-        setEvent(response.result);
+        const response = await eventDetail({ eventId });
+        setEvent(response);
       } catch (error) {
         console.error('이벤트 상세 정보 불러오기 실패:', error);
       }
@@ -91,22 +69,21 @@ const EventDetailsPage = () => {
       />
       {event ? (
         <>
-          <img src={event.bannerImageUrl} alt="이벤트 배너" className="w-full h-64 mb-6" />
+          <img src={event.result.bannerImageUrl} alt="이벤트 배너" className="w-full h-64 mb-6" />
           <div className="flex flex-col gap-3 px-4 md:px-6">
-
-            <div key={event.id} className="flex flex-col gap-2">
-              <h1 className="text-xl md:text-2xl font-bold">{event.title}</h1>
+            <div key={event.result.id} className="flex flex-col gap-2">
+              <h1 className="text-xl md:text-2xl font-bold">{event.result.title}</h1>
               <div className="flex justify-between items-center gap-1">
                 <div className="flex gap-2">
                   <img src={participantsImg} alt="인원수 이미지" />
                   <span className="font-bold text-base md:text-lg py-2">
-                    현재 {event.participantCount}명이 참가 신청했습니다.
+                    현재 {event.result.participantCount}명이 참가 신청했습니다.
                   </span>
                 </div>
                 <div className="flex gap-3">
                   <IconButton
                     iconPath={<img src={share} alt="공유하기 버튼" />}
-                    onClick={() => handleShareClick(event.title)}
+                    onClick={() => handleShareClick(event.result.title)}
                   />
                   <IconButton
                     iconPath={<img src={clickedLike ? liked : like} alt="좋아요 버튼" />}
@@ -116,32 +93,35 @@ const EventDetailsPage = () => {
               </div>
               <div className="flex gap-2">
                 <img src={dateImg} alt="달력 이미지" />
-                <span className="text-sm md:text-base">{event.startDate} ~ {event.endDate}</span>
+                <span className="text-sm md:text-base">
+                  {event.result.startDate} ~ {event.result.endDate}
+                </span>
               </div>
               <div className="flex gap-2">
                 <img src={timeImg} alt="시간 이미지" />
-                <span className="text-sm md:text-base">{event.startTime} ~ {event.endTime}</span>
+                <span className="text-sm md:text-base">
+                  {event.result.startTime} ~ {event.result.endTime}
+                </span>
               </div>
               <div className="flex gap-2">
                 <img src={locationImg} alt="위치 이미지" />
-                <span className="text-sm md:text-base">{event.address}</span>
+                <span className="text-sm md:text-base">{event.result.address}</span>
               </div>
-              <span className="text-sm md:text-base py-3">{event.description}</span>
+              <span className="text-sm md:text-base py-3">{event.result.description}</span>
             </div>
 
-
             <h2 className="font-bold text-xl">위치</h2>
-            <KakaoMap lat={event.location.lat} lng={event.location.lng} />
+            <KakaoMap lat={event.result.location.lat} lng={event.result.location.lng} />
 
             <OrganizerInfo
-              name={event.hostChannelName}
-              description={event.hostChannelDescription}
-              phone={event.organizerPhoneNumber}
-              email={event.organizerEmail}
+              name={event.result.hostChannelName}
+              description={event.result.hostChannelDescription}
+              phone={event.result.organizerPhoneNumber}
+              email={event.result.organizerEmail}
             />
 
             <h2 className="font-bold text-xl">티켓 옵션</h2>
-            <TicketInfo eventId={event.id} />
+            <TicketInfo eventId={event.result.id} />
 
             <div className="flex flex-col gap-2">
               <h2 className="font-bold text-xl">관련 링크</h2>
