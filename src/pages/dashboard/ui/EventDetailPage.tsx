@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
 import FileUpload from '../../../features/event-manage/event-create/ui/FileUpload';
 import LinkInput from '../../../features/event-manage/event-create/ui/LinkInput';
@@ -7,6 +7,7 @@ import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 
 const EventDetailPage = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -17,11 +18,7 @@ const EventDetailPage = () => {
         <LinkInput />
       </div>
       <div className="w-full p-7">
-        <Button
-          label="저장하기"
-          onClick={() => navigate('/dashbord/eventDetail')}
-          className="w-full h-12 rounded-full"
-        />
+        <Button label="저장하기" onClick={() => navigate(`/dashboard/${id}`)} className="w-full h-12 rounded-full" />
       </div>
     </DashboardLayout>
   );
