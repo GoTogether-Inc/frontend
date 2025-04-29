@@ -57,7 +57,7 @@ const MainPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => { }}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton size="large" color="black" label={isLoggedIn ? `${name}님`  : '로그인'} onClick={openModal} />}
+        rightContent={<SecondaryButton size="large" color="black" label={isLoggedIn ? `${name}님`  : '로그인'} onClick={isLoggedIn ? closeModal : openModal} />}
       />
       <AnimatePresence>{isModalOpen && <LoginModal onClose={closeModal} />}</AnimatePresence>
 

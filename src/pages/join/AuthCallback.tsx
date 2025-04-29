@@ -13,10 +13,10 @@ const AuthCallback = () => {
     useEffect(() => {
         const handleAuth = async () => {
             try {
-                login();
                 if (status === 'new') {
                     navigate('/join/agreement');
                 } else {
+                    login();
                     setName(data?.name || "사용자");
                     console.log(isModalOpen);
                     navigate('/');

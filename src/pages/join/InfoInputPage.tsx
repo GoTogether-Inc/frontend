@@ -5,9 +5,11 @@ import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTe
 import { useNavigate } from 'react-router-dom';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
 import { useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
+import useAuthStore from '../../app/provider/authStore';
 
 const InfoInputPage = () => {
   const { data, isLoading } = useUserInfo();
+  const { login, setName} = useAuthStore();
   const { mutate: updateUser } = useUserUpdate();
   const {
     register,
@@ -31,6 +33,8 @@ const InfoInputPage = () => {
     };
     updateUser(updatedData, {
       onSuccess: () => {
+        login();
+        setName(data?.name || "사용자");
         alert('정보가 성공적으로 업데이트되었습니다.');
         navigate('/');
       },
