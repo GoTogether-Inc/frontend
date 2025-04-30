@@ -30,7 +30,6 @@ const InfoInputPage = () => {
 
   const onSubmit: SubmitHandler<FormData> = formData => {
     const updatedData = {
-      id: data?.id || 0,
       name: data?.name || "",
       email: data?.email || "",
       phoneNumber: formData.phone,

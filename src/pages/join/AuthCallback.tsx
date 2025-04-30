@@ -19,7 +19,6 @@ const AuthCallback = () => {
                     navigate('/join/agreement');
                 } else {
                     login();
-                    console.log(data);
                     setName(data?.name || "사용자");
                     navigate('/');
                 }

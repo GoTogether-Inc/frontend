@@ -6,7 +6,6 @@ export interface UserInfoResponse {
 }
 
 export interface UserInfoRequest {
-    id: number;
     name: string;
     phoneNumber: string;
     email: string;
