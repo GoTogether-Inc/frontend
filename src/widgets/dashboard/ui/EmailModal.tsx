@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
 import EmailInput from '../../../features/dashboard/ui/EmailInput';
@@ -11,7 +11,6 @@ interface EmailModalProps {
   allParticipantEmails: string[];
 }
 const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailModalProps) => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const { mutate: sendEmail } = useSendEmail();
 
@@ -23,7 +22,6 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
     reservationTime,
     setReservationDate,
     setReservationTime,
-    reset,
   } = useEmailStore();
 
   const handleSend = () => {
@@ -36,17 +34,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
       reservationDate,
       reservationTime,
     };
-    console.log(emailData);
-    sendEmail(emailData, {
-      onSuccess: () => {
-        reset();
-        alert("예약 메일이 성공적으로 발송되었습니다!");
-        navigate(`/dashboard/${id}/mailBox`);
-      },
-      onError: () => {
-        alert("메일 전송에 실패했습니다. 다시 시도해 주세요.");
-      },
-    });
+    sendEmail(emailData);
   };
 
   return (

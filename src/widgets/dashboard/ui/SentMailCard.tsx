@@ -10,10 +10,11 @@ import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
 interface SentMailCardProps {
   mail: ReadEmailResponse;
   isPending: boolean;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickDelete?: () => void;
 }
 
-const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardProps) => {
+const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
@@ -55,7 +56,7 @@ const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardP
                 type="button"
                 color="black"
                 size="medium"
-                onClick={() => setIsModalOpen(true)}
+                onClick={onClickDelete}
               />
               <TertiaryButton
                 label="수정하기"
