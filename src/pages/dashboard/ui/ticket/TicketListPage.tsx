@@ -13,7 +13,7 @@ const TicketListPage = () => {
     navigate(`/dashboard/${id}/ticket/create`);
   };
   const { id } = useParams();
-  const eventId = id ? parseInt(id) : 1;
+  const eventId = id ? parseInt(id) : 0;
   const { data, isLoading, isError } = useTickets(eventId);
 
   if (isLoading) return <div>로딩 중...</div>;

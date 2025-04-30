@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const TimePicker = () => {
+interface TimePickerProps {
+  onDateChange: (date: string) => void;
+  onTimeChange: (time: string) => void;
+}
+
+const TimePicker = ({ onDateChange, onTimeChange }: TimePickerProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedHour, setSelectedHour] = useState<string>('00');
   const [selectedMinute, setSelectedMinute] = useState<string>('00');
+
+  // 날짜, 시간 바뀔 때마다 업데이트
+  useEffect(() => {
+    if (selectedDate) {
+      const formattedDate = selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD
+      onDateChange(formattedDate);
+    }
+  }, [selectedDate]);
+  useEffect(() => {
+    const formattedTime = `${selectedHour}:${selectedMinute}`;
+    onTimeChange(formattedTime);
+  }, [selectedHour, selectedMinute]);
 
   return (
     <div className="flex items-center justify-between">

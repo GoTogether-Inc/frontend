@@ -1,16 +1,48 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import EmailInput from '../../../../features/dashboard/ui/EmailInput';
 import TimePicker from '../../../../features/event-manage/event-create/ui/TimePicker';
 import Button from '../../../../../design-system/ui/Button';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
+import { useEmailStore } from '../../../../features/dashboard/model/EmailStore';
 
 const EmailEditPage = () => {
   const navigate = useNavigate();
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const { participants } = useParticipants();
+  const { id } = useParams();
+
+  const {
+    title,
+    content,
+    recipients,
+    reservationDate,
+    reservationTime,
+    setReservationDate,
+    setReservationTime,
+    reset,
+  } = useEmailStore();
+
+  const handleEdit = () => {
+    const eventId = id ? parseInt(id) : 0;
+
+    console.log('Editing and sending email with:', {
+      eventId,
+      title,
+      content,
+      recipients,
+      reservationDate,
+      reservationTime,
+    });
+
+    // 이메일 수정 및 전송 API 호출 부분
+
+    reset(); // 상태 초기화
+    navigate(`/dashboard/${id}/mailBox`); // 수정 완료 후 메일함으로 이동
+  };
+
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -21,8 +53,11 @@ const EmailEditPage = () => {
           allParticipantEmails={participants.map((p: { email: any; }) => p.email)}
         />
         {/*시간 선택 컴포넌트*/}
-        <TimePicker />
-        <Button label="보내기" onClick={() => navigate('/dashboard/mailBox')} className="w-full h-12 rounded-full" />
+        <TimePicker
+          onTimeChange={(time: string) => setReservationTime(time)}
+          onDateChange={(date: string) => setReservationDate(date)}
+        />
+        <Button label="보내기" onClick={handleEdit} className="w-full h-12 rounded-full" />
       </div>
       {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} />}
     </DashboardLayout>
