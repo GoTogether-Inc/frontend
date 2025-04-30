@@ -3,8 +3,9 @@ import { useState } from 'react';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import { formatDate } from '../../../shared/lib/date';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ReadEmailResponse } from '../../../features/dashboard/model/emailInformation';
+import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
 
 interface SentMailCardProps {
   mail: ReadEmailResponse;
@@ -15,6 +16,18 @@ interface SentMailCardProps {
 const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const { id } = useParams();
+  const { setReservationEmailId, setTitle, setContent, setRecipients, setReservationDate, setReservationTime } = useEmailStore();
+  const handleEditClick = () => {
+    setReservationEmailId(mail.id);
+    setTitle(mail.title);
+    setContent(mail.content);
+    setRecipients(mail.recipients);
+    setReservationDate(mail.reservationDate);
+    setReservationTime(mail.reservationTime);
+
+    navigate(`/dashboard/${id}/edit-email`);
+  };
 
   return (
     <div className="p-4 bg-white rounded-[5px] border-[0.5px] border-gray4 transition-all">
@@ -49,7 +62,7 @@ const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardP
                 type="button"
                 color="pink"
                 size="medium"
-                onClick={() => navigate('/dashboard/edit-email')}
+                onClick={handleEditClick}
               />
             </div>
           )}

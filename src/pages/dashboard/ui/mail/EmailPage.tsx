@@ -46,7 +46,7 @@ const EmailPage = () => {
         navigate(`/dashboard/${id}/mailBox`);
       },
       onError: () => {
-        alert("이메일 전송에 실패했습니다. 다시 시도해 주세요."); 
+        alert("메일 전송에 실패했습니다. 다시 시도해 주세요."); 
       },
     });
   };

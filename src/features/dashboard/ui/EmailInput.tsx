@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
@@ -9,18 +9,29 @@ interface EmailInputProps {
   type?: '이메일 예약 발송' | '선택 이메일 보내기' | '이메일 내용 수정';
   openSelectTicket: () => void;
   allParticipantEmails: string[];
+  isEdited?: boolean;
 }
 
-const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allParticipantEmails }: EmailInputProps) => {
+const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allParticipantEmails, isEdited }: EmailInputProps) => {
   const [inputValue, setInputValue] = useState('');
 
   const {
+    title,
+    content,
     recipients,
     setTitle,
     setContent,
     setRecipients,
   } = useEmailStore();
 
+  useEffect(() => {
+    if (!isEdited) {
+      setRecipients([]); 
+      setTitle('');
+    setContent('');
+    }
+  }, [isEdited, setRecipients]);
+  
   const addAllEmails = () => {
     setRecipients([...new Set(allParticipantEmails)]);
   };
@@ -50,13 +61,14 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
             placeholder={recipients.length === 0 ? '위 필터로 이메일 보내실 대상을 선택하세요.' : ''}
           />
         </div>
-        <DefaultTextField className="h-12" leftText="제목" placeholder="제목" onChange={(e) => setTitle(e.target.value)} />
+        <DefaultTextField className="h-12" leftText="제목" placeholder="제목" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       {/* 이메일 내용 작성 부분 */}
       <MultilineTextField
         label="발송될 이메일 내용"
         className="h-80 md:mb-4"
         placeholder="발송될 이메일 본문 내용입니다."
+        value={content}
         onChange={(e) => setContent(e.target.value)}
       />
     </div>
