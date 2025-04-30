@@ -1,13 +1,13 @@
-import { mailInfoData } from '../../../shared/types/mailInfoType';
 import arrow from '../../../../public/assets/dashboard/mail/Arrow.svg';
 import { useState } from 'react';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import { formatDate } from '../../../shared/lib/date';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { useNavigate } from 'react-router-dom';
+import { ReadEmailResponse } from '../../../features/dashboard/model/emailInformation';
 
 interface SentMailCardProps {
-  mail: mailInfoData;
+  mail: ReadEmailResponse;
   isPending: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -21,10 +21,11 @@ const SentMailCard = ({ mail, isPending = false, setIsModalOpen }: SentMailCardP
       <div className="flex justify-between transition-transform">
         <div className="flex flex-col gap-1 text-md">
           <div className="flex items-center gap-2">
-            <p className="text-main font-semibold">[{mail.receiver}]</p>
+            {/* <p className="text-main font-semibold">[{mail.receiver}]</p>  수정 필요 */}
+            <p className="text-main font-semibold">[무료]</p>
             <p>{mail.title}</p>
           </div>
-          <p className="text-sm text-placeholderText">{formatDate(mail.date)}</p>
+          <p className="text-sm text-placeholderText">{formatDate(mail.reservationDate)}</p>
         </div>
         <IconButton
           iconPath={<img src={arrow} alt="화살표" className={`${isOpen ? 'rotate-180' : ''}`} />}

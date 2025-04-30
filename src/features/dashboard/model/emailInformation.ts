@@ -12,3 +12,11 @@ export interface EmailResponse {
     message: string;
     result: string;
 }
+export interface ReadEmailResponse {
+    id: number;
+    title: string;
+    content: string;
+    recipients: string[];
+    reservationDate: string;
+    reservationTime: string;
+}

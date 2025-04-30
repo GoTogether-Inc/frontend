@@ -3,16 +3,18 @@ import TextButton from '../../../../../design-system/ui/buttons/TextButton';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../../shared/ui/SearchBar';
 import SentMailCard from '../../../../widgets/dashboard/ui/SentMailCard';
-import { mailInfo } from '../../../../shared/types/mailInfoType';
 import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
+import { useParams } from 'react-router-dom';
+import { useReadEmail } from '../../../../features/dashboard/hook/useEmailHook';
 
 const MailBoxPage = () => {
+  const { id } = useParams();
+  const eventId = id ? parseInt(id) : 0;
   const [listType, setListType] = useState<'completed' | 'pending'>('completed');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const currentDate = new Date();
 
-  const completedMails = mailInfo.filter(mail => new Date(mail.date) < currentDate);
-  const pendingMails = mailInfo.filter(mail => new Date(mail.date) > currentDate);
+  const status = listType === 'pending' ? 'PENDING' : 'SENT';
+  const { data: emails = [], isLoading } = useReadEmail(eventId,status);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -33,14 +35,17 @@ const MailBoxPage = () => {
             className={listType === 'pending' ? 'text-main' : ''}
           />
         </div>
-        {(listType === 'completed' ? completedMails : pendingMails).map(mail => (
+        {isLoading ? (
+          <div>로딩 중...</div>
+        ) : (
+        emails.map(mail => (
           <SentMailCard
             key={mail.id}
             mail={mail}
             isPending={listType === 'pending' ? true : false}
             setIsModalOpen={setIsModalOpen}
           />
-        ))}
+        )))}
       </div>
       {isModalOpen && (
         <EmailDeleteMoal

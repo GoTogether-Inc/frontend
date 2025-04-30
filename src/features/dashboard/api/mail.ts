@@ -1,5 +1,18 @@
 import { axiosClient } from '../../../shared/types/api/http-client';
-import { EmailRequest } from '../model/emailInformation';
+import { EmailRequest, ReadEmailResponse } from '../model/emailInformation';
+
+export const readEmail = async (eventId: number, status: 'PENDING' | 'SENT'): Promise<ReadEmailResponse[]> => {
+    const response = await axiosClient.get<{ result: ReadEmailResponse[] }>(
+        `/reservation-emails`,
+        {
+            params: {
+                eventId,
+                status,
+            },
+        }
+    );
+    return response.data.result;
+}
 
 export const sendEmail = async (data: EmailRequest) => {
     const response = await axiosClient.post('/reservation-emails', data);
