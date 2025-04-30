@@ -7,18 +7,20 @@ const AuthCallback = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const status = searchParams.get('status'); // 'new' or 'existing'
-    const { login, setName, isModalOpen } = useAuthStore();
+    const { login, setName } = useAuthStore();
     const { data } = useUserInfo();
 
     useEffect(() => {
         const handleAuth = async () => {
+            if (!data) return;
+            
             try {
                 if (status === 'new') {
                     navigate('/join/agreement');
                 } else {
                     login();
+                    console.log(data);
                     setName(data?.name || "사용자");
-                    console.log(isModalOpen);
                     navigate('/');
                 }
             } catch (error) {
@@ -27,7 +29,7 @@ const AuthCallback = () => {
             }
         };
         handleAuth();
-    }, [data, navigate, login, status, setName, isModalOpen]);
+    }, [data, navigate, login, status, setName]);
 
     return <div className="text-center mt-32 text-lg font-bold">로그인 중입니다...</div>;
 };
