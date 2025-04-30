@@ -23,3 +23,8 @@ export const editEmail = async (reservationEmailId: number, data: EmailRequest) 
     const response = await axiosClient.put(`/reservation-emails/${reservationEmailId}`, data);
     return response.data.result;
 };
+
+export const deleteEmail = async (reservationEmailId: number) => {
+    const response = await axiosClient.delete(`/reservation-emails/${reservationEmailId}`);
+    return response.data.result;
+}

@@ -5,16 +5,23 @@ import SearchBar from '../../../../shared/ui/SearchBar';
 import SentMailCard from '../../../../widgets/dashboard/ui/SentMailCard';
 import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
 import { useParams } from 'react-router-dom';
-import { useReadEmail } from '../../../../features/dashboard/hook/useEmailHook';
+import { useDeleteEmail, useReadEmail } from '../../../../features/dashboard/hook/useEmailHook';
 
 const MailBoxPage = () => {
   const { id } = useParams();
   const eventId = id ? parseInt(id) : 0;
   const [listType, setListType] = useState<'completed' | 'pending'>('completed');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEmailId, setSelectedEmailId] = useState<number | null>(null);
 
   const status = listType === 'pending' ? 'PENDING' : 'SENT';
-  const { data: emails = [], isLoading } = useReadEmail(eventId,status);
+  const { data: emails = [], isLoading } = useReadEmail(eventId, status);
+  const { mutate: deleteEmail } = useDeleteEmail();
+
+  const handleDelete = (reservationEmailId: number) => {
+    deleteEmail(reservationEmailId);
+    setIsModalOpen(false);
+  }
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -38,22 +45,28 @@ const MailBoxPage = () => {
         {isLoading ? (
           <div>로딩 중...</div>
         ) : (
-        emails.map(mail => (
-          <SentMailCard
-            key={mail.id}
-            mail={mail}
-            isPending={listType === 'pending' ? true : false}
-            setIsModalOpen={setIsModalOpen}
-          />
-        )))}
+          emails.map(mail => (
+            <SentMailCard
+              key={mail.id}
+              mail={mail}
+              isPending={listType === 'pending' ? true : false}
+              onClickDelete={() => {
+                setSelectedEmailId(mail.id);
+                setIsModalOpen(true);
+              }}
+            />
+          )))}
       </div>
       {isModalOpen && (
         <EmailDeleteMoal
           mainText="이메일을 삭제하면 예약이 자동으로 취소됩니다.. 그래도 삭제하시겠습니까?"
           approveButtonText="삭제"
           rejectButtonText="취소"
-          onClose={() => setIsModalOpen(false)}
-          onClick={() => setIsModalOpen(false)} //임시
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedEmailId(null);
+          }}
+          onClick={() => handleDelete(selectedEmailId || 0)}
         />
       )}
     </DashboardLayout>
