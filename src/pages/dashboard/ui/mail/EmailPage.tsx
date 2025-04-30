@@ -17,7 +17,7 @@ const EmailPage = () => {
       <div className="p-5 flex flex-col gap-10 min-h-full">
         <EmailInput
           openSelectTicket={() => setTicketModalOpen(true)}
-          allParticipantEmails={participants.map(p => p.email)}
+          allParticipantEmails={participants.map((p: { email: any; }) => p.email)}
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker />

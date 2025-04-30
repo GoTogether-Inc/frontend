@@ -18,7 +18,7 @@ const EmailEditPage = () => {
         <EmailInput
           type="이메일 내용 수정"
           openSelectTicket={() => setTicketModalOpen(true)}
-          allParticipantEmails={participants.map(p => p.email)}
+          allParticipantEmails={participants.map((p: { email: any; }) => p.email)}
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker />

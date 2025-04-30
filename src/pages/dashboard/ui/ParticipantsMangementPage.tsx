@@ -53,7 +53,7 @@ const ParticipantsManagementPage = () => {
             setEmailModalOpen(false);
             setTicketModalOpen(true);
           }}
-          allParticipantEmails={participants.map(p => p.email)}
+          allParticipantEmails={participants.map((p: { email: any; }) => p.email)}
         />
       )}
       {ticketModalOpen && (
