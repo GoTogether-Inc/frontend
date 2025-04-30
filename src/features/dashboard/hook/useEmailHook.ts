@@ -9,8 +9,8 @@ export const useSendEmail = () => {
 };
 
 export const useEditEmail = () => {
-    return useMutation<EmailResponse, Error, { emailId: number; data: EmailRequest }>({
-        mutationFn: ({ emailId, data }) => editEmail(emailId, data),
+    return useMutation<EmailResponse, Error, { reservationEmailId: number; data: EmailRequest }>({
+        mutationFn: ({ reservationEmailId, data }) => editEmail(reservationEmailId, data),
     });
 };
 

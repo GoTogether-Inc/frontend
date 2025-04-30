@@ -7,14 +7,16 @@ import Button from '../../../../../design-system/ui/Button';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
 import { useEmailStore } from '../../../../features/dashboard/model/EmailStore';
-
+import { useEditEmail } from '../../../../features/dashboard/hook/useEmailHook';
 const EmailEditPage = () => {
   const navigate = useNavigate();
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const { participants } = useParticipants();
   const { id } = useParams();
+  const {mutate: editEmail} = useEditEmail();
 
   const {
+    reservationEmailId,
     title,
     content,
     recipients,
@@ -27,22 +29,30 @@ const EmailEditPage = () => {
 
   const handleEdit = () => {
     const eventId = id ? parseInt(id) : 0;
-
-    console.log('Editing and sending email with:', {
+    const emailData = {
       eventId,
       title,
       content,
       recipients,
       reservationDate,
       reservationTime,
+    };
+    console.log(emailData);
+
+    editEmail({
+      reservationEmailId: reservationEmailId, 
+      data: emailData,
+    },{
+      onSuccess: () => {
+        reset(); 
+        alert("예약 메일이 성공적으로 수정되었습니다!"); 
+        navigate(`/dashboard/${id}/mailBox`);
+      },
+      onError: () => {
+        alert("메일 수정에 실패했습니다. 다시 시도해 주세요."); 
+      },
     });
-
-    // 이메일 수정 및 전송 API 호출 부분
-
-    reset(); // 상태 초기화
-    navigate(`/dashboard/${id}/mailBox`); // 수정 완료 후 메일함으로 이동
   };
-
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -51,6 +61,7 @@ const EmailEditPage = () => {
           type="이메일 내용 수정"
           openSelectTicket={() => setTicketModalOpen(true)}
           allParticipantEmails={participants.map((p: { email: any; }) => p.email)}
+          isEdited= {true}
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker
