@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { sendEmail, editEmail, readEmail, deleteEmail } from '../api/mail';
 import { EmailRequest, EmailResponse, ReadEmailResponse } from '../model/emailInformation';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -47,11 +47,12 @@ export const useEditEmail = () => {
 };
 
 export const useDeleteEmail = () => {
+    const queryClient = useQueryClient();
     return useMutation<EmailResponse, Error, number>({
         mutationFn: (reservationEmailId) => deleteEmail(reservationEmailId),
         onSuccess: () => {
             alert("메일이 삭제되었습니다.");
-            window.location.reload();
+            queryClient.invalidateQueries({ queryKey: ['emails'] });
         },
         onError: () => {
             alert("메일 삭제에 실패했습니다. 다시 시도해 주세요.");

@@ -26,6 +26,22 @@ const EmailPage = () => {
   } = useEmailStore();
 
   const handleSend = () => {
+    if (!title.trim()) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (!content.trim()) {
+      alert('내용을 입력해주세요.');
+      return;
+    }
+    if (recipients.length === 0) {
+      alert('수신자를 한 명 이상 선택해주세요.');
+      return;
+    }
+    if (!reservationDate || !reservationTime) {
+      alert('예약 날짜와 시간을 선택해주세요.');
+      return;
+    }
     const eventId = id ? parseInt(id) : 0;
     const emailData = {
       eventId,
