@@ -3,6 +3,7 @@ import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
 import EmailInputBase from '../../../shared/ui/EmailInputBase';
+import { useEmailStore } from '../model/EmailStore';
 
 interface EmailInputProps {
   type?: '이메일 예약 발송' | '선택 이메일 보내기' | '이메일 내용 수정';
@@ -11,14 +12,20 @@ interface EmailInputProps {
 }
 
 const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allParticipantEmails }: EmailInputProps) => {
-  const [allEmails, setAllEmails] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
 
+  const {
+    recipients,
+    setTitle,
+    setContent,
+    setRecipients,
+  } = useEmailStore();
+
   const addAllEmails = () => {
-    setAllEmails([...new Set(allParticipantEmails)]);
+    setRecipients([...new Set(allParticipantEmails)]);
   };
   const removeAllEmail = () => {
-    setAllEmails([]);
+    setRecipients([]);
   };
   return (
     <div className="flex flex-col gap-4 mb-2">
@@ -35,21 +42,22 @@ const EmailInput = ({ type = '이메일 예약 발송', openSelectTicket, allPar
           <h1 className="text-base font-bold whitespace-nowrap">받는 사람</h1>
           {/* 이메일 입력 필드 */}
           <EmailInputBase
-            emails={allEmails}
+            emails={recipients}
             inputValue={inputValue}
             setInputValue={setInputValue}
             onRemove={removeAllEmail}
             showAllEmails={false}
-            placeholder={allEmails.length === 0 ? '위 필터로 이메일 보내실 대상을 선택하세요.' : ''}
+            placeholder={recipients.length === 0 ? '위 필터로 이메일 보내실 대상을 선택하세요.' : ''}
           />
         </div>
-        <DefaultTextField className="h-12" leftText="제목" placeholder="제목" />
+        <DefaultTextField className="h-12" leftText="제목" placeholder="제목" onChange={(e) => setTitle(e.target.value)} />
       </div>
       {/* 이메일 내용 작성 부분 */}
       <MultilineTextField
         label="발송될 이메일 내용"
         className="h-80 md:mb-4"
         placeholder="발송될 이메일 본문 내용입니다."
+        onChange={(e) => setContent(e.target.value)}
       />
     </div>
   );
