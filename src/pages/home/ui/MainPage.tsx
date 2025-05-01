@@ -14,6 +14,7 @@ import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
 import useAuthStore from '../../../app/provider/authStore';
 import EventTag from '../../../features/home/ui/EventTags';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const MainPage = () => {
   const images = [
@@ -76,6 +77,7 @@ const MainPage = () => {
         전체 이벤트 보러가기 <span className="ml-1.5">&gt;</span>
       </button>
       <BottomBar />
+      <ReactQueryDevtools initialIsOpen={false} position="left" />
     </div>
   );
 };

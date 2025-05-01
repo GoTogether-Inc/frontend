@@ -25,6 +25,6 @@ export interface EventCreate extends EventRequest {
 
 // PUT,이벤트 수정
 export interface EventUpdate extends EventRequest {
-  hostEmail: string;
-  hostPhoneNumber: string;
+  organizerEmail: string;
+  organizerPhoneNumber: string;
 }
