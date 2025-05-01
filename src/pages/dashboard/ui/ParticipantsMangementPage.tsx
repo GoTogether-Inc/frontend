@@ -50,20 +50,13 @@ const ParticipantsManagementPage = () => {
         <EmailModal
           onClose={() => setEmailModalOpen(false)}
           openSelectTicket={() => {
-            setEmailModalOpen(false);
             setTicketModalOpen(true);
           }}
           allParticipantEmails={participants.map((p: { email: string; }) => p.email)}
         />
       )}
       {ticketModalOpen && (
-        <SelectTicketModal
-          onClose={() => setTicketModalOpen(false)}
-          openEmailModal={() => {
-            setTicketModalOpen(false);
-            setEmailModalOpen(true);
-          }}
-        />
+        <SelectTicketModal onClose={() => setTicketModalOpen(false)} participants={participants} />
       )}
     </DashboardLayout>
   );

@@ -14,15 +14,13 @@ const EmailPage = () => {
   const { participants } = useParticipants();
   const { id } = useParams();
   const { mutate: sendEmail } = useSendEmail();
-
+  
   const {
     title,
     content,
     recipients,
     reservationDate,
-    reservationTime,
     setReservationDate,
-    setReservationTime,
   } = useEmailStore();
 
   const handleSend = () => {
@@ -38,7 +36,7 @@ const EmailPage = () => {
       alert('수신자를 한 명 이상 선택해주세요.');
       return;
     }
-    if (!reservationDate || !reservationTime) {
+    if (!reservationDate) {
       alert('예약 날짜와 시간을 선택해주세요.');
       return;
     }
@@ -49,9 +47,7 @@ const EmailPage = () => {
       content,
       recipients,
       reservationDate,
-      reservationTime,
     };
-
     sendEmail(emailData);
   };
 
@@ -64,8 +60,7 @@ const EmailPage = () => {
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker
-          onTimeChange={(time: string) => setReservationTime(time)}
-          onDateChange={(date: string) => setReservationDate(date)}
+          onChange={(isoString) => { setReservationDate(isoString); }}
         />
         <div className="flex-grow"></div>
         <Button label="보내기" onClick={handleSend} className="w-full h-12 rounded-full" />
