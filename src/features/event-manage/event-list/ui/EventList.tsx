@@ -7,7 +7,7 @@ import { EventItem } from '../../../../entities/event/model/event';
 const EventList = () => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteScroll<EventItem>({
     queryKey: ['events', 'infinite'],
-    queryFn: (params) => getAllEventsInfinite({...params, tag: 'current'}),
+    queryFn: getAllEventsInfinite,
     size: 10,
     filters: { tag: 'current' },
   });
@@ -26,6 +26,12 @@ const EventList = () => {
     });
 
     if (lastEventCardRef.current) observerRef.current.observe(lastEventCardRef.current);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
   }, [hasNextPage, isFetching, fetchNextPage]);
 
   return (
