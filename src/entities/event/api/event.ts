@@ -65,7 +65,7 @@ export const createEvent = async (eventData: EventCreate): Promise<EventResponse
 };
 
 // 이벤트 수정 (PUT)
-updateEvent: async (eventId: number, eventData: EventUpdate): Promise<EventResponse<string>> => {
+export const updateEvent = async (eventId: number, eventData: EventUpdate): Promise<EventResponse<string>> => {
   const response = await axiosClient.put<EventResponse<string>>(`/events/${eventId}`, eventData);
   return response.data;
 };
