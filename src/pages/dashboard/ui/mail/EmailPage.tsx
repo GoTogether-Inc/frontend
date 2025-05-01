@@ -60,7 +60,7 @@ const EmailPage = () => {
       <div className="p-5 flex flex-col gap-10 min-h-full">
         <EmailInput
           openSelectTicket={() => setTicketModalOpen(true)}
-          allParticipantEmails={participants.map((p: { email: any; }) => p.email)}
+          allParticipantEmails={participants.map((p: { email: string; }) => p.email)}
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker
@@ -70,7 +70,7 @@ const EmailPage = () => {
         <div className="flex-grow"></div>
         <Button label="보내기" onClick={handleSend} className="w-full h-12 rounded-full" />
       </div>
-      {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} />}
+      {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} participants={participants} />}
     </DashboardLayout>
   );
 };

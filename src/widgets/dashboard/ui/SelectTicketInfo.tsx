@@ -1,14 +1,13 @@
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import ticket from '../../../../public/assets/dashboard/participants-management/Ticket.svg';
-import { TicketType } from '../../../shared/types/ticketType';
+import { ReadTicketResponse } from '../../../features/ticket/model/ticketInformation';
 
 interface SelectTicketInfoProps {
-  tickets: TicketType;
-  onClose: () => void;
-  openEmailModal: () => void;
+  tickets: ReadTicketResponse;
+  onClick: () => void;
 }
 
-const SelectTicketInfo = ({ tickets, onClose, openEmailModal }: SelectTicketInfoProps) => {
+const SelectTicketInfo = ({ tickets,onClick}: SelectTicketInfoProps) => {
   return (
     <div className="flex items-center justify-between w-full h-14 bg-white border-[0.5px] border-[#D9D9D9] rounded-[5px]">
       <div className="flex items-center gap-3 ml-4">
@@ -19,10 +18,7 @@ const SelectTicketInfo = ({ tickets, onClose, openEmailModal }: SelectTicketInfo
       <div className="flex items-center justify-center bg-main w-20 h-14 rounded-r-[5px]">
         <TextButton
           label=">"
-          onClick={() => {
-            onClose();
-            openEmailModal();
-          }}
+          onClick={onClick}
           className="text-white text-xl font-bold"
         />
       </div>
