@@ -19,9 +19,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
     content,
     recipients,
     reservationDate,
-    reservationTime,
     setReservationDate,
-    setReservationTime,
   } = useEmailStore();
 
   const handleSend = () => {
@@ -37,7 +35,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
       alert('수신자를 한 명 이상 선택해주세요.');
       return;
     }
-    if (!reservationDate || !reservationTime) {
+    if (!reservationDate) {
       alert('예약 날짜와 시간을 선택해주세요.');
       return;
     }
@@ -47,8 +45,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
       title,
       content,
       recipients,
-      reservationDate,
-      reservationTime,
+      reservationDate
     };
     sendEmail(emailData);
   };
@@ -62,8 +59,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
           allParticipantEmails={allParticipantEmails}
         />
         <TimePicker
-          onTimeChange={(time: string) => setReservationTime(time)}
-          onDateChange={(date: string) => setReservationDate(date)}
+          onChange={(isoString) => { setReservationDate(isoString); }}
         />
         <div className="flex justify-end gap-3">
           <TertiaryButton label="취소" type="button" color="black" size="medium" onClick={onClose} />

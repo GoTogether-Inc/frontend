@@ -11,7 +11,7 @@ interface SelectTicketModalProps {
   participants: ParticipantData[];
 }
 
-const SelectTicketModal = ({ onClose, openEmailModal,participants }: SelectTicketModalProps) => {
+const SelectTicketModal = ({ onClose, openEmailModal, participants }: SelectTicketModalProps) => {
   const { id } = useParams();
   const eventId = id ? parseInt(id) : 0;
   const {data, isLoading} = useTickets(eventId);
