@@ -13,8 +13,14 @@ export const eventDetail = async (dto: EventDetailRequest) => {
 
 // 이벤트 검색 (기본 정보)
 export const searchEvents = async (keyword: string, { page, size }: PaginationParams): Promise<EventNormalResponse> => {
+  const params = new URLSearchParams();
+
+  params.append('keyword', keyword);
+  params.append('page', page.toString());
+  params.append('size', size.toString());
+
   const response = await axiosClient.get<EventNormalResponse>(
-    `/events/search?keyword=${keyword}&page=${page}&size=${size}`
+    `/events/search?keyword=${params.toString()}`
   );
   return response.data;
 };
