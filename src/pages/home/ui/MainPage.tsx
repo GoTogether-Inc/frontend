@@ -13,7 +13,7 @@ import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
 import useAuthStore from '../../../app/provider/authStore';
-import EventTag from '../../../features/home/ui/EventTags';
+import EventTags from '../../../features/home/ui/EventTags';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const MainPage = () => {
@@ -67,7 +67,7 @@ const MainPage = () => {
       </div>
 
       {/* 이벤트 태그 섹션 (최신, 인기, 마감임박) */}
-      <EventTag />
+      <EventTags />
 
       {/* 전체 이벤트 보러가기 버튼 */}
       <button
