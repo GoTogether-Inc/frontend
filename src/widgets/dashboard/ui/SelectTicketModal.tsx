@@ -3,34 +3,32 @@ import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import SelectTicketInfo from './SelectTicketInfo';
 import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
 import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
-import { ParticipantData } from '../../../features/dashboard/model/participantInformation';
+import { usePurchaserEmails } from '../../../features/dashboard/hook/useEmailHook';
 
 interface SelectTicketModalProps {
   onClose: () => void;
   openEmailModal?: () => void;
-  participants: ParticipantData[];
 }
 
-const SelectTicketModal = ({ onClose, openEmailModal, participants }: SelectTicketModalProps) => {
+const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) => {
   const { id } = useParams();
   const eventId = id ? parseInt(id) : 0;
-  const {data, isLoading} = useTickets(eventId);
+  const { data, isLoading } = useTickets(eventId);
   const tickets = data?.result ?? [];
   const { setRecipients } = useEmailStore();
+  const { mutate:readEmail } = usePurchaserEmails();
 
-  const handleClick = (ticketName: string) => {
-    if (!participants || participants.length === 0) {
-      alert('구매자가 없습니다.');
-      return;
-    }
-  
-    const filteredEmails = participants
-      .filter(p => p.ticketName === ticketName)
-      .map(p => p.email);
-
-    setRecipients([...new Set(filteredEmails)]); 
-    onClose();
-    openEmailModal?.();
+  const handleClick = (ticketId: number) => {
+    readEmail(
+      { eventId, ticketId },
+      {
+        onSuccess: (emails) => {
+          setRecipients(emails.email);
+          onClose();
+          openEmailModal?.();
+        },
+      }
+    );
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center w-full max-w-lg h-full mx-auto bg-black bg-opacity-30 z-50">
@@ -50,11 +48,11 @@ const SelectTicketModal = ({ onClose, openEmailModal, participants }: SelectTick
         ) : (
           tickets.map((ticket) => (
             <SelectTicketInfo
-              key={ticket.ticketId} 
+              key={ticket.ticketId}
               tickets={ticket}
               onClick={() => {
-                handleClick(ticket.ticketName); 
-                openEmailModal?.(); 
+                handleClick(ticket.ticketId);
+                openEmailModal?.();
               }}
             />
           ))

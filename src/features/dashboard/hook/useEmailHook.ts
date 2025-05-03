@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { sendEmail, editEmail, readEmail, deleteEmail } from '../api/mail';
+import { sendEmail, editEmail, readEmail, deleteEmail, readPurchaserEmails } from '../api/mail';
 import { EmailRequest, EmailResponse, ReadEmailResponse } from '../model/emailInformation';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEmailStore } from '../model/EmailStore';
@@ -12,6 +12,16 @@ export const useReadEmail = (eventId: number, status: 'PENDING' | 'SENT') => {
     });
 }
 
+export const usePurchaserEmails = () => {
+    return useMutation({
+        mutationFn: ({ eventId, ticketId }: { eventId: number; ticketId?: number }) =>
+          readPurchaserEmails(eventId, ticketId),
+        onError: () => {
+            alert('이메일을 불러오는 데 실패했습니다.');
+          },
+      });
+  };
+  
 export const useSendEmail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
