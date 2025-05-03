@@ -52,7 +52,6 @@ const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) 
               tickets={ticket}
               onClick={() => {
                 handleClick(ticket.ticketId);
-                openEmailModal?.();
               }}
             />
           ))
