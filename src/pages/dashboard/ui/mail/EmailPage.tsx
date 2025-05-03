@@ -65,7 +65,7 @@ const EmailPage = () => {
         <div className="flex-grow"></div>
         <Button label="보내기" onClick={handleSend} className="w-full h-12 rounded-full" />
       </div>
-      {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} participants={participants} />}
+      {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} />}
     </DashboardLayout>
   );
 };
