@@ -16,7 +16,7 @@ export const readEmail = async (eventId: number, status: 'PENDING' | 'SENT'): Pr
 }
 
 // 전체/티켓별 구매자 이메일 조회
-export const readPurchaserEmails = async (eventId: number, ticketId?: number) => {
+export const readPurchaserEmails = async (eventId: number, ticketId?: number): Promise<{email: string[]}> => {
     const response = await axiosClient.get('/orders/purchaser-emails',
         {
             params: {
