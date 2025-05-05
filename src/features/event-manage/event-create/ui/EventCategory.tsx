@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CategoryButton from '../../../../../public/assets/event-manage/creation/BackBtn(black).svg';
 import { FunnelState } from '../model/FunnelContext';
+import { CategoryType } from '../../../../shared/types/baseEventType';
 
 interface Category {
   id: string;
@@ -32,7 +33,7 @@ const EventCategory = ({ eventState, setEventState }: EventCategoryProps) => {
     setSelectedCategory(category);
     setOpen(false);
     if (setEventState) {
-      setEventState(prev => ({ ...prev, category: category.id }));
+      setEventState(prev => ({ ...prev, category: category.id as CategoryType }));
     }
   };
 
