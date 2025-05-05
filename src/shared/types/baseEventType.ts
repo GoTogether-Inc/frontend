@@ -5,19 +5,16 @@ export interface BaseEvent {
   title: string;
   startDate: string;
   endDate: string;
-  startTime: string;
-  endTime: string;
   bannerImageUrl: string;
   description: string;
   referenceLinks: {
     title: string;
     url: string;
-    address?: string;
-    detailAddress?: string;
   }[];
   onlineType: OnlineType;
   address: string;
-  location: { lat: number; lng: number };
+  locationLat: number;
+  locationLng: number;
   category: CategoryType;
   hashtags: string[];
   organizerEmail: string;
