@@ -80,7 +80,7 @@ const EventType = ({ className }: EventTypeProps) => {
             onLocationChange={handleLocationChange}
             onDetailAddressChange={handleDetailAddressChange}
           />
-          <KakaoMap lat={eventState.location.lat} lng={eventState.location.lng} />
+          <KakaoMap lat={eventState.locationLat} lng={eventState.locationLng} />
         </div>
       )}
     </div>
