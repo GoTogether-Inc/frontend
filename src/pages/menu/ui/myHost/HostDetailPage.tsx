@@ -20,7 +20,7 @@ const HostDetailPage = () => {
       }
     >
       <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2 z-50">
-        {data?.result.events.map(event => (
+        {data?.result.events?.map(event => (
           <EventCard
             id={event.id}
             key={event.id}

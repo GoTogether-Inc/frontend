@@ -20,7 +20,7 @@ const HostInfoPage = () => {
           <div className="flex flex-col gap-4 lg:gap-6">
             <p className="text-xl text-black font-semibold">멤버 목록</p>
             <div className="flex flex-wrap gap-x-5 gap-y-4 lg:gap-x-10 lg:gap-y-6 text-sm md:text-16 lg:text-base">
-              {data?.result.hostChannelMembers.map(user => (
+              {data?.result.hostChannelMembers?.map(user => (
                 <ProfileCircle
                   key={user.id}
                   id={user.id}
