@@ -51,7 +51,7 @@ const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPagePr
       />
       <UnderlineTextField
         label="전화번호"
-        placeholder={`"-" 없이 번호만 입력해주세요`}
+        placeholder={`"-"를 포함하여 입력해주세요`}
         type="tel"
         errorMessage={errors.phone?.message}
         className="w-full"
