@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ProfileCircle from '../../../../design-system/ui/Profile';
 import Header from '../../../../design-system/ui/Header';
 import { ButtonHTMLAttributes, ReactElement } from 'react';
-import { hostInfo, hostInfoData } from '../../types/hostInfoType';
+import useHostChannelInfo from '../../../entities/host/hook/useHostChannelInfoHook';
 
 interface HostDetailLayoutProps {
   rightContent?: ReactElement<ButtonHTMLAttributes<HTMLButtonElement>>;
@@ -12,7 +12,8 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const host: hostInfoData | undefined = hostInfo.find(host => host.id === Number(id));
+  const hostChannelId = Number(id);
+  const { data } = useHostChannelInfo(hostChannelId);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -29,12 +30,12 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
           rightContent={rightContent}
           color="white"
         />
-        <div className="flex justify-center items-center px-6 md:px-10">
+        <div className="flex justify-start items-center px-6 md:px-10">
           <ProfileCircle profile="hostProfile" className="md:w-28 md:h-28 w-24 h-24" />
 
           <div className="flex flex-col gap-1 md:gap-3 ml-5 text-white">
-            <p className="text-lg md:text-xl font-bold">{host?.name}</p>
-            <p className="flex-wrap text-sm md:text-base">{host?.description}</p>
+            <p className="text-lg md:text-xl font-bold">{data?.result.hostChannelName}</p>
+            <p className="flex-wrap text-sm md:text-base">{data?.result.channelDescription}</p>
           </div>
         </div>
       </div>
