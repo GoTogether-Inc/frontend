@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
 import { useUpdateHostChannelInfo } from '../../../../features/host/hook/useHostHook';
+import { useQueryClient } from '@tanstack/react-query';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +21,7 @@ const HostEditPage = () => {
   const hostChannelId = Number(id);
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
   const { mutate } = useUpdateHostChannelInfo();
+  const queryClient = useQueryClient();
 
   const handeHostInfoClick = () => {
     setSelectedHost(true);
@@ -43,6 +45,9 @@ const HostEditPage = () => {
 
     mutate(updatedData, {
       onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['hostInfo', hostChannelId],
+        });
         alert('저장되었습니다.');
       },
       onError: () => {
