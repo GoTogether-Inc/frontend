@@ -20,7 +20,7 @@ const HostEditPage = () => {
 
   const hostChannelId = Number(id);
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
-  const { mutate } = useUpdateHostChannelInfo();
+  const { mutate } = useUpdateHostChannelInfo(hostChannelId);
   const queryClient = useQueryClient();
 
   const handeHostInfoClick = () => {
