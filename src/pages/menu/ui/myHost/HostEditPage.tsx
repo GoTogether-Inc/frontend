@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HostDetailLayout from '../../../../shared/ui/backgrounds/HostDetailLayout';
 import ProfileCircle from '../../../../../design-system/ui/Profile';
 import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
@@ -6,8 +6,8 @@ import DefaultTextField from '../../../../../design-system/ui/textFields/Default
 import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import { useParams } from 'react-router-dom';
 import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
-import { hostInfo } from '../../../../shared/types/hostInfoType';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
+import { useUpdateHostChannelInfo } from '../../../../features/host/hook/useHostHook';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,9 +15,11 @@ const HostEditPage = () => {
   const [selectedInfo, setSelectedInfo] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [channelDescription, setChannelDescription] = useState('');
 
   const hostChannelId = Number(id);
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
+  const { mutate } = useUpdateHostChannelInfo();
 
   const handeHostInfoClick = () => {
     setSelectedHost(true);
@@ -27,12 +29,40 @@ const HostEditPage = () => {
     setSelectedInfo(true);
     setSelectedHost(false);
   };
+
+  const handleSave = () => {
+    if (!hostInfo?.result.id) return;
+
+    const updatedData = {
+      hostChannelId,
+      profileImageUrl: hostInfo.result.profileImageUrl,
+      hostChannelName: hostInfo.result.hostChannelName,
+      hostEmail: hostInfo.result.email,
+      channelDescription,
+    };
+
+    mutate(updatedData, {
+      onSuccess: () => {
+        alert('저장되었습니다.');
+      },
+      onError: () => {
+        alert('저장에 실패했습니다.');
+      },
+    });
+  };
+
   const handleAddClick = () => {
     if (inputValue.trim() && !tags.includes(inputValue.trim())) {
       setTags([...tags, inputValue.trim()]);
       setInputValue('');
     }
   };
+
+  useEffect(() => {
+    if (hostInfo?.result.channelDescription && channelDescription === '') {
+      setChannelDescription(hostInfo.result.channelDescription);
+    }
+  }, [hostInfo, channelDescription]);
 
   return (
     <HostDetailLayout>
@@ -96,10 +126,11 @@ const HostEditPage = () => {
             <div className="flex flex-col gap-2">
               <MultilineTextField
                 label="채널에 대한 설명"
-                value={hostInfo?.result.channelDescription || ''}
+                value={channelDescription}
+                onChange={e => setChannelDescription(e.target.value)}
                 className="h-24 mb-8"
               />
-              <TertiaryButton type="button" label="저장하기" size="large" color="pink" />
+              <TertiaryButton type="button" label="저장하기" size="large" color="pink" onClick={handleSave} />
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex flex-col">
