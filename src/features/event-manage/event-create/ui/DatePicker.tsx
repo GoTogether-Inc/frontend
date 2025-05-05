@@ -16,8 +16,8 @@ const EventDatePicker = ({ className, eventState, setEventState, isLabel = false
     eventState?.startDate ? new Date(eventState.startDate) : new Date()
   );
   const [endDate, setEndDate] = useState<Date | null>(eventState?.endDate ? new Date(eventState.endDate) : new Date());
-  const [startTime, setStartTime] = useState<string>(eventState?.startTime || '06:00');
-  const [endTime, setEndTime] = useState<string>(eventState?.endTime || '23:00');
+  const [startTime, setStartTime] = useState<string>('06:00');
+  const [endTime, setEndTime] = useState<string>('23:00');
 
   const generateTimeOptions = () => {
     const options = [];
@@ -31,24 +31,23 @@ const EventDatePicker = ({ className, eventState, setEventState, isLabel = false
     return options;
   };
 
-  const formatDate = (date: Date | null) => {
-    if (!date) return '';
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`; // yyyy-mm-dd 형태로 포맷팅
-  };
-
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    if (setEventState) {
+    if (setEventState && startDate && endDate) {
+      const [startHour, startMin] = startTime.split(':').map(Number);
+      const [endHour, endMin] = endTime.split(':').map(Number);
+
+      const start = new Date(startDate);
+      start.setHours(startHour, startMin, 0, 0);
+
+      const end = new Date(endDate);
+      end.setHours(endHour, endMin, 0, 0);
+
       setEventState(prev => ({
         ...prev,
-        startDate: startDate ? formatDate(startDate) : '',
-        endDate: endDate ? formatDate(endDate) : '',
-        startTime,
-        endTime,
+        startDate: start.toISOString(),
+        endDate: end.toISOString(),
       }));
     }
   }, [startDate, endDate, startTime, endTime, setEventState]);
