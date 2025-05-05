@@ -5,6 +5,7 @@ const useHostDetail = (hostChannelId: number) => {
   const { data } = useQuery({
     queryKey: ['hostDetail', hostChannelId],
     queryFn: () => hostDetail({ hostChannelId }),
+    enabled: !!hostChannelId,
   });
 
   return { data };
