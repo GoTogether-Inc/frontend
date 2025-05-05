@@ -23,7 +23,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
     if (currentStep === 7) {
       createEvent(eventState, {
         onSuccess: () => {
-          navigate('/');
+          navigate('/menu/myHost');
         },
         onError: error => {
           console.error('API 호출 실패:', error);
