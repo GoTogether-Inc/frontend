@@ -1,5 +1,6 @@
 import EventSliderSection from './EventSliderSection';
 import { useLatestEvents, useTrendingEvents, useClosingSoonEvents } from '../hooks/useEventHook';
+
 const EventTags = () => {
   const { data: latestEvents = { result: [] } } = useLatestEvents();
   const { data: trendingEvents = { result: [] } } = useTrendingEvents();
