@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
+import { useInfiniteScroll } from '../../../../shared/hooks/useInfiniteScroll';
 import { getAllEventsInfinite } from '../../../../entities/event/api/event';
 import EventCard from '../../../../shared/ui/EventCard';
 import { EventItem } from '../../../../entities/event/model/event';
