@@ -35,6 +35,7 @@ import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagement
 import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
 import AuthCallback from '../../pages/join/AuthCallback';
 import LogoutPage from '../../pages/join/LogoutPage';
+import BookmarkPage from '../../pages/bookmark/ui/BookmarkPage';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -44,6 +45,7 @@ const mainRoutes = [
   { path: MAIN_ROUTES.search, element: <SearchPage />, requiresAuth: false },
   { path: MAIN_ROUTES.menu, element: <MenuPage />, requiresAuth: false },
   { path: MAIN_ROUTES.payment, element: <PaymentPage />, requiresAuth: false },
+  { path: MAIN_ROUTES.bookmark, element: <BookmarkPage />, requiresAuth: false },
 ];
 
 const joinRoutes = [
