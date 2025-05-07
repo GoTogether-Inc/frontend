@@ -37,10 +37,11 @@ const EventType = ({ className }: EventTypeProps) => {
     }));
   };
 
-  const handleLocationChange = (lat: number, lng: number) => {
+  const handleLocationChange = (locationLat: number, locationLng: number) => {
     setEventState(prev => ({
       ...prev,
-      location: { lat, lng },
+      locationLat,
+      locationLng,
     }));
   };
 
