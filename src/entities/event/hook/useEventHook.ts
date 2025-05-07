@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom';
 const useEventDetail = () => {
   const { id } = useParams();
 
-  //const eventId = Number(id);
-  const eventId = 1;
+  const eventId = Number(id);
 
   const { data } = useQuery({
     queryKey: ['eventDetail', eventId],
