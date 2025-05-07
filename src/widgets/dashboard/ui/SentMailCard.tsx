@@ -18,14 +18,13 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const { setReservationEmailId, setTitle, setContent, setRecipients, setReservationDate, setReservationTime } = useEmailStore();
+  const { setReservationEmailId, setTitle, setContent, setRecipients, setReservationDate } = useEmailStore();
   const handleEditClick = () => {
     setReservationEmailId(mail.id);
     setTitle(mail.title);
     setContent(mail.content);
     setRecipients(mail.recipients);
     setReservationDate(mail.reservationDate);
-    setReservationTime(mail.reservationTime);
 
     navigate(`/dashboard/${id}/edit-email`);
   };

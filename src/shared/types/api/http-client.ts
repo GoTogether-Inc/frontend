@@ -42,7 +42,7 @@ axiosClient.interceptors.response.use(
     if (errorInfo.status === 401) {
       try {
         await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/refresh`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`,
           {},
           {
             withCredentials: true, 
