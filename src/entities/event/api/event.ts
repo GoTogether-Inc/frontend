@@ -6,7 +6,7 @@ import { EventItem, PaginationParams } from '../model/event';
 
 export const eventDetail = async (dto: EventDetailRequest) => {
   const response = await axiosClient.get(`/events/${dto.eventId}`);
-  return response.data;
+  return response.data.result;
 };
 
 // 이벤트 검색 (기본 정보)
