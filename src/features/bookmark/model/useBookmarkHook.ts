@@ -47,7 +47,7 @@ export const useDeleteBookmark = () => {
 
             queryClient.setQueryData(['eventDetail', eventId], (old: any) => ({
                 ...old,
-                isBookmarked: false,
+                //isBookmarked: false,
             }));
 
             return { previous };
