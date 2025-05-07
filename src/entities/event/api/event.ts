@@ -3,5 +3,5 @@ import { EventDetailRequest } from '../model/event';
 
 export const eventDetail = async (dto: EventDetailRequest) => {
   const response = await axiosClient.get(`/events/${dto.eventId}`);
-  return response.data;
+  return response.data.result;
 };
