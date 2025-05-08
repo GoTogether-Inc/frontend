@@ -4,6 +4,8 @@ export interface EmailRequest {
     content: string;
     recipients: string[];
     reservationDate: string;
+    targetType: 'ALL' | 'TICKET';
+    ticketId?: number;
 }
 export interface EmailResponse {
     isSuccess: boolean;
