@@ -31,6 +31,7 @@ const BookmarkPage = () => {
                         eventDate={event.startDate}
                         location={event.onlineType}
                         hashtags={event.hashtags}
+                        onClick={() => navigate(`/event-details/${event.id}`)}
                     />
                 ))}
             </div>
