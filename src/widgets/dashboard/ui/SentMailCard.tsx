@@ -34,8 +34,7 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
       <div className="flex justify-between transition-transform">
         <div className="flex flex-col gap-1 text-md">
           <div className="flex items-center gap-2">
-            {/* <p className="text-main font-semibold">[{mail.receiver}]</p>  수정 필요 */}
-            <p className="text-main font-semibold">[무료]</p>
+            <p className="text-main font-semibold">[{mail.targetName}]</p>
             <p>{mail.title}</p>
           </div>
           <p className="text-sm text-placeholderText">{formatDate(mail.reservationDate)}</p>
