@@ -13,6 +13,7 @@ export interface BaseEvent {
   }[];
   onlineType: OnlineType;
   address: string;
+  detailAddress: string;
   locationLat: number;
   locationLng: number;
   category: CategoryType;

@@ -1,18 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import SecondaryButton from '../../../design-system/ui/buttons/SecondaryButton';
 
 interface AddressSearchProps {
   address: string;
+  detailAddress?: string;
   setAddress: (address: string) => void;
   onLocationChange?: (lat: number, lng: number) => void;
   onDetailAddressChange?: (detailAddress: string) => void;
 }
 
-export const AddressSearch = ({ address, setAddress, onLocationChange, onDetailAddressChange }: AddressSearchProps) => {
+export const AddressSearch = ({
+  address,
+  detailAddress: initialDetailAddress = '',
+  setAddress,
+  onLocationChange,
+  onDetailAddressChange,
+}: AddressSearchProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postcodeKey, setPostcodeKey] = useState(0);
   const [detailAddress, setDetailAddress] = useState('');
+
+  useEffect(() => {
+    setDetailAddress(initialDetailAddress);
+  }, [initialDetailAddress]);
 
   const handleComplete = (data: Address) => {
     setAddress(data.address);

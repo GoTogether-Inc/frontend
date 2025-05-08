@@ -30,6 +30,7 @@ export const FunnelProvider = ({ children }: { children: ReactNode }) => {
     referenceLinks: [],
     onlineType: 'ONLINE',
     address: '',
+    detailAddress: '',
     locationLat: 0,
     locationLng: 0,
     category: 'DEVELOPMENT_STUDY',

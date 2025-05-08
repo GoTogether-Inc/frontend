@@ -3,13 +3,14 @@ import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import EventDatePicker from '../../../features/event-manage/event-create/ui/DatePicker';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
-import SearchBar from '../../../shared/ui/SearchBar';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
 import { formatEventRequest } from '../../../shared/lib/formatEventRequest';
 import { OnlineType } from '../../../shared/types/baseEventType';
+import { AddressSearch } from '../../../shared/ui/AddressSearch';
+import KakaoMap from '../../../shared/ui/KakaoMap';
 
 const EventInfoPage = () => {
   const navigate = useNavigate();
@@ -27,6 +28,9 @@ const EventInfoPage = () => {
   const [phone, setPhone] = useState('');
   const [onlineType, setOnlineType] = useState('');
   const [address, setAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
+  const [locationLat, setLocationLat] = useState<number>(0);
+  const [locationLng, setLocationLng] = useState<number>(0);
 
   const handleSave = () => {
     if (!data?.result.id) return;
@@ -41,6 +45,9 @@ const EventInfoPage = () => {
         organizerPhoneNumber: phone,
         onlineType: selectedOption as OnlineType,
         address,
+        detailAddress,
+        locationLat,
+        locationLng,
       },
       {
         onSuccess: () => {
@@ -54,16 +61,19 @@ const EventInfoPage = () => {
     );
   };
 
-  // 초기 데이터 채우기
   useEffect(() => {
     if (data?.result) {
       const info = data.result;
       setTitle(info.title);
       setEmail(info.organizerEmail);
       setPhone(info.organizerPhoneNumber);
-      setOnlineType(info.onlineType); // '온라인' or '오프라인'
-      setAddress(info.address);
+      setOnlineType(info.onlineType);
       setSelectedOption(info.onlineType);
+      setAddress(info.address);
+      setDetailAddress(info.detailAddress);
+      setLocationLat(info.locationLat || 0);
+      setLocationLng(info.locationLng || 0);
+      console.log(info);
     }
   }, [data]);
 
@@ -104,9 +114,19 @@ const EventInfoPage = () => {
           value={selectedOption || onlineType}
         />
         {(selectedOption || onlineType) === 'OFFLINE' && (
-          <div className="space-y-2">
+          <div className="space-y-4">
             <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
-            <SearchBar placeholder="장소를 입력하세요." className="w-full" value={address} onChange={setAddress} />
+            <AddressSearch
+              address={address}
+              detailAddress={detailAddress}
+              setAddress={setAddress}
+              onLocationChange={(lat, lng) => {
+                setLocationLat(lat);
+                setLocationLng(lng);
+              }}
+              onDetailAddressChange={setDetailAddress}
+            />
+            {locationLat !== 0 && locationLng !== 0 && <KakaoMap lat={locationLat} lng={locationLng} />}
           </div>
         )}
       </div>
