@@ -5,7 +5,9 @@ import { ApiResponse } from '../../../shared/types/api/apiResponse';
 import { EventItem, PaginationParams } from '../model/event';
 
 export const eventDetail = async (dto: EventDetailRequest) => {
-  const response = await axiosClient.get(`/events/${dto.eventId}`);
+  const response = await axiosClient.get(`/events/${dto.eventId}`, {
+    params: { userId: dto.userId },
+  });
   return response.data.result;
 };
 

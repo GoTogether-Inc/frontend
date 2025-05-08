@@ -2,6 +2,7 @@ import { BaseEvent, CategoryType, TagType } from '../../../shared/types/baseEven
 
 export interface EventDetailRequest {
   eventId: number;
+  userId?: number
 }
 
 export interface EventDetailResponse {
