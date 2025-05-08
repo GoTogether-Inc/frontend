@@ -15,7 +15,7 @@ const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) 
   const eventId = id ? parseInt(id) : 0;
   const { data, isLoading } = useTickets(eventId);
   const tickets = data?.result ?? [];
-  const { setRecipients } = useEmailStore();
+  const { setRecipients, setTargetType, setTicketId } = useEmailStore();
   const { mutate:readEmail } = usePurchaserEmails();
 
   const handleClick = (ticketId: number) => {
@@ -24,6 +24,8 @@ const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) 
       {
         onSuccess: (emails) => {
           setRecipients(emails.email);
+          setTargetType('TICKET');
+          setTicketId(ticketId);
           onClose();
           openEmailModal?.();
         },

@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
 import { useEmailStore } from '../../../../features/dashboard/model/EmailStore';
 import { useSendEmail } from '../../../../features/dashboard/hook/useEmailHook';
+import { EmailRequest } from '../../../../features/dashboard/model/emailInformation';
 
 const EmailPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
@@ -21,6 +22,8 @@ const EmailPage = () => {
     recipients,
     reservationDate,
     setReservationDate,
+    ticketId,
+    targetType
   } = useEmailStore();
 
   const handleSend = () => {
@@ -41,13 +44,17 @@ const EmailPage = () => {
       return;
     }
     const eventId = id ? parseInt(id) : 0;
-    const emailData = {
+    const emailData: EmailRequest = {
       eventId,
       title,
       content,
       recipients,
       reservationDate,
+      targetType,
     };
+    if (targetType === 'TICKET') {
+      emailData.ticketId = ticketId;
+    }
     sendEmail(emailData);
   };
 

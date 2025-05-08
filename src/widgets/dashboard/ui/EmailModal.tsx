@@ -4,6 +4,7 @@ import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
 import EmailInput from '../../../features/dashboard/ui/EmailInput';
 import { useSendEmail } from '../../../features/dashboard/hook/useEmailHook';
 import TimePicker from '../../../features/event-manage/event-create/ui/TimePicker';
+import { EmailRequest } from '../../../features/dashboard/model/emailInformation';
 
 interface EmailModalProps {
   onClose: () => void;
@@ -20,6 +21,8 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
     recipients,
     reservationDate,
     setReservationDate,
+    targetType,
+    ticketId
   } = useEmailStore();
 
   const handleSend = () => {
@@ -40,13 +43,17 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
       return;
     }
     const eventId = id ? parseInt(id) : 0;
-    const emailData = {
+    const emailData: EmailRequest = {
       eventId,
       title,
       content,
       recipients,
-      reservationDate
+      reservationDate,
+      targetType
     };
+    if (targetType === 'TICKET') {
+      emailData.ticketId = ticketId;
+    }
     sendEmail(emailData);
   };
 
