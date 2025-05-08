@@ -25,7 +25,8 @@ const EventType = ({ className }: EventTypeProps) => {
     setAddress(address);
     setEventState(prev => ({
       ...prev,
-      address: `${address} ${detailAddress}`.trim(),
+      address,
+      detailAddress,
     }));
   };
 
@@ -33,7 +34,8 @@ const EventType = ({ className }: EventTypeProps) => {
     setDetailAddress(detailAddress);
     setEventState(prev => ({
       ...prev,
-      address: `${address} ${detailAddress}`.trim(),
+      address,
+      detailAddress,
     }));
   };
 
