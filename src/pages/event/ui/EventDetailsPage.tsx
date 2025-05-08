@@ -23,8 +23,6 @@ const EventDetailsPage = () => {
   const [title, setTitle] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: event } = useEventDetail();
-  const [clickedLike, setClickedLike] = useState(false);
-  const [bookmarkId, setBookmarkId] = useState<number | null>(event?.bookmarkId ?? null);
 
   const handleShareClick = (title: string) => {
     setTitle(title);
@@ -37,25 +35,13 @@ const EventDetailsPage = () => {
   const { mutate: deleteBookmark } = useDeleteBookmark();
 
   const handleLikeClick = () => {
-    const previous = clickedLike;
-    if (bookmarkId !== null) {
-      deleteBookmark({ eventId: event.id, bookmarkId: bookmarkId }, {
-        onSuccess: () => {
-          setClickedLike(false);
-          setBookmarkId(null);
-        },
-      });
+    if (event.bookmarked) {
+      if (event.bookmarkedId === null) {
+        return;
+      }
+      deleteBookmark({ eventId: event.id, bookmarkId: event.bookmarkId });
     } else {
-      createBookmark(event.id, {
-        onSuccess: (data) => {
-          setClickedLike(true);
-          const id = parseInt(data.result.replace('bookmarkId: ', ''), 10);
-          setBookmarkId(id);
-        },
-        onError: () => {
-          setClickedLike(previous);
-        }
-      });
+      createBookmark(event.id);
     }
   };
 
@@ -95,7 +81,7 @@ const EventDetailsPage = () => {
                     onClick={() => handleShareClick(event.title)}
                   />
                   <IconButton
-                    iconPath={<img src={clickedLike ? liked : like} alt="좋아요 버튼" />}
+                    iconPath={<img src={event.bookmarked ? liked : like} alt="좋아요 버튼" />}
                     onClick={handleLikeClick}
                   />
                 </div>

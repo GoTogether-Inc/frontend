@@ -2,6 +2,7 @@ import { BaseEvent } from '../../../shared/types/baseEventType';
 
 export interface EventDetailRequest {
   eventId: number;
+  userId?: number
 }
 
 export interface EventDetailResponse {

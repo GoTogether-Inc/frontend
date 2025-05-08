@@ -20,7 +20,7 @@ export const useCreateBookmark = () => {
 
             queryClient.setQueryData(['eventDetail', eventId], (old: any) => ({
                 ...old,
-                //isBookmarked: true,
+                bookmarked: true,
             }));
 
             return { previous };
@@ -47,7 +47,7 @@ export const useDeleteBookmark = () => {
 
             queryClient.setQueryData(['eventDetail', eventId], (old: any) => ({
                 ...old,
-                //isBookmarked: false,
+                bookmarked: false,
             }));
 
             return { previous };
