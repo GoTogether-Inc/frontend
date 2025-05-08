@@ -20,4 +20,5 @@ export interface ReadEmailResponse {
     recipients: string[];
     reservationDate: string;
     reservationTime: string;
+    targetName: string
 }

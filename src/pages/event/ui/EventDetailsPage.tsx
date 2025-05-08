@@ -36,7 +36,7 @@ const EventDetailsPage = () => {
 
   const handleLikeClick = () => {
     if (event.bookmarked) {
-      if (event.bookmarkedId === null) {
+      if (event.bookmarkId === null) {
         return;
       }
       deleteBookmark({ eventId: event.id, bookmarkId: event.bookmarkId });
