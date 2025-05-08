@@ -28,6 +28,7 @@ export const useCreateBookmark = () => {
         onError: (_err, eventId, context) => {
             if (context?.previous) {
                 queryClient.setQueryData(['eventDetail', eventId], context.previous);
+                alert("좋아요 등록에 실패했습니다. 잠시후 다시 시도해 주세요.");
             }
         },
         onSettled: (_data, _error, eventId) => {
@@ -55,6 +56,7 @@ export const useDeleteBookmark = () => {
         onError: (_err, { eventId }, context) => {
             if (context?.previous) {
                 queryClient.setQueryData(['eventDetail', eventId], context.previous);
+                alert("좋아요 삭제에 실패했습니다. 잠시후 다시 시도해 주세요.");
             }
         },
         onSettled: (_data, _error, { eventId }) => {
