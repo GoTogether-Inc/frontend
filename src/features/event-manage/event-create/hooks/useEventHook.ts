@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { ApiResponse } from '../../../../shared/types/api/apiResponse';
 import { createEvent } from '../api/event';
-import { CreateEventRequest } from '../model/eventCreation';
+import { CreateEventRequest } from '../model/event';
 import { useMutation } from '@tanstack/react-query';
 
 export const useEventCreation = () => {
