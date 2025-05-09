@@ -23,6 +23,7 @@ const EventInfoPage = () => {
   };
 
   // 초기값 세팅을 위한 state
+  const [hostChannelId, setHostChannelId] = useState<number>(0);
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -37,10 +38,17 @@ const EventInfoPage = () => {
 
     const formatData = formatEventRequest(data.result);
 
+    const toIsoDateTime = (date: string, time: string) => {
+      return `${date}T${time}`;
+    };
+
     mutate(
       {
         ...formatData,
+        hostChannelId,
         title,
+        startDate: toIsoDateTime(data.result.startDate, data.result.startTime),
+        endDate: toIsoDateTime(data.result.endDate, data.result.endTime),
         organizerEmail: email,
         organizerPhoneNumber: phone,
         onlineType: selectedOption as OnlineType,
@@ -64,6 +72,7 @@ const EventInfoPage = () => {
   useEffect(() => {
     if (data?.result) {
       const info = data.result;
+      setHostChannelId(data.result.hostChannelId || 0);
       setTitle(info.title);
       setEmail(info.organizerEmail);
       setPhone(info.organizerPhoneNumber);
@@ -73,7 +82,6 @@ const EventInfoPage = () => {
       setDetailAddress(info.detailAddress);
       setLocationLat(info.locationLat || 0);
       setLocationLng(info.locationLng || 0);
-      console.log(info);
     }
   }, [data]);
 
