@@ -1,5 +1,6 @@
 export type OnlineType = 'ONLINE' | 'OFFLINE';
 export type CategoryType = 'DEVELOPMENT_STUDY' | 'NETWORKING' | 'HACKATHON' | 'CONFERENCE';
+export type TagType = 'current' | 'popular' | 'deadline';
 
 export interface BaseEvent {
   title: string;

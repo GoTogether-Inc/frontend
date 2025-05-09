@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { CreateEventRequest } from './eventCreation';
+import { CreateEventRequest } from './event';
 import { HostCreationRequest } from './hostCreation';
 
 export interface FunnelState {

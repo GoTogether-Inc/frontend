@@ -1,10 +1,10 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EventItem } from '../../../entities/event/model/event';
 import EventCard from '../../../shared/ui/EventCard';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
+import { EventItem } from '../../../entities/event/api/event';
 
 interface EventSliderSectionProps {
   title: string;
@@ -15,6 +15,8 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
   const [startIndex, setStartIndex] = useState<number>(0);
   const maxCardsToShow = 2;
   const navigate = useNavigate();
+
+  console.log(events);
 
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
