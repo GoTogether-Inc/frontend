@@ -4,7 +4,7 @@ import EventCard from '../../../shared/ui/EventCard';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
-import { EventItem } from '../../../entities/event/api/event';
+import { EventItem } from '../../../entities/event/model/event';
 
 interface EventSliderSectionProps {
   title: string;
@@ -32,27 +32,31 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
     <div className="relative w-full px-6">
       <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">{title}</h2>
       <div className="flex gap-4">
-        {events
-          .slice(startIndex, startIndex + maxCardsToShow)
-          .concat(
-            startIndex + maxCardsToShow > events.length
-              ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
-              : []
-          )
-          .map((event: EventItem) => (
-            <EventCard
-              key={event.id}
-              id={event.id}
-              img={event.bannerImageUrl}
-              eventTitle={event.title}
-              dDay={event.remainDays}
-              host={event.hostChannelName}
-              eventDate={event.startDate}
-              location={event.address}
-              hashtags={event.hashtags}
-              onClick={() => navigate(`/event-details/${event.id}`)}
-            />
-          ))}
+        {events.length === 0 ? (
+          <div className="w-full text-center text-gray-500">표시할 이벤트가 없습니다.</div>
+        ) : (
+          events
+            .slice(startIndex, startIndex + maxCardsToShow)
+            .concat(
+              startIndex + maxCardsToShow > events.length
+                ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
+                : []
+            )
+            .map((event: EventItem) => (
+              <EventCard
+                key={event.id}
+                id={event.id}
+                img={event.bannerImageUrl}
+                eventTitle={event.title}
+                dDay={event.remainDays}
+                host={event.hostChannelName}
+                eventDate={event.startDate}
+                location={event.address}
+                hashtags={event.hashtags}
+                onClick={() => navigate(`/event-details/${event.id}`)}
+              />
+            ))
+        )}
       </div>
       {startIndex !== 0 && (
         <IconButton

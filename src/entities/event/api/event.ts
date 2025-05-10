@@ -17,7 +17,7 @@ export const searchEvents = async (keyword: string, { page, size }: PaginationPa
   params.append('page', page.toString());
   params.append('size', size.toString());
 
-  const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events/search?keyword=${params.toString()}`);
+  const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events/search?${params.toString()}`);
   
   return response.data;
 };
