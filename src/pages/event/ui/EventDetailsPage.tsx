@@ -17,6 +17,7 @@ import locationImg from '../../../../public/assets/event-manage/details/Location
 import KakaoMap from '../../../shared/ui/KakaoMap';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useCreateBookmark, useDeleteBookmark } from '../../../features/bookmark/model/useBookmarkHook';
+import { formatDate, formatTime } from '../../../shared/lib/date';
 
 const EventDetailsPage = () => {
   const navigate = useNavigate();
@@ -89,13 +90,13 @@ const EventDetailsPage = () => {
               <div className="flex gap-2">
                 <img src={dateImg} alt="달력 이미지" />
                 <span className="text-sm md:text-base">
-                  {event.startDate} ~ {event.endDate}
+                  {formatDate(event.startDate)} ~ {formatDate(event.endDate)}
                 </span>
               </div>
               <div className="flex gap-2">
                 <img src={timeImg} alt="시간 이미지" />
                 <span className="text-sm md:text-base">
-                  {event.startTime} ~ {event.endTime}
+                  {formatTime(event.startDate)} ~ {formatTime(event.endDate)}
                 </span>
               </div>
               <div className="flex gap-2">
@@ -106,7 +107,7 @@ const EventDetailsPage = () => {
             </div>
 
             <h2 className="font-bold text-xl">위치</h2>
-            <KakaoMap lat={event.location.lat} lng={event.location.lng} />
+            <KakaoMap lat={event.locationLat} lng={event.locationLng} />
 
             <OrganizerInfo
               name={event.hostChannelName}
