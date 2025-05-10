@@ -1,7 +1,7 @@
 import arrow from '../../../../public/assets/dashboard/mail/Arrow.svg';
 import { useState } from 'react';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
-import { formatDate } from '../../../shared/lib/date';
+import { formatDate, formatTime } from '../../../shared/lib/date';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReadEmailResponse } from '../../../features/dashboard/model/emailInformation';
@@ -37,7 +37,7 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
             <p className="text-main font-semibold">[{mail.targetName}]</p>
             <p>{mail.title}</p>
           </div>
-          <p className="text-sm text-placeholderText">{formatDate(mail.reservationDate)}</p>
+          <p className="text-sm text-placeholderText">{formatDate(mail.reservationDate)} {formatTime(mail.reservationDate)}</p>
         </div>
         <IconButton
           iconPath={<img src={arrow} alt="화살표" className={`${isOpen ? 'rotate-180' : ''}`} />}
