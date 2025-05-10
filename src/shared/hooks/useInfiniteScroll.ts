@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { PaginationParams, EventFilters } from '../../entities/event/api/event';
+import { PaginationParams, EventFilters } from '../../entities/event/model/event';
 
 interface UseInfiniteScrollProps<T> {
   queryKey: string[];
