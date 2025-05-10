@@ -13,8 +13,6 @@ interface LinkInputProps {
 export interface Link {
   title: string;
   url: string;
-  address: string;
-  detailAddress: string;
 }
 
 const LinkInput = ({ value, onChange, setEventState }: LinkInputProps) => {
@@ -36,8 +34,6 @@ const LinkInput = ({ value, onChange, setEventState }: LinkInputProps) => {
     const newLink = {
       title: '',
       url: '',
-      address: '',
-      detailAddress: '',
     };
     updateAll([...links, newLink]);
   };
