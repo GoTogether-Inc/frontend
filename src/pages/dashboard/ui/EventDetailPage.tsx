@@ -14,12 +14,14 @@ const EventDetailPage = () => {
   const { data } = useEventDetail();
   const { mutate } = useUpdateEventHook();
 
+  const [hostChannelId, setHostChannelId] = useState<number>(0);
   const [bannerImageUrl, setBannerImageUrl] = useState('');
   const [description, setDescription] = useState('');
   const [referenceLinks, setReferenceLinks] = useState<Link[]>([]);
 
   useEffect(() => {
     if (data?.result) {
+      setHostChannelId(data.result.hostChannelId || 0);
       setBannerImageUrl(data.result.bannerImageUrl || '');
       setDescription(data.result.description || '');
       setReferenceLinks(data.result.referenceLinks || []);
@@ -31,24 +33,22 @@ const EventDetailPage = () => {
 
     const formatData = formatEventRequest(data.result);
 
-    mutate(
-      {
-        ...formatData,
-        bannerImageUrl,
-        description,
-        referenceLinks,
-        hostChannelId: 1,
+    const finalPayload = {
+      ...formatData,
+      hostChannelId,
+      bannerImageUrl,
+      description,
+      referenceLinks: referenceLinks.map(({ title, url }) => ({ title, url })),
+    };
+    mutate(finalPayload, {
+      onSuccess: () => {
+        alert('이벤트 정보가 저장되었습니다.');
+        navigate(`/dashboard/${data?.result.id}`);
       },
-      {
-        onSuccess: () => {
-          alert('이벤트 정보가 저장되었습니다.');
-          navigate(`/dashboard/${data?.result.id}`);
-        },
-        onError: () => {
-          alert('저장에 실패했습니다.');
-        },
-      }
-    );
+      onError: () => {
+        alert('저장에 실패했습니다.');
+      },
+    });
   };
 
   return (
