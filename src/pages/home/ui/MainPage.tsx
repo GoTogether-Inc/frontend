@@ -59,7 +59,7 @@ const MainPage = () => {
               iconPath={<img src={button.iconPath} alt="메인 아이콘" />}
               label={button.label}
               size="lg"
-              onClick={button.onClick}
+              onClick={() => navigate('/category', {state: {category: button.category} })}
               className="font-semibold"
             />
           ))}

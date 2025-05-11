@@ -4,10 +4,12 @@ import SearchTextField from '../../../../design-system/ui/textFields/SearchTextF
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 import EventList from '../../../features/event-manage/event-list/ui/EventList';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const AllEventsPage = () => {
+const CategoryPage = () => {
   const navigater = useNavigate();
+  const location = useLocation();
+  const category = location.state?.category;
 
   return (
     <div className="flex flex-col items-center mb-28">
@@ -26,9 +28,10 @@ const AllEventsPage = () => {
         rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
       />
       {/* 이벤트 카드 목록 */}
-      <EventList tag="current" />
+      <EventList category={category} />
       <BottomBar />
     </div>
   );
 };
-export default AllEventsPage;
+
+export default CategoryPage;

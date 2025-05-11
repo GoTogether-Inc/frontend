@@ -1,11 +1,34 @@
 import { useRef, useEffect } from 'react';
+import { useInfiniteScroll } from '../../../../shared/hooks/useInfiniteScroll';
+import { getAllEventsInfinite, getCategoryEventsInfinite } from '../../../../entities/event/api/event';
 import EventCard from '../../../../shared/ui/EventCard';
+import { BaseEvent, CategoryType, TagType } from '../../../../shared/types/baseEventType';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import useEventList from '../../../../entities/event/hook/useEventListHook';
-import type { EventList } from '../model/eventList';
 
-const EventList = () => {
-  const { data, hasNextPage, isFetching, fetchNextPage } = useEventList();
+interface EventListProps extends BaseEvent {
+  id: number;
+  hostChannelName: string;
+  remainDays: string;
+}
+
+interface EventListComponentProps {
+  category?: CategoryType;
+  tag?: TagType;
+}
+
+const EventList = ({ category, tag }: EventListComponentProps) => {
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteScroll<EventListProps>({
+    queryKey: ['events', 'infinite', category ?? '', tag ?? ''],
+    queryFn: params => {
+      if (category) {
+        return getCategoryEventsInfinite({ ...params, category });
+      }
+      return getAllEventsInfinite({ ...params, tag });
+    },
+    size: 10,
+    filters: { tag, category },
+  });
+
   const observerRef = useRef<IntersectionObserver>();
   const lastEventCardRef = useRef<HTMLDivElement | null>(null);
 

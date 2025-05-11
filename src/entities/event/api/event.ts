@@ -33,11 +33,36 @@ export const getAllEventsInfinite = async ({
   size,
   tag,
 }: PaginationParams & { tag?: TagType }): Promise<{ items: EventItem[]; hasNextPage: boolean }> => {
-  const response = await axiosClient.get<ApiResponse<EventItem[]>>(
-    `/events${tag ? `?tags=${tag}` : ''}${tag ? '&' : '?'}page=${page}&size=${size}`
-  );
+  const params = new URLSearchParams();
 
-  // ApiResponse의 result는 옵셔널 -> result?: T
+  if (tag) params.append('tags', tag);
+  params.append('page', page.toString());
+  params.append('size', size.toString());
+
+  const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events?${params.toString()}`);
+
+  const items = response.data.result ?? [];
+
+  return {
+    items,
+    hasNextPage: items.length === size,
+  };
+};
+
+// 카테고리별 이벤트 목록 조회 (무한 스크롤)
+export const getCategoryEventsInfinite = async ({
+  page,
+  size,
+  category,
+}: PaginationParams & { category: CategoryType }): Promise<{ items: EventItem[]; hasNextPage: boolean }> => {
+  const params = new URLSearchParams();
+
+  params.append('category', category);
+  params.append('page', page.toString());
+  params.append('size', size.toString());
+
+  const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events/categories?${params.toString()}`);
+
   const items = response.data.result ?? [];
 
   return {
