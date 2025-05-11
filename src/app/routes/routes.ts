@@ -7,7 +7,8 @@ export const MAIN_ROUTES = {
   menu: '/menu',
   dashboard: '/dashboard/:id',
   payment: '/payment',
-  bookmark: '/bookmark'
+  bookmark: '/bookmark',
+  category: '/category',
 };
 
 export const AUTH_ROUTES = {
