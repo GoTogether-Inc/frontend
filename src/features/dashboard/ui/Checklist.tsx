@@ -22,8 +22,8 @@ const CheckList = () => {
     const statusMap = {
       0: true, // 이벤트 기본 정보는 항상 true
       1: true, // 이벤트 상세와 사진은 항상 true
-      2: data?.ticket ?? false, // 티켓 생성하기
-      3: data?.ticketOption ?? false, // 티켓에 추가 옵션 부착
+      2: Boolean(data?.ticket), // 티켓 생성하기
+      3: Boolean(data?.ticketOption), // 티켓에 추가 옵션 부착
     };
 
     return statusMap[index as keyof typeof statusMap];
