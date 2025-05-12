@@ -8,11 +8,14 @@ export const eventDetail = async (dto: EventDetailRequest) => {
   const response = await axiosClient.get(`/events/${dto.eventId}`, {
     params: { userId: dto.userId },
   });
-  return response.data.result;
+  return response.data;
 };
 
 // 이벤트 검색 (기본 정보)
-export const searchEvents = async (keyword: string, { page, size }: PaginationParams): Promise<ApiResponse<EventItem[]>> => {
+export const searchEvents = async (
+  keyword: string,
+  { page, size }: PaginationParams
+): Promise<ApiResponse<EventItem[]>> => {
   const params = new URLSearchParams();
 
   params.append('keyword', keyword);
@@ -20,7 +23,7 @@ export const searchEvents = async (keyword: string, { page, size }: PaginationPa
   params.append('size', size.toString());
 
   const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events/search?${params.toString()}`);
-  
+
   return response.data;
 };
 
