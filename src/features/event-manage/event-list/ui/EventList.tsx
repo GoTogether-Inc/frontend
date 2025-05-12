@@ -1,23 +1,11 @@
 import { useRef, useEffect } from 'react';
-import { useInfiniteScroll } from '../../../../shared/hooks/useInfiniteScroll';
-import { getAllEventsInfinite } from '../../../../entities/event/api/event';
 import EventCard from '../../../../shared/ui/EventCard';
-import { BaseEvent } from '../../../../shared/types/baseEventType';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-interface EventListProps extends BaseEvent{
-  id: number;
-  hostChannelName: string;
-  remainDays: string;
-}
+import useEventList from '../../../../entities/event/hook/useEventListHook';
+import type { EventList } from '../model/eventList';
 
 const EventList = () => {
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteScroll<EventListProps>({
-    queryKey: ['events', 'infinite'],
-    queryFn: getAllEventsInfinite,
-    size: 10,
-    filters: { tag: 'current' },
-  });
-
+  const { data, hasNextPage, isFetching, fetchNextPage } = useEventList();
   const observerRef = useRef<IntersectionObserver>();
   const lastEventCardRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,7 +34,7 @@ const EventList = () => {
     <>
       <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
         {data?.pages.map((page, pageIndex) =>
-          page.items.map((event: EventListProps, eventIndex) => {
+          page.items.map((event: EventList, eventIndex) => {
             const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
             return (
               <div key={event.id} ref={isLastElement ? lastEventCardRef : null}>
