@@ -7,7 +7,8 @@ import TextEditor from '../../../features/event-manage/event-create/ui/TextEdito
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
-import { formatEventRequest } from '../../../shared/lib/formatEventRequest';
+import { UpdateEventRequest } from '../../../features/dashboard/model/event';
+import { OnlineType } from '../../../shared/types/baseEventType';
 
 const EventDetailPage = () => {
   const navigate = useNavigate();
@@ -31,16 +32,26 @@ const EventDetailPage = () => {
   const handleSave = () => {
     if (!data?.result.id) return;
 
-    const formatData = formatEventRequest(data.result);
-
-    const finalPayload = {
-      ...formatData,
-      hostChannelId,
-      bannerImageUrl,
-      description,
-      referenceLinks: referenceLinks.map(({ title, url }) => ({ title, url })),
+    const requestData: UpdateEventRequest = {
+      hostChannelId: data.result.hostChannelId || hostChannelId,
+      title: data.result.title,
+      startDate: data.result.startDate,
+      endDate: data.result.endDate,
+      bannerImageUrl: bannerImageUrl || data.result.bannerImageUrl || '',
+      description: description || data.result.description || '',
+      referenceLinks: referenceLinks.map(({ title, url }) => ({ title, url })) || data.result.referenceLinks || [],
+      onlineType: data.result.onlineType as OnlineType,
+      address: data.result.address || '',
+      detailAddress: data.result.detailAddress || '',
+      locationLat: data.result.locationLat || 0,
+      locationLng: data.result.locationLng || 0,
+      category: data.result.category || 'DEVELOPMENT_STUDY',
+      hashtags: data.result.hashtags || [],
+      organizerEmail: data.result.organizerEmail || '',
+      organizerPhoneNumber: data.result.organizerPhoneNumber || '',
     };
-    mutate(finalPayload, {
+
+    mutate(requestData, {
       onSuccess: () => {
         alert('이벤트 정보가 저장되었습니다.');
         navigate(`/dashboard/${data?.result.id}`);
