@@ -7,19 +7,17 @@ import firstPage from '../../../../public/assets/banners/1.png';
 import secondPage from '../../../../public/assets/banners/2.png';
 import thirdPage from '../../../../public/assets/banners/3.png';
 import EventCard from '../../../shared/ui/EventCard';
-import { trendingEventsData } from '../../../shared/types/eventCardType';
-import { hostInfoData } from '../../../shared/types/hostInfoType';
-import { FilterDataType } from '../../../shared/types/filterDataType';
-import { FilterMockData } from '../../../shared/types/filterDataType';
 import ProfileCircle from '../../../../design-system/ui/Profile';
+import useEventList from '../../../entities/event/hook/useEventListHook';
+import type { EventList } from '../../../features/event-manage/event-list/model/eventList';
+import useHostChannelList from '../../../entities/host/hook/useHostChannelListHook';
 
 const SearchPage = () => {
   const [keyword, setKeyword] = useState('');
-  const [filterData, setFilterDate] = useState<FilterDataType>({
-    Events: [],
-    Host: [],
-  });
-  //@TODO:추후에 response body 보고 Type 수정
+  const { data, hasNextPage, isFetching, fetchNextPage } = useEventList();
+  const { data: hostData } = useHostChannelList();
+  const observerRef = useRef<IntersectionObserver>();
+  const lastEventCardRef = useRef<HTMLDivElement | null>(null);
 
   const images = [
     { img: firstPage, link: 'https://example.com/page1' },
@@ -36,11 +34,23 @@ const SearchPage = () => {
   ];
 
   useEffect(() => {
-    //@TODO:API 호출 후, response를 setFilterDate에 넣을 예정
-    //현재는 목업 데이터를 넣어놓음
-    //@TODO:API 연동하며 디바운스 구현 예정
-    setFilterDate(FilterMockData);
-  }, [keyword]);
+    if (!hasNextPage || isFetching) return;
+    if (observerRef.current) observerRef.current.disconnect();
+
+    observerRef.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    });
+
+    if (lastEventCardRef.current) observerRef.current.observe(lastEventCardRef.current);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasNextPage, isFetching, fetchNextPage]);
 
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null); // Input 요소를 참조하기 위한 훅
@@ -75,49 +85,68 @@ const SearchPage = () => {
       {keyword ? (
         <>
           <div className="px-6 flex flex-col gap-8">
-            {/* 이벤트 검색 결과를 렌더링 하는 부분 */}
-            {filterData.Events?.length > 0 && (
-              <div>
-                <p className="font-bold text-lg lg:text-xl mb-3">이벤트</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {filterData.Events?.map((event: trendingEventsData) => (
-                    <EventCard
-                      key={event.id}
-                      img={event.img}
-                      eventTitle={event.eventTitle}
-                      dDay={event.dDay}
-                      host={event.host}
-                      eventDate={event.eventDate}
-                      location={event.location}
-                      hashtags={event.hashtags}
-                    />
-                  ))}
-                </div>
+            <div>
+              <p className="font-bold text-lg lg:text-xl mb-3">이벤트</p>
+              <div className="grid grid-cols-2 gap-4">
+                {data?.pages.map((page, pageIndex) =>
+                  page.items
+                    .filter(
+                      (event: EventList) =>
+                        event.title.toLowerCase().includes(keyword.toLowerCase()) ||
+                        event.address.toLowerCase().includes(keyword.toLowerCase()) ||
+                        event.hostChannelName.toLowerCase().includes(keyword.toLowerCase())
+                    )
+                    .map((event: EventList, eventIndex) => {
+                      const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
+                      return (
+                        <div key={event.id} ref={isLastElement ? lastEventCardRef : null}>
+                          <EventCard
+                            id={event.id}
+                            img={event.bannerImageUrl}
+                            eventTitle={event.title}
+                            eventDate={event.startDate}
+                            location={event.address}
+                            host={event.hostChannelName}
+                            hashtags={event.hashtags}
+                            dDay={event.remainDays}
+                          />
+                        </div>
+                      );
+                    })
+                )}
               </div>
-            )}
+              {isFetching && <div className="text-center py-4">Loading...</div>}
+            </div>
 
             {/* 호스트 검색 결과를 렌더링 하는 부분 */}
-            {filterData.Host?.length > 0 && (
-              <div>
-                <p className="font-bold pb-3 text-lg lg:text-xl mb-3">호스트</p>
-                <div className="flex flex-wrap gap-9 px-2">
-                  {filterData.Host?.map((host: hostInfoData) => (
+            <div>
+              <p className="font-bold pb-3 text-lg lg:text-xl mb-3">호스트</p>
+              <div className="flex flex-wrap gap-9 px-2 mb-10">
+                {hostData?.result
+                  .filter(host => host.hostChannelName.toLowerCase().includes(keyword.toLowerCase()))
+                  .map(host => (
                     <ProfileCircle
                       key={host.id}
-                      profile="hostInfoProfile"
-                      name={host.name}
                       id={host.id}
+                      profile="hostInfoProfile"
+                      name={host.hostChannelName}
+                      onClick={() => navigate(`/menu/hostInfo/${host.id}`)}
                       className="w-19 h-19 md:w-20 md:h-20 text-sm md:text-16 lg:text-base"
                     />
                   ))}
-                </div>
               </div>
-            )}
+            </div>
           </div>
 
-          {!filterData.Host?.length && !filterData.Events?.length && (
-            <div className="p-6 text-center font-semibold text-gray-700">검색 결과가 없습니다.</div>
-          )}
+          {!hostData?.result.some(host => host.hostChannelName.toLowerCase().includes(keyword.toLowerCase())) &&
+            !data?.pages.some(page =>
+              page.items.some(
+                event =>
+                  event.title.toLowerCase().includes(keyword.toLowerCase()) ||
+                  event.address.toLowerCase().includes(keyword.toLowerCase()) ||
+                  event.hostChannelName.toLowerCase().includes(keyword.toLowerCase())
+              )
+            ) && <div className="p-6 text-center font-semibold text-gray-700">검색 결과가 없습니다.</div>}
         </>
       ) : (
         <div className="px-6">
