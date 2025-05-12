@@ -1,4 +1,5 @@
 import { HostDashboardResponse } from '../../../entities/host/model/hostDashboard';
+import { formatDate, formatTime } from '../../../shared/lib/date';
 
 const EventOverview = ({ eventInfo }: { eventInfo?: HostDashboardResponse }) => {
   return (
@@ -14,12 +15,16 @@ const EventOverview = ({ eventInfo }: { eventInfo?: HostDashboardResponse }) => 
         </h4>
         <div className="flex gap-2">
           <span>
-            {' '}
-            {/*@TODO 포맷팅?*/}
-            {eventInfo ? `${eventInfo.eventStartDate}` : '날짜 정보 없음'}
+            {eventInfo
+              ? `${formatDate(eventInfo.eventStartDate)} ${formatTime(eventInfo.eventStartDate)}`
+              : '날짜 정보 없음'}
           </span>
           <span>&gt;</span>
-          <span>{eventInfo ? `${eventInfo.eventEndDate}` : '날짜 정보 없음'} </span>
+          <span>
+            {eventInfo
+              ? `${formatDate(eventInfo.eventEndDate)} ${formatTime(eventInfo.eventEndDate)}`
+              : '날짜 정보 없음'}
+          </span>
         </div>
       </div>
     </div>
