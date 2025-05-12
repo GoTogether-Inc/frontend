@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
-import { formatEventRequest } from '../../../shared/lib/formatEventRequest';
 import { OnlineType } from '../../../shared/types/baseEventType';
 import { AddressSearch } from '../../../shared/ui/AddressSearch';
 import KakaoMap from '../../../shared/ui/KakaoMap';
+import { UpdateEventRequest } from '../../../features/dashboard/model/event';
 
 const EventInfoPage = () => {
   const navigate = useNavigate();
@@ -36,37 +36,42 @@ const EventInfoPage = () => {
   const handleSave = () => {
     if (!data?.result.id) return;
 
-    const formatData = formatEventRequest(data.result);
-
-    const toIsoDateTime = (date: string, time: string) => {
-      return `${date}T${time}`;
+    const toIsoDateTime = (date: string) => {
+      if (date.includes('T')) {
+        return date;
+      }
+      return date;
     };
 
-    mutate(
-      {
-        ...formatData,
-        hostChannelId,
-        title,
-        startDate: toIsoDateTime(data.result.startDate, data.result.startTime),
-        endDate: toIsoDateTime(data.result.endDate, data.result.endTime),
-        organizerEmail: email,
-        organizerPhoneNumber: phone,
-        onlineType: selectedOption as OnlineType,
-        address,
-        detailAddress,
-        locationLat,
-        locationLng,
+    const requestData: UpdateEventRequest = {
+      hostChannelId: data.result.hostChannelId || hostChannelId,
+      title: title || data.result.title,
+      startDate: toIsoDateTime(data.result.startDate),
+      endDate: toIsoDateTime(data.result.endDate),
+      bannerImageUrl: data.result.bannerImageUrl || '',
+      description: data.result.description || '',
+      referenceLinks: data.result.referenceLinks || [],
+      onlineType: (selectedOption || data.result.onlineType) as OnlineType,
+      address: address || data.result.address || '',
+      detailAddress: detailAddress || data.result.detailAddress || '',
+      locationLat: locationLat || data.result.locationLat || 0,
+      locationLng: locationLng || data.result.locationLng || 0,
+      category: data.result.category || 'DEVELOPMENT_STUDY',
+      hashtags: data.result.hashtags || [],
+      organizerEmail: email || data.result.organizerEmail || '',
+      organizerPhoneNumber: phone || data.result.organizerPhoneNumber || '',
+    };
+
+    mutate(requestData, {
+      onSuccess: () => {
+        alert('이벤트 정보가 저장되었습니다.');
+        navigate(`/dashboard/${data?.result.id}`);
       },
-      {
-        onSuccess: () => {
-          alert('이벤트 정보가 저장되었습니다.');
-          navigate(`/dashboard/${data?.result.id}`);
-        },
-        onError: () => {
-          alert('저장에 실패했습니다.');
-        },
-      }
-    );
+      onError: error => {
+        console.error('Error details:', error);
+        alert('저장에 실패했습니다.');
+      },
+    });
   };
 
   useEffect(() => {
