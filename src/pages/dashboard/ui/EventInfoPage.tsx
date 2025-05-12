@@ -32,22 +32,17 @@ const EventInfoPage = () => {
   const [detailAddress, setDetailAddress] = useState('');
   const [locationLat, setLocationLat] = useState<number>(0);
   const [locationLng, setLocationLng] = useState<number>(0);
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
 
   const handleSave = () => {
     if (!data?.result.id) return;
 
-    const toIsoDateTime = (date: string) => {
-      if (date.includes('T')) {
-        return date;
-      }
-      return date;
-    };
-
     const requestData: UpdateEventRequest = {
       hostChannelId: data.result.hostChannelId || hostChannelId,
       title: title || data.result.title,
-      startDate: toIsoDateTime(data.result.startDate),
-      endDate: toIsoDateTime(data.result.endDate),
+      startDate: startDate || data.result.startDate,
+      endDate: endDate || data.result.endDate,
       bannerImageUrl: data.result.bannerImageUrl || '',
       description: data.result.description || '',
       referenceLinks: data.result.referenceLinks || [],
@@ -87,6 +82,8 @@ const EventInfoPage = () => {
       setDetailAddress(info.detailAddress);
       setLocationLat(info.locationLat || 0);
       setLocationLng(info.locationLng || 0);
+      setStartDate(info.startDate);
+      setEndDate(info.endDate);
     }
   }, [data]);
 
@@ -101,7 +98,12 @@ const EventInfoPage = () => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
-        <EventDatePicker />
+        <EventDatePicker
+          startDate={startDate}
+          endDate={endDate}
+          onStartDateChange={setStartDate}
+          onEndDateChange={setEndDate}
+        />
         <DefaultTextField
           label="주최자 이메일"
           placeholder="example@example.com"

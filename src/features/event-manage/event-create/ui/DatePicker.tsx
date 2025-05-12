@@ -8,23 +8,55 @@ interface DatePickerProps {
   className?: string;
   eventState?: FunnelState['eventState'];
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  startDate?: string;
+  endDate?: string;
+  onStartDateChange?: (date: string) => void;
+  onEndDateChange?: (date: string) => void;
   isLabel?: boolean;
 }
 
-const EventDatePicker = ({ className, eventState, setEventState, isLabel = false }: DatePickerProps) => {
-  const [startDate, setStartDate] = useState<Date | null>(
-    eventState?.startDate ? new Date(eventState.startDate) : new Date()
-  );
-  const [endDate, setEndDate] = useState<Date | null>(eventState?.endDate ? new Date(eventState.endDate) : new Date());
+const EventDatePicker = ({
+  className,
+  eventState,
+  setEventState,
+  startDate: initialStartDate,
+  endDate: initialEndDate,
+  onStartDateChange,
+  onEndDateChange,
+  isLabel = false,
+}: DatePickerProps) => {
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<string>('06:00');
   const [endTime, setEndTime] = useState<string>('23:00');
+
+  useEffect(() => {
+    const start = eventState?.startDate || initialStartDate;
+    const end = eventState?.endDate || initialEndDate;
+
+    if (start && !startDate) {
+      const startDate = new Date(start);
+      setStartDate(startDate);
+      const hours = startDate.getHours().toString().padStart(2, '0');
+      const minutes = startDate.getMinutes().toString().padStart(2, '0');
+      setStartTime(`${hours}:${minutes}`);
+    }
+
+    if (end && !endDate) {
+      const endDate = new Date(end);
+      setEndDate(endDate);
+      const hours = endDate.getHours().toString().padStart(2, '0');
+      const minutes = endDate.getMinutes().toString().padStart(2, '0');
+      setEndTime(`${hours}:${minutes}`);
+    }
+  }, [eventState, initialStartDate, initialEndDate]);
 
   const generateTimeOptions = () => {
     const options = [];
     for (let i = 0; i < 24; i++) {
       for (let j = 0; j < 4; j++) {
         const hour = i.toString().padStart(2, '0');
-        const minute = (j * 15).toString().padEnd(2, '0');
+        const minute = (j * 15).toString().padStart(2, '0');
         options.push(`${hour}:${minute}`);
       }
     }
@@ -34,7 +66,7 @@ const EventDatePicker = ({ className, eventState, setEventState, isLabel = false
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    if (setEventState && startDate && endDate) {
+    if (startDate && endDate) {
       const [startHour, startMin] = startTime.split(':').map(Number);
       const [endHour, endMin] = endTime.split(':').map(Number);
 
@@ -44,13 +76,26 @@ const EventDatePicker = ({ className, eventState, setEventState, isLabel = false
       const end = new Date(endDate);
       end.setHours(endHour, endMin, 0, 0);
 
-      setEventState(prev => ({
-        ...prev,
-        startDate: start.toISOString(),
-        endDate: end.toISOString(),
-      }));
+      const startISO = new Date(start.getTime() + 9 * 60 * 60 * 1000).toISOString();
+      const endISO = new Date(end.getTime() + 9 * 60 * 60 * 1000).toISOString();
+
+      if (setEventState) {
+        setEventState(prev => ({
+          ...prev,
+          startDate: startISO,
+          endDate: endISO,
+        }));
+      }
+
+      if (onStartDateChange) {
+        onStartDateChange(startISO);
+      }
+
+      if (onEndDateChange) {
+        onEndDateChange(endISO);
+      }
     }
-  }, [startDate, endDate, startTime, endTime, setEventState]);
+  }, [startDate, endDate, startTime, endTime, setEventState, onStartDateChange, onEndDateChange]);
 
   return (
     <div className={`flex flex-col w-full ${className}`}>
