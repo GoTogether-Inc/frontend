@@ -40,9 +40,9 @@ const EventDetailsPage = () => {
       if (event.bookmarkId === null) {
         return;
       }
-      deleteBookmark({ eventId: event.id, bookmarkId: event.bookmarkId });
+      deleteBookmark({ eventId: event.result.id, bookmarkId: event.result.bookmarkId });
     } else {
-      createBookmark(event.id);
+      createBookmark(event.result.id);
     }
   };
 
@@ -65,24 +65,24 @@ const EventDetailsPage = () => {
       />
       {event ? (
         <>
-          <img src={event.bannerImageUrl} alt="이벤트 배너" className="w-full h-64 mb-6" />
+          <img src={event.result.bannerImageUrl} alt="이벤트 배너" className="w-full h-64 mb-6" />
           <div className="flex flex-col gap-3 px-4 md:px-6">
-            <div key={event.id} className="flex flex-col gap-2">
-              <h1 className="text-xl md:text-2xl font-bold">{event.title}</h1>
+            <div key={event.result.id} className="flex flex-col gap-2">
+              <h1 className="text-xl md:text-2xl font-bold">{event.result.title}</h1>
               <div className="flex justify-between items-center gap-1">
                 <div className="flex gap-2">
                   <img src={participantsImg} alt="인원수 이미지" />
                   <span className="font-bold text-base md:text-lg py-2">
-                    현재 {event.participantCount}명이 참가 신청했습니다.
+                    현재 {event.result.participantCount}명이 참가 신청했습니다.
                   </span>
                 </div>
                 <div className="flex gap-3">
                   <IconButton
                     iconPath={<img src={share} alt="공유하기 버튼" />}
-                    onClick={() => handleShareClick(event.title)}
+                    onClick={() => handleShareClick(event.result.title)}
                   />
                   <IconButton
-                    iconPath={<img src={event.bookmarked ? liked : like} alt="좋아요 버튼" />}
+                    iconPath={<img src={event.result.bookmarked ? liked : like} alt="좋아요 버튼" />}
                     onClick={handleLikeClick}
                   />
                 </div>
@@ -90,34 +90,34 @@ const EventDetailsPage = () => {
               <div className="flex gap-2">
                 <img src={dateImg} alt="달력 이미지" />
                 <span className="text-sm md:text-base">
-                  {formatDate(event.startDate)} ~ {formatDate(event.endDate)}
+                  {formatDate(event.result.startDate)} ~ {formatDate(event.result.endDate)}
                 </span>
               </div>
               <div className="flex gap-2">
                 <img src={timeImg} alt="시간 이미지" />
                 <span className="text-sm md:text-base">
-                  {formatTime(event.startDate)} ~ {formatTime(event.endDate)}
+                  {formatTime(event.result.startDate)} ~ {formatTime(event.result.endDate)}
                 </span>
               </div>
               <div className="flex gap-2">
                 <img src={locationImg} alt="위치 이미지" />
-                <span className="text-sm md:text-base">{event.address}</span>
+                <span className="text-sm md:text-base">{event.result.address}</span>
               </div>
-              <span className="text-sm md:text-base py-3">{event.description}</span>
+              <span className="text-sm md:text-base py-3">{event.result.description}</span>
             </div>
 
             <h2 className="font-bold text-xl">위치</h2>
-            <KakaoMap lat={event.locationLat} lng={event.locationLng} />
+            <KakaoMap lat={event.result.locationLat} lng={event.result.locationLng} />
 
             <OrganizerInfo
-              name={event.hostChannelName}
-              description={event.hostChannelDescription}
-              phone={event.organizerPhoneNumber}
-              email={event.organizerEmail}
+              name={event.result.hostChannelName}
+              description={event.result.hostChannelDescription}
+              phone={event.result.organizerPhoneNumber}
+              email={event.result.organizerEmail}
             />
 
             <h2 className="font-bold text-xl">티켓 옵션</h2>
-            <TicketInfo eventId={event.id} />
+            <TicketInfo eventId={event.result.id} />
 
             <div className="flex flex-col gap-2">
               <h2 className="font-bold text-xl">관련 링크</h2>
