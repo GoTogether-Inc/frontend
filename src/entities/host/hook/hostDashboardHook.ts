@@ -9,7 +9,7 @@ const useHostDashboard = () => {
 
   const { data, refetch } = useQuery({
     queryKey: ['hostDashboard', eventId],
-    queryFn: () => hostDashboard(eventId!),
+    queryFn: () => hostDashboard(eventId),
     enabled: !!eventId,
   });
 
