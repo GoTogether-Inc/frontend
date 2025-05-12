@@ -1,6 +1,6 @@
-import { dashboardData } from '../../../shared/types/dashboardType';
+import { HostDashboardResponse } from '../../../entities/host/model/hostDashboard';
 
-const EventOverview = ({ eventInfo }: { eventInfo?: dashboardData }) => {
+const EventOverview = ({ eventInfo }: { eventInfo?: HostDashboardResponse }) => {
   return (
     <div className="flex flex-col w-full h-full bg-white shadow-md rounded-[10px] gap-5 px-4 py-6">
       <div>
@@ -16,10 +16,10 @@ const EventOverview = ({ eventInfo }: { eventInfo?: dashboardData }) => {
           <span>
             {' '}
             {/*@TODO 포맷팅?*/}
-            {eventInfo ? `${eventInfo.eventStartDate} ${eventInfo.eventStartTime}` : '날짜 정보 없음'}
+            {eventInfo ? `${eventInfo.eventStartDate}` : '날짜 정보 없음'}
           </span>
           <span>&gt;</span>
-          <span>{eventInfo ? `${eventInfo.eventEndDate} ${eventInfo.eventEndTime}` : '날짜 정보 없음'} </span>
+          <span>{eventInfo ? `${eventInfo.eventEndDate}` : '날짜 정보 없음'} </span>
         </div>
       </div>
     </div>
