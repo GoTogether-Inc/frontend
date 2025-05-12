@@ -14,6 +14,7 @@ import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
 import useAuthStore from '../../../app/provider/authStore';
 import EventTags from '../../../features/home/ui/EventTags';
+import ProfileCircle from '../../../../design-system/ui/Profile';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const MainPage = () => {
@@ -40,12 +41,11 @@ const MainPage = () => {
         leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
         rightContent={
-          <SecondaryButton
-            size="large"
-            color="black"
-            label={isLoggedIn ? `${name}님` : '로그인'}
-            onClick={isLoggedIn ? closeModal : openModal}
-          />
+          isLoggedIn ? (
+            <ProfileCircle profile="userProfile" name={name?.slice(1, 3) || ''} className="w-11 h-11 text-15" />
+          ) : (
+            <SecondaryButton size="large" color="black" label="로그인" onClick={openModal} />
+          )
         }
       />
       <AnimatePresence>{isModalOpen && <LoginModal onClose={closeModal} />}</AnimatePresence>
