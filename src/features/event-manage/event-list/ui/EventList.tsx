@@ -32,8 +32,6 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
   const observerRef = useRef<IntersectionObserver>();
   const lastEventCardRef = useRef<HTMLDivElement | null>(null);
 
-  console.log('EventList data.pages:', data?.pages);
-
   useEffect(() => {
     if (!hasNextPage || isFetching) return;
     if (observerRef.current) observerRef.current.disconnect();
@@ -55,27 +53,37 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
-        {data?.pages.map((page, pageIndex) =>
-          page.items.map((event: EventList, eventIndex) => {
-            const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
-            return (
-              <div key={event.id} ref={isLastElement ? lastEventCardRef : null}>
-                <EventCard
-                  id={event.id}
-                  img={event.bannerImageUrl}
-                  eventTitle={event.title}
-                  eventDate={event.startDate}
-                  location={event.address}
-                  host={event.hostChannelName}
-                  hashtags={event.hashtags}
-                  dDay={event.remainDays}
-                />
-              </div>
-            );
-          })
-        )}
-      </div>
+      {data?.pages[0]?.items.length === 0 ? (
+        <div className="sm:text-12 md:text-14 lg:text-16 py-8 text-placeholderText ">
+          {tag ? (
+            <div>생성된 이벤트가 없습니다.</div>
+          ) : category ? (
+            <div>생성된 {category} 이벤트가 없습니다.</div>
+          ) : null}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
+          {data?.pages.map((page, pageIndex) =>
+            page.items.map((event: EventListProps, eventIndex) => {
+              const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
+              return (
+                <div key={event.id} ref={isLastElement ? lastEventCardRef : null}>
+                  <EventCard
+                    id={event.id}
+                    img={event.bannerImageUrl}
+                    eventTitle={event.title}
+                    eventDate={event.startDate}
+                    location={event.address}
+                    host={event.hostChannelName}
+                    hashtags={event.hashtags}
+                    dDay={event.remainDays}
+                  />
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
       {isFetching && <div className="text-center py-4">Loading...</div>}
       <ReactQueryDevtools initialIsOpen={false} position="left" />
     </>
