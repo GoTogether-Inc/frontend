@@ -5,9 +5,13 @@ import searchIcon from '../../../../design-system/icons/Search.svg';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 import EventList from '../../../features/event-manage/event-list/ui/EventList';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../../app/provider/authStore';
+import { AnimatePresence } from 'framer-motion';
+import LoginModal from '../../../widgets/main/ui/LoginModal';
 
 const AllEventsPage = () => {
   const navigater = useNavigate();
+  const { isModalOpen, openModal, closeModal, isLoggedIn, name } = useAuthStore();
 
   return (
     <div className="flex flex-col items-center mb-28">
@@ -23,8 +27,16 @@ const AllEventsPage = () => {
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
         leftButtonClick={() => navigater('/')}
         leftButtonLabel="같이가요"
-        rightContent={<SecondaryButton size="large" color="black" label="로그인" onClick={() => {}} />}
+        rightContent={
+          <SecondaryButton
+            size="large"
+            color="black"
+            label={isLoggedIn ? `${name}님` : '로그인'}
+            onClick={isLoggedIn ? closeModal : openModal}
+          />
+        }
       />
+      <AnimatePresence>{isModalOpen && <LoginModal onClose={closeModal} />}</AnimatePresence>
       {/* 이벤트 카드 목록 */}
       <EventList tag="current" />
       <BottomBar />
