@@ -131,7 +131,15 @@ const EventDetailsPage = () => {
       ) : (
         <div className="flex justify-center items-center h-screen">로딩 중...</div>
       )}
-      {isModalOpen && <ShareEventModal closeModal={closeModal} eventName={title} />}
+      {isModalOpen && (
+        <ShareEventModal
+          closeModal={closeModal}
+          eventName={title}
+          eventDescription={event?.result.description}
+          eventImageUrl={event?.result.bannerImageUrl}
+          eventUrl={window.location.href}
+        />
+      )}
     </>
   );
 };
