@@ -3,7 +3,7 @@ import Checkbox from '../../../../design-system/ui/Checkbox';
 import { useParticipantStore } from '../model/store/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useApproveParticipants } from '../hook/useParticipants';
 
 interface ParticipantCardProps {
@@ -15,6 +15,7 @@ interface ParticipantCardProps {
 const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
   const { approvedParticipants } = useParticipantStore();
   const navigate = useNavigate();
+  const id = useParams();
 
   const { mutate: approveParticipant } = useApproveParticipants(participant.orderNumber);
 
@@ -40,7 +41,7 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
             color="pink"
             size="small"
             onClick={() => {
-              navigate('/dashboard/responses-management', {
+              navigate(`/dashboard/${id}/responses-management`, {
                 state: {
                   participantName: participant.participant,
                   participantEmail: participant.email,
