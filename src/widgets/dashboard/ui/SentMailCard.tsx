@@ -4,8 +4,8 @@ import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import { formatDate, formatTime } from '../../../shared/lib/date';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ReadEmailResponse } from '../../../features/dashboard/model/emailInformation';
-import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
+import { ReadEmailResponse } from '../../../features/dashboard/model/email';
+import { useEmailStore } from '../../../features/dashboard/model/store/EmailStore';
 
 interface SentMailCardProps {
   mail: ReadEmailResponse;
@@ -37,7 +37,9 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
             <p className="text-main font-semibold">[{mail.targetName}]</p>
             <p>{mail.title}</p>
           </div>
-          <p className="text-sm text-placeholderText">{formatDate(mail.reservationDate)} {formatTime(mail.reservationDate)}</p>
+          <p className="text-sm text-placeholderText">
+            {formatDate(mail.reservationDate)} {formatTime(mail.reservationDate)}
+          </p>
         </div>
         <IconButton
           iconPath={<img src={arrow} alt="화살표" className={`${isOpen ? 'rotate-180' : ''}`} />}
@@ -49,20 +51,8 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
           <p className="mt-4 text-14 whitespace-pre-line">{mail.content}</p>
           {isPending && (
             <div className="flex justify-end gap-3">
-              <TertiaryButton
-                label="삭제하기"
-                type="button"
-                color="black"
-                size="medium"
-                onClick={onClickDelete}
-              />
-              <TertiaryButton
-                label="수정하기"
-                type="button"
-                color="pink"
-                size="medium"
-                onClick={handleEditClick}
-              />
+              <TertiaryButton label="삭제하기" type="button" color="black" size="medium" onClick={onClickDelete} />
+              <TertiaryButton label="수정하기" type="button" color="pink" size="medium" onClick={handleEditClick} />
             </div>
           )}
         </div>
