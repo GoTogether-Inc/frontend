@@ -4,8 +4,8 @@ import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../shared/ui/SearchBar';
 import ButtonModal from '../../../../design-system/ui/modals/ButtonModal';
 import ParticipantsFilterBar from '../../../widgets/dashboard/ui/ParticipantsFilterBar';
-import EmailModal from '../../../widgets/dashboard/ui/EmailModal';
-import SelectTicketModal from '../../../widgets/dashboard/ui/SelectTicketModal';
+import EmailModal from '../../../widgets/dashboard/ui/email/EmailModal';
+import SelectTicketModal from '../../../widgets/dashboard/ui/email/SelectTicketModal';
 import { useParticipants } from '../../../features/dashboard/hook/useParticipants';
 
 const ParticipantsManagementPage = () => {
@@ -52,12 +52,10 @@ const ParticipantsManagementPage = () => {
           openSelectTicket={() => {
             setTicketModalOpen(true);
           }}
-          allParticipantEmails={participants.map((p: { email: string; }) => p.email)}
+          allParticipantEmails={participants.map((p: { email: string }) => p.email)}
         />
       )}
-      {ticketModalOpen && (
-        <SelectTicketModal onClose={() => setTicketModalOpen(false)} participants={participants} />
-      )}
+      {ticketModalOpen && <SelectTicketModal onClose={() => setTicketModalOpen(false)} participants={participants} />}
     </DashboardLayout>
   );
 };

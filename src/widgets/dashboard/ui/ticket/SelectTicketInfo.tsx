@@ -1,6 +1,6 @@
-import TextButton from '../../../../design-system/ui/buttons/TextButton';
+import TextButton from '../../../../../design-system/ui/buttons/TextButton';
 import ticket from '../../../../public/assets/dashboard/participants-management/Ticket.svg';
-import { ReadTicketResponse } from '../../../features/ticket/model/ticket';
+import { ReadTicketResponse } from '../../../../features/ticket/model/ticket';
 
 interface SelectTicketInfoProps {
   tickets: ReadTicketResponse;

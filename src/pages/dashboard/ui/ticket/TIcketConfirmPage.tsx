@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import Header from '../../../../../design-system/ui/Header';
 import Search from '../../../../../design-system/icons/Search.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
-import PurchaseBanner from '../../../../widgets/dashboard/ui/TicketConfirmPage/PurchaseBanner';
+import EmailDeleteMoal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
+import PurchaseBanner from '../../../../widgets/dashboard/ui/ticketConfirm/PurchaseBanner';
 import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
 import { cancelTickets, readTicket } from '../../../../features/ticket/api/order';
@@ -20,10 +20,10 @@ type Ticket = {
   organizerEmail: string;
   organizerPhoneNumber: string;
   eventAddress: string;
-  location: { lng: number, lat: number };
+  location: { lng: number; lat: number };
   remainDays: string;
   ticketQrCode: string;
-  orderStatus: "COMPLETED" | "PENDING" | "CANCELED";
+  orderStatus: 'COMPLETED' | 'PENDING' | 'CANCELED';
 };
 
 const TicketConfirmPage = () => {
@@ -41,7 +41,7 @@ const TicketConfirmPage = () => {
         const response = await readTicket.getDetail(ticketId, eventId);
         setTicket(response.result || []);
       } catch (error) {
-        console.error("구매한 티켓 정보 불러오기 실패:", error);
+        console.error('구매한 티켓 정보 불러오기 실패:', error);
       }
     };
     fetchOrderTicket();
@@ -53,12 +53,12 @@ const TicketConfirmPage = () => {
     for (const orderId of orderIds) {
       try {
         const response = await cancelTickets(orderId);
-        console.log("티켓 취소 API 응답:", response);
+        console.log('티켓 취소 API 응답:', response);
       } catch (error) {
         console.error(`orderId ${orderId} 취소 실패:`, error);
       }
     }
-  }
+  };
   return (
     <>
       <Header
@@ -71,8 +71,21 @@ const TicketConfirmPage = () => {
       {ticket ? (
         <>
           <div className="bg-gray-100 p-3 min-h-screen flex flex-col gap-3">
-            <PurchaseBanner setIsModalOpen={setIsModalOpen} title={ticket.title} startDate={ticket.startDate} startTime={ticket.startTime} ticketName={ticket.ticketName} quantity={orderIds.length} />
-            <OrganizerInfo name={ticket.hostChannelName} description={ticket.hostChannelDescription} phone={ticket.organizerPhoneNumber} email={ticket.organizerEmail} bgColor='bg-white' />
+            <PurchaseBanner
+              setIsModalOpen={setIsModalOpen}
+              title={ticket.title}
+              startDate={ticket.startDate}
+              startTime={ticket.startTime}
+              ticketName={ticket.ticketName}
+              quantity={orderIds.length}
+            />
+            <OrganizerInfo
+              name={ticket.hostChannelName}
+              description={ticket.hostChannelDescription}
+              phone={ticket.organizerPhoneNumber}
+              email={ticket.organizerEmail}
+              bgColor="bg-white"
+            />
             <div className="p-5 bg-white flex flex-col gap-2 rounded-[10px]">
               <p className="font-bold md:text-2xl text-xl">오시는 길</p>
               <p>{ticket.eventAddress}</p>
@@ -89,7 +102,11 @@ const TicketConfirmPage = () => {
           approveButtonText="티켓 취소"
           rejectButtonText="뒤로가기"
           onClose={() => setIsModalOpen(false)}
-          onClick={() => { cancleOrderTicket(orderIds).then(() => { navigate('/menu/myticket'); }); }}
+          onClick={() => {
+            cancleOrderTicket(orderIds).then(() => {
+              navigate('/menu/myticket');
+            });
+          }}
         />
       )}
     </>

@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
-import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import { useEmailStore } from '../../../features/dashboard/model/store/EmailStore';
-import EmailInput from '../../../features/dashboard/ui/EmailInput';
-import { useSendEmail } from '../../../features/dashboard/hook/useEmailHook';
-import TimePicker from '../../../features/event/ui/TimePicker';
-import { EmailRequest } from '../../../features/dashboard/model/email';
+import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
+import { useEmailStore } from '../../../../features/dashboard/model/store/EmailStore';
+import EmailInput from '../../../../features/dashboard/ui/EmailInput';
+import { useSendEmail } from '../../../../features/dashboard/hook/useEmailHook';
+import TimePicker from '../../../../features/event/ui/TimePicker';
+import { EmailRequest } from '../../../../features/dashboard/model/email';
 
 interface EmailModalProps {
   onClose: () => void;

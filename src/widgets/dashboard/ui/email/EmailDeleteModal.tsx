@@ -1,4 +1,4 @@
-import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
+import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import notice from '../../../../public/assets/dashboard/mail/Notice.svg';
 
 interface EmailDeleteMoalProps {

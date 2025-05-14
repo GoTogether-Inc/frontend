@@ -1,10 +1,10 @@
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
-import EventOverview from '../../../widgets/dashboard/ui/EventOverview';
-import TicketRevenue from '../../../widgets/dashboard/ui/TicketRevenue';
+import TicketRevenue from '../../../widgets/dashboard/ui/main/TicketRevenue';
 import ticket from '../../../../public/assets/dashboard/main/Ticket(white).svg';
 import cash from '../../../../public/assets/dashboard/main/Cash.svg';
 import CheckList from '../../../features/dashboard/ui/Checklist';
 import useHostDashboard from '../../../entities/host/hook/hostDashboardHook';
+import EventOverview from '../../../widgets/dashboard/ui/main/EventOverview';
 
 const DashboardPage = () => {
   const { data } = useHostDashboard();
