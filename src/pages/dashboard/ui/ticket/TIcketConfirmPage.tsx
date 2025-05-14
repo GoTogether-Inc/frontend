@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from '../../../../../design-system/ui/Header';
 import Search from '../../../../../design-system/icons/Search.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import EmailDeleteMoal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
+import EmailDeleteModal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import PurchaseBanner from '../../../../widgets/dashboard/ui/ticket/PurchaseBanner';
 import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
@@ -97,7 +97,7 @@ const TicketConfirmPage = () => {
         <p className="text-center text-gray-500">티켓 정보를 불러오는 중...</p>
       )}
       {isModalOpen && (
-        <EmailDeleteMoal
+        <EmailDeleteModal
           mainText={`${ticket?.title}의 ${ticket?.ticketName} ${orderIds.length}매 구매를 취소하시겠습니까?. 취소 후에는 복구가 불가능합니다.`}
           approveButtonText="티켓 취소"
           rejectButtonText="뒤로가기"
