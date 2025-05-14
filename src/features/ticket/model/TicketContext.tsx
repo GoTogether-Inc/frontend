@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { CreateTicketRequest } from './ticketInformation';
+import { CreateTicketRequest } from './ticket';
 
 export interface TicketState {
   ticketState: CreateTicketRequest;
@@ -11,7 +11,7 @@ const TicketContext = createContext<TicketState | undefined>(undefined);
 
 export const TicketProvider = ({ children }: { children: ReactNode }) => {
   const [ticketState, setTicketState] = useState<CreateTicketRequest>({
-    eventId: 0, 
+    eventId: 0,
     ticketType: '',
     ticketName: '',
     ticketDescription: '',

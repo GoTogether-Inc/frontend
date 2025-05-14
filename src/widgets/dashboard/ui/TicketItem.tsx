@@ -1,13 +1,13 @@
 import AvailableTicket from '../../../../public/assets/dashboard/ticket/Ticket(gray).svg';
 import PersonIcon from '../../../../public/assets/dashboard/ticket/PersonIcon.svg';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { ReadTicketResponse } from '../../../features/ticket/model/ticketInformation';
+import { ReadTicketResponse } from '../../../features/ticket/model/ticket';
 import { useDeleteTicket } from '../../../features/ticket/hooks/useTicketHook';
 
 const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
   const [isDragging, setIsDragging] = useState(false);
-  const { mutate: handleDelete} = useDeleteTicket();
+  const { mutate: handleDelete } = useDeleteTicket();
   return (
     <div className="relative overflow-hidden w-full mb-4">
       <motion.div
@@ -24,7 +24,7 @@ const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
         }}
       >
         <div className="flex gap-5">
-          <p className="font-bold">{ticket.ticketPrice > 0 ? "일반" : "무료"}</p>
+          <p className="font-bold">{ticket.ticketPrice > 0 ? '일반' : '무료'}</p>
           <p>{ticket.ticketName}</p>
         </div>
         <div className="flex-grow" />
@@ -48,7 +48,6 @@ const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
       >
         삭제
       </motion.button>
-
     </div>
   );
 };
