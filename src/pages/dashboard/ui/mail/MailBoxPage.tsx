@@ -3,9 +3,9 @@ import TextButton from '../../../../../design-system/ui/buttons/TextButton';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../../shared/ui/SearchBar';
 import SentMailCard from '../../../../widgets/dashboard/ui/email/SentMailCard';
-import EmailDeleteMoal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import { useParams } from 'react-router-dom';
 import { useDeleteEmail, useReadEmail } from '../../../../features/dashboard/hook/useEmailHook';
+import EmailDeleteModal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
 
 const MailBoxPage = () => {
   const { id } = useParams();
@@ -59,7 +59,7 @@ const MailBoxPage = () => {
         )}
       </div>
       {isModalOpen && (
-        <EmailDeleteMoal
+        <EmailDeleteModal
           mainText="이메일을 삭제하면 예약이 자동으로 취소됩니다.. 그래도 삭제하시겠습니까?"
           approveButtonText="삭제"
           rejectButtonText="취소"
