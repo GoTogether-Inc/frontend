@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
+import { useEmailStore } from '../../../features/dashboard/model/store/EmailStore';
 import EmailInput from '../../../features/dashboard/ui/EmailInput';
 import { useSendEmail } from '../../../features/dashboard/hook/useEmailHook';
 import TimePicker from '../../../features/event-manage/event-create/ui/TimePicker';
-import { EmailRequest } from '../../../features/dashboard/model/emailInformation';
+import { EmailRequest } from '../../../features/dashboard/model/email';
 
 interface EmailModalProps {
   onClose: () => void;
@@ -15,15 +15,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
   const { id } = useParams();
   const { mutate: sendEmail } = useSendEmail();
 
-  const {
-    title,
-    content,
-    recipients,
-    reservationDate,
-    setReservationDate,
-    targetType,
-    ticketId
-  } = useEmailStore();
+  const { title, content, recipients, reservationDate, setReservationDate, targetType, ticketId } = useEmailStore();
 
   const handleSend = () => {
     if (!title.trim()) {
@@ -49,7 +41,7 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
       content,
       recipients,
       reservationDate,
-      targetType
+      targetType,
     };
     if (targetType === 'TICKET') {
       emailData.ticketId = ticketId;
@@ -66,7 +58,9 @@ const EmailModal = ({ onClose, openSelectTicket, allParticipantEmails }: EmailMo
           allParticipantEmails={allParticipantEmails}
         />
         <TimePicker
-          onChange={(isoString) => { setReservationDate(isoString); }}
+          onChange={isoString => {
+            setReservationDate(isoString);
+          }}
         />
         <div className="flex justify-end gap-3">
           <TertiaryButton label="취소" type="button" color="black" size="medium" onClick={onClose} />
