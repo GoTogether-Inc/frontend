@@ -73,7 +73,6 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
             {renderSection('phone', 'phone', true)}
             {renderSection('email', 'email', true)}
             {renderSection('grade', 'grade', true)}
-            {renderSection('email', 'email', true)}
           </>
         );
       case 'query':
