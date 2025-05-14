@@ -28,7 +28,7 @@ const EmailInput = ({
       setTitle('');
       setContent('');
     }
-  }, [isEdited, setRecipients]);
+  }, [isEdited, setRecipients, setTitle, setContent]);
 
   const addAllEmails = () => {
     setRecipients([...new Set(allParticipantEmails)]);
