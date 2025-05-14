@@ -1,15 +1,15 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getHostDashboard, updateEventInfo } from '../api/event';
-import { dashboardData } from '../../../shared/types/dashboardType';
 import { UpdateEventRequest } from '../model/event';
+import { HostDashboardResponse } from '../../../entities/host/model/hostDashboard';
 
 export const useGetEventHook = () => {
   const { id } = useParams();
 
   const eventId = Number(id);
 
-  const { data: eventInfo } = useQuery<dashboardData>({
+  const { data: eventInfo } = useQuery<HostDashboardResponse>({
     queryKey: ['eventInfo', eventId],
     queryFn: () => getHostDashboard(eventId),
   });
