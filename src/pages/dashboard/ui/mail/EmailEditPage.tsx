@@ -8,6 +8,7 @@ import SelectTicketModal from '../../../../widgets/dashboard/ui/email/SelectTick
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
 import { useEmailStore } from '../../../../features/dashboard/model/store/EmailStore';
 import { useEditEmail } from '../../../../features/dashboard/hook/useEmailHook';
+import { EmailRequest } from '../../../../features/dashboard/model/emailInformation';
 const EmailEditPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const { participants } = useParticipants();
@@ -20,22 +21,25 @@ const EmailEditPage = () => {
     content,
     recipients,
     reservationDate,
-    reservationTime,
     setReservationDate,
-    setReservationTime,
+    ticketId,
+    targetType
   } = useEmailStore();
 
   const handleEdit = () => {
     const eventId = id ? parseInt(id) : 0;
-    const emailData = {
+    const emailData: EmailRequest = {
       eventId,
       title,
       content,
       recipients,
       reservationDate,
-      reservationTime,
+      targetType
     };
-    editEmail({ reservationEmailId: reservationEmailId, data: emailData });
+    if (targetType === 'TICKET') {
+      emailData.ticketId = ticketId;
+    }
+    editEmail({ reservationEmailId: reservationEmailId, data: emailData,});
   };
 
   return (
@@ -49,8 +53,7 @@ const EmailEditPage = () => {
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker
-          onTimeChange={(time: string) => setReservationTime(time)}
-          onDateChange={(date: string) => setReservationDate(date)}
+          onChange={(isoString) => { setReservationDate(isoString); }}
         />
         <Button label="보내기" onClick={handleEdit} className="w-full h-12 rounded-full" />
       </div>
