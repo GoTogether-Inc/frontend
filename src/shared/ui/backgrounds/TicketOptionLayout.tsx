@@ -16,10 +16,6 @@ const TicketOptionLayout = ({ children, ticketAmount }: TicketOptionLayoutProps)
   const { currentPage, setCurrentPage } = useTicketOptionStore();
   const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
 
-  //페이지
-  const pageIndicator = Array(ticketAmount).fill(' . ');
-  pageIndicator[currentPage - 1] = ' - ';
-
   //버튼 텍스트
   const isLastPage = currentPage === ticketAmount;
   const buttonText = isLastPage ? '결제하기' : '다음 티켓 옵션 선택하기';
