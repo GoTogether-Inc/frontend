@@ -1,4 +1,4 @@
-import EventType from '../../../features/event/ui/EventType';
+import EventType from '../../../../features/event/ui/EventType';
 
 const EventTypePage = () => {
   return (

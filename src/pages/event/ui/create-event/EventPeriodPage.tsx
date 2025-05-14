@@ -1,5 +1,5 @@
-import { useFunnelState } from '../../../features/event/model/FunnelContext';
-import EventDatePicker from '../../../features/event/ui/DatePicker';
+import { useFunnelState } from '../../../../features/event/model/FunnelContext';
+import EventDatePicker from '../../../../features/event/ui/DatePicker';
 
 const EventPeriodPage = () => {
   const { eventState, setEventState } = useFunnelState();
