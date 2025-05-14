@@ -1,6 +1,6 @@
 import { EventList } from '../../../features/event-manage/event-list/model/eventList';
 import { useInfiniteScroll } from '../../../shared/hooks/useInfiniteScroll';
-import { getAllEventsInfinite } from '../api/event';
+import { getAllEventsInfinite } from '../api/eventDetail';
 
 const useEventList = () => {
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteScroll<EventList>({

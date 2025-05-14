@@ -1,29 +1,13 @@
 import { axiosClient } from '../../../shared/types/api/http-client';
-import { EventDetailRequest } from '../model/event';
+import { EventDetailRequest } from '../model/eventDetail';
 import { CategoryType, TagType } from '../../../shared/types/baseEventType';
 import { ApiResponse } from '../../../shared/types/api/apiResponse';
-import { EventItem, PaginationParams } from '../model/event';
+import { EventItem, PaginationParams } from '../model/eventDetail';
 
 export const eventDetail = async (dto: EventDetailRequest) => {
   const response = await axiosClient.get(`/events/${dto.eventId}`, {
     params: { userId: dto.userId },
   });
-  return response.data;
-};
-
-// 이벤트 검색 (기본 정보)
-export const searchEvents = async (
-  keyword: string,
-  { page, size }: PaginationParams
-): Promise<ApiResponse<EventItem[]>> => {
-  const params = new URLSearchParams();
-
-  params.append('keyword', keyword);
-  params.append('page', page.toString());
-  params.append('size', size.toString());
-
-  const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events/search?${params.toString()}`);
-
   return response.data;
 };
 
