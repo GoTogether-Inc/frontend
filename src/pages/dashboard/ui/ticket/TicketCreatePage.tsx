@@ -4,8 +4,8 @@ import { TwoOptions } from '../../../../../design-system/stories/ChoiceChip.stor
 import ChoiceChip from '../../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
 import Button from '../../../../../design-system/ui/Button';
-import TicketDatePicker from '../../../../features/ticket/model/TicketDatePicker';
-import { CreateTicketRequest } from '../../../../features/ticket/model/ticketInformation';
+import TicketDatePicker from '../../../../features/ticket/ui/TicketDatePicker';
+import { CreateTicketRequest } from '../../../../features/ticket/model/ticket';
 import { useCreateTicket } from '../../../../features/ticket/hooks/useTicketHook';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ const TicketCreatePage = () => {
   const { mutate: createTicket } = useCreateTicket();
   const { id } = useParams();
   const eventId = Number(id);
-  
+
   const [ticketData, setTicketData] = useState<CreateTicketRequest>({
     eventId: eventId,
     ticketType: 'FIRST_COME',
@@ -35,7 +35,7 @@ const TicketCreatePage = () => {
     } else {
       mappedType = 'SELECTION';
     }
-    setTicketData((prev) => ({
+    setTicketData(prev => ({
       ...prev,
       ticketType: mappedType,
     }));
@@ -47,7 +47,7 @@ const TicketCreatePage = () => {
     if ((field === 'ticketPrice' || field === 'availableQuantity') && Number(value) < 0) {
       return;
     }
-    setTicketData((prev) => ({
+    setTicketData(prev => ({
       ...prev,
       [field]: field === 'ticketPrice' || field === 'availableQuantity' ? Number(value) : value,
     }));
@@ -55,7 +55,7 @@ const TicketCreatePage = () => {
 
   // 시간 업데이트
   const handleDateChange = (dates: { startDate: string; endDate: string; startTime: string; endTime: string }) => {
-    setTicketData((prevState) => ({
+    setTicketData(prevState => ({
       ...prevState,
       startDate: dates.startDate,
       endDate: dates.endDate,
@@ -78,7 +78,12 @@ const TicketCreatePage = () => {
 
   // API 호출
   const handleSaveClick = async () => {
-    if (!ticketData.ticketName || !ticketData.ticketDescription || ticketData.ticketPrice < 0 || !ticketData.availableQuantity) {
+    if (
+      !ticketData.ticketName ||
+      !ticketData.ticketDescription ||
+      ticketData.ticketPrice < 0 ||
+      !ticketData.availableQuantity
+    ) {
       alert('모든 필수 입력 항목을 작성해주세요.');
       return;
     }
@@ -128,9 +133,19 @@ const TicketCreatePage = () => {
 
         {/*가격 계산 란*/}
         <div className="flex items-center gap-5">
-          <DefaultTextField label="1개당 가격" className="h-8 md:h-9" onChange={handleInputChange('ticketPrice')} placeholder="0" />
+          <DefaultTextField
+            label="1개당 가격"
+            className="h-8 md:h-9"
+            onChange={handleInputChange('ticketPrice')}
+            placeholder="0"
+          />
           <p className="text-gray-700 text-2xl">X</p>
-          <DefaultTextField label="수량" className="h-8 md:h-9" onChange={handleInputChange('availableQuantity')} placeholder="1" />
+          <DefaultTextField
+            label="수량"
+            className="h-8 md:h-9"
+            onChange={handleInputChange('availableQuantity')}
+            placeholder="1"
+          />
           <p className="text-gray-700 text-2xl">=</p>
           <div>
             <p className="whitespace-nowrap text-gray-700 font-semibold text-15 md:text-base">예상 수익</p>
@@ -141,10 +156,14 @@ const TicketCreatePage = () => {
         {/*캘린더가 들어갈 자리*/}
         <div className="flex flex-col gap-2">
           <p className="px-1 text-gray-700 font-semibold">판매 기간</p>
-          <TicketDatePicker isLabel={true} ticketState={ticketData}
-            setTicketState={setTicketData} onDateChange={handleDateChange} />
+          <TicketDatePicker
+            isLabel={true}
+            ticketState={ticketData}
+            setTicketState={setTicketData}
+            onDateChange={handleDateChange}
+          />
         </div>
-        
+
         <div className="flex-grow"></div>
 
         <div className="w-full ">
