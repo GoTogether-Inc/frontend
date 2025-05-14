@@ -16,7 +16,7 @@ import timeImg from '../../../../public/assets/event-manage/details/Time.svg';
 import locationImg from '../../../../public/assets/event-manage/details/Location.svg';
 import KakaoMap from '../../../shared/ui/KakaoMap';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
-import { useCreateBookmark, useDeleteBookmark } from '../../../features/bookmark/model/useBookmarkHook';
+import { useCreateBookmark, useDeleteBookmark } from '../../../features/bookmark/hook/useBookmarkHook';
 import { formatDate, formatTime } from '../../../shared/lib/date';
 
 const EventDetailsPage = () => {
