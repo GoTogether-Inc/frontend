@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Header from '../../../../design-system/ui/Header';
-import menuBar from '../../../../public/assets/dashboard/menu/MenuBar.svg';
+import menuBar from '../../../../../public/assets/dashboard/menu/MenuBar.svg';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
-import { getMenuLists } from '../../../shared/types/dashboardType';
+import { getMenuLists } from '../../../../shared/types/dashboardType';
+import Header from '../../../../../design-system/ui/Header';
+import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 
 const SideBar = ({ onClose }: { onClose: () => void }) => {
   const navigate = useNavigate();

@@ -10,7 +10,7 @@ interface PurchaseBannerPrpos {
   quantity: number;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const PurchaseBanner = ({ title,startDate, startTime, ticketName, quantity, setIsModalOpen }: PurchaseBannerPrpos) => {
+const PurchaseBanner = ({ title, startDate, startTime, ticketName, quantity, setIsModalOpen }: PurchaseBannerPrpos) => {
   const navigate = useNavigate();
   //@TODO:api연동하면서 props 변경
 

@@ -1,5 +1,5 @@
-import { HostDashboardResponse } from '../../../entities/host/model/hostDashboard';
-import { formatDate, formatTime } from '../../../shared/lib/date';
+import { HostDashboardResponse } from '../../../../entities/host/model/hostDashboard';
+import { formatDate, formatTime } from '../../../../shared/lib/date';
 
 const EventOverview = ({ eventInfo }: { eventInfo?: HostDashboardResponse }) => {
   return (

@@ -1,4 +1,4 @@
-import arrow from '../../../../public/assets/dashboard/mail/Arrow.svg';
+import arrow from '../../../../../public/assets/dashboard/mail/Arrow.svg';
 import { useState } from 'react';
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
 import { formatDate, formatTime } from '../../../../shared/lib/date';
