@@ -48,15 +48,17 @@ const TicketOption = ({ options }: TicketOptionProps) => {
               />
             ))}
 
-          {option.type === 'multiple' &&
-            option.choices.map(choice => (
-              <Checkbox
-                key={choice}
-                label={choice}
-                checked={(currentSelectedOptions[option.optionName] as string[])?.includes(choice)}
-                onChange={() => handleChange('multiple', option.optionName, choice)}
-                className="block mt-2"
-              />
+                    {option.type === "multiple" &&
+                        option.choices.map((choice) => (
+                            <Checkbox
+                                key={choice}
+                                label={choice}
+                                checked={(currentSelectedOptions[option.optionName] as string[] || []).includes(choice)}
+                                onChange={() => handleChange("multiple", option.optionName, choice)}
+                                className="block mt-2"
+                            />
+                        ))}
+                </div>
             ))}
         </div>
       ))}

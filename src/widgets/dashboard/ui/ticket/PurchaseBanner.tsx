@@ -1,16 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import CheckIcon from '../../../../../public/assets/dashboard/ticket/checkIcon.svg';
+import { formatDate, formatTime } from '../../../../shared/lib/date';
 
 interface PurchaseBannerPrpos {
   title: string;
   startDate: string;
-  startTime: string;
   ticketName: string;
   quantity: number;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const PurchaseBanner = ({ title, startDate, startTime, ticketName, quantity, setIsModalOpen }: PurchaseBannerPrpos) => {
+const PurchaseBanner = ({ title, startDate, ticketName, quantity, setIsModalOpen }: PurchaseBannerPrpos) => {
   const navigate = useNavigate();
   //@TODO:api연동하면서 props 변경
 
@@ -29,7 +29,7 @@ const PurchaseBanner = ({ title, startDate, startTime, ticketName, quantity, set
           <p className="text-pink-500 font-bold md:text-2xl text-xl">{title}</p>
           <p className="text-gray-700 mt-5 flex gap-3">
             <span className="font-semibold text-gray-400">일정</span>
-            {startDate}, {startTime}
+            {formatDate(startDate)}, {formatTime(startDate)}
           </p>
           <p className="text-gray-700 flex gap-3">
             <span className="font-semibold text-gray-400">상품</span>

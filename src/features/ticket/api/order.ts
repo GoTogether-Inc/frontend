@@ -1,5 +1,5 @@
-import { axiosClient } from '../../../shared/types/api/http-client';
-import { OrderTicketRequest } from '../model/order';
+import { axiosClient } from "../../../shared/types/api/http-client"
+import { OrderTicketRequest } from "../model/orderInformation";
 
 export const readTicket = {
   // 주문 티켓 전체 조회
