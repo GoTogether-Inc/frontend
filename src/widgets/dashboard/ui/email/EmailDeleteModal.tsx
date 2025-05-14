@@ -9,7 +9,13 @@ interface EmailDeleteMoalProps {
   onClick?: () => void;
 }
 
-const EmailDeleteMoal = ({ onClose, mainText, approveButtonText, rejectButtonText, onClick }: EmailDeleteMoalProps) => {
+const EmailDeleteModal = ({
+  onClose,
+  mainText,
+  approveButtonText,
+  rejectButtonText,
+  onClick,
+}: EmailDeleteMoalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center w-full max-w-lg mx-auto backdrop-blur-sm">
       <div className="flex flex-col items-center justify-center w-[93%] gap-5 py-6 bg-white border border-placeholderText rounded-lg p-6">
@@ -29,4 +35,4 @@ const EmailDeleteMoal = ({ onClose, mainText, approveButtonText, rejectButtonTex
     </div>
   );
 };
-export default EmailDeleteMoal;
+export default EmailDeleteModal;
