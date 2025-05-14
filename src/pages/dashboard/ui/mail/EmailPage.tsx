@@ -6,25 +6,17 @@ import { useState } from 'react';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
 import { useParams } from 'react-router-dom';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
-import { useEmailStore } from '../../../../features/dashboard/model/EmailStore';
+import { useEmailStore } from '../../../../features/dashboard/model/store/EmailStore';
 import { useSendEmail } from '../../../../features/dashboard/hook/useEmailHook';
-import { EmailRequest } from '../../../../features/dashboard/model/emailInformation';
+import { EmailRequest } from '../../../../features/dashboard/model/email';
 
 const EmailPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const { participants } = useParticipants();
   const { id } = useParams();
   const { mutate: sendEmail } = useSendEmail();
-  
-  const {
-    title,
-    content,
-    recipients,
-    reservationDate,
-    setReservationDate,
-    ticketId,
-    targetType
-  } = useEmailStore();
+
+  const { title, content, recipients, reservationDate, setReservationDate, ticketId, targetType } = useEmailStore();
 
   const handleSend = () => {
     if (!title.trim()) {
@@ -63,11 +55,13 @@ const EmailPage = () => {
       <div className="p-5 flex flex-col gap-10 min-h-full">
         <EmailInput
           openSelectTicket={() => setTicketModalOpen(true)}
-          allParticipantEmails={participants.map((p: { email: string; }) => p.email)}
+          allParticipantEmails={participants.map((p: { email: string }) => p.email)}
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker
-          onChange={(isoString) => { setReservationDate(isoString); }}
+          onChange={isoString => {
+            setReservationDate(isoString);
+          }}
         />
         <div className="flex-grow"></div>
         <Button label="보내기" onClick={handleSend} className="w-full h-12 rounded-full" />

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import SelectTicketInfo from './SelectTicketInfo';
 import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
-import { useEmailStore } from '../../../features/dashboard/model/EmailStore';
+import { useEmailStore } from '../../../features/dashboard/model/store/EmailStore';
 import { usePurchaserEmails } from '../../../features/dashboard/hook/useEmailHook';
 
 interface SelectTicketModalProps {
@@ -16,13 +16,13 @@ const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) 
   const { data, isLoading } = useTickets(eventId);
   const tickets = data?.result ?? [];
   const { setRecipients, setTargetType, setTicketId } = useEmailStore();
-  const { mutate:readEmail } = usePurchaserEmails();
+  const { mutate: readEmail } = usePurchaserEmails();
 
   const handleClick = (ticketId: number) => {
     readEmail(
       { eventId, ticketId },
       {
-        onSuccess: (emails) => {
+        onSuccess: emails => {
           setRecipients(emails.email);
           setTargetType('TICKET');
           setTicketId(ticketId);
@@ -48,7 +48,7 @@ const SelectTicketModal = ({ onClose, openEmailModal }: SelectTicketModalProps) 
         {isLoading ? (
           <div>로딩 중...</div>
         ) : (
-          tickets.map((ticket) => (
+          tickets.map(ticket => (
             <SelectTicketInfo
               key={ticket.ticketId}
               tickets={ticket}

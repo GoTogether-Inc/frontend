@@ -1,6 +1,6 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import Checkbox from '../../../../design-system/ui/Checkbox';
-import { useParticipantStore } from '../model/ParticipantStore';
+import { useParticipantStore } from '../model/store/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
