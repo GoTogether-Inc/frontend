@@ -1,12 +1,12 @@
 import basicProfile from '../../../../public/assets/event-manage/creation/BasicProfile.svg';
 import addImage from '../../../../public/assets/event-manage/creation/AddImage.svg';
-import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
-import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
+import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
+import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
 import { useEffect } from 'react';
-import { useFunnelState } from '../../../features/event/model/FunnelContext';
+import { useFunnelState } from '../../../../features/event/model/FunnelContext';
 import { useForm } from 'react-hook-form';
-import { hostCreationZodValidation } from '../../../shared/lib/formValidation';
-import { HostCreationFormData } from '../../../shared/lib/formValidation';
+import { hostCreationZodValidation } from '../../../../shared/lib/formValidation';
+import { HostCreationFormData } from '../../../../shared/lib/formValidation';
 
 interface HostCreationPageProps {
   onValidationChange?: (isValid: boolean) => void;

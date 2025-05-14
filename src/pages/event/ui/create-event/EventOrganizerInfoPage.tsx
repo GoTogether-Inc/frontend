@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
-import { useFunnelState } from '../../../features/event/model/FunnelContext';
-import { OrganizerFormData, organizerZodValidation } from '../../../shared/lib/formValidation';
+import UnderlineTextField from '../../../../../design-system/ui/textFields/UnderlineTextField';
+import { useFunnelState } from '../../../../features/event/model/FunnelContext';
+import { OrganizerFormData, organizerZodValidation } from '../../../../shared/lib/formValidation';
 
 interface EventOrganizerInfoPageProps {
   onValidationChange?: (isValid: boolean) => void;
