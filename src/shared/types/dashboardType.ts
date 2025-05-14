@@ -17,25 +17,6 @@ import clickedSentEmail from '../../../public/assets/dashboard/menu/SentMail(pin
 import participants from '../../../public/assets/dashboard/menu/Participants(black).svg';
 import clickedParticipants from '../../../public/assets/dashboard/menu/Participants(pink).svg';
 
-export interface menuListsData {
-  text: string;
-  icon: string;
-  clickedIcon: string;
-  path: string;
-}
-
-export interface dashboardData {
-  eventName: string;
-  eventStartDate: string;
-  eventStartTime: string;
-  eventEndDate: string;
-  eventEndTime: string;
-  totalTicketCnt: number;
-  totalPrice: number;
-  ticket: boolean;
-  ticketOption: boolean;
-}
-
 export const getMenuLists = (id: string | number) => [
   { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/${id}` },
   { text: '이벤트 기본 정보', icon: eventInfo, clickedIcon: clickedEventInfo, path: `/dashboard/${id}/eventInfo` },
