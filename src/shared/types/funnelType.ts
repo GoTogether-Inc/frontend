@@ -1,4 +1,4 @@
-import { FunnelProps, StepProps } from '../../features/event-manage/event-create/hooks/useFunnelHook';
+import { FunnelProps, StepProps } from '../../features/event/hooks/useFunnelHook';
 
 export enum StepNames {
   HostSelection = 'HostSelection',

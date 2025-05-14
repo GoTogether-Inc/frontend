@@ -1,4 +1,4 @@
-import FileUploadImage from '../../../../../public/assets/event-manage/creation/FileUpload.svg';
+import FileUploadImage from '../../../../public/assets/event-manage/creation/FileUpload.svg';
 import { useEffect, useRef, useState } from 'react';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
 import { FunnelState } from '../model/FunnelContext';

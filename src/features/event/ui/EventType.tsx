@@ -1,8 +1,8 @@
-import OnlineIcon from '../../../../../public/assets/event-manage/creation/OnlineIcon.svg';
-import OfflineIcon from '../../../../../public/assets/event-manage/creation/OfflineIcon.svg';
+import OnlineIcon from '../../../../public/assets/event-manage/creation/OnlineIcon.svg';
+import OfflineIcon from '../../../../public/assets/event-manage/creation/OfflineIcon.svg';
 import { useFunnelState } from '../model/FunnelContext';
-import KakaoMap from '../../../../shared/ui/KakaoMap';
-import { AddressSearch } from '../../../../shared/ui/AddressSearch';
+import KakaoMap from '../../../shared/ui/KakaoMap';
+import { AddressSearch } from '../../../shared/ui/AddressSearch';
 import { useState } from 'react';
 
 interface EventTypeProps {

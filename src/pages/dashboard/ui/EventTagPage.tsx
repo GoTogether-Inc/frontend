@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import Button from '../../../../design-system/ui/Button';
-import EventCategory from '../../../features/event-manage/event-create/ui/EventCategory';
-import EventTag from '../../../features/event-manage/event-create/ui/EventTag';
+import EventCategory from '../../../features/event/ui/EventCategory';
+import EventTag from '../../../features/event/ui/EventTag';
 
 const EventTagPage = () => {
   const navigate = useNavigate();

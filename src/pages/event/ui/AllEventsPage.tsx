@@ -3,7 +3,7 @@ import Header from '../../../../design-system/ui/Header';
 import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
-import EventList from '../../../features/event-manage/event-list/ui/EventList';
+import EventList from '../../../features/event/ui/EventList';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../../app/provider/authStore';
 import { AnimatePresence } from 'framer-motion';

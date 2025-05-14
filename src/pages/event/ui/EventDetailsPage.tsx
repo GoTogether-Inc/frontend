@@ -9,7 +9,7 @@ import like from '../../../../public/assets/event-manage/details/Like.svg';
 import liked from '../../../../public/assets/event-manage/details/ClickedLike.svg';
 import TicketInfo from '../../../widgets/event/ui/TicketInfo';
 import link from '../../../../public/assets/event-manage/details/Link.svg';
-import ShareEventModal from '../../../features/event-manage/event-create/ui/ShareEventModal';
+import ShareEventModal from '../../../features/event/ui/ShareEventModal';
 import participantsImg from '../../../../public/assets/event-manage/details/People.svg';
 import dateImg from '../../../../public/assets/event-manage/details/Date.svg';
 import timeImg from '../../../../public/assets/event-manage/details/Time.svg';

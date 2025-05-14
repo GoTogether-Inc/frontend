@@ -9,7 +9,7 @@ import thirdPage from '../../../../public/assets/banners/3.png';
 import EventCard from '../../../shared/ui/EventCard';
 import ProfileCircle from '../../../../design-system/ui/Profile';
 import useEventList from '../../../entities/event/hook/useEventListHook';
-import type { EventList } from '../../../features/event-manage/event-list/model/eventList';
+import type { EventList } from '../../../features/event/event-list/model/eventList';
 import useHostChannelList from '../../../entities/host/hook/useHostChannelListHook';
 
 const SearchPage = () => {

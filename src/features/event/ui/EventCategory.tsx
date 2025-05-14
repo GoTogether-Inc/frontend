@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CategoryButton from '../../../../../public/assets/event-manage/creation/BackBtn(black).svg';
+import CategoryButton from '../../../../public/assets/event-manage/creation/BackBtn(black).svg';
 import { FunnelState } from '../model/FunnelContext';
-import { CategoryType } from '../../../../shared/types/baseEventType';
+import { CategoryType } from '../../../shared/types/baseEventType';
 
 interface Category {
   id: string;

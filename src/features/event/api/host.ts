@@ -1,4 +1,4 @@
-import { axiosClient } from '../../../../shared/types/api/http-client';
+import { axiosClient } from '../../../shared/types/api/http-client';
 import { HostCreationRequest } from '../model/hostCreation';
 
 export const createHost = async (data: HostCreationRequest) => {

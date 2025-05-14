@@ -3,7 +3,7 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import { useEmailStore } from '../../../features/dashboard/model/store/EmailStore';
 import EmailInput from '../../../features/dashboard/ui/EmailInput';
 import { useSendEmail } from '../../../features/dashboard/hook/useEmailHook';
-import TimePicker from '../../../features/event-manage/event-create/ui/TimePicker';
+import TimePicker from '../../../features/event/ui/TimePicker';
 import { EmailRequest } from '../../../features/dashboard/model/email';
 
 interface EmailModalProps {
