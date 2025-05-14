@@ -1,8 +1,8 @@
 import { PresignedUrlRequest, PresignedUrlResponse } from '../model/presignedUrl';
-import { axiosClient } from '../../../../shared/types/api/http-client';
+import { axiosClient } from '../../../shared/types/api/http-client';
 
 import axios from 'axios';
-import { ApiResponse } from '../../../../shared/types/api/apiResponse';
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
 
 const getPresignedUrl = async (dto: PresignedUrlRequest) => {
   try {

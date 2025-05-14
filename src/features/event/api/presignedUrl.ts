@@ -1,4 +1,4 @@
-import { axiosClient } from '../../../../shared/types/api/http-client';
+import { axiosClient } from '../../../shared/types/api/http-client';
 import { PresignedUrlRequest, PresignedUrlResponse } from '../model/presignedUrl';
 
 const presignedUrl = async (dto: PresignedUrlRequest) => {

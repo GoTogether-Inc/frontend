@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../../../../design-system/ui/Button';
-import FileUpload from '../../../features/event-manage/event-create/ui/FileUpload';
-import LinkInput, { Link } from '../../../features/event-manage/event-create/ui/LinkInput';
-import TextEditor from '../../../features/event-manage/event-create/ui/TextEditor';
+import FileUpload from '../../../features/event/ui/FileUpload';
+import LinkInput, { Link } from '../../../features/event/ui/LinkInput';
+import TextEditor from '../../../features/event/ui/TextEditor';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';

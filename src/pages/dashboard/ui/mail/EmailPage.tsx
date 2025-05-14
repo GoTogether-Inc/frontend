@@ -1,6 +1,6 @@
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Button from '../../../../../design-system/ui/Button';
-import TimePicker from '../../../../features/event-manage/event-create/ui/TimePicker';
+import TimePicker from '../../../../features/event/ui/TimePicker';
 import EmailInput from '../../../../features/dashboard/ui/EmailInput';
 import { useState } from 'react';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';

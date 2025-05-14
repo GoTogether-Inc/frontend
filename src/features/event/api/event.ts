@@ -1,4 +1,4 @@
-import { axiosClient } from '../../../../shared/types/api/http-client';
+import { axiosClient } from '../../../shared/types/api/http-client';
 import { CreateEventRequest } from '../model/event';
 
 export const createEvent = async (data: CreateEventRequest) => {

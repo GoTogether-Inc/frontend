@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import EmailInput from '../../../../features/dashboard/ui/EmailInput';
-import TimePicker from '../../../../features/event-manage/event-create/ui/TimePicker';
+import TimePicker from '../../../../features/event/ui/TimePicker';
 import Button from '../../../../../design-system/ui/Button';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';

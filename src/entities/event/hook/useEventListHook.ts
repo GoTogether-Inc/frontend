@@ -1,4 +1,4 @@
-import { EventList } from '../../../features/event-manage/event-list/model/eventList';
+import { EventList } from '../../../features/event/event-list/model/eventList';
 import { useInfiniteScroll } from '../../../shared/hooks/useInfiniteScroll';
 import { getAllEventsInfinite } from '../api/eventDetail';
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
-import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
+import { useFunnelState } from '../../../features/event/model/FunnelContext';
 import useHostChannelList from '../../../entities/host/hook/useHostChannelListHook';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
-import { useHostDeletion } from '../../../features/event-manage/event-create/hooks/useHostHook';
+import { useHostDeletion } from '../../../features/event/hooks/useHostHook';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;

@@ -3,7 +3,7 @@ import addImage from '../../../../public/assets/event-manage/creation/AddImage.s
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../design-system/ui/textFields/MultilineTextField';
 import { useEffect } from 'react';
-import { useFunnelState } from '../../../features/event-manage/event-create/model/FunnelContext';
+import { useFunnelState } from '../../../features/event/model/FunnelContext';
 import { useForm } from 'react-hook-form';
 import { hostCreationZodValidation } from '../../../shared/lib/formValidation';
 import { HostCreationFormData } from '../../../shared/lib/formValidation';
