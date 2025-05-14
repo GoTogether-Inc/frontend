@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
-import { OrderTicketRequest } from '../../../features/ticket/model/order';
-import { orderTickets } from '../../../features/ticket/api/order';
 import { useNavigate } from 'react-router-dom';
 import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
 
@@ -35,29 +33,10 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
     }));
   };
 
-  // 구매 API 호출
+  // 티켓 옵션 응답 페이지 이동.
   const orderTicket = async (ticketId: number, eventId: number, ticketCnt: number) => {
-    try {
-      const requestData: OrderTicketRequest = {
-        ticketId,
-        eventId,
-        ticketCnt,
-      };
-
-      const response = await orderTickets(requestData);
-
-      console.log('API 응답:', response);
-
-      if (response.isSuccess && Array.isArray(response.result)) {
-        const orderIds = response.result;
-
-        navigate('/payment/ticket-confirm', { state: { orderIds, ticketId, eventId } });
-      } else {
-        alert('주문 정보를 불러올 수 없습니다.');
-      }
-    } catch (error) {
-      alert('티켓 구매 중 오류가 발생했습니다.');
-    }
+    const orderInfo = { ticketId, eventId, ticketCnt };
+    navigate('/payment/ticket-option-response', { state: orderInfo });
   };
   if (isLoading) return <div>Loading...</div>;
   if (isError || !data || !data.isSuccess) return <div>티켓 정보를 불러올 수 없습니다.</div>;

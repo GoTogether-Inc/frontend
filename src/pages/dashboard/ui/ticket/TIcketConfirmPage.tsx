@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from '../../../../../design-system/ui/Header';
 import Search from '../../../../../design-system/icons/Search.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,25 +6,8 @@ import EmailDeleteModal from '../../../../widgets/dashboard/ui/email/EmailDelete
 import PurchaseBanner from '../../../../widgets/dashboard/ui/ticket/PurchaseBanner';
 import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
-import { cancelTickets, readTicket } from '../../../../features/ticket/api/order';
-
-type Ticket = {
-  id: number;
-  title: string;
-  startDate: string;
-  startTime: string;
-  ticketName: string;
-  ticketCnt: number;
-  hostChannelName: string;
-  hostChannelDescription: string;
-  organizerEmail: string;
-  organizerPhoneNumber: string;
-  eventAddress: string;
-  location: { lng: number; lat: number };
-  remainDays: string;
-  ticketQrCode: string;
-  orderStatus: 'COMPLETED' | 'PENDING' | 'CANCELED';
-};
+import { useCancelTicket, useTicketOrderDetail } from '../../../../features/ticket/hooks/useOrderHook';
+import { TicketConfirm } from '../../../../features/ticket/model/orderInformation';
 
 const TicketConfirmPage = () => {
   const navigate = useNavigate();
@@ -33,30 +16,17 @@ const TicketConfirmPage = () => {
   const orderIds: number[] = location.state?.orderIds || [];
   const eventId = location.state?.eventId || 0;
   const ticketId = location.state?.ticketId || 0;
+  console.log(eventId,ticketId)
+  const { data, isLoading, isError } = useTicketOrderDetail(ticketId, eventId);
+  const ticket = data?.result as TicketConfirm | undefined;
+  const { mutate: cancelTicket } = useCancelTicket();
 
-  const [ticket, setTicket] = useState<Ticket | null>(null);
-  useEffect(() => {
-    const fetchOrderTicket = async () => {
-      try {
-        const response = await readTicket.getDetail(ticketId, eventId);
-        setTicket(response.result || []);
-      } catch (error) {
-        console.error('구매한 티켓 정보 불러오기 실패:', error);
-      }
-    };
-    fetchOrderTicket();
-  }, []);
   const handlePreviousButton = () => {
     navigate(-1);
   };
   const cancleOrderTicket = async (orderIds: number[]) => {
     for (const orderId of orderIds) {
-      try {
-        const response = await cancelTickets(orderId);
-        console.log('티켓 취소 API 응답:', response);
-      } catch (error) {
-        console.error(`orderId ${orderId} 취소 실패:`, error);
-      }
+      cancelTicket(orderId);
     }
   };
   return (
@@ -68,14 +38,17 @@ const TicketConfirmPage = () => {
         centerContent="티켓 구매 확인"
         rightContent={<img src={Search} alt="검색" className="w-4" />}
       />
-      {ticket ? (
+      {isLoading ? (
+        <p className="text-center text-gray-500">티켓 정보를 불러오는 중...</p>
+      ) : isError || !ticket ? (
+        <p className="text-center text-red-500">티켓 정보를 불러오는 데 실패했습니다.</p>
+      ) : (
         <>
           <div className="bg-gray-100 p-3 min-h-screen flex flex-col gap-3">
             <PurchaseBanner
               setIsModalOpen={setIsModalOpen}
               title={ticket.title}
               startDate={ticket.startDate}
-              startTime={ticket.startTime}
               ticketName={ticket.ticketName}
               quantity={orderIds.length}
             />
@@ -89,13 +62,12 @@ const TicketConfirmPage = () => {
             <div className="p-5 bg-white flex flex-col gap-2 rounded-[10px]">
               <p className="font-bold md:text-2xl text-xl">오시는 길</p>
               <p>{ticket.eventAddress}</p>
-              <KakaoMap lat={ticket.location.lat} lng={ticket.location.lng} />
+              <KakaoMap lat={ticket.locationLat} lng={ticket.locationLng} />
             </div>
           </div>
         </>
-      ) : (
-        <p className="text-center text-gray-500">티켓 정보를 불러오는 중...</p>
       )}
+
       {isModalOpen && (
         <EmailDeleteModal
           mainText={`${ticket?.title}의 ${ticket?.ticketName} ${orderIds.length}매 구매를 취소하시겠습니까?. 취소 후에는 복구가 불가능합니다.`}
