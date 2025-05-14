@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getEventByTag } from '../../../entities/event/api/event';
+import { getEventByTag } from '../../../entities/event/api/eventDetail';
 import { TagType } from '../../../shared/types/baseEventType';
-import { EventItem } from '../../../entities/event/model/event';
+import { EventItem } from '../../../entities/event/model/eventDetail';
 
 export const useLatestEvents = () => {
   return useQuery<EventItem[]>({

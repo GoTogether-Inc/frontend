@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useInfiniteScroll } from '../../../../shared/hooks/useInfiniteScroll';
-import { getAllEventsInfinite, getCategoryEventsInfinite } from '../../../../entities/event/api/event';
+import { getAllEventsInfinite, getCategoryEventsInfinite } from '../../../../entities/event/api/eventDetail';
 import EventCard from '../../../../shared/ui/EventCard';
 import { BaseEvent, CategoryType, TagType } from '../../../../shared/types/baseEventType';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';

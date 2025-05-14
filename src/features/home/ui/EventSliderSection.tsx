@@ -4,7 +4,7 @@ import EventCard from '../../../shared/ui/EventCard';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
-import { EventItem } from '../../../entities/event/model/event';
+import { EventItem } from '../../../entities/event/model/eventDetail';
 
 interface EventSliderSectionProps {
   title: string;
