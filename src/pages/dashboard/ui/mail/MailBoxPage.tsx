@@ -2,8 +2,8 @@ import { useState } from 'react';
 import TextButton from '../../../../../design-system/ui/buttons/TextButton';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../../shared/ui/SearchBar';
-import SentMailCard from '../../../../widgets/dashboard/ui/SentMailCard';
-import EmailDeleteMoal from '../../../../widgets/dashboard/ui/EmailDeleteModal';
+import SentMailCard from '../../../../widgets/dashboard/ui/email/SentMailCard';
+import EmailDeleteMoal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import { useParams } from 'react-router-dom';
 import { useDeleteEmail, useReadEmail } from '../../../../features/dashboard/hook/useEmailHook';
 
@@ -21,7 +21,7 @@ const MailBoxPage = () => {
   const handleDelete = (reservationEmailId: number) => {
     deleteEmail(reservationEmailId);
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
@@ -55,7 +55,8 @@ const MailBoxPage = () => {
                 setIsModalOpen(true);
               }}
             />
-          )))}
+          ))
+        )}
       </div>
       {isModalOpen && (
         <EmailDeleteMoal

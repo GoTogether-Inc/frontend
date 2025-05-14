@@ -4,7 +4,7 @@ import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import EmailInput from '../../../../features/dashboard/ui/EmailInput';
 import TimePicker from '../../../../features/event/ui/TimePicker';
 import Button from '../../../../../design-system/ui/Button';
-import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
+import SelectTicketModal from '../../../../widgets/dashboard/ui/email/SelectTicketModal';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
 import { useEmailStore } from '../../../../features/dashboard/model/store/EmailStore';
 import { useEditEmail } from '../../../../features/dashboard/hook/useEmailHook';

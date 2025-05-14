@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
-import TextButton from '../../../../design-system/ui/buttons/TextButton';
-import SelectTicketInfo from './SelectTicketInfo';
-import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
-import { useEmailStore } from '../../../features/dashboard/model/store/EmailStore';
-import { usePurchaserEmails } from '../../../features/dashboard/hook/useEmailHook';
+import TextButton from '../../../../../design-system/ui/buttons/TextButton';
+import SelectTicketInfo from '../ticket/SelectTicketInfo';
+import { useTickets } from '../../../../features/ticket/hooks/useTicketHook';
+import { useEmailStore } from '../../../../features/dashboard/model/store/EmailStore';
+import { usePurchaserEmails } from '../../../../features/dashboard/hook/useEmailHook';
 
 interface SelectTicketModalProps {
   onClose: () => void;

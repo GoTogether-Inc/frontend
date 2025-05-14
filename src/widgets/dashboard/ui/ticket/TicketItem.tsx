@@ -2,8 +2,8 @@ import AvailableTicket from '../../../../public/assets/dashboard/ticket/Ticket(g
 import PersonIcon from '../../../../public/assets/dashboard/ticket/PersonIcon.svg';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { ReadTicketResponse } from '../../../features/ticket/model/ticket';
-import { useDeleteTicket } from '../../../features/ticket/hooks/useTicketHook';
+import { ReadTicketResponse } from '../../../../features/ticket/model/ticket';
+import { useDeleteTicket } from '../../../../features/ticket/hooks/useTicketHook';
 
 const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
   const [isDragging, setIsDragging] = useState(false);

@@ -1,6 +1,6 @@
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import Ticket from '../../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
-import TicketItem from '../../../../widgets/dashboard/ui/TicketItem';
+import TicketItem from '../../../../widgets/dashboard/ui/ticket/TicketItem';
 import { useNavigate, useParams } from 'react-router-dom';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
 import AddButton from '../../../../../public/assets/dashboard/ticket/AddButton.svg';
