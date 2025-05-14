@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Checkbox from '../../../../design-system/ui/Checkbox';
 import ParticipantCard from './ParicipantCard';
-import { useParticipantStore } from '../model/ParticipantStore';
+import { useParticipantStore } from '../model/store/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 
 interface ParticipantsListProps {

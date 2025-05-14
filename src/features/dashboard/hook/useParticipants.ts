@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ApiResponse } from '../../../shared/types/api/apiResponse';
 import { AxiosError } from 'axios';
 import { approveParticipants } from '../../../features/dashboard/api/participants';
-import { useParticipantStore } from '../model/ParticipantStore';
+import { useParticipantStore } from '../model/store/ParticipantStore';
 
 export const useParticipants = (tags = 'all', page = 0, size = 10) => {
   const { id } = useParams();

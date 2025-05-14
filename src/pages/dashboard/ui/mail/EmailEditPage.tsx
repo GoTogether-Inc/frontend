@@ -6,13 +6,13 @@ import TimePicker from '../../../../features/event-manage/event-create/ui/TimePi
 import Button from '../../../../../design-system/ui/Button';
 import SelectTicketModal from '../../../../widgets/dashboard/ui/SelectTicketModal';
 import { useParticipants } from '../../../../features/dashboard/hook/useParticipants';
-import { useEmailStore } from '../../../../features/dashboard/model/EmailStore';
+import { useEmailStore } from '../../../../features/dashboard/model/store/EmailStore';
 import { useEditEmail } from '../../../../features/dashboard/hook/useEmailHook';
 const EmailEditPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const { participants } = useParticipants();
   const { id } = useParams();
-  const {mutate: editEmail} = useEditEmail();
+  const { mutate: editEmail } = useEditEmail();
 
   const {
     reservationEmailId,
@@ -35,7 +35,7 @@ const EmailEditPage = () => {
       reservationDate,
       reservationTime,
     };
-    editEmail({ reservationEmailId: reservationEmailId, data: emailData,});
+    editEmail({ reservationEmailId: reservationEmailId, data: emailData });
   };
 
   return (
@@ -44,8 +44,8 @@ const EmailEditPage = () => {
         <EmailInput
           type="이메일 내용 수정"
           openSelectTicket={() => setTicketModalOpen(true)}
-          allParticipantEmails={participants.map((p: { email: string; }) => p.email)}
-          isEdited= {true}
+          allParticipantEmails={participants.map((p: { email: string }) => p.email)}
+          isEdited={true}
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker

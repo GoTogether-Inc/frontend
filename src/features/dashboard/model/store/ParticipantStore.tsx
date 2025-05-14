@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { participantsData } from '../../../shared/types/participantInfoType';
+import { participantsData } from '../../../../shared/types/participantInfoType';
 
 interface ParicipantState {
   all: boolean;
