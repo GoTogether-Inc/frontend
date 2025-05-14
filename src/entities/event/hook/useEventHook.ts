@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { eventDetail } from '../api/event';
+import { eventDetail } from '../api/eventDetail';
 import { useParams } from 'react-router-dom';
 import { useUserInfo } from '../../../features/join/hooks/useUserHook';
 
