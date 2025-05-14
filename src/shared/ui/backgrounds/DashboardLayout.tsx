@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
 import dashboardMenu from '../../../../public/assets/dashboard/DashboardMenu.svg';
 import { useState } from 'react';
-import SideBar from '../../../widgets/dashboard/ui/SideBar';
+import SideBar from '../../../widgets/dashboard/ui/main/SideBar';
 
 interface DashboardLayoutProps {
   pinkBg?: boolean;
