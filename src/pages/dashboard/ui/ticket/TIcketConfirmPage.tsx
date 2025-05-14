@@ -3,7 +3,7 @@ import Header from '../../../../../design-system/ui/Header';
 import Search from '../../../../../design-system/icons/Search.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EmailDeleteMoal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
-import PurchaseBanner from '../../../../widgets/dashboard/ui/ticketConfirm/PurchaseBanner';
+import PurchaseBanner from '../../../../widgets/dashboard/ui/ticket/PurchaseBanner';
 import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
 import { cancelTickets, readTicket } from '../../../../features/ticket/api/order';

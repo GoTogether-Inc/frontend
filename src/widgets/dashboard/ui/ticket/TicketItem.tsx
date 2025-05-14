@@ -1,5 +1,5 @@
-import AvailableTicket from '../../../../public/assets/dashboard/ticket/Ticket(gray).svg';
-import PersonIcon from '../../../../public/assets/dashboard/ticket/PersonIcon.svg';
+import AvailableTicket from '../../../../../public/assets/dashboard/ticket/Ticket(gray).svg';
+import PersonIcon from '../../../../../public/assets/dashboard/ticket/PersonIcon.svg';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { ReadTicketResponse } from '../../../../features/ticket/model/ticket';
