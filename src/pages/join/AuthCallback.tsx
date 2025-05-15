@@ -7,14 +7,14 @@ const AuthCallback = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const status = searchParams.get('status'); // 'new' or 'existing'
-    const { login, setName } = useAuthStore();
+    const { login, setName, closeModal } = useAuthStore();
     const { data } = useUserInfo();
 
     useEffect(() => {
         const handleAuth = async () => {
             if (!data) return;
-            
             try {
+                closeModal();
                 if (status === 'new') {
                     navigate('/join/agreement');
                 } else {
