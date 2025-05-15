@@ -3,7 +3,6 @@ import { useInfiniteScroll } from '../../../shared/hooks/useInfiniteScroll';
 import { getAllEventsInfinite, getCategoryEventsInfinite } from '../../../entities/event/api/event';
 import EventCard from '../../../shared/ui/EventCard';
 import { BaseEvent, CategoryType, TagType } from '../../../shared/types/baseEventType';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 interface EventListProps extends BaseEvent {
   id: number;
@@ -85,7 +84,6 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
         </div>
       )}
       {isFetching && <div className="text-center py-4">Loading...</div>}
-      <ReactQueryDevtools initialIsOpen={false} position="left" />
     </>
   );
 };
