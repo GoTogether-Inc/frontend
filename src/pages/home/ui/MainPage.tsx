@@ -12,7 +12,6 @@ import { cardButtons } from '../../../shared/types/mainCardButtonType';
 import useAuthStore from '../../../app/provider/authStore';
 import EventTags from '../../../features/home/ui/EventTags';
 import ProfileCircle from '../../../../design-system/ui/Profile';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import useEventList from '../../../entities/event/hook/useEventListHook';
 
 const MainPage = () => {
@@ -78,7 +77,6 @@ const MainPage = () => {
         전체 이벤트 보러가기 <span className="ml-1.5">&gt;</span>
       </button>
       <BottomBar />
-      <ReactQueryDevtools initialIsOpen={false} position="left" />
     </div>
   );
 };
