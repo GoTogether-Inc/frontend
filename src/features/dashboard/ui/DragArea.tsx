@@ -94,9 +94,9 @@ const DragArea = ({
                 <HorizontalCardButton
                   iconPath={<img src={AddButton2} alt="추가 버튼" />}
                   className="text-sm  !justify-start [&>div]:!justify-start"
-                  label="티켓 설문 새로 생성하기"
+                  label="티켓 옵션 새로 생성하기"
                   onClick={() => {
-                    navigate('/dashboard/ticket/option/create');
+                    navigate('/dashboard/:id/ticket/option/create');
                   }}
                 />
               </div>
