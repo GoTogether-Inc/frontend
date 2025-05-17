@@ -62,7 +62,7 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
           ) : null}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
+        <div className="w-[90%] grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
           {data?.pages.map((page, pageIndex) =>
             page.items.map((event: EventListProps, eventIndex) => {
               const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;

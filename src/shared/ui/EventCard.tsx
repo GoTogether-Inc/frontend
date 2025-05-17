@@ -37,7 +37,7 @@ const EventCard = ({
   return (
     <div
       onClick={onClick}
-      className="w-full h-full md:h-[300px] sm:h-[280px] max-w-sm p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
+      className="w-full h-full md:h-[300px] sm:h-[280px] max-w-full p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
     >
 
       {/* 이미지 */}
