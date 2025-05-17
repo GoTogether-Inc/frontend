@@ -34,7 +34,7 @@ const DraggableList = ({
     const parsedData = savedData ? JSON.parse(savedData) : null;
     const optionData = parsedData?.options[id];
 
-    navigate('/dashboard/ticket/option/create', {
+    navigate('/dashboard/:id/ticket/option/create', {
       state: {
         isEditing: true,
         editOption: {
