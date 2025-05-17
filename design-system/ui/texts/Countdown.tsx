@@ -17,7 +17,7 @@ const Countdown = ({ children, isChecked }: CountdownProps) => {
   `;
 
   const baseStyles = `
-    h-5 sm:h-4 md:h-5 px-2 py-1 rounded-[2px] text-11 
+    h-5 sm:h-4 md:h-5 w-12 px-2 py-1 rounded-[2px] text-11 
     border-[0.1px] font-medium ${flexCenter} 
   `;
 
