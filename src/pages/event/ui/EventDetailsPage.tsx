@@ -103,7 +103,10 @@ const EventDetailsPage = () => {
                 <img src={locationImg} alt="위치 이미지" />
                 <span className="text-sm md:text-base">{event.result.address}</span>
               </div>
-              <span className="text-sm md:text-base py-3">{event.result.description}</span>
+              <div
+                className="text-sm md:text-base py-3"
+                dangerouslySetInnerHTML={{ __html: event.result.description }}
+              ></div>
             </div>
 
             <h2 className="font-bold text-xl">위치</h2>
