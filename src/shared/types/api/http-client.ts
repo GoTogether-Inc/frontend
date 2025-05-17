@@ -53,7 +53,11 @@ axiosClient.interceptors.response.use(
       } catch (refreshError) {
         // 리프레시 실패 시 로그아웃 처리
         Cookies.remove('access_token');
-        useAuthStore.getState().openModal();
+        Cookies.remove('refresh_token');
+        const authStore = useAuthStore.getState();
+        authStore.logout(); 
+        authStore.openModal();
+
         return Promise.reject(refreshError);
       }
     }
