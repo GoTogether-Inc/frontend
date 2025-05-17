@@ -35,15 +35,19 @@ const EventCard = ({
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
   return (
-    <div onClick={onClick} className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md cursor-pointer">
+    <div
+      onClick={onClick}
+      className="w-full h-full md:h-[300px] sm:h-[280px] max-w-sm p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
+    >
+
       {/* 이미지 */}
       <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />
 
       {/* 상세 정보 */}
       <div className="flex flex-col gap-1 mt-4">
         <div className="flex justify-between">
-          <h2 className="text-sm font-semibold truncate max-w-36">{eventTitle}</h2>
-          <Countdown isChecked>{dDay}</Countdown>
+          <h2 className="text-sm font-semibold line-clamp-2 overflow-hidden">{eventTitle}</h2>
+          <div className='sm:max-w-10 md:max-w-15'><Countdown isChecked>{dDay}</Countdown></div>
         </div>
 
         <p className="text-xs text-gray-500">{host}</p>
@@ -55,7 +59,7 @@ const EventCard = ({
 
         <div className="flex items-center text-xs text-gray-500">
           <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
-          {location}
+          <div className="line-clamp-2 overflow-hidden">{location}</div>
         </div>
 
         {/* 승인 여부 표시 */}

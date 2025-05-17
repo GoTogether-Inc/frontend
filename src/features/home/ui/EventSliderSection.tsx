@@ -28,6 +28,16 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
 
+  const eventsToShow =
+    events.length > 0
+      ? events
+        .slice(startIndex, startIndex + maxCardsToShow)
+        .concat(
+          startIndex + maxCardsToShow > events.length
+            ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
+            : []
+        )
+      : [];
   return (
     <div className="relative w-full px-6">
       <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">{title}</h2>
@@ -35,14 +45,8 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
         {events.length === 0 ? (
           <div className="w-full text-center text-gray-500">표시할 이벤트가 없습니다.</div>
         ) : (
-          events
-            .slice(startIndex, startIndex + maxCardsToShow)
-            .concat(
-              startIndex + maxCardsToShow > events.length
-                ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
-                : []
-            )
-            .map((event: EventItem) => (
+          eventsToShow.map((event: EventItem) => (
+            <div key={event.id} className="w-full h-full min-h-[200px] max-w-sm">
               <EventCard
                 key={event.id}
                 id={event.id}
@@ -55,7 +59,8 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
                 hashtags={event.hashtags}
                 onClick={() => navigate(`/event-details/${event.id}`)}
               />
-            ))
+            </div>
+          ))
         )}
       </div>
       {startIndex !== 0 && (
