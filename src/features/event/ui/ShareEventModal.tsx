@@ -1,7 +1,7 @@
-import profile from '../../../../public/assets/banners/1.png';
 import link from '../../../../public/assets/event-manage/details/Link.svg';
 import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
 import { shareToKakao } from '../../../shared/lib/kakaoShare';
+import useEventDetail from '../../../entities/event/hook/useEventHook';
 
 interface ShareEventModalProps {
   closeModal: () => void;
@@ -18,6 +18,11 @@ const ShareEventModal = ({
   eventImageUrl = '',
   eventUrl = window.location.href,
 }: ShareEventModalProps) => {
+  const { data } = useEventDetail();
+
+  const bannerImage = data?.result.bannerImageUrl || '';
+  const eventTitle = data?.result.title || '';
+
   const handleKakaoShare = async () => {
     try {
       await shareToKakao(eventName, eventDescription, eventImageUrl, eventUrl);
@@ -69,8 +74,8 @@ const ShareEventModal = ({
         </div>
         <h1 className="font-semibold text-xl text-center mb-6">공유하기</h1>
         <div className="flex items-center gap-5 mb-8">
-          <img src={profile} alt="프로필 사진" className="w-20 h-20 rounded-[5px]" />
-          <span className="font-semibold text-lg">{eventName}</span>
+          <img src={bannerImage} alt="프로필 사진" className="w-20 h-20 rounded-[5px]" />
+          <span className="font-semibold text-lg">{eventTitle}</span>
         </div>
         <div className="flex flex-col gap-4 py-3">
           <div onClick={handleCopyLink} className="flex items-center gap-4 cursor-pointer">
