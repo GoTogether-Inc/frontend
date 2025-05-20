@@ -31,12 +31,12 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
   const eventsToShow =
     events.length > 0
       ? events
-        .slice(startIndex, startIndex + maxCardsToShow)
-        .concat(
-          startIndex + maxCardsToShow > events.length
-            ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
-            : []
-        )
+          .slice(startIndex, startIndex + maxCardsToShow)
+          .concat(
+            startIndex + maxCardsToShow > events.length
+              ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
+              : []
+          )
       : [];
   return (
     <div className="relative w-full px-6">
@@ -55,7 +55,7 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
                 dDay={event.remainDays}
                 host={event.hostChannelName}
                 eventDate={event.startDate}
-                location={event.address}
+                location={event.onlineType}
                 hashtags={event.hashtags}
                 onClick={() => navigate(`/event-details/${event.id}`)}
               />
