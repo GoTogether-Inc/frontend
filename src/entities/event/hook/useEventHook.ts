@@ -12,7 +12,7 @@ const useEventDetail = () => {
   const { data } = useQuery({
     queryKey: ['eventDetail', eventId],
     queryFn: () => eventDetail({ eventId, userId: user?.id }),
-    enabled: !!user?.id,
+    enabled: !!user?.id && !!eventId,
   });
 
   return { data };
