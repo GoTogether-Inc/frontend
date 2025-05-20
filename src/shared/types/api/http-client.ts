@@ -34,12 +34,15 @@ axiosClient.interceptors.response.use(
     const errorInfo = {
       status: error.response?.status || 'NETWORK_ERROR',
       message: error.response?.data?.message || error.message,
+      code: error.response?.data.code,
     };
 
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     // 401(토큰 만료)일 경우 로그아웃 처리 or 토큰 갱신 가능
-    if (errorInfo.status === 401) {
+    if (errorInfo.code === 'TOKEN4001' && !originalRequest._retry) {
+      originalRequest._retry = true;
+
       try {
         await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`,
@@ -55,7 +58,7 @@ axiosClient.interceptors.response.use(
         Cookies.remove('access_token');
         Cookies.remove('refresh_token');
         const authStore = useAuthStore.getState();
-        authStore.logout(); 
+        authStore.logout();
         authStore.openModal();
 
         return Promise.reject(refreshError);
