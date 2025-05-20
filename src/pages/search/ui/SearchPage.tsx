@@ -19,11 +19,11 @@ const SearchPage = () => {
   const observerRef = useRef<IntersectionObserver>();
   const lastEventCardRef = useRef<HTMLDivElement | null>(null);
 
-  const images = [
+  /* const images = [
     { img: firstPage, link: 'https://example.com/page1' },
     { img: secondPage, link: 'https://example.com/page2' },
     { img: thirdPage, link: 'https://example.com/page3' },
-  ];
+  ]; */
 
   const terms = [
     { number: 1, text: '우아콘' },
@@ -152,7 +152,7 @@ const SearchPage = () => {
         <div className="px-6">
           <SearchTermList items={terms} highlightColor="blue" title="인기 검색어" time="11.10 15:00" />
           <SearchTermList items={terms} highlightColor="red" title="급상승 검색어" time="11.10 15:00" />
-          <Banner images={images} interval={4000} />
+          {/* <Banner images={images} interval={4000} /> */}
         </div>
       )}
     </>
