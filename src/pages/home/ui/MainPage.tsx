@@ -1,9 +1,6 @@
 import Header from '../../../../design-system/ui/Header';
 import Banner from '../../../widgets/main/ui/Banner';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
-import firstPage from '../../../../public/assets/banners/1.png';
-import secondPage from '../../../../public/assets/banners/2.png';
-import thirdPage from '../../../../public/assets/banners/3.png';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
 import searchIcon from '../../../../design-system/icons/Search.svg';
@@ -16,15 +13,19 @@ import useAuthStore from '../../../app/provider/authStore';
 import EventTags from '../../../features/home/ui/EventTags';
 import ProfileCircle from '../../../../design-system/ui/Profile';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import useEventList from '../../../entities/event/hook/useEventListHook';
 
 const MainPage = () => {
-  const images = [
-    { img: firstPage, link: 'https://example.com/page1' },
-    { img: secondPage, link: 'https://example.com/page2' },
-    { img: thirdPage, link: 'https://example.com/page3' },
-  ];
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal, isLoggedIn, name } = useAuthStore();
+  const { data } = useEventList();
+
+  const recentEvents = data?.pages[0].items.slice(0, 4) ?? [];
+
+  const bannerImages = recentEvents.map(event => ({
+    img: event.bannerImageUrl,
+    link: `/event-details/${event.id}`,
+  }));
 
   return (
     <div className="flex flex-col items-center pb-24">
@@ -51,7 +52,7 @@ const MainPage = () => {
       <AnimatePresence>{isModalOpen && <LoginModal onClose={closeModal} />}</AnimatePresence>
 
       <div className="w-full px-6">
-        <Banner images={images} interval={5000} />
+        {bannerImages.length > 0 && <Banner images={bannerImages} interval={5000} />}
         <div className="flex items-center justify-around sm:my-8 md:my-9 lg:my-10">
           {cardButtons.map((button, index) => (
             <VerticalCardButton
@@ -59,7 +60,7 @@ const MainPage = () => {
               iconPath={<img src={button.iconPath} alt="메인 아이콘" />}
               label={button.label}
               size="lg"
-              onClick={() => navigate('/category', {state: {category: button.category} })}
+              onClick={() => navigate('/category', { state: { category: button.category } })}
               className="font-semibold"
             />
           ))}

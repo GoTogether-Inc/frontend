@@ -12,7 +12,7 @@ const Banner = ({ images, interval = 3000 }: BannerProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   return (
-    <div className="relative my-1 overflow-hidden sm:h-32 md:h-36 lg:h-40 rounded-xl">
+    <div className="relative my-1 overflow-hidden h-40 lg:h-44 rounded-xl">
       <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={0}
@@ -28,7 +28,7 @@ const Banner = ({ images, interval = 3000 }: BannerProps) => {
         {images.map((image, index) => (
           <SwiperSlide key={index}>
             <a href={image.link || '#'} target="_blank" rel="noopener noreferrer" className="w-full h-full">
-              <img src={image.img} alt={`Slide ${index + 1}`} className="object-cover w-full h-full" />
+              <img src={image.img} alt={`Slide ${index + 1}`} className="object-contain w-full h-full" />
             </a>
           </SwiperSlide>
         ))}
