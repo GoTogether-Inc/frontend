@@ -20,21 +20,26 @@ const BookmarkPage = () => {
         }
       />
       <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2 z-50">
-        {data?.map(event => (
-          <EventCard
-            id={event.id}
-            key={event.id}
-            img={event.bannerImageUrl}
-            eventTitle={event.title}
-            dDay={event.remainDays}
-            host={event.hostChannelName}
-            eventDate={event.startDate}
-            location={event.onlineType}
-            hashtags={event.hashtags}
-            onClick={() => navigate(`/event-details/${event.id}`)}
-          />
-        ))}
+        {data?.length ? (
+          data.map(event => (
+            <EventCard
+              id={event.id}
+              key={event.id}
+              img={event.bannerImageUrl}
+              eventTitle={event.title}
+              dDay={event.remainDays}
+              host={event.hostChannelName}
+              eventDate={event.startDate}
+              location={event.onlineType}
+              hashtags={event.hashtags}
+              onClick={() => navigate(`/event-details/${event.id}`)}
+            />
+          ))
+        ) : (
+          <p className="col-span-2 text-center text-sm md:text-base">관심 있는 이벤트가 없습니다.</p>
+        )}
       </div>
+
       <BottomBar />
     </div>
   );

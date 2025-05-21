@@ -19,12 +19,12 @@ type Ticket = {
     startDate: string;
     remainDays: string;
     hashtags: string[];
-    onlineType: "ONLINE" | "OFFLINE"; // onlineType 추가
+    onlineType: 'ONLINE' | 'OFFLINE'; // onlineType 추가
   };
   ticketQrCode: string;
   ticketName: string;
   ticketPrice: number;
-  orderStatus: "COMPLETED" | "PENDING" | "CANCELED";
+  orderStatus: 'COMPLETED' | 'PENDING' | 'CANCELED';
   checkIn: boolean;
 };
 
@@ -39,7 +39,7 @@ const MyTicketPage = () => {
         const response = await readTicket.getAll(0, 10);
         setMyTickets(response.result || []);
       } catch (error) {
-        console.error("티켓 목록 불러오기 실패:", error);
+        console.error('티켓 목록 불러오기 실패:', error);
       }
     };
     fetchMyTickets();
@@ -49,37 +49,40 @@ const MyTicketPage = () => {
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" showText={true}>
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-6 mt-28 md:grid-cols-2 lg:grid-cols-2 pb-4">
-        {myTickets.map((ticket) => (
-          <EventCard
-            key={ticket.id}
-            id={ticket.id}
-            img={ticket.event.bannerImageUrl}
-            eventTitle={ticket.event.title}
-            dDay={ticket.event.remainDays}
-            host={ticket.event.hostChannelName}
-            eventDate={ticket.event.startDate}
-            location={ticket.event.address}
-            hashtags={ticket.event.hashtags}
-            onClick={() => {
-              setSelectedTicket(ticket);
-              setIsModalOpen(true);
-            }}
-          >
-            <div className="flex items-center text-xs text-gray-500">
-              <img src={ticketImg} alt="날짜" className="w-3 h-3 mr-1" />
-              {ticket.ticketName}
-            </div>
-            <div className="flex items-center text-xs text-gray-500">
-              <img
-                src={ticket.orderStatus === 'COMPLETED' ? completedImg : pendingImg}
-                alt={ticket.orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
-                className="w-3 h-3 mr-1"
-              />
-              {ticket.orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
-            </div>
-
-          </EventCard>
-        ))}
+        {myTickets.length > 0 ? (
+          myTickets.map(ticket => (
+            <EventCard
+              key={ticket.id}
+              id={ticket.id}
+              img={ticket.event.bannerImageUrl}
+              eventTitle={ticket.event.title}
+              dDay={ticket.event.remainDays}
+              host={ticket.event.hostChannelName}
+              eventDate={ticket.event.startDate}
+              location={ticket.event.address}
+              hashtags={ticket.event.hashtags}
+              onClick={() => {
+                setSelectedTicket(ticket);
+                setIsModalOpen(true);
+              }}
+            >
+              <div className="flex items-center text-xs text-gray-500">
+                <img src={ticketImg} alt="날짜" className="w-3 h-3 mr-1" />
+                {ticket.ticketName}
+              </div>
+              <div className="flex items-center text-xs text-gray-500">
+                <img
+                  src={ticket.orderStatus === 'COMPLETED' ? completedImg : pendingImg}
+                  alt={ticket.orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
+                  className="w-3 h-3 mr-1"
+                />
+                {ticket.orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
+              </div>
+            </EventCard>
+          ))
+        ) : (
+          <p className="col-span-2 text-center text-sm md:text-base">구매하신 티켓 정보가 없습니다.</p>
+        )}
       </div>
 
       {isModalOpen && selectedTicket && (
