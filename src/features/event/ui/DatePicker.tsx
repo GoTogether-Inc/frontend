@@ -26,8 +26,11 @@ const EventDatePicker = ({
   onEndDateChange,
   isLabel = false,
 }: DatePickerProps) => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(
+    eventState?.startDate ? new Date(eventState.startDate) : new Date()
+  );
+  const [endDate, setEndDate] = useState<Date | null>(eventState?.endDate ? new Date(eventState.endDate) : new Date());
+
   const [startTime, setStartTime] = useState<string>('06:00');
   const [endTime, setEndTime] = useState<string>('23:00');
 
@@ -101,6 +104,7 @@ const EventDatePicker = ({
               onChange={(date: Date | null) => setStartDate(date)}
               locale={ko}
               dateFormat="MM월 dd일"
+              autoComplete="off"
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
               renderCustomHeader={({
                 date,
@@ -148,6 +152,7 @@ const EventDatePicker = ({
               onChange={(date: Date | null) => setEndDate(date)}
               locale={ko}
               dateFormat="MM월 dd일"
+              autoComplete="off"
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
               renderCustomHeader={({
                 date,
