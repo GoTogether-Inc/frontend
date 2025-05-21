@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TicketState } from '../model/TicketContext';
+import { formatISO } from '../../../shared/lib/date';
 
 interface DatePickerProps {
   className?: string;
@@ -12,13 +13,21 @@ interface DatePickerProps {
   onDateChange: (dates: { startDate: string; endDate: string; startTime: string; endTime: string }) => void;
 }
 
-const TicketDatePicker = ({ className, ticketState, setTicketState, isLabel = false, onDateChange }: DatePickerProps) => {
+const TicketDatePicker = ({
+  className,
+  ticketState,
+  setTicketState,
+  isLabel = false,
+  onDateChange,
+}: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
     ticketState?.startDate ? new Date(ticketState.startDate) : new Date()
   );
-  const [endDate, setEndDate] = useState<Date | null>(ticketState?.endDate ? new Date(ticketState.endDate) : new Date());
-  const [startTime, setStartTime] = useState<string>(ticketState?.startTime || '06:00');
-  const [endTime, setEndTime] = useState<string>(ticketState?.endTime || '23:00');
+  const [endDate, setEndDate] = useState<Date | null>(
+    ticketState?.endDate ? new Date(ticketState.endDate) : new Date()
+  );
+  const [startTime, setStartTime] = useState<string>('06:00');
+  const [endTime, setEndTime] = useState<string>('23:00');
 
   const generateTimeOptions = () => {
     const options = [];
@@ -32,45 +41,29 @@ const TicketDatePicker = ({ className, ticketState, setTicketState, isLabel = fa
     return options;
   };
 
-  const formatDate = (date: Date | null) => {
-    if (!date) return '';
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`; // yyyy-mm-dd 형태로 포맷팅
-  };
-
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
+    const newStartDate = startDate ? formatISO(startDate, startTime) : '';
+    const newEndDate = endDate ? formatISO(endDate, endTime) : '';
+
     if (setTicketState) {
-      setTicketState(prev => {
-        const newStartDate = startDate ? formatDate(startDate) : '';
-        const newEndDate = endDate ? formatDate(endDate) : '';
-        if (
-          prev.startDate !== newStartDate ||
-          prev.endDate !== newEndDate ||
-          prev.startTime !== startTime ||
-          prev.endTime !== endTime
-        ) {
-          onDateChange({
-            startDate: newStartDate,
-            endDate: newEndDate,
-            startTime,
-            endTime,
-          });
-          return {
-            ...prev,
-            startDate: newStartDate,
-            endDate: newEndDate,
-            startTime,
-            endTime,
-          };
-        }
-        return prev; 
-      });
+      setTicketState(prev => ({
+        ...prev,
+        startDate: newStartDate,
+        endDate: newEndDate,
+      }));
     }
-  }, [startDate, endDate, startTime, endTime, setTicketState, onDateChange]);
+
+    onDateChange?.({
+      startDate: newStartDate,
+      endDate: newEndDate,
+      startTime,
+      endTime,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startDate, endDate, startTime, endTime]);
 
   return (
     <div className={`flex flex-col w-full ${className}`}>

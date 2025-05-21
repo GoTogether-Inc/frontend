@@ -13,3 +13,11 @@ export const formatTime = (isoDate: string) => {
   const minutes = dateObj.getMinutes().toString().padStart(2, '0');
   return `${hours}:${minutes}`;
 };
+
+export const formatISO = (date: Date, time: string): string => {
+  const [hours, minutes] = time.split(':').map(Number);
+  const newDate = new Date(date);
+  newDate.setHours(hours, minutes, 0, 0);
+  const kstDate = new Date(newDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+  return kstDate.toISOString();
+};
