@@ -1,6 +1,7 @@
 import link from '../../../../public/assets/event-manage/details/Link.svg';
 import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
 import { shareToKakao } from '../../../shared/lib/kakaoShare';
+import stripHtml from '../lib/stripHtml';
 
 interface ShareEventModalProps {
   closeModal: () => void;
@@ -17,9 +18,11 @@ const ShareEventModal = ({
   eventImageUrl = '',
   eventUrl = window.location.href,
 }: ShareEventModalProps) => {
+  const description = stripHtml(eventDescription);
+
   const handleKakaoShare = async () => {
     try {
-      await shareToKakao(title, eventDescription, eventImageUrl, eventUrl);
+      await shareToKakao(title, description, eventImageUrl, eventUrl);
     } catch (error) {
       console.error('카카오 공유 실패:', error);
       alert('카카오 공유하기에 실패했습니다.');
