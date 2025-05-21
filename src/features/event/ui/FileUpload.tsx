@@ -1,7 +1,6 @@
 import FileUploadImage from '../../../../public/assets/event-manage/creation/FileUpload.svg';
-import { useEffect, useRef, useState } from 'react';
-import { uploadFile } from '../hooks/usePresignedUrlHook';
 import { FunnelState } from '../model/FunnelContext';
+import useImageUpload from '../../../shared/hooks/useImageUpload';
 
 interface FileUploadProps {
   value?: string;
@@ -10,62 +9,13 @@ interface FileUploadProps {
 }
 
 const FileUpload = ({ value, onChange, setEventState }: FileUploadProps) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileUpload = async (file: File) => {
-    if (file.size > 500 * 1024) {
-      alert('파일 크기는 500KB를 초과할 수 없습니다.');
-      return;
-    }
-
-    if (!['image/jpg', 'image/jpeg', 'image/png'].includes(file.type)) {
-      alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
-      return;
-    }
-
-    try {
-      const imageUrl = await uploadFile(file);
-      setPreviewUrl(imageUrl);
-      onChange?.(imageUrl);
-      if (setEventState) {
-        setEventState(prev => ({ ...prev, bannerImageUrl: imageUrl }));
-      }
-    } catch (error) {
-      console.error('파일 업로드 실패:', error);
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file) handleFileUpload(file);
-  };
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleFileUpload(file);
-  };
-
-  useEffect(() => {
-    if (value) setPreviewUrl(value);
-  }, [value]);
+  const { previewUrl, fileInputRef, handleFileChange, handleDrop, setIsDragging, isDragging } = useImageUpload({
+    value, // 서버에서 받아온 기본 이미지
+    onSuccess: url => {
+      onChange?.(url);
+      setEventState?.(prev => ({ ...prev, bannerImageUrl: url }));
+    },
+  });
 
   return (
     <div className="flex flex-col justify-start gap-1">
@@ -75,10 +25,16 @@ const FileUpload = ({ value, onChange, setEventState }: FileUploadProps) => {
         className={`flex flex-col items-center justify-center h-44 border border-dashed ${
           isDragging ? 'border-main bg-dropdown' : 'border-placeholderText bg-gray3'
         } rounded-[10px] mb-4 cursor-pointer`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
+        onDragOver={e => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragLeave={e => {
+          e.preventDefault();
+          setIsDragging(false);
+        }}
         onDrop={handleDrop}
-        onClick={handleClick}
+        onClick={() => fileInputRef.current?.click()}
       >
         <input
           type="file"

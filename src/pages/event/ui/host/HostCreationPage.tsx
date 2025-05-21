@@ -7,6 +7,7 @@ import { useFunnelState } from '../../../../features/event/model/FunnelContext';
 import { useForm } from 'react-hook-form';
 import { hostCreationZodValidation } from '../../../../shared/lib/formValidation';
 import { HostCreationFormData } from '../../../../shared/lib/formValidation';
+import useImageUpload from '../../../../shared/hooks/useImageUpload';
 
 interface HostCreationPageProps {
   onValidationChange?: (isValid: boolean) => void;
@@ -33,6 +34,16 @@ const HostCreationPage = ({ onValidationChange }: HostCreationPageProps) => {
   const hostEmail = watch('hostEmail');
   const channelDescription = watch('channelDescription');
 
+  const { previewUrl, fileInputRef, handleFileChange } = useImageUpload({
+    value: hostState.profileImageUrl,
+    onSuccess: url => {
+      setHostState(prev => ({
+        ...prev,
+        profileImageUrl: url,
+      }));
+    },
+  });
+
   useEffect(() => {
     onValidationChange?.(isValid);
   }, [isValid, onValidationChange]);
@@ -49,10 +60,25 @@ const HostCreationPage = ({ onValidationChange }: HostCreationPageProps) => {
   return (
     <div className="flex flex-col gap-5 px-4">
       <div className="relative flex items-center justify-center mb-4">
-        <img src={basicProfile} alt="기본 프로필 이미지" className="w-24 object-cover" />
-        <button className="absolute bottom-0 sm:right-[33%] md:right-[35%] lg:right-[38%]">
+        <img
+          src={previewUrl || basicProfile}
+          alt="기본 프로필 이미지"
+          className="w-24 h-24 object-cover rounded-full"
+        />
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="absolute bottom-0 sm:right-[33%] md:right-[35%] lg:right-[38%]"
+        >
           <img src={addImage} alt="이미지 추가 버튼" className="w-7" />
         </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
+          accept="image/jpeg,image/png"
+          onChange={handleFileChange}
+        />
       </div>
       <DefaultTextField
         label="채널 이름을 입력해주세요"

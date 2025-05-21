@@ -1,0 +1,63 @@
+import { useRef, useState, useCallback, useEffect } from 'react';
+import { uploadFile } from '../../features/event/hooks/usePresignedUrlHook';
+
+const useImageUpload = ({ value, onSuccess }: { value?: string; onSuccess?: (url: string) => void }) => {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (value) setPreviewUrl(value);
+  }, [value]);
+
+  const validateFile = (file: File) => {
+    if (file.size > 500 * 1024) {
+      alert('파일 크기는 500KB를 초과할 수 없습니다.');
+      return false;
+    }
+    if (!['image/jpg', 'image/jpeg', 'image/png'].includes(file.type)) {
+      alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleFileUpload = useCallback(
+    async (file: File) => {
+      if (!validateFile(file)) return;
+
+      try {
+        const imageUrl = await uploadFile(file);
+        setPreviewUrl(imageUrl);
+        onSuccess?.(imageUrl);
+      } catch (error) {
+        console.error('파일 업로드 실패:', error);
+      }
+    },
+    [onSuccess]
+  );
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleFileUpload(file);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileUpload(file);
+  };
+
+  return {
+    previewUrl,
+    isDragging,
+    setIsDragging,
+    fileInputRef,
+    handleFileUpload,
+    handleFileChange,
+    handleDrop,
+  };
+};
+
+export default useImageUpload;
