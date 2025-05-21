@@ -24,8 +24,6 @@ const TicketCreatePage = () => {
     availableQuantity: 0,
     startDate: '',
     endDate: '',
-    startTime: '',
-    endTime: '',
   });
 
   const handleTicketTypeChange = (type: string) => {

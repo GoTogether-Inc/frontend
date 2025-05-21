@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 interface ChoiceChipOption {
-  label?: string; // UI에 보여질 한국어
-  value?: string; // 서버에서 오는 값
+  label: string; // UI에 보여질 한국어
+  value: string; // 서버에서 오는 값
 }
 
 interface ChoiceChipProps {
@@ -24,7 +24,7 @@ const ChoiceChip = ({
   buttonClassName = '',
   value,
 }: ChoiceChipProps) => {
-  const [selected, setSelected] = useState(value || options[0]);
+  const [selected, setSelected] = useState<string>(value || options[0].value || '');
 
   useEffect(() => {
     if (value) {

@@ -29,7 +29,10 @@ export default meta;
 export const TwoOptions: Story = {
   args: {
     label: '',
-    options: ['선착순', '주최자 선별'],
+    options: [
+      { label: '선착순', value: 'FIRST_COME' },
+      { label: '주최자 선별', value: 'SELECTION' },
+    ],
     onSelect: (selected: string) => {
       console.log(`Selected option: ${selected}`);
     },
@@ -39,7 +42,11 @@ export const TwoOptions: Story = {
 export const ThreeOptions: Story = {
   args: {
     label: '',
-    options: ['객관식', '주관식', '여러 개 선택'],
+    options: [
+      { label: '객관식', value: 'MULTIPLE_CHOICE' },
+      { label: '주관식', value: 'SUBJECTIVE' },
+      { label: '여러 개 선택', value: 'MULTI_SELECT' },
+    ],
     onSelect: (selected: string) => {
       console.log(`Selected option: ${selected}`);
     },
