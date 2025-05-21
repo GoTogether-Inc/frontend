@@ -18,17 +18,21 @@ const MyHostPage = () => {
   return (
     <TicketHostLayout image={HostLogo} centerContent="내 호스트">
       <div className="flex space-x-5 mt-24 mx-5 overflow-x-auto scrollbar-hide">
-        {data?.result.map(profile => (
-          <ProfileCircle
-            key={profile.id}
-            id={profile.id}
-            name={profile.hostChannelName}
-            profileImageUrl={profile.profileImageUrl}
-            profile="hostProfile"
-            onClick={() => handleProfileClick(profile.id)}
-            className="md:w-20 md:h-20 w-16 h-16 hover:border hover:border-main"
-          />
-        ))}
+        {data?.result.length ? (
+          data.result.map(profile => (
+            <ProfileCircle
+              key={profile.id}
+              id={profile.id}
+              name={profile.hostChannelName}
+              profileImageUrl={profile.profileImageUrl}
+              profile="hostProfile"
+              onClick={() => handleProfileClick(profile.id)}
+              className="md:w-20 md:h-20 w-16 h-16 hover:border hover:border-main"
+            />
+          ))
+        ) : (
+          <p className="col-span-2 text-center text-sm md:text-base">호스트 정보가 없습니다.</p>
+        )}
       </div>
 
       {/* 이벤트 카드 목록 */}
