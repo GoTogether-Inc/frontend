@@ -31,7 +31,11 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
           color="white"
         />
         <div className="flex justify-start items-center px-6 md:px-10">
-          <ProfileCircle profile="hostProfile" className="md:w-28 md:h-28 w-24 h-24" />
+          <ProfileCircle
+            profileImageUrl={data?.result.profileImageUrl}
+            profile="hostProfile"
+            className="md:w-28 md:h-28 w-24 h-24"
+          />
 
           <div className="flex flex-col gap-1 md:gap-3 ml-5 text-white">
             <p className="text-lg md:text-xl font-bold">{data?.result.hostChannelName}</p>
@@ -40,7 +44,7 @@ const HostDetailLayout = ({ rightContent, children }: HostDetailLayoutProps) => 
         </div>
       </div>
       {/* 레이아웃 내용 */}
-      <div className="absolute top-[calc(100%-2vh)] w-full bg-white rounded-t-[20px]">{children}</div>
+      <div className="absolute top-[calc(100%-1vh)] w-full bg-white rounded-t-[20px]">{children}</div>
     </div>
   );
 };

@@ -130,6 +130,7 @@ const SearchPage = () => {
                       id={host.id}
                       profile="hostInfoProfile"
                       name={host.hostChannelName}
+                      profileImageUrl={host.profileImageUrl}
                       onClick={() => navigate(`/menu/hostInfo/${host.id}`)}
                       className="w-19 h-19 md:w-20 md:h-20 text-sm md:text-16 lg:text-base"
                     />
