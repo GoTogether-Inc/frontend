@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FunnelState } from '../model/FunnelContext';
+import { formatISO } from '../../../shared/lib/date';
 
 interface DatePickerProps {
   className?: string;
@@ -67,17 +68,8 @@ const EventDatePicker = ({
 
   useEffect(() => {
     if (startDate && endDate) {
-      const [startHour, startMin] = startTime.split(':').map(Number);
-      const [endHour, endMin] = endTime.split(':').map(Number);
-
-      const start = new Date(startDate);
-      start.setHours(startHour, startMin, 0, 0);
-
-      const end = new Date(endDate);
-      end.setHours(endHour, endMin, 0, 0);
-
-      const startISO = new Date(start.getTime() + 9 * 60 * 60 * 1000).toISOString();
-      const endISO = new Date(end.getTime() + 9 * 60 * 60 * 1000).toISOString();
+      const startISO = formatISO(startDate, startTime);
+      const endISO = formatISO(endDate, endTime);
 
       if (setEventState) {
         setEventState(prev => ({

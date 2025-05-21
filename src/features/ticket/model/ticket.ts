@@ -9,13 +9,6 @@ export interface CreateTicketRequest {
   endDate: string;
 }
 
-export interface TicketResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: string; // "ticketId: 2"
-}
-
 export interface ReadTicketResponse {
   ticketId: number;
   ticketName: string;

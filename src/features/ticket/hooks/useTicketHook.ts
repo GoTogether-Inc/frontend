@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createTicket, deleteTicket, readTicket } from '../api/ticket';
-import { CreateTicketRequest, ReadTicketResponse, TicketResponse } from '../model/ticket';
+import { CreateTicketRequest, ReadTicketResponse } from '../model/ticket';
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
+import { AxiosError } from 'axios';
 
 export const useTickets = (eventId: number) => {
   return useQuery<{ isSuccess: boolean; result: ReadTicketResponse[] }>({
@@ -11,7 +13,7 @@ export const useTickets = (eventId: number) => {
 };
 
 export const useCreateTicket = () => {
-  return useMutation<TicketResponse, Error, CreateTicketRequest>({
+  return useMutation<ApiResponse<null>, AxiosError, CreateTicketRequest>({
     mutationFn: createTicket,
     onSuccess: () => {
       alert('티켓이 성공적으로 저장되었습니다.');
@@ -24,7 +26,7 @@ export const useCreateTicket = () => {
 };
 
 export const useDeleteTicket = () => {
-  return useMutation<TicketResponse, Error, number>({
+  return useMutation<ApiResponse<null>, AxiosError, number>({
     mutationFn: deleteTicket,
     onSuccess: () => {
       alert('티켓이 삭제되었습니다.');
