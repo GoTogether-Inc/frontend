@@ -5,17 +5,13 @@ import useEventDetail from '../../../entities/event/hook/useEventHook';
 
 interface ShareEventModalProps {
   closeModal: () => void;
-  eventName: string;
   eventDescription?: string;
-  eventImageUrl?: string;
   eventUrl?: string;
 }
 
 const ShareEventModal = ({
   closeModal,
-  eventName,
   eventDescription = '',
-  eventImageUrl = '',
   eventUrl = window.location.href,
 }: ShareEventModalProps) => {
   const { data } = useEventDetail();
@@ -25,7 +21,7 @@ const ShareEventModal = ({
 
   const handleKakaoShare = async () => {
     try {
-      await shareToKakao(eventName, eventDescription, eventImageUrl, eventUrl);
+      await shareToKakao(eventTitle, eventDescription, bannerImage, eventUrl);
     } catch (error) {
       console.error('카카오 공유 실패:', error);
       alert('카카오 공유하기에 실패했습니다.');
