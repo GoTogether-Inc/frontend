@@ -1,27 +1,25 @@
 import link from '../../../../public/assets/event-manage/details/Link.svg';
 import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
 import { shareToKakao } from '../../../shared/lib/kakaoShare';
-import useEventDetail from '../../../entities/event/hook/useEventHook';
 
 interface ShareEventModalProps {
   closeModal: () => void;
+  title: string;
   eventDescription?: string;
+  eventImageUrl?: string;
   eventUrl?: string;
 }
 
 const ShareEventModal = ({
   closeModal,
+  title,
   eventDescription = '',
+  eventImageUrl = '',
   eventUrl = window.location.href,
 }: ShareEventModalProps) => {
-  const { data } = useEventDetail();
-
-  const bannerImage = data?.result.bannerImageUrl || '';
-  const eventTitle = data?.result.title || '';
-
   const handleKakaoShare = async () => {
     try {
-      await shareToKakao(eventTitle, eventDescription, bannerImage, eventUrl);
+      await shareToKakao(title, eventDescription, eventImageUrl, eventUrl);
     } catch (error) {
       console.error('카카오 공유 실패:', error);
       alert('카카오 공유하기에 실패했습니다.');
@@ -70,8 +68,8 @@ const ShareEventModal = ({
         </div>
         <h1 className="font-semibold text-xl text-center mb-6">공유하기</h1>
         <div className="flex items-center gap-5 mb-8">
-          <img src={bannerImage} alt="프로필 사진" className="w-20 h-20 rounded-[5px]" />
-          <span className="font-semibold text-lg">{eventTitle}</span>
+          <img src={eventImageUrl} alt="프로필 사진" className="w-20 h-20 rounded-[5px]" />
+          <span className="font-semibold text-lg">{title}</span>
         </div>
         <div className="flex flex-col gap-4 py-3">
           <div onClick={handleCopyLink} className="flex items-center gap-4 cursor-pointer">

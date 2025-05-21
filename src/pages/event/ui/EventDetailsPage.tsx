@@ -141,7 +141,7 @@ const EventDetailsPage = () => {
       {isModalOpen && (
         <ShareEventModal
           closeModal={closeModal}
-          eventName={title}
+          title={title}
           eventDescription={event?.result.description}
           eventImageUrl={event?.result.bannerImageUrl}
           eventUrl={window.location.href}
