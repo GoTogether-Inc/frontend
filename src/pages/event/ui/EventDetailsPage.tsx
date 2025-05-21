@@ -109,8 +109,12 @@ const EventDetailsPage = () => {
               ></div>
             </div>
 
-            <h2 className="font-bold text-xl">위치</h2>
-            <KakaoMap lat={event.result.locationLat} lng={event.result.locationLng} />
+            {event.result.locationLat !== 0.0 && event.result.locationLng !== 0.0 && (
+              <>
+                <h2 className="font-bold text-xl">위치</h2>
+                <KakaoMap lat={event.result.locationLat} lng={event.result.locationLng} />
+              </>
+            )}
 
             <OrganizerInfo
               name={event.result.hostChannelName}
