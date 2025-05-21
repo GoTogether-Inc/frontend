@@ -6,6 +6,8 @@ interface MultilineTextFieldProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onCompositionStart?: (e: React.CompositionEvent<HTMLTextAreaElement>) => void;
+  onCompositionEnd?: (e: React.CompositionEvent<HTMLTextAreaElement>) => void;
   disabled?: boolean;
   placeholder?: string;
   className?: string;
@@ -20,6 +22,8 @@ const MultilineTextField = forwardRef<HTMLTextAreaElement, MultilineTextFieldPro
       value,
       onChange,
       onKeyDown,
+      onCompositionStart,
+      onCompositionEnd,
       disabled = false,
       placeholder = '',
       className = '',
@@ -39,6 +43,8 @@ const MultilineTextField = forwardRef<HTMLTextAreaElement, MultilineTextFieldPro
           value={value}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          onCompositionStart={onCompositionStart}
+          onCompositionEnd={onCompositionEnd}
           disabled={disabled}
           placeholder={placeholder}
           {...rest}

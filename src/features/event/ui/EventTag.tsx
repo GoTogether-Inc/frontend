@@ -9,6 +9,7 @@ interface EventTagProps {
 
 const EventTag = ({ eventState, setEventState }: EventTagProps) => {
   const [inputValue, setInputValue] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
   const MAX_TAGS = 5;
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -18,7 +19,7 @@ const EventTag = ({ eventState, setEventState }: EventTagProps) => {
   const hashtags = eventState?.hashtags || [];
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && inputValue.trim()) {
+    if (e.key === 'Enter' && !isComposing && inputValue.trim()) {
       e.preventDefault();
 
       if (hashtags.length >= MAX_TAGS) {
@@ -57,6 +58,8 @@ const EventTag = ({ eventState, setEventState }: EventTagProps) => {
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          onCompositionStart={() => setIsComposing(true)} // ✅ 한글 조합 시작
+          onCompositionEnd={() => setIsComposing(false)}
           placeholder="엔터를 이용해 태그를 입력하세요"
           className="w-full h-40"
           disabled={hashtags.length >= MAX_TAGS}
