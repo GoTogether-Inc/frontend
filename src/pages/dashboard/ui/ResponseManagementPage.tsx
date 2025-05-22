@@ -7,7 +7,7 @@ import { responsesInfo } from '../../../shared/types/responseType';
 import { useLocation } from 'react-router-dom';
 import ResponesModal from '../../../widgets/dashboard/ui/response/ResponseModal';
 
-const ResponsesManagementPage = () => {
+const ResponseManagementPage = () => {
   const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
   const { response, setResponses, setSelectedResponse, isModalOpen, closeModal } = useResponseStore();
   const location = useLocation();
@@ -36,4 +36,4 @@ const ResponsesManagementPage = () => {
     </DashboardLayout>
   );
 };
-export default ResponsesManagementPage;
+export default ResponseManagementPage;

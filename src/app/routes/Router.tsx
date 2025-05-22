@@ -31,7 +31,7 @@ import PaymentPage from '../../pages/payment/ui/PaymentPage';
 import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
 import TicketOptionPage from '../../pages/dashboard/ui/ticket/TicketOptionPage';
 import TicketOptionCreatePage from '../../pages/dashboard/ui/ticket/TicketOptionCreatePage';
-import ResponseManagementPage from '../../pages/dashboard/ui/ResponsesManagementPage';
+import ResponseManagementPage from '../../pages/dashboard/ui/ResponseManagementPage';
 import TicketOptionResponsePage from '../../pages/dashboard/ui/ticket/TicketOptionResponsePage';
 import AuthCallback from '../../pages/join/AuthCallback';
 import LogoutPage from '../../pages/join/LogoutPage';
