@@ -52,7 +52,7 @@ const EventRegisterLayout = ({
       {/* 레이아웃 내용 */}
       <div className="flex flex-col justify-between w-[85%] min-h-[calc(100vh-6rem)] bg-white rounded-[20px] mt-24 mx-auto z-20">
         <div>
-          <div className="text-center w-full my-8 text-xl  md:text-2xl font-bold">{title}</div>
+          <div className="text-center w-full my-5 md:my-8 text-lg md:text-2xl font-bold">{title}</div>
           <div className={`${className}`}>{childrenWithValidation}</div>
         </div>
         <div className="w-full p-5">
