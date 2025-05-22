@@ -4,20 +4,28 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getMenuLists } from '../../../../shared/types/dashboardType';
 import Header from '../../../../../design-system/ui/Header';
 import HorizontalCardButton from '../../../../../design-system/ui/buttons/HorizontalCardButton';
+import { useResponseStore } from '../../../../features/dashboard/model/store/ResponseStore';
 
 const SideBar = ({ onClose }: { onClose: () => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
   const [selectedIcon, setSelectedIcon] = useState<string>('');
+  const { openModal } = useResponseStore();
 
   const menuLists = id ? getMenuLists(id) : [];
 
   const handleMenuClick = (menuText: string, path: string) => {
     if (location.pathname === path) {
+      if (menuText === '사용자 응답 관리') {
+      openModal();
+    }
       onClose();
     } else {
       setSelectedIcon(menuText);
+      if (menuText === '사용자 응답 관리') {
+      openModal();
+    }
       navigate(path);
     }
   };

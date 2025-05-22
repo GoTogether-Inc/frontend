@@ -6,11 +6,16 @@ interface ResponseState {
   selectedField: string;
   selectedResponse: responsesData[];
   currentIndex: number;
+  isModalOpen: boolean;
+  selectedTicketId: number | null;
 
   setResponses: (responses: responsesData[]) => void;
   setSelectedField: (field: string) => void;
   setSelectedResponse: (responseName: string, responseEmail: string) => void;
   setCurrentIndex: (updateFn: (prevIndex: number) => number) => void;
+  openModal: () => void;
+  closeModal: () => void;
+  setSelectedTicketId: (id: number) => void;
 }
 
 export const useResponseStore = create<ResponseState>(set => ({
@@ -18,6 +23,8 @@ export const useResponseStore = create<ResponseState>(set => ({
   selectedField: '',
   selectedResponse: [],
   currentIndex: 0,
+  isModalOpen: false,
+  selectedTicketId: 0,
 
   setResponses: response => {
     set(() => ({
@@ -44,4 +51,11 @@ export const useResponseStore = create<ResponseState>(set => ({
     set(state => ({
       currentIndex: updateFn(state.currentIndex),
     })),
+
+  openModal: () => set({ isModalOpen: true }),
+  closeModal: () => set({ isModalOpen: false }),
+
+  setSelectedTicketId: (ticketId) => {
+    set({selectedTicketId: ticketId})
+  }
 }));

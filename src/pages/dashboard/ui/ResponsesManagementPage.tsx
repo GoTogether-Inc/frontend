@@ -5,10 +5,11 @@ import ResponsesList from '../../../features/dashboard/ui/ResponsesList';
 import { useResponseStore } from '../../../features/dashboard/model/store/ResponseStore';
 import { responsesInfo } from '../../../shared/types/responseType';
 import { useLocation } from 'react-router-dom';
+import ResponesModal from '../../../widgets/dashboard/ui/response/ResponseModal';
 
 const ResponsesManagementPage = () => {
   const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-  const { response, setResponses, setSelectedResponse } = useResponseStore();
+  const { response, setResponses, setSelectedResponse, isModalOpen, closeModal } = useResponseStore();
   const location = useLocation();
   const { participantName, participantEmail } = location.state || {};
   useEffect(() => {
@@ -22,6 +23,9 @@ const ResponsesManagementPage = () => {
   }, [participantName]);
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
+      {isModalOpen && (
+        <ResponesModal onClose={closeModal}></ResponesModal>
+      )}
       <div className="flex flex-col px-2 md:px-4">
         <h1 className="text-left font-semibold md:text-2xl text-xl py-4 md:py-6 pl-4">응답 {response.length}개</h1>
         <div className="flex justify-center">
