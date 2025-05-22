@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { EventFunnelInterface, StepNames } from '../../../shared/types/funnelType';
 import { useFunnelState } from '../model/FunnelContext';
 import { useEventCreation } from '../hooks/useEventHook';
-import { useHostCreation } from '../hooks/useHostHook';
+import { useHostCreation } from '../../host/hook/useHostHook';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();

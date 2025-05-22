@@ -4,7 +4,7 @@ import { useFunnelState } from '../../../../features/event/model/FunnelContext';
 import useHostChannelList from '../../../../entities/host/hook/useHostChannelListHook';
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
 import CloseButton from '../../../../../public/assets/event-manage/creation/CloseBtn.svg';
-import { useHostDeletion } from '../../../../features/event/hooks/useHostHook';
+import { useHostDeletion } from '../../../../features/host/hook/useHostHook';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
