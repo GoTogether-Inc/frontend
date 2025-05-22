@@ -1,4 +1,4 @@
-import basicProfile from '../../../../../public/assets/event-manage/creation/BasicProfile.svg';
+import basicProfile from '../../../../../public/assets/event-manage/creation/BasicProfile.png';
 import addImage from '../../../../../public/assets/event-manage/creation/AddImage.svg';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
