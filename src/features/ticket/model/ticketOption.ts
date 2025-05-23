@@ -1,4 +1,6 @@
-// 인터페이스 정의 
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
+
+// 인터페이스 정의
 export interface OptionConfig {
   limitToggled: boolean;
   numActivated: boolean;
@@ -39,3 +41,26 @@ export type Action =
   | { type: 'UPDATE_OPTION_CONFIG'; payload: { index: number; config: Partial<OptionConfig>; isSingle: boolean } } // 특정 옵션 설정 업데이트 (config -> optional)
   | { type: 'ADD_OPTION'; payload: { isSingle: boolean } } // 옵션 추가
   | { type: 'REMOVE_OPTION'; payload: { index: number; isSingle: boolean } }; // 옵션 삭제
+
+export interface TicketOptionRequest {
+  eventId: number;
+  name: string;
+  description: string;
+  type: string;
+  isMandatory: boolean;
+  choices: string[];
+}
+
+export interface TicketOptionsType {
+  id: number;
+  name: string;
+  description: string;
+  type: 'SINGLE' | 'MULTIPLE' | 'TEXT';
+  isMandatory: boolean;
+  choices: {
+    id: number;
+    content: string;
+  }[];
+}
+
+export interface TicketOptionResponse extends ApiResponse<TicketOptionsType> {}

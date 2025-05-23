@@ -6,7 +6,7 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import Trash from '../../../../design-system/icons/Trash.svg';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 
-export const TicketOptionListSection = () => {
+export const TicketOptionListSection = ({ form }: { form: ReturnType<typeof useTicketOptionForm> }) => {
   const {
     state,
     dispatch,
@@ -16,7 +16,7 @@ export const TicketOptionListSection = () => {
     handleQuantityChange,
     handleAddOption,
     getActiveOptions,
-  } = useTicketOptionForm();
+  } = form;
 
   return (
     <>

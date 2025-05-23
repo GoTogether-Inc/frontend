@@ -190,7 +190,7 @@ export const useTicketOptionForm = () => {
       dispatch({ type: 'TOGGLE_ANSWER' });
       dispatch({ type: 'SET_RESPONSE_FORMAT', payload: editOption.responseFormat });
 
-      // localStorage에서 저장된 데이터 가져오기
+      // localStorage에서 저장된 데이터 가져오기 (수정 모드에서만 사용)
       const savedData = localStorage.getItem('ticketOptions');
       if (savedData) {
         const parsedData = JSON.parse(savedData); // JS로 파싱된 데이터 가져오기

@@ -40,7 +40,7 @@ export const DASHBOARD_ROUTES = {
   eventTag: `${MAIN_ROUTES.dashboard}/eventTag`,
   ticket: `${MAIN_ROUTES.dashboard}/ticket`,
   ticketCreate: `${MAIN_ROUTES.dashboard}/ticket/create`,
-  ticketOption: `${MAIN_ROUTES.dashboard}/ticket/option`,
+  ticketOption: `dashboard/:eventId/ticket/option`, // URL 수정 필요
   ticketOptionCreate: `${MAIN_ROUTES.dashboard}/ticket/option/create`,
   email: `${MAIN_ROUTES.dashboard}/email`,
   mailBox: `${MAIN_ROUTES.dashboard}/mailBox`,

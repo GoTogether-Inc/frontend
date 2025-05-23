@@ -1,10 +1,10 @@
-import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
+import { useTicketOptionForm } from '../hooks/useTicketOptionForm';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import ToggleButton from '../../../../design-system/ui/buttons/ToggleButton';
-import { useTicketOptionForm } from '../hooks/useTicketOptionForm';
+import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
 
-export const TicketOptionFormSection = () => {
-  const { state, dispatch, handleAnswerToggled } = useTicketOptionForm();
+export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useTicketOptionForm> }) => {
+  const { state, dispatch, handleAnswerToggled } = form;
   return (
     <>
       {/*티켓 질문 입력란*/}
@@ -40,7 +40,12 @@ export const TicketOptionFormSection = () => {
           <p className="block text-m font-semibold text-gray-700">응답을 어떤 형식으로 받을까요?</p>
           <p className="block mb-1 text-placeholderText text-11 md:text-13">한 개만 선택할 수 있습니다.</p>
           <ChoiceChip
-            options={['객관식', '여러개 선택', '자유로운 텍스트']}
+            value={state.responseFormat} // 객관식
+            options={[
+              { label: '객관식', value: '객관식' },
+              { label: '여러개 선택', value: '여러개 선택' },
+              { label: '자유로운 텍스트', value: '자유로운 텍스트' },
+            ]}
             onSelect={selected => {
               dispatch({ type: 'SET_RESPONSE_FORMAT', payload: selected });
               dispatch({ type: 'SET_WARNING', payload: { field: 'optionWarning', value: '' } });
