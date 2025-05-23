@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import ModifyPencilIcon from '../../../../public/assets/dashboard/ticket/ModifyPencilIcon.svg';
 import DeleteIcon from '../../../../public/assets/dashboard/ticket/DeleteIcon.svg';
+import { useTicketOption } from '../../../features/ticket/model/TicketOptionContext';
 
 interface DraggableListProps {
-  id: string; // task의 id
-  content: string; // task의 content
-  index: number; // 드래그앤드롭 위치 추적용
+  id: string;
+  content: string;
+  index: number;
   isDragDisabled?: boolean;
   answerToggled: boolean;
   responseFormat: string;
   droppableId: string;
-  onDelete: (id: string) => void;
 }
 
 const DraggableList = ({
@@ -23,30 +23,28 @@ const DraggableList = ({
   answerToggled,
   responseFormat,
   droppableId,
-  onDelete,
 }: DraggableListProps) => {
   const navigate = useNavigate();
+  const { selectedOptions, setSelectedOptions } = useTicketOption();
 
-  // 수정 버튼 클릭 시 해당 옵션의 수정 페이지로 이동
   const handleEditClick = () => {
-    // localStorage에서 전체 데이터 가져오기
-    const savedData = localStorage.getItem('ticketOptions');
-    const parsedData = savedData ? JSON.parse(savedData) : null;
-    const optionData = parsedData?.options[id];
-
     navigate('/dashboard/:id/ticket/option/create', {
       state: {
         isEditing: true,
         editOption: {
-          id: id,
-          content: content,
-          answerToggled: answerToggled,
-          responseFormat: responseFormat,
-          options: optionData?.options || [],
-          optionsConfig: optionData?.optionsConfig || [],
+          id: Number(id),
+          content,
+          answerToggled,
+          responseFormat,
         },
       },
     });
+  };
+
+  const handleDelete = () => {
+    if (droppableId === 'ticket') {
+      setSelectedOptions(prev => prev.filter(opt => String(opt.id) !== id));
+    }
   };
 
   return (
@@ -76,7 +74,7 @@ const DraggableList = ({
                   {responseFormat}
                 </div>
               </div>
-              <IconButton iconPath={<img className="w-3 h-3" src={DeleteIcon} />} onClick={() => onDelete(id)} size="small" />
+              <IconButton iconPath={<img className="w-3 h-3" src={DeleteIcon} />} onClick={handleDelete} size="small" />
             </div>
           )}
         </div>

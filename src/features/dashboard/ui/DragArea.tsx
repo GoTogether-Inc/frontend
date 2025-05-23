@@ -3,60 +3,18 @@ import DraggableList from './DraggableList';
 import { Droppable } from '@hello-pangea/dnd';
 import AddButton2 from '../../../../public/assets/dashboard/ticket/AddButton2.svg';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
-
-interface OptionTitle {
-  id: string;
-  content: string;
-  answerToggled: boolean;
-  responseFormat: string;
-}
+import { TicketOptionsType } from '../../../features/ticket/model/ticketOption';
 
 interface DragAreaProps {
-  data: {
-    options: { [key: string]: OptionTitle };
-    dragAreas: {
-      [key: string]: {
-        id: string;
-        title: string;
-        optionIds: string[];
-      };
-    };
-    dragAreaOrder: string[];
-  };
-  setData: React.Dispatch<React.SetStateAction<DragAreaProps['data']>>;
+  options: TicketOptionsType[];
   droppableId: string;
-  answerToggled: boolean;
-  responseFormat: string;
   ticketSurveyAddButton?: boolean;
 }
 
-const DragArea = ({
-  data,
-  setData,
-  droppableId,
-  answerToggled,
-  responseFormat,
-  ticketSurveyAddButton = true,
-}: DragAreaProps) => {
+const DragArea = ({ options, droppableId, ticketSurveyAddButton = false }: DragAreaProps) => {
   const navigate = useNavigate();
-  const dragArea = data.dragAreas[droppableId];
   const isOptionsArea = droppableId === 'options';
   const isTicketArea = droppableId === 'ticket';
-
-  const handleDelete = (id: string) => {
-    if (isTicketArea) {
-      setData(prev => ({
-        ...prev,
-        dragAreas: {
-          ...prev.dragAreas,
-          ticket: {
-            ...prev.dragAreas.ticket,
-            optionIds: prev.dragAreas.ticket.optionIds.filter(optionId => optionId !== id),
-          },
-        },
-      }));
-    }
-  };
 
   return (
     <div className="w-full">
@@ -73,22 +31,18 @@ const DragArea = ({
                 : 'h-80 grid grid-cols-2 gap-2 grid-flow-row content-start'
             }`}
           >
-            {dragArea.optionIds.map((optionId, index) => {
-              const option = data.options[optionId];
-              return (
-                <DraggableList
-                  key={option.id}
-                  id={option.id}
-                  content={option.content}
-                  index={index}
-                  answerToggled={option.answerToggled}
-                  responseFormat={option.responseFormat}
-                  droppableId={droppableId}
-                  isDragDisabled={false}
-                  onDelete={handleDelete}
-                />
-              );
-            })}
+            {options.map((option, index) => (
+              <DraggableList
+                key={option.id}
+                id={String(option.id)}
+                content={option.name}
+                index={index}
+                answerToggled={option.isMandatory}
+                responseFormat={option.type}
+                droppableId={droppableId}
+                isDragDisabled={false}
+              />
+            ))}
             {ticketSurveyAddButton && isOptionsArea && (
               <div className="col-span-1 flex items-center h-[3.5rem] bg-deDayBgLight rounded">
                 <HorizontalCardButton
