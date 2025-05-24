@@ -9,18 +9,19 @@ import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
 import { useUpdateHostChannelInfo } from '../../../../features/host/hook/useHostHook';
 import { useQueryClient } from '@tanstack/react-query';
+import { useHostInvitation } from '../../../../features/host/hook/useHostInvitation';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedHost, setSelectedHost] = useState(true);
   const [selectedInfo, setSelectedInfo] = useState(false);
-  const [tags, setTags] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState('');
   const [channelDescription, setChannelDescription] = useState('');
+  const [emails, setEmails] = useState<string[]>([]);
 
   const hostChannelId = Number(id);
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
   const { mutate } = useUpdateHostChannelInfo(hostChannelId);
+  const { mutate: inviteMember } = useHostInvitation(hostChannelId);
   const queryClient = useQueryClient();
 
   const handeHostInfoClick = () => {
@@ -56,11 +57,20 @@ const HostEditPage = () => {
     });
   };
 
-  const handleAddClick = () => {
-    if (inputValue.trim() && !tags.includes(inputValue.trim())) {
-      setTags([...tags, inputValue.trim()]);
-      setInputValue('');
+  const handleInviteMembers = () => {
+    if (!hostInfo?.result.id) return;
+
+    if (emails.length === 0) {
+      alert('초대할 이메일을 입력해주세요.');
+      return;
     }
+
+    emails.forEach(email => {
+      inviteMember({ email });
+    });
+
+    alert('초대가 전송되었습니다.');
+    setEmails([]); // 전송 후 초기화
   };
 
   useEffect(() => {
@@ -144,13 +154,13 @@ const HostEditPage = () => {
                   이메일로 회원을 검색해 추가 할 수 있습니다. 삭제 하려면 추가된 이메일 아이콘의 x를 눌러주세요.{' '}
                 </p>
               </div>
-              <MemberEmailInput />
+              <MemberEmailInput emails={emails} setEmails={setEmails} />
               <TertiaryButton
                 type="button"
                 label="전송"
                 size="large"
                 color="pink"
-                onClick={handleAddClick}
+                onClick={handleInviteMembers}
                 className="mb-4"
               />
             </div>

@@ -1,8 +1,12 @@
 import { useState, KeyboardEvent } from 'react';
 import EmailInputBase from '../../../shared/ui/EmailInputBase';
 
-const MemberEmailInput = () => {
-  const [emails, setEmails] = useState<string[]>([]);
+interface MemberEmailInputProps {
+  emails: string[];
+  setEmails: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const MemberEmailInput = ({ emails, setEmails }: MemberEmailInputProps) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
