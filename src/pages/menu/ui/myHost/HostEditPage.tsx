@@ -7,9 +7,8 @@ import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButt
 import { useParams } from 'react-router-dom';
 import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
-import { useQueryClient } from '@tanstack/react-query';
-import { useHostInvitation } from '../../../../features/host/hook/useHostInvitation';
 import { useHostInfoSave } from '../../../../features/host/hook/useHostInfoHook';
+import { useInviteMembers } from '../../../../features/host/hook/useInviteHostHook';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,8 +19,7 @@ const HostEditPage = () => {
 
   const hostChannelId = Number(id);
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
-  const { mutate: inviteMember } = useHostInvitation(hostChannelId);
-  const queryClient = useQueryClient();
+  const { inviteMembers } = useInviteMembers(hostChannelId);
 
   const { handleSave } = useHostInfoSave(hostChannelId, hostInfo!, channelDescription);
 
@@ -37,33 +35,7 @@ const HostEditPage = () => {
   const handleInviteMembers = () => {
     if (!hostInfo?.result.id) return;
 
-    if (emails.length === 0) {
-      alert('초대할 이메일을 입력해주세요.');
-      return;
-    }
-
-    const invitationPromises = emails.map(
-      email =>
-        new Promise((resolve, reject) => {
-          inviteMember(
-            { email },
-            {
-              onSuccess: resolve,
-              onError: reject,
-            }
-          );
-        })
-    );
-
-    Promise.all(invitationPromises)
-      .then(() => {
-        alert('초대가 전송되었습니다.');
-        setEmails([]);
-        queryClient.invalidateQueries({ queryKey: ['hostInfo', hostChannelId] }); // ✅ 멤버 목록 리패치
-      })
-      .catch(() => {
-        alert('초대 중 일부 실패했습니다.');
-      });
+    inviteMembers(emails, () => setEmails([]));
   };
 
   useEffect(() => {
