@@ -7,9 +7,9 @@ import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButt
 import { useParams } from 'react-router-dom';
 import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
-import { useUpdateHostChannelInfo } from '../../../../features/host/hook/useHostHook';
 import { useQueryClient } from '@tanstack/react-query';
 import { useHostInvitation } from '../../../../features/host/hook/useHostInvitation';
+import { useHostInfoSave } from '../../../../features/host/hook/useInviteMemberHook';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,9 +20,10 @@ const HostEditPage = () => {
 
   const hostChannelId = Number(id);
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
-  const { mutate } = useUpdateHostChannelInfo(hostChannelId);
   const { mutate: inviteMember } = useHostInvitation(hostChannelId);
   const queryClient = useQueryClient();
+
+  const { handleSave } = useHostInfoSave(hostChannelId, hostInfo!, channelDescription);
 
   const handeHostInfoClick = () => {
     setSelectedHost(true);
@@ -31,30 +32,6 @@ const HostEditPage = () => {
   const handeInfoEditClick = () => {
     setSelectedInfo(true);
     setSelectedHost(false);
-  };
-
-  const handleSave = () => {
-    if (!hostInfo?.result.id) return;
-
-    const updatedData = {
-      hostChannelId,
-      profileImageUrl: hostInfo.result.profileImageUrl,
-      hostChannelName: hostInfo.result.hostChannelName,
-      hostEmail: hostInfo.result.email,
-      channelDescription,
-    };
-
-    mutate(updatedData, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['hostInfo', hostChannelId],
-        });
-        alert('저장되었습니다.');
-      },
-      onError: () => {
-        alert('저장에 실패했습니다.');
-      },
-    });
   };
 
   const handleInviteMembers = () => {
