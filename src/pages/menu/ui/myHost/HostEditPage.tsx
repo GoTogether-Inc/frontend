@@ -9,7 +9,7 @@ import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
 import { useQueryClient } from '@tanstack/react-query';
 import { useHostInvitation } from '../../../../features/host/hook/useHostInvitation';
-import { useHostInfoSave } from '../../../../features/host/hook/useInviteMemberHook';
+import { useHostInfoSave } from '../../../../features/host/hook/useHostInfoHook';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
