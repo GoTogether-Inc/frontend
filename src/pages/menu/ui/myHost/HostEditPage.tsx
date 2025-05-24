@@ -65,12 +65,28 @@ const HostEditPage = () => {
       return;
     }
 
-    emails.forEach(email => {
-      inviteMember({ email });
-    });
+    const invitationPromises = emails.map(
+      email =>
+        new Promise((resolve, reject) => {
+          inviteMember(
+            { email },
+            {
+              onSuccess: resolve,
+              onError: reject,
+            }
+          );
+        })
+    );
 
-    alert('초대가 전송되었습니다.');
-    setEmails([]); // 전송 후 초기화
+    Promise.all(invitationPromises)
+      .then(() => {
+        alert('초대가 전송되었습니다.');
+        setEmails([]);
+        queryClient.invalidateQueries({ queryKey: ['hostInfo', hostChannelId] }); // ✅ 멤버 목록 리패치
+      })
+      .catch(() => {
+        alert('초대 중 일부 실패했습니다.');
+      });
   };
 
   useEffect(() => {
