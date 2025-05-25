@@ -4,7 +4,7 @@ import ticket from "../../../../public/assets/dashboard/ticket/Ticket(horizon).s
 import Button from "../../../../design-system/ui/Button";
 import active from "../../../../public/assets/payment/Active.svg";
 import inactive from "../../../../public/assets/payment/Inactive.svg";
-import { useTicketOptionStore } from "../../../features/dashboard/model/TicketOptionStore";
+import { useTicketOptionStore } from "../../../features/dashboard/model/store/TicketOptionStore";
 import { useOrderTicket } from "../../../features/ticket/hooks/useOrderHook";
 import { OrderTicketRequest } from "../../../features/ticket/model/orderInformation";
 import { useCreateTicketOptionAnswers, useTickets } from "../../../features/ticket/hooks/useTicketHook";

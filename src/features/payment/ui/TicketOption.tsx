@@ -1,4 +1,4 @@
-import { useTicketOptionStore } from "../../dashboard/model/TicketOptionStore";
+import { useTicketOptionStore } from "../../dashboard/model/store/TicketOptionStore";
 import Checkbox from "../../../../design-system/ui/Checkbox";
 import { TicketOptionResponse } from "../../ticket/model/ticketInformation";
 
