@@ -26,3 +26,34 @@ export interface ReadTicketResponse {
     availableQuantity: number;
 }
 
+export interface TicketOptionChoice {
+    id: number;
+    name: string;
+}
+export interface TicketOptionResponse {
+    id: number;
+    name: string;
+    description: string;
+    type: 'SINGLE' | 'MULTIPLE' | 'TEXT';
+    isMandatory: boolean;
+    choices: TicketOptionChoice[];
+}
+
+// 텍스트
+export interface TicketOptionAnswerTextRequest {
+  ticketOptionId: number;
+  answerText: string;
+}
+
+// 선택지
+export interface TicketOptionAnswerChoiceRequest {
+  ticketOptionId: number;
+  ticketOptionChoiceId: number;
+}
+
+// 티켓 옵션 응답
+export interface TicketOptionAnswerRequest {
+    ticketOptionId: number;
+    answerText?: string;
+    ticketOptionChoiceId?: number;
+}
