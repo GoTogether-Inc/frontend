@@ -1,8 +1,6 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { createTicket, deleteTicket, readTicket } from '../api/ticket';
-import { CreateTicketRequest, ReadTicketResponse } from '../model/ticket';
-import { ApiResponse } from '../../../shared/types/api/apiResponse';
-import { AxiosError } from 'axios';
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createTicket, createTicketOptionAnswers, deleteTicket, readTicket, readTicketOptions } from "../api/ticket";
+import { CreateTicketRequest, ReadTicketResponse, TicketOptionAnswerRequest, TicketOptionResponse, TicketResponse } from "../model/ticketInformation";
 
 export const useTickets = (eventId: number) => {
   return useQuery<{ isSuccess: boolean; result: ReadTicketResponse[] }>({
@@ -36,4 +34,24 @@ export const useDeleteTicket = () => {
       alert('티켓 삭제 중 오류가 발생했습니다.');
     },
   });
+};
+
+export const useTicketOptions = (ticketId: number) => {
+    return useQuery<{ isSuccess: boolean; result: TicketOptionResponse[] }>({
+        queryKey: ['ticketOptions', ticketId],
+        queryFn: () => readTicketOptions(ticketId),
+        enabled: !!ticketId,
+    });
+};
+
+export const useCreateTicketOptionAnswers = () => {
+    return useMutation<TicketResponse,Error,TicketOptionAnswerRequest>({
+        mutationFn: createTicketOptionAnswers,
+        onSuccess: () => {
+            console.log("티켓 옵션 응답 전송 성공");
+        },
+        onError: () => {
+            alert("티켓 옵션 응답 전송 중 오류가 발생했습니다.");
+        },
+    });
 };

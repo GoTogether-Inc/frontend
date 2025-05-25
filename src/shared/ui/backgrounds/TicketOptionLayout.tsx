@@ -7,7 +7,7 @@ import inactive from "../../../../public/assets/payment/Inactive.svg";
 import { useTicketOptionStore } from "../../../features/dashboard/model/TicketOptionStore";
 import { useOrderTicket } from "../../../features/ticket/hooks/useOrderHook";
 import { OrderTicketRequest } from "../../../features/ticket/model/orderInformation";
-import { useTickets } from "../../../features/ticket/hooks/useTicketHook";
+import { useCreateTicketOptionAnswers, useTickets } from "../../../features/ticket/hooks/useTicketHook";
 
 interface TicketOptionLayoutProps {
     children: React.ReactNode;
@@ -17,7 +17,7 @@ interface TicketOptionLayoutProps {
 
 const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOptionLayoutProps) => {
     const navigate = useNavigate();
-    const { currentPage, setCurrentPage, selectedOptions } = useTicketOptionStore();
+    const { currentPage, setCurrentPage, selectedOptions, resetOptions } = useTicketOptionStore();
     const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
 
     const { mutate: orderTickets } = useOrderTicket();
@@ -25,6 +25,7 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOption
     const ticketObj = ticketData?.result.find(
         (ticket) => ticket.ticketId === ticketInfo.ticketId
     );
+    const { mutate: submitAnswers } = useCreateTicketOptionAnswers();
 
     //페이지
     const pageIndicator = Array(ticketAmount).fill(" . ");
@@ -35,26 +36,59 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOption
     const buttonText = isLastPage ? "결제하기" : "다음 티켓 옵션 선택하기";
     const handleNextPage = () => {
         if (isLastPage) {
-            {/* 티켓 옵션 데이터 전송 추가 */ }
-            orderTickets(ticketInfo, {
-                onSuccess: (response) => {
-                    if (response.isSuccess && Array.isArray(response.result)) {
-                        const orderIds = response.result;
-                        navigate('/payment/ticket-confirm', {
-                            state: { orderIds, ...ticketInfo }
-                        });
-                    } else {
-                        alert("주문 정보를 불러올 수 없습니다.");
+            const sendAnswersByPage = async () => {
+                for (const pageIndex of Object.keys(selectedOptions).sort((a, b) => Number(a) - Number(b))) {
+                    const optionsForPage = selectedOptions[Number(pageIndex)];
+
+                    for (const [optionIdStr, value] of Object.entries(optionsForPage)) {
+                        const optionId = Number(optionIdStr);
+
+                        if (typeof value === "string") {
+                            submitAnswers({
+                                ticketOptionId: optionId,
+                                answerText: value,
+                            });
+                        } else if (typeof value === "number") {
+                            submitAnswers({
+                                ticketOptionId: optionId,
+                                ticketOptionChoiceId: value,
+                            });
+                        } else if (Array.isArray(value)) {
+                            for (const choiceId of value) {
+                                submitAnswers({
+                                    ticketOptionId: optionId,
+                                    ticketOptionChoiceId: choiceId,
+                                });
+                            }
+                        }
                     }
-                },
-            });
-            //console.log(selectedOptions)
+                }
+            };
+
+            sendAnswersByPage()
+                .then(() => {
+                    resetOptions();
+                    orderTickets(ticketInfo, {
+                        onSuccess: (response) => {
+                            if (response.isSuccess && Array.isArray(response.result)) {
+                                const orderIds = response.result;
+                                navigate('/payment/ticket-confirm', {
+                                    state: { orderIds, ...ticketInfo }
+                                });
+                            } else {
+                                alert("주문 정보를 불러올 수 없습니다.");
+                            }
+                        },
+                    });
+                })
+                .catch(() => {
+                    alert("옵션 답변 전송 중 오류가 발생했습니다.");
+                });
         } else {
             setCurrentPage(currentPage + 1);
-
-            {/* 티켓 옵션 데이터 전송 추가 */ }
         }
     };
+
     return (
         <div className="relative flex flex-col">
             {/* 헤더 영역 */}
