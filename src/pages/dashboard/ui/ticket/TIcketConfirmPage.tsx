@@ -16,7 +16,6 @@ const TicketConfirmPage = () => {
   const orderIds: number[] = location.state?.orderIds || [];
   const eventId = location.state?.eventId || 0;
   const ticketId = location.state?.ticketId || 0;
-  console.log(eventId,ticketId)
   const { data, isLoading, isError } = useTicketOrderDetail(ticketId, eventId);
   const ticket = data?.result as TicketConfirm | undefined;
   const { mutate: cancelTicket } = useCancelTicket();
