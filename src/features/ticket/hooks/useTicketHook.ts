@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createTicket, createTicketOptionAnswers, deleteTicket, readTicket, readTicketOptions } from "../api/ticket";
 import { CreateTicketRequest, ReadTicketResponse, TicketOptionAnswerRequest, TicketOptionResponse, TicketResponse } from "../model/ticketInformation";
+import { ApiResponse } from "../../../shared/types/api/apiResponse";
+import { AxiosError } from "axios";
 
 export const useTickets = (eventId: number) => {
   return useQuery<{ isSuccess: boolean; result: ReadTicketResponse[] }>({
