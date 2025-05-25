@@ -39,18 +39,6 @@ export interface TicketOptionResponse {
     choices: TicketOptionChoice[];
 }
 
-// 텍스트
-export interface TicketOptionAnswerTextRequest {
-  ticketOptionId: number;
-  answerText: string;
-}
-
-// 선택지
-export interface TicketOptionAnswerChoiceRequest {
-  ticketOptionId: number;
-  ticketOptionChoiceId: number;
-}
-
 // 티켓 옵션 응답
 export interface TicketOptionAnswerRequest {
     ticketOptionId: number;
