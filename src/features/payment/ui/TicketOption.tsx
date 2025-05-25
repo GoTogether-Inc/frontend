@@ -35,7 +35,7 @@ const TicketOption = ({ options }: TicketOptionProps) => {
         <div key={option.id} className="mt-4">
           <p>
             {option.name}
-            {/* {option.isMandatory && <span className="text-red-500">*</span>} */}
+            {option.isMandatory && <span className="text-red-500">*</span>}
           </p>
 
           {option.type === "TEXT" && (
