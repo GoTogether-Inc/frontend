@@ -1,4 +1,4 @@
-import React, { ReactElement, ButtonHTMLAttributes } from 'react';
+import React, { ReactElement, ButtonHTMLAttributes, ReactNode } from 'react';
 import TextButton from './buttons/TextButton'; // TextButton 컴포넌트를 가져옵니다.
 
 type Button = ReactElement<ButtonHTMLAttributes<HTMLButtonElement>>;
@@ -7,7 +7,7 @@ type CenterContent = string | ReactElement<React.InputHTMLAttributes<HTMLInputEl
 
 interface HeaderProps {
   centerContent?: CenterContent; // 가운데 콘텐츠 (타이틀 or 검색창)
-  leftButtonLabel?: string; // 왼쪽 콘텐츠 (버튼)
+  leftButtonLabel?: ReactNode; // 왼쪽 콘텐츠 (버튼)
   leftButtonClick?: () => void; // 왼쪽 버튼 클릭 핸들러
   leftButtonClassName?: string; // 왼쪽 버튼 추가 스타일링 클래스
   rightContent?: Button; // 오른쪽 콘텐츠 (버튼)
