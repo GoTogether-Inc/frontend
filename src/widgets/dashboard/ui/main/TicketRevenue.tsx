@@ -10,7 +10,7 @@ const TicketRevenue = ({ icon, title, value }: TicketRevenueProps) => {
       <div className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-main rounded-[5px]">{icon}</div>
       <div className="flex flex-col">
         <span className="text-xs md:text-base text-main font-semibold">{title}</span>
-        <h2 className="text-2xl font-bold">{value}</h2>
+        <h2 className="text-16 md:text-xl font-bold">{value}</h2>
       </div>
     </div>
   );
