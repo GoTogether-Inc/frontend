@@ -5,12 +5,12 @@ import EventDatePicker from '../../../features/event/ui/DatePicker';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
-import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
 import { OnlineType } from '../../../shared/types/baseEventType';
 import { AddressSearch } from '../../../shared/ui/AddressSearch';
 import KakaoMap from '../../../shared/ui/KakaoMap';
 import { UpdateEventRequest } from '../../../features/dashboard/model/event';
+import { useEventDetail } from '../../../entities/event/hook/useEventHook';
 
 const EventInfoPage = () => {
   const navigate = useNavigate();
