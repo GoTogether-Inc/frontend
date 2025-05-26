@@ -15,7 +15,7 @@ const BookmarkPage = () => {
         centerContent="관심 있는 이벤트"
         rightContent={
           <button type="button" className="w-5 z-10" onClick={() => navigate('/search')}>
-            <img src={searchIcon} alt="Search Icon" />
+            <img src={searchIcon} alt="Search Icon" className="w-5" />
           </button>
         }
       />
