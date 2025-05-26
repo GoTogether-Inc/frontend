@@ -8,6 +8,7 @@ import EventOverview from '../../../widgets/dashboard/ui/main/EventOverview';
 
 const DashboardPage = () => {
   const { data } = useHostDashboard();
+  const formattedPrice = data?.totalPrice.toLocaleString();
 
   return (
     <DashboardLayout centerContent="대시보드" pinkBg={true}>
@@ -24,7 +25,7 @@ const DashboardPage = () => {
           <TicketRevenue
             icon={<img src={cash} alt="돈" className="w-8 md:w-9" />}
             title="판매 금액"
-            value={`${data?.totalPrice || '-'}원`}
+            value={`${formattedPrice || '-'}원`}
           />
         </div>
       </div>
