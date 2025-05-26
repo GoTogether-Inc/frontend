@@ -46,7 +46,7 @@ const MyTicketPage = () => {
   }, []);
 
   return (
-    <TicketHostLayout image={TicketLogo} centerContent="내 티켓" showText={true}>
+    <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true}>
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-6 mt-28 md:grid-cols-2 lg:grid-cols-2 pb-4">
         {myTickets.length > 0 ? (
