@@ -4,13 +4,12 @@ import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTex
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
-import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 import { myPageSchema } from '../../../shared/lib/formValidation';
-import { useUserInfo,useUserUpdate } from '../../../features/join/hooks/useUserHook';
+import { useUserInfo, useUserUpdate } from '../../../features/join/hooks/useUserHook';
 import useAuthStore from '../../../app/provider/authStore';
 
 const MyPage = () => {
-  const {data, isLoading, error} = useUserInfo();
+  const { data, isLoading, error } = useUserInfo();
   const { mutate: updateUser } = useUserUpdate();
   const { setName } = useAuthStore();
 
@@ -21,7 +20,7 @@ const MyPage = () => {
     formState: { errors },
     setValue,
   } = useForm({
-    defaultValues: { name: data?.name || '', phone: data?.phoneNumber || ''},
+    defaultValues: { name: data?.name || '', phone: data?.phoneNumber || '' },
     ...myPageSchema,
   });
   useEffect(() => {
@@ -31,7 +30,7 @@ const MyPage = () => {
     }
   }, [data, setValue]);
 
-  const onSubmit:  SubmitHandler<{ name: string; phone: string }> = (formData) => {
+  const onSubmit: SubmitHandler<{ name: string; phone: string }> = formData => {
     const { name, phone } = formData;
     const updatedData = {
       id: data?.id || 0,
@@ -44,7 +43,7 @@ const MyPage = () => {
         setName(name);
         alert('정보가 성공적으로 업데이트되었습니다.');
       },
-      onError: (err) => {
+      onError: err => {
         alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
         console.error(err);
       },
@@ -60,10 +59,9 @@ const MyPage = () => {
     }
 
     setIsChanged(changeMessage); // 변경 상태 업데이트
-
   };
   if (isLoading) {
-    return <div>로딩 중...</div>; 
+    return <div>로딩 중...</div>;
   }
   if (error) {
     return <div>정보를 불러오는데 실패했습니다. 다시 시도해주세요.</div>;
@@ -106,7 +104,7 @@ const MyPage = () => {
           <TertiaryButton label="저장하기" color="black" size="large" type="submit" className="w-24 h-8" />
         </form>
       </div>
-      <PaymentCard title={'등록된 카드'} />
+      {/* <PaymentCard title={'등록된 카드'} /> */}
       <BottomBar />
     </div>
   );
