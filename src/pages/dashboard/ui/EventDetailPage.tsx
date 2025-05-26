@@ -5,10 +5,10 @@ import FileUpload from '../../../features/event/ui/FileUpload';
 import LinkInput, { Link } from '../../../features/event/ui/LinkInput';
 import TextEditor from '../../../features/event/ui/TextEditor';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
-import useEventDetail from '../../../entities/event/hook/useEventHook';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
 import { UpdateEventRequest } from '../../../features/dashboard/model/event';
 import { OnlineType } from '../../../shared/types/baseEventType';
+import { useEventDetail } from '../../../entities/event/hook/useEventHook';
 
 const EventDetailPage = () => {
   const navigate = useNavigate();
