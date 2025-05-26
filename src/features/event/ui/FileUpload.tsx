@@ -6,15 +6,17 @@ interface FileUploadProps {
   value?: string;
   onChange?: (url: string) => void;
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  useDefaultImage?: boolean;
 }
 
-const FileUpload = ({ value, onChange, setEventState }: FileUploadProps) => {
+const FileUpload = ({ value, onChange, setEventState, useDefaultImage }: FileUploadProps) => {
   const { previewUrl, fileInputRef, handleFileChange, handleDrop, setIsDragging, isDragging } = useImageUpload({
     value, // 서버에서 받아온 기본 이미지
     onSuccess: url => {
       onChange?.(url);
       setEventState?.(prev => ({ ...prev, bannerImageUrl: url }));
     },
+    useDefaultImage,
   });
 
   return (

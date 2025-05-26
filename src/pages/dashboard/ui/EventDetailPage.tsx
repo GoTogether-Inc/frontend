@@ -66,7 +66,7 @@ const EventDetailPage = () => {
     <DashboardLayout centerContent="WOOACON 2024">
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 상세 정보</h1>
-        <FileUpload value={bannerImageUrl} onChange={setBannerImageUrl} />
+        <FileUpload value={bannerImageUrl} onChange={setBannerImageUrl} useDefaultImage={false} />
         <TextEditor value={description} onChange={setDescription} />
         <LinkInput value={referenceLinks} onChange={setReferenceLinks} />
       </div>

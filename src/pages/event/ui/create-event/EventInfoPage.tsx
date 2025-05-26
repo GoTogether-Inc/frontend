@@ -7,7 +7,7 @@ const EventInfoPage = () => {
   const { setEventState } = useFunnelState();
   return (
     <div className="w-full px-5 space-y-8">
-      <FileUpload setEventState={setEventState} />
+      <FileUpload setEventState={setEventState} useDefaultImage={false} />
       <TextEditor setEventState={setEventState} />
       <LinkInput setEventState={setEventState} />
     </div>
