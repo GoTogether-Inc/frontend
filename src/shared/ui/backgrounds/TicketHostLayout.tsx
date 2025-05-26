@@ -15,7 +15,7 @@ const TicketHostLayout = ({ image, children, centerContent, ticketPage = true }:
   };
   return (
     <div className="relative">
-      <div className="relative top-0 h-32 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
+      <div className="relative w-full top-0 h-32 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
         {/* 헤더 */}
         <Header
           leftButtonLabel="<"
@@ -42,7 +42,7 @@ const TicketHostLayout = ({ image, children, centerContent, ticketPage = true }:
           )}
 
           {!ticketPage && (
-            <p className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-sm whitespace-nowrap">
+            <p className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-11 md:text-sm whitespace-nowrap">
               원을 누르면 주최한 이벤트, 이름을 누르면 호스트 상세 정보 확인이 가능합니다.
             </p>
           )}

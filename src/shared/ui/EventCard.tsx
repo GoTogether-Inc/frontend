@@ -45,7 +45,7 @@ const EventCard = ({
   return (
     <div
       onClick={onClick}
-      className="w-full max-w-full h-full min-h-[240px] md:min-h-[300px] max-h-full p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
+      className="w-full max-w-full h-full min-h-[240px] md:min-h-[300px] max-h-full p-2 md:p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
     >
       {/* 이미지 */}
       <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />
@@ -108,7 +108,7 @@ const EventCard = ({
                 iconPath={<img src={deleteButton} />}
                 size="small"
                 onClick={() => setIsModalOpen(true)}
-                iconClassName="w-7 h-7 bg-red-500 hover:bg-red-600 rounded-[5px]"
+                iconClassName="w-5 h-5 md:w-7 md:h-7 bg-red-500 hover:bg-red-600 rounded-[5px] p-1"
               />
             )}
 
