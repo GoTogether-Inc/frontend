@@ -38,7 +38,7 @@ const EventCard = ({
   return (
     <div
       onClick={onClick}
-      className="w-full h-full md:h-[300px] sm:h-[280px] max-w-full p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
+      className="w-full max-w-full h-full min-h-[240px] md:min-h-[300px] max-h-full p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
     >
       {/* 이미지 */}
       <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />
@@ -69,13 +69,18 @@ const EventCard = ({
         {/* 승인 여부 표시 */}
         {children}
         {/* 해시태그 */}
-        <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
-          {(hashtags ?? []).map((tag, index) => (
-            <span key={index} className="flex items-center justify-center h-6 px-2 mr-2 bg-gray-200 rounded last:mr-0">
-              {tag}
-            </span>
-          ))}
-        </div>
+        {hashtags && (
+          <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
+            {(hashtags ?? []).map((tag, index) => (
+              <span
+                key={index}
+                className="flex items-center justify-center h-6 px-2 mr-2 bg-gray-200 rounded last:mr-0"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* 대시보드 버튼 */}
         {isHostPage && (
