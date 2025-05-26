@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getEventByTag } from '../../../entities/event/api/eventDetail';
+import { getEventByTag } from '../../../entities/event/api/event';
 import { TagType } from '../../../shared/types/baseEventType';
 import { EventItem } from '../../../entities/event/model/eventDetail';
 
