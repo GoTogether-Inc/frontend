@@ -73,7 +73,7 @@ export const getEventByCategory = async (
 };
 
 // 이벤트 삭제 (DELETE)
-export const deleteEvent = async (eventId: number): Promise<ApiResponse<string>> => {
-  const response = await axiosClient.delete<ApiResponse<string>>(`/events/${eventId}`);
+export const eventDeletion = async (eventId: number) => {
+  const response = await axiosClient.delete(`/events/${eventId}`);
   return response.data;
 };
