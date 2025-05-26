@@ -16,8 +16,8 @@ const MyHostPage = () => {
   };
 
   return (
-    <TicketHostLayout image={HostLogo} centerContent="내 호스트">
-      <div className="flex space-x-5 mt-24 mx-5 overflow-x-auto scrollbar-hide">
+    <TicketHostLayout image={HostLogo} centerContent="내 호스트" ticketPage={false}>
+      <div className="flex space-x-5 mt-28 mx-5 overflow-x-auto scrollbar-hide">
         {data?.result.length ? (
           data.result.map(profile => (
             <ProfileCircle

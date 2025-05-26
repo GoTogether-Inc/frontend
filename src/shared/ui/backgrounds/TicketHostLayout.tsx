@@ -5,10 +5,10 @@ interface TicketHostLayoutProps {
   image: string;
   children: React.ReactNode;
   centerContent: string;
-  showText?: boolean;
+  ticketPage?: boolean;
 }
 
-const TicketHostLayout = ({ image, children, centerContent, showText = false }: TicketHostLayoutProps) => {
+const TicketHostLayout = ({ image, children, centerContent, ticketPage = true }: TicketHostLayoutProps) => {
   const navigate = useNavigate();
   const handleBackClick = () => {
     navigate(-1);
@@ -35,10 +35,16 @@ const TicketHostLayout = ({ image, children, centerContent, showText = false }: 
             />
           </div>
 
-          {showText && (
+          {ticketPage && (
             <div className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-sm whitespace-nowrap">
               티켓을 누르면 입장을 위한 QR코드를 확인할 수 있습니다.
             </div>
+          )}
+
+          {!ticketPage && (
+            <p className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-sm whitespace-nowrap">
+              원을 누르면 주최한 이벤트, 이름을 누르면 호스트 상세 정보 확인이 가능합니다.
+            </p>
           )}
         </>
       </div>
