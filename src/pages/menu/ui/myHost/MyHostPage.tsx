@@ -39,15 +39,17 @@ const MyHostPage = () => {
         )}
       </div>
 
-      <div className="flex justify-end mx-6">
-        <TertiaryButton
-          label={deleteBtn ? '완료' : '삭제'}
-          type="button"
-          color="pink"
-          size="small"
-          onClick={() => setDeleteBtn(prev => !prev)}
-        />
-      </div>
+      {hostDetail?.result?.events && hostDetail?.result?.events?.length > 0 && (
+        <div className="flex justify-end mx-6">
+          <TertiaryButton
+            label={deleteBtn ? '완료' : '삭제'}
+            type="button"
+            color="pink"
+            size="small"
+            onClick={() => setDeleteBtn(prev => !prev)}
+          />
+        </div>
+      )}
 
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-5 md:grid-cols-2 lg:grid-cols-2 pb-6">
