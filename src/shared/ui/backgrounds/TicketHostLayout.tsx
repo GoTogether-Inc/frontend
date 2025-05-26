@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
+import HomeButton from '../../../../public/assets/menu/HomeButton.svg';
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
 
 interface TicketHostLayoutProps {
   image: string;
@@ -22,6 +24,13 @@ const TicketHostLayout = ({ image, children, centerContent, ticketPage = true }:
           leftButtonClassName="text-xl z-30"
           leftButtonClick={handleBackClick}
           centerContent={centerContent}
+          rightContent={
+            <IconButton
+              iconPath={<img src={HomeButton} />}
+              onClick={() => navigate('/')}
+              iconClassName="cursor-pointer z-30 ml-auto"
+            />
+          }
           color="white"
         />
 
