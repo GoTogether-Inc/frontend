@@ -47,9 +47,11 @@ const EventCard = ({
       <div className="flex flex-col gap-1 mt-4">
         <div className="flex justify-between">
           <h2 className="text-sm font-semibold line-clamp-2 overflow-hidden">{eventTitle}</h2>
-          <div className="sm:max-w-10 md:max-w-15">
-            <Countdown isChecked>{dDay}</Countdown>
-          </div>
+          {dDay !== 'false' && (
+            <div className="sm:max-w-10 md:max-w-15">
+              <Countdown isChecked>{dDay}</Countdown>
+            </div>
+          )}
         </div>
 
         <p className="text-xs text-gray-500">{host}</p>
