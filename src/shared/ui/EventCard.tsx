@@ -4,6 +4,10 @@ import Countdown from '../../../design-system/ui/texts/Countdown';
 import dateImg from '../../../public/assets/event-manage/details/Date.svg';
 import locationImg from '../../../public/assets/event-manage/details/Location.svg';
 import { formatDate } from '../lib/date';
+import IconButton from '../../../design-system/ui/buttons/IconButton';
+import deleteButton from '../../../public/assets/menu/Delete.svg';
+import { useState } from 'react';
+import DeleteConfirmModal from '../../widgets/host/DeleteConfirmModal';
 
 interface EventCardProps {
   id: number;
@@ -16,6 +20,7 @@ interface EventCardProps {
   hashtags: string[];
   onClick?: () => void;
   children?: React.ReactNode;
+  isDelete?: boolean;
 }
 
 const EventCard = ({
@@ -29,9 +34,11 @@ const EventCard = ({
   hashtags,
   onClick,
   children,
+  isDelete = false,
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
@@ -84,17 +91,33 @@ const EventCard = ({
 
         {/* 대시보드 버튼 */}
         {isHostPage && (
-          <TertiaryButton
-            label="호스트 대시보드 바로가기"
-            type="button"
-            color="pink"
-            size="small"
-            onClick={event => {
-              event?.stopPropagation();
-              navigate(`/dashboard/${id}`);
-            }}
-            className="w-31.5 md:w-33 mt-2"
-          />
+          <div className="flex justify-between items-center h-7">
+            <TertiaryButton
+              label="호스트 대시보드 바로가기"
+              type="button"
+              color="pink"
+              size="small"
+              onClick={event => {
+                event?.stopPropagation();
+                navigate(`/dashboard/${id}`);
+              }}
+              className="w-31.5 md:w-33"
+            />
+            {isDelete && (
+              <IconButton
+                iconPath={<img src={deleteButton} />}
+                size="small"
+                onClick={() => setIsModalOpen(true)}
+                iconClassName="w-7 h-7 bg-red-500 hover:bg-red-600 rounded-[5px]"
+              />
+            )}
+
+            <DeleteConfirmModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onConfirm={() => setIsModalOpen(false)}
+            />
+          </div>
         )}
       </div>
     </div>

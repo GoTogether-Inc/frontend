@@ -5,9 +5,11 @@ import EventCard from '../../../../shared/ui/EventCard';
 import { useState } from 'react';
 import useHostChannelList from '../../../../entities/host/hook/useHostChannelListHook';
 import useHostDetail from '../../../../entities/host/hook/useHostDetailHook';
+import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
+  const [deleteBtn, setDeleteBtn] = useState(false);
   const { data } = useHostChannelList();
   const { data: hostDetail } = useHostDetail(selectedHostId ?? 0);
 
@@ -35,8 +37,18 @@ const MyHostPage = () => {
         )}
       </div>
 
+      <div className="flex justify-end mx-6">
+        <TertiaryButton
+          label={deleteBtn ? '완료' : '삭제'}
+          type="button"
+          color="pink"
+          size="small"
+          onClick={() => setDeleteBtn(prev => !prev)}
+        />
+      </div>
+
       {/* 이벤트 카드 목록 */}
-      <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2 pb-6">
+      <div className="grid grid-cols-2 gap-4 mx-5 md:grid-cols-2 lg:grid-cols-2 pb-6">
         {hostDetail?.result?.events?.map(event => (
           <EventCard
             key={event.id}
@@ -48,6 +60,7 @@ const MyHostPage = () => {
             eventDate={event.startDate}
             location={event.onlineType}
             hashtags={event.hashtags}
+            isDelete={deleteBtn}
           />
         ))}
       </div>
