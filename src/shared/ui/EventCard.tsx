@@ -8,6 +8,7 @@ import IconButton from '../../../design-system/ui/buttons/IconButton';
 import deleteButton from '../../../public/assets/menu/Delete.svg';
 import { useState } from 'react';
 import DeleteConfirmModal from '../../widgets/host/DeleteConfirmModal';
+import { useEventDeletion } from '../../entities/event/hook/useEventHook';
 
 interface EventCardProps {
   id: number;
@@ -21,6 +22,7 @@ interface EventCardProps {
   onClick?: () => void;
   children?: React.ReactNode;
   isDelete?: boolean;
+  onDeleteSuccess?: (eventId: number) => void;
 }
 
 const EventCard = ({
@@ -35,10 +37,12 @@ const EventCard = ({
   onClick,
   children,
   isDelete = false,
+  onDeleteSuccess,
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { mutate } = useEventDeletion();
 
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
@@ -115,7 +119,18 @@ const EventCard = ({
             <DeleteConfirmModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
-              onConfirm={() => setIsModalOpen(false)}
+              onConfirm={() => {
+                mutate(id, {
+                  onSuccess: () => {
+                    onDeleteSuccess?.(id);
+                    setIsModalOpen(false);
+                  },
+                  onError: () => {
+                    alert('이벤트 삭제에 실패했습니다.');
+                    setIsModalOpen(false);
+                  },
+                });
+              }}
             />
           </div>
         )}

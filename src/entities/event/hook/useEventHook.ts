@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { eventDetail } from '../api/event';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { eventDeletion, eventDetail } from '../api/event';
 import { useParams } from 'react-router-dom';
 import { useUserInfo } from '../../../features/join/hooks/useUserHook';
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
 
-const useEventDetail = () => {
+export const useEventDetail = () => {
   const { id } = useParams();
   const { data: user } = useUserInfo();
 
@@ -17,4 +18,11 @@ const useEventDetail = () => {
 
   return { data };
 };
-export default useEventDetail;
+
+export const useEventDeletion = () => {
+  return useMutation<ApiResponse<null>, Error, number>({
+    mutationFn: async (eventId: number) => {
+      return await eventDeletion(eventId);
+    },
+  });
+};

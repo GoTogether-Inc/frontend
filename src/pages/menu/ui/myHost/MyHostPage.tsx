@@ -10,6 +10,8 @@ import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButt
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
   const [deleteBtn, setDeleteBtn] = useState(false);
+  const [deletedEventIds, setDeletedEventIds] = useState<number[]>([]);
+
   const { data } = useHostChannelList();
   const { data: hostDetail } = useHostDetail(selectedHostId ?? 0);
 
@@ -49,20 +51,25 @@ const MyHostPage = () => {
 
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-5 md:grid-cols-2 lg:grid-cols-2 pb-6">
-        {hostDetail?.result?.events?.map(event => (
-          <EventCard
-            key={event.id}
-            id={event.id}
-            img={event.bannerImageUrl}
-            eventTitle={event.title}
-            dDay={event.remainDays}
-            host={event.hostChannelName}
-            eventDate={event.startDate}
-            location={event.onlineType}
-            hashtags={event.hashtags}
-            isDelete={deleteBtn}
-          />
-        ))}
+        {hostDetail?.result?.events
+          ?.filter(event => !deletedEventIds.includes(event.id))
+          .map(event => (
+            <EventCard
+              key={event.id}
+              id={event.id}
+              img={event.bannerImageUrl}
+              eventTitle={event.title}
+              dDay={event.remainDays}
+              host={event.hostChannelName}
+              eventDate={event.startDate}
+              location={event.onlineType}
+              hashtags={event.hashtags}
+              isDelete={deleteBtn}
+              onDeleteSuccess={(deletedEventIds: number) => {
+                setDeletedEventIds(prev => [...prev, deletedEventIds]);
+              }}
+            />
+          ))}
       </div>
     </TicketHostLayout>
   );
