@@ -10,9 +10,9 @@ export const readTicket = {
     return response.data;
   },
   // 주문 상세 조회
-  getDetail: async (ticketId: number, eventId: number) => {
+  getDetail: async (orderId: number) => {
     const response = await axiosClient.get('/orders/purchase-confirmation', {
-      params: { ticketId, eventId },
+      params: { orderId },
     });
     return response.data;
   },

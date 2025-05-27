@@ -11,11 +11,11 @@ export const useTicketOrders = (page: number = 0, size: number = 10) => {
 };
 
 // 주문 상세 조회
-export const useTicketOrderDetail = (ticketId: number, eventId: number) => {
+export const useTicketOrderDetail = (orderId: number) => {
     return useQuery({
-        queryKey: ['ticketOrderDetail', ticketId, eventId],
-        queryFn: () => readTicket.getDetail(ticketId, eventId),
-        enabled: !!ticketId && !!eventId,
+        queryKey: ['ticketOrderDetail', orderId],
+        queryFn: () => readTicket.getDetail(orderId),
+        enabled: !!orderId 
     });
 };
 
