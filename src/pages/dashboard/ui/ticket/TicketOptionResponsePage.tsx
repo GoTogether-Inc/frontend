@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import TicketOption from "../../../../features/payment/ui/TicketOption";
 import TicketOptionLayout from "../../../../shared/ui/backgrounds/TicketOptionLayout";
-import { useTicketOptions } from "../../../../features/ticket/hooks/useTicketHook";
+import { useTicketOptions } from "../../../../features/ticket/hooks/useTicketOptionHook";
 
 const TicketOptionResponsePage = () => {
     const location = useLocation();

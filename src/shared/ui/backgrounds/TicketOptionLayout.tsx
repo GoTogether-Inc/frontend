@@ -7,7 +7,8 @@ import inactive from "../../../../public/assets/payment/Inactive.svg";
 import { useTicketOptionStore } from "../../../features/dashboard/model/store/TicketOptionStore";
 import { useOrderTicket } from "../../../features/ticket/hooks/useOrderHook";
 import { OrderTicketRequest } from "../../../features/ticket/model/orderInformation";
-import { useCreateTicketOptionAnswers, useTickets } from "../../../features/ticket/hooks/useTicketHook";
+import { useTickets } from "../../../features/ticket/hooks/useTicketHook";
+import { useCreateTicketOptionAnswers } from "../../../features/ticket/hooks/useTicketOptionHook";
 
 interface TicketOptionLayoutProps {
     children: React.ReactNode;
