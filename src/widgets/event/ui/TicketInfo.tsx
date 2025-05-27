@@ -3,12 +3,16 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 import { useNavigate } from 'react-router-dom';
 import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
+import { useOrderTicket } from '../../../features/ticket/hooks/useOrderHook';
+import { readTicketOptions } from '../../../features/ticket/api/ticketOption';
 
 const TicketInfo = ({ eventId }: { eventId: number }) => {
   const limitNum = 4;
   const { data, isError, isLoading } = useTickets(eventId);
   const [quantity, setQuantity] = useState<{ [key: number]: number }>({});
   const navigate = useNavigate();
+  const { mutate: orderTickets } = useOrderTicket();
+
   useEffect(() => {
     if (data && data.isSuccess) {
       const initialQuantity: { [key: number]: number } = {};
@@ -33,10 +37,41 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
     }));
   };
 
+  // 바로 결제 
+  const handleDirectOrder = (
+    ticketId: number,
+    eventId: number,
+    ticketCnt: number
+  ) => {
+    const ticketInfo = { ticketId, eventId, ticketCnt };
+    orderTickets(ticketInfo, {
+      onSuccess: (response) => {
+        if (response.isSuccess && Array.isArray(response.result)) {
+          const orderIds = response.result;
+          navigate('/payment/ticket-confirm', {
+            state: { orderIds },
+          });
+        } else {
+          alert('주문 정보를 불러올 수 없습니다.');
+        }
+      },
+    });
+  };
+
   // 티켓 옵션 응답 페이지 이동.
   const orderTicket = async (ticketId: number, eventId: number, ticketCnt: number) => {
-    const orderInfo = { ticketId, eventId, ticketCnt };
-    navigate('/payment/ticket-option-response', { state: orderInfo });
+    try {
+      const res = await readTicketOptions(ticketId);
+      if (res.isSuccess && res.result.length > 0) {
+        const orderInfo = { ticketId, eventId, ticketCnt };
+        navigate('/payment/ticket-option-response', { state: orderInfo });
+      } else {
+        // 옵션 없음 → 바로 결제
+        handleDirectOrder(ticketId, eventId, ticketCnt);
+      }
+    } catch (e) {
+      alert('옵션 정보를 불러오는 중 오류가 발생했습니다.');
+    }
   };
   if (isLoading) return <div>Loading...</div>;
   if (isError || !data || !data.isSuccess) return <div>티켓 정보를 불러올 수 없습니다.</div>;
