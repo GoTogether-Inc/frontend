@@ -1,13 +1,13 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import EventCard from '../../../shared/ui/EventCard';
-import { readTicket } from '../../../features/ticket/api/order';
 import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
+import { useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
 type Ticket = {
   id: number;
   event: {
@@ -30,26 +30,19 @@ type Ticket = {
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [myTickets, setMyTickets] = useState<Ticket[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
-
-  useEffect(() => {
-    const fetchMyTickets = async () => {
-      try {
-        const response = await readTicket.getAll(0, 10);
-        setMyTickets(response.result || []);
-      } catch (error) {
-        console.error('티켓 목록 불러오기 실패:', error);
-      }
-    };
-    fetchMyTickets();
-  }, []);
+  const { data, isLoading, isError } = useTicketOrders(0, 10);
+  const myTickets: Ticket[] = data?.result || [];
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true}>
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-6 mt-28 md:grid-cols-2 lg:grid-cols-2 pb-4">
-        {myTickets.length > 0 ? (
+        {isLoading ? (
+          <p className="col-span-2 text-center text-sm md:text-base">티켓을 불러오는 중입니다...</p>
+        ) : isError ? (
+          <p className="col-span-2 text-center text-sm md:text-base text-red-500">티켓을 불러오는데 실패했습니다.</p>
+        ) : myTickets.length > 0 ? (
           myTickets.map(ticket => (
             <EventCard
               key={ticket.id}
@@ -67,7 +60,7 @@ const MyTicketPage = () => {
               }}
             >
               <div className="flex items-center text-xs text-gray-500">
-                <img src={ticketImg} alt="날짜" className="w-3 h-3 mr-1" />
+                <img src={ticketImg} alt="티켓" className="w-3 h-3 mr-1" />
                 {ticket.ticketName}
               </div>
               <div className="flex items-center text-xs text-gray-500">
