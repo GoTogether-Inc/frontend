@@ -15,7 +15,7 @@ const TicketOptionResponsePage = () => {
     if (!data?.isSuccess) return <div>옵션 정보를 불러오지 못했습니다.</div>;
 
     return (
-        <TicketOptionLayout ticketAmount={ticketCnt} ticketInfo={{ ticketId, eventId, ticketCnt }}>
+        <TicketOptionLayout ticketAmount={ticketCnt} ticketInfo={{ ticketId, eventId, ticketCnt }} options={data?.result}>
             <TicketOption options={data?.result}>
             </TicketOption>
         </TicketOptionLayout>
