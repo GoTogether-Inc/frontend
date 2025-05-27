@@ -39,9 +39,27 @@ export interface TicketOptionResponse {
     choices: TicketOptionChoice[];
 }
 
-// 티켓 옵션 응답
+// 티켓 옵션 응답 전송
 export interface TicketOptionAnswerRequest {
     ticketOptionId: number;
     answerText?: string;
     ticketOptionChoiceId?: number;
 }
+
+// 티켓 옵션 응답 전체 조회
+export type TicketOptionAnswer = {
+  id: number;
+  answer: string;
+};
+
+export type TicketOptionAnswerResponse = {
+  optionId: number;
+  optionName: string;
+  answers: TicketOptionAnswer[];
+};
+
+// 티켓 옵션 응답 개별 조회
+export type PersonalTicketOptionAnswerResponse = {
+  optionName: string;
+  answer: string;
+};

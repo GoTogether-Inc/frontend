@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { TicketOptionAnswerRequest, TicketOptionResponse, TicketResponse } from "../model/ticketInformation";
-import { createTicketOptionAnswers, readTicketOptions } from "../api/ticketOption";
+import { PersonalTicketOptionAnswerResponse, TicketOptionAnswerRequest, TicketOptionAnswerResponse, TicketOptionResponse, TicketResponse } from "../model/ticketInformation";
+import { createTicketOptionAnswers, readPersonalTicketOptionAnswers, readPurchaserAnswers, readTicketOptions } from "../api/ticketOption";
 
+// 티켓 옵션 조회
 export const useTicketOptions = (ticketId: number) => {
     return useQuery<{ isSuccess: boolean; result: TicketOptionResponse[] }>({
         queryKey: ['ticketOptions', ticketId],
@@ -10,6 +11,7 @@ export const useTicketOptions = (ticketId: number) => {
     });
 };
 
+// 티켓 옵션 응답 전송
 export const useCreateTicketOptionAnswers = () => {
     return useMutation<TicketResponse,Error,TicketOptionAnswerRequest>({
         mutationFn: createTicketOptionAnswers,
@@ -20,4 +22,22 @@ export const useCreateTicketOptionAnswers = () => {
             alert("티켓 옵션 응답 전송 중 오류가 발생했습니다.");
         },
     });
+};
+
+// 티켓 옵션 응답 전체 조회
+export const usePurchaserAnswers = (ticketId: number | null) => {
+  return useQuery<{ isSuccess: boolean; result: TicketOptionAnswerResponse[] }>({
+    queryKey: ['purchaserAnswers', ticketId],
+    queryFn: () => readPurchaserAnswers(ticketId!),
+    enabled: !!ticketId,
+  });
+};
+
+// 티켓 옵션 응답 개별 조회
+export const usePersonalTicketOptionAnswers = (ticketId: number | null) => {
+  return useQuery<{ isSuccess: boolean; result: PersonalTicketOptionAnswerResponse[] }>({
+    queryKey: ['personalTicketOptionAnswers', ticketId],
+    queryFn: () => readPersonalTicketOptionAnswers(ticketId!),
+    enabled: !!ticketId,
+  });
 };
