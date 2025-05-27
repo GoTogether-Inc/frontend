@@ -6,10 +6,13 @@ import { useResponseStore } from '../../../features/dashboard/model/store/Respon
 import { responsesInfo } from '../../../shared/types/responseType';
 import { useLocation } from 'react-router-dom';
 import ResponesModal from '../../../widgets/dashboard/ui/response/ResponseModal';
+import { usePurchaserAnswers } from '../../../features/ticket/hooks/useTicketOptionHook';
 
 const ResponseManagementPage = () => {
   const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-  const { response, setResponses, setSelectedResponse, isModalOpen, closeModal } = useResponseStore();
+  const { response, setResponses, setSelectedResponse, isModalOpen, closeModal, selectedTicketId } = useResponseStore();
+  const { data, isSuccess } = usePurchaserAnswers(selectedTicketId);
+  console.log(data)
   const location = useLocation();
   const { participantName, participantEmail } = location.state || {};
   useEffect(() => {
