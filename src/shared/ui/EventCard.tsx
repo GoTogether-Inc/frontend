@@ -111,7 +111,10 @@ const EventCard = ({
               <IconButton
                 iconPath={<img src={deleteButton} />}
                 size="small"
-                onClick={() => setIsModalOpen(true)}
+                onClick={e => {
+                  e.stopPropagation();
+                  setIsModalOpen(true);
+                }}
                 iconClassName="w-5 h-5 md:w-7 md:h-7 bg-red-500 hover:bg-red-600 rounded-[5px] p-1"
               />
             )}
