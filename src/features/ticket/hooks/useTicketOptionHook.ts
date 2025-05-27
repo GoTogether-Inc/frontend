@@ -13,7 +13,7 @@ export const useTicketOptions = (ticketId: number) => {
 
 // 티켓 옵션 응답 전송
 export const useCreateTicketOptionAnswers = () => {
-    return useMutation<TicketResponse,Error,TicketOptionAnswerRequest>({
+    return useMutation<TicketResponse, Error, TicketOptionAnswerRequest>({
         mutationFn: createTicketOptionAnswers,
         onSuccess: () => {
             console.log("티켓 옵션 응답 전송 성공");
@@ -26,18 +26,28 @@ export const useCreateTicketOptionAnswers = () => {
 
 // 티켓 옵션 응답 전체 조회
 export const usePurchaserAnswers = (ticketId: number | null) => {
-  return useQuery<{ isSuccess: boolean; result: TicketOptionAnswerResponse[] }>({
-    queryKey: ['purchaserAnswers', ticketId],
-    queryFn: () => readPurchaserAnswers(ticketId!),
-    enabled: !!ticketId,
-  });
+    return useQuery<{ isSuccess: boolean; result: TicketOptionAnswerResponse[] }>({
+        queryKey: ['purchaserAnswers', ticketId],
+        queryFn: () => {
+            if (ticketId === null) {
+                throw new Error("ticketId is required");
+            }
+            return readPurchaserAnswers(ticketId);
+        },
+        enabled: !!ticketId,
+    });
 };
 
 // 티켓 옵션 응답 개별 조회
 export const usePersonalTicketOptionAnswers = (ticketId: number | null) => {
-  return useQuery<{ isSuccess: boolean; result: PersonalTicketOptionAnswerResponse[] }>({
-    queryKey: ['personalTicketOptionAnswers', ticketId],
-    queryFn: () => readPersonalTicketOptionAnswers(ticketId!),
-    enabled: !!ticketId,
-  });
+    return useQuery<{ isSuccess: boolean; result: PersonalTicketOptionAnswerResponse[] }>({
+        queryKey: ['personalTicketOptionAnswers', ticketId],
+        queryFn: () => {
+            if (ticketId === null) {
+                throw new Error("ticketId is required");
+            }
+            return readPersonalTicketOptionAnswers(ticketId);
+        },
+        enabled: !!ticketId,
+    });
 };
