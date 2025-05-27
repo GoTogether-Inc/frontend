@@ -26,7 +26,6 @@ const TicketOption = ({ options }: TicketOptionProps) => {
         : [...prevValues, value as number];
       setOption(currentPage, optionId, newValues);
     }
-    console.log(selectedOptions)
   };
 
   return (
