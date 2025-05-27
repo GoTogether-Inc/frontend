@@ -4,12 +4,15 @@ import ResponseFilter from './ResponseFilter';
 import SelectedResponseList from './SelectedResponseList';
 import { createFieldMappings } from '../../../shared/lib/createFieldMappings';
 import { useEffect } from 'react';
+import { TicketOptionAnswerResponse } from '../../ticket/model/ticketInformation';
+import MultiplePieCharts from './MultiplePieCharts';
 
 interface ResponsesListProps {
   listType: 'summary' | 'query' | 'individual';
+  ticketOptionResponses: TicketOptionAnswerResponse[];
 }
 
-const ResponsesList = ({ listType }: ResponsesListProps) => {
+const ResponsesList = ({ listType, ticketOptionResponses }: ResponsesListProps) => {
   const {
     response,
     selectedField,
@@ -23,11 +26,11 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
   const queryOptions =
     response && response[0]
       ? Object.keys(response[0])
-          .filter(key => key !== 'id' && key !== 'selectedOptions')
-          .map(key => ({
-            v1: fieldMap[key] || key,
-            v2: '',
-          }))
+        .filter(key => key !== 'id' && key !== 'selectedOptions')
+        .map(key => ({
+          v1: fieldMap[key] || key,
+          v2: '',
+        }))
       : [];
 
   useEffect(() => {
@@ -69,10 +72,12 @@ const ResponsesList = ({ listType }: ResponsesListProps) => {
       case 'summary':
         return (
           <>
-            {renderSection('name', 'name', true)}
-            {renderSection('phone', 'phone', true)}
-            {renderSection('email', 'email', true)}
-            {renderSection('grade', 'grade', true)}
+            <div className="flex justify-center">
+              <div style={{ minWidth: '300px', maxWidth: '600px', width: '100%' }}>
+                <MultiplePieCharts responses={ticketOptionResponses} />
+              </div>
+              
+            </div>
           </>
         );
       case 'query':

@@ -11,7 +11,7 @@ import { usePurchaserAnswers } from '../../../features/ticket/hooks/useTicketOpt
 const ResponseManagementPage = () => {
   const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
   const { response, setResponses, setSelectedResponse, isModalOpen, closeModal, selectedTicketId } = useResponseStore();
-  const { data, isSuccess } = usePurchaserAnswers(selectedTicketId);
+  const { data } = usePurchaserAnswers(selectedTicketId);
   console.log(data)
   const location = useLocation();
   const { participantName, participantEmail } = location.state || {};
@@ -34,7 +34,7 @@ const ResponseManagementPage = () => {
         <div className="flex justify-center">
           <ResponsesFilterBar listType={listType} setListType={setListType} />
         </div>
-        <ResponsesList listType={listType} />
+        <ResponsesList listType={listType} ticketOptionResponses={data?.result ?? []} />
       </div>
     </DashboardLayout>
   );
