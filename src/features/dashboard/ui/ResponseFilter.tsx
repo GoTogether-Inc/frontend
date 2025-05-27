@@ -7,7 +7,7 @@ import leftButton from '../../../../public/assets/main/LeftButton.svg';
 
 interface ResponseFilterProps {
     responses: responsesData[];
-    listType: 'summary' | 'query' | 'individual';
+    listType: 'summary' | 'individual';
     selectedField: { v1: string; v2: string };
     setSelectedField: (v1: string, v2: string) => void;
     setCurrentIndex: (updateFn: (prevIndex: number) => number) => void;
@@ -50,8 +50,7 @@ const ResponseFilter = ({
                         selectedValue={selectedField.v1}
                         onSelect={(selectedName, selectedEmail) => {
                             const selectedOption = options.find(opt =>
-                                (listType === 'query' ? fieldMapToKorean[opt.v1] === selectedName : opt.v1 === selectedName) &&
-                                opt.v2 === selectedEmail
+                                opt.v1 === selectedName && opt.v2 === selectedEmail
                             );
                             if (selectedOption) {
                                 setSelectedField(selectedOption.v1, selectedOption.v2);

@@ -1,8 +1,8 @@
 import TextButton from '../../../../design-system/ui/buttons/TextButton';
 
 interface ResponsesFilterBarProps {
-  listType: 'summary' | 'query' | 'individual';
-  setListType: (type: 'summary' | 'query' | 'individual') => void;
+  listType: 'summary' | 'individual';
+  setListType: (type: 'summary' | 'individual') => void;
 }
 
 const ResponsesFilterBar = ({
@@ -15,11 +15,6 @@ const ResponsesFilterBar = ({
           label="요약"
           onClick={() => setListType('summary')}
           className={listType === 'summary' ? 'text-main' : ''}
-        />
-        <TextButton
-          label="질문"
-          onClick={() => setListType('query')}
-          className={listType === 'query' ? 'text-main' : ''}
         />
         <TextButton
           label="개별 조회"

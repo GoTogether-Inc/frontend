@@ -26,7 +26,6 @@ const MultiplePieCharts = ({ responses }: MultiplePieChartsProps) => {
     <div className="grid grid-cols-1 gap-6 p-4">
       {responses.map((option, _index) => {
         const data = aggregateAnswers(option.answers);
-        const allSame = data.length === 1;
 
         return (
           <div key={option.optionId} className="flex flex-col items-center">
@@ -41,7 +40,7 @@ const MultiplePieCharts = ({ responses }: MultiplePieChartsProps) => {
                   cy="50%"
                   outerRadius={80}
                   label
-                  stroke={allSame ? "none" : "white"}
+                  stroke="none"
                 >
                   {data.map((_, i) => (
                     <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />

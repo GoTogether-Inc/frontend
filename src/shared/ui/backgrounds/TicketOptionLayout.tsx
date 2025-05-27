@@ -9,14 +9,16 @@ import { useOrderTicket } from "../../../features/ticket/hooks/useOrderHook";
 import { OrderTicketRequest } from "../../../features/ticket/model/orderInformation";
 import { useTickets } from "../../../features/ticket/hooks/useTicketHook";
 import { useCreateTicketOptionAnswers } from "../../../features/ticket/hooks/useTicketOptionHook";
+import { TicketOptionResponse } from "../../../features/ticket/model/ticketInformation";
 
 interface TicketOptionLayoutProps {
     children: React.ReactNode;
     ticketAmount: number;
     ticketInfo: OrderTicketRequest;
+    options: TicketOptionResponse[];
 }
 
-const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOptionLayoutProps) => {
+const TicketOptionLayout = ({ children, ticketAmount, ticketInfo, options }: TicketOptionLayoutProps) => {
     const navigate = useNavigate();
     const { currentPage, setCurrentPage, selectedOptions, resetOptions } = useTicketOptionStore();
     const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
@@ -27,6 +29,7 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOption
         (ticket) => ticket.ticketId === ticketInfo.ticketId
     );
     const { mutate: submitAnswers } = useCreateTicketOptionAnswers();
+    console.log(selectedOptions)
 
     //페이지
     const pageIndicator = Array(ticketAmount).fill(" . ");
@@ -35,7 +38,28 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOption
     //버튼 텍스트
     const isLastPage = currentPage === ticketAmount;
     const buttonText = isLastPage ? "결제하기" : "다음 티켓 옵션 선택하기";
+
     const handleNextPage = () => {
+        const currentOptions = selectedOptions[currentPage];
+        const requiredOptions = options.filter((opt) => opt.isMandatory);
+        const isValid = requiredOptions.every((opt) => {
+            const answer = currentOptions?.[opt.id];
+            if (opt.type === "TEXT") {
+                return typeof answer === "string" && answer.trim() !== "";
+            }
+            if (opt.type === "SINGLE") {
+                return typeof answer === "number";
+            }
+            if (opt.type === "MULTIPLE") {
+                return Array.isArray(answer) && answer.length > 0;
+            }
+            return false;
+        });
+        if (!isValid) {
+            alert("필수 옵션을 모두 입력해주세요.");
+            return;
+        }
+
         if (isLastPage) {
             const sendAnswersByPage = async () => {
                 for (const pageIndex of Object.keys(selectedOptions).sort((a, b) => Number(a) - Number(b))) {
@@ -73,11 +97,7 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOption
                         onSuccess: (response) => {
                             if (response.isSuccess && Array.isArray(response.result)) {
                                 const orderIds = response.result;
-                                navigate('/payment/ticket-confirm', {
-                                    state: { orderIds, ...ticketInfo }
-                                });
-                            } else {
-                                alert("주문 정보를 불러올 수 없습니다.");
+                                navigate('/payment/ticket-confirm', { state: { orderIds } });
                             }
                         },
                     });
@@ -128,23 +148,23 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo }: TicketOption
                 </div>
             </div>
 
-      <div className="flex flex-col mt-8 mx-auto w-[85%]">
-        <p className="font-bold text-sm md:text-base">추가 옵션</p>
-        <p className="text-xs md:text-sm text-gray-500 mt-2">
-          구매하는 티켓에 추가적으로 선택할 수 있는 옵션들이 있습니다.
-        </p>
-      </div>
+            <div className="flex flex-col mt-8 mx-auto w-[85%]">
+                <p className="font-bold text-sm md:text-base">추가 옵션</p>
+                <p className="text-xs md:text-sm text-gray-500 mt-2">
+                    구매하는 티켓에 추가적으로 선택할 수 있는 옵션들이 있습니다.
+                </p>
+            </div>
 
-      {/* 내용 영역 */}
-      <div className="flex flex-col w-[85%] mx-auto mt-4">
-        {children}
-        <div className="flex flex-grow" />
-        <div className="w-full p-6">
-          <Button label={buttonText} onClick={handleNextPage} className="w-full h-12 rounded-full" />
+            {/* 내용 영역 */}
+            <div className="flex flex-col w-[85%] mx-auto mt-4">
+                {children}
+                <div className="flex flex-grow" />
+                <div className="w-full p-6">
+                    <Button label={buttonText} onClick={handleNextPage} className="w-full h-12 rounded-full" />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default TicketOptionLayout;

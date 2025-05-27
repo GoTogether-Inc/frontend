@@ -3,34 +3,32 @@ import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import ResponsesFilterBar from '../../../widgets/dashboard/ui/ResponsesFilterBar';
 import ResponsesList from '../../../features/dashboard/ui/ResponsesList';
 import { useResponseStore } from '../../../features/dashboard/model/store/ResponseStore';
-import { responsesInfo } from '../../../shared/types/responseType';
 import { useLocation } from 'react-router-dom';
 import ResponesModal from '../../../widgets/dashboard/ui/response/ResponseModal';
 import { usePurchaserAnswers } from '../../../features/ticket/hooks/useTicketOptionHook';
 
 const ResponseManagementPage = () => {
-  const [listType, setListType] = useState<'summary' | 'query' | 'individual'>('summary');
-  const { response, setResponses, setSelectedResponse, isModalOpen, closeModal, selectedTicketId } = useResponseStore();
+  const [listType, setListType] = useState<'summary' | 'individual'>('summary');
+  const { setSelectedResponse, isModalOpen, closeModal, selectedTicketId } = useResponseStore();
   const { data } = usePurchaserAnswers(selectedTicketId);
   console.log(data)
   const location = useLocation();
   const { participantName, participantEmail } = location.state || {};
-  useEffect(() => {
-    setResponses(responsesInfo);
-  }, [setResponses]);
+
   useEffect(() => {
     if (participantName) {
       setListType('individual');
       setSelectedResponse(participantName, participantEmail);
     }
   }, [participantName]);
+
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
       {isModalOpen && (
         <ResponesModal onClose={closeModal}></ResponesModal>
       )}
       <div className="flex flex-col px-2 md:px-4">
-        <h1 className="text-left font-semibold md:text-2xl text-xl py-4 md:py-6 pl-4">응답 {response.length}개</h1>
+        <h1 className="text-left font-semibold md:text-2xl text-xl py-4 md:py-6 pl-4">응답 {data?.result.length}개</h1>
         <div className="flex justify-center">
           <ResponsesFilterBar listType={listType} setListType={setListType} />
         </div>
