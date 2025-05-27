@@ -23,7 +23,7 @@ export const readPurchaserAnswers = async (ticketId: number): Promise<{ isSucces
 
 // 티켓 옵션 응답 개별 조회
 export const readPersonalTicketOptionAnswers = async (ticketId: number): Promise<{ isSuccess: boolean; result: PersonalTicketOptionAnswerResponse[] }> => {
-  const response = await axiosClient.get("/api/v1/ticket-option-answers", {
+  const response = await axiosClient.get("/ticket-option-answers", {
     params: { ticketId },
   });
   return response.data;
