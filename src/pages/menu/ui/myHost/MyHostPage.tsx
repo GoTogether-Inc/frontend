@@ -10,7 +10,7 @@ import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButt
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
   const [deleteBtn, setDeleteBtn] = useState(false);
-  const [deletedEventIds, setDeletedEventIds] = useState<number[]>([]);
+  const [deletedEventId, setDeletedEventId] = useState<number[]>([]);
 
   const { data } = useHostChannelList();
   const { data: hostDetail } = useHostDetail(selectedHostId ?? 0);
@@ -54,7 +54,7 @@ const MyHostPage = () => {
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-5 md:grid-cols-2 lg:grid-cols-2 pb-6">
         {hostDetail?.result?.events
-          ?.filter(event => !deletedEventIds.includes(event.id))
+          ?.filter(event => !deletedEventId.includes(event.id))
           .map(event => (
             <EventCard
               key={event.id}
@@ -67,8 +67,8 @@ const MyHostPage = () => {
               location={event.onlineType}
               hashtags={event.hashtags}
               isDelete={deleteBtn}
-              onDeleteSuccess={(deletedEventIds: number) => {
-                setDeletedEventIds(prev => [...prev, deletedEventIds]);
+              onDeleteSuccess={(deletedEventId: number) => {
+                setDeletedEventId(prev => [...prev, deletedEventId]);
               }}
             />
           ))}
