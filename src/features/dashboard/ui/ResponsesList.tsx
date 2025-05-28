@@ -94,7 +94,7 @@ const ResponsesList = ({ listType, ticketOptionResponses, ticketId }: ResponsesL
 };
 export default ResponsesList;
 
-const examplePersonalResponse: PersonalTicketOptionAnswerResponse[] = [
+export const examplePersonalResponse: PersonalTicketOptionAnswerResponse[] = [
   {
     userId: 2,
     orders: [

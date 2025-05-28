@@ -5,6 +5,10 @@ import { participantsData } from '../../../shared/types/participantInfoType';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApproveParticipants } from '../hook/useParticipants';
+import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
+import { useState } from 'react';
+import { examplePersonalResponse } from './ResponsesList';
+import OrderAnswerModal from '../../../widgets/dashboard/ui/response/OrderAnswerModal';
 
 interface ParticipantCardProps {
   participant: participantsData;
@@ -15,7 +19,15 @@ interface ParticipantCardProps {
 const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
   const { approvedParticipants } = useParticipantStore();
   const navigate = useNavigate();
-  const id = useParams();
+  const { id } = useParams();
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  //const { data } = usePersonalTicketOptionAnswers(Number(id));
+  const order = examplePersonalResponse
+    .flatMap(user => user.orders)
+    .find(order => order.orderId === 3422);
+    console.log('order:', order);
+    // participant.orderNumber로 수정
 
   const { mutate: approveParticipant } = useApproveParticipants(participant.orderNumber);
 
@@ -40,14 +52,17 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
             label="확인하기"
             color="pink"
             size="small"
-            onClick={() => {
-              navigate(`/dashboard/${id}/responses-management`, {
-                state: {
-                  participantName: participant.participant,
-                  participantEmail: participant.email,
-                },
-              });
-            }}
+            onClick={() => setModalOpen(true)
+            //   {
+            //   navigate(`/dashboard/${id}/responses-management`, {
+            //     state: {
+            //       participantName: participant.participant,
+            //       participantEmail: participant.email,
+            //     },
+            //   });
+            // }
+            
+          }
           />
         }
         {participant.checkIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
@@ -61,6 +76,13 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
             size="small"
             color="pink"
             onClick={() => approveParticipant({ orderId: participant.orderNumber })}
+          />
+        )}
+        {order && (
+          <OrderAnswerModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            order={order}
           />
         )}
       </div>
