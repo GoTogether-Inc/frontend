@@ -14,7 +14,7 @@ const TicketConfirmPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const orderIds: number[] = location.state?.orderIds || [];
-  const orderId = location.state?.orderId || 0;
+  const orderId = orderIds.length > 0 ? orderIds[0] : 0;
   const { data, isLoading, isError } = useTicketOrderDetail(orderId);
   const ticket = data?.result as TicketConfirm | undefined;
   const { mutate: cancelTicket } = useCancelTicket();
