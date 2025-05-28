@@ -1,7 +1,10 @@
+import {  TicketOptionAnswerRequest } from "./ticketInformation";
+
 export interface OrderTicketRequest {
     ticketId: number;
     eventId: number;
     ticketCnt: number;
+    ticketOptionAnswers: TicketOptionAnswerRequest[][];
 }
 export interface TicketConfirm {
     id: number;

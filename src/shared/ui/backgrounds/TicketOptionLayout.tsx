@@ -8,8 +8,7 @@ import { useTicketOptionStore } from "../../../features/dashboard/model/store/Ti
 import { useOrderTicket } from "../../../features/ticket/hooks/useOrderHook";
 import { OrderTicketRequest } from "../../../features/ticket/model/orderInformation";
 import { useTickets } from "../../../features/ticket/hooks/useTicketHook";
-import { useCreateTicketOptionAnswers } from "../../../features/ticket/hooks/useTicketOptionHook";
-import { TicketOptionAnswerRequest, TicketOptionResponse } from "../../../features/ticket/model/ticketInformation";
+import { TicketOptionResponse } from "../../../features/ticket/model/ticketInformation";
 import { buildTicketOptionAnswers } from "../../../features/ticket/util/buildTicketOptionAnswers";
 
 interface TicketOptionLayoutProps {
@@ -29,7 +28,6 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo, options }: Tic
     const ticketObj = ticketData?.result.find(
         (ticket) => ticket.ticketId === ticketInfo.ticketId
     );
-    const { mutate: submitAnswers } = useCreateTicketOptionAnswers();
 
     //페이지
     const pageIndicator = Array(ticketAmount).fill(" . ");
@@ -61,49 +59,6 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo, options }: Tic
         }
 
         if (isLastPage) {
-            // const sendAnswersByPage = async () => {
-            //     for (const pageIndex of Object.keys(selectedOptions).sort((a, b) => Number(a) - Number(b))) {
-            //         const optionsForPage = selectedOptions[Number(pageIndex)];
-
-            //         for (const [optionIdStr, value] of Object.entries(optionsForPage)) {
-            //             const optionId = Number(optionIdStr);
-
-            //             if (typeof value === "string") {
-            //                 submitAnswers({
-            //                     ticketOptionId: optionId,
-            //                     answerText: value,
-            //                 });
-            //             } else if (typeof value === "number") {
-            //                 submitAnswers({
-            //                     ticketOptionId: optionId,
-            //                     ticketOptionChoiceId: value,
-            //                 });
-            //             } else if (Array.isArray(value)) {
-            //                 for (const choiceId of value) {
-            //                     submitAnswers({
-            //                         ticketOptionId: optionId,
-            //                         ticketOptionChoiceId: choiceId,
-            //                     });
-            //                 }
-            //             }
-            //         }
-            //     }
-            // };
-            // sendAnswersByPage()
-            //     .then(() => {
-            //         resetOptions();
-            //         orderTickets(ticketInfo, {
-            //             onSuccess: (response) => {
-            //                 if (response.isSuccess && Array.isArray(response.result)) {
-            //                     const orderIds = response.result;
-            //                     navigate('/payment/ticket-confirm', { state: { orderIds } });
-            //                 }
-            //             },
-            //         });
-            //     })
-            //     .catch(() => {
-            //         alert("옵션 답변 전송 중 오류가 발생했습니다.");
-            //     });
             if (isLastPage) {
                 const sendAnswersByPage = async () => {
                     const ticketOptionAnswers = buildTicketOptionAnswers(selectedOptions);
@@ -114,7 +69,7 @@ const TicketOptionLayout = ({ children, ticketAmount, ticketInfo, options }: Tic
                     orderTickets(
                         {
                             ...ticketInfo,
-                            //ticketOptionAnswers, 
+                            ticketOptionAnswers, 
                         },
                         {
                             onSuccess: (response) => {

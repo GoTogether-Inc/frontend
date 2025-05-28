@@ -11,9 +11,7 @@ export const readTicket = {
   },
   // 주문 상세 조회
   getDetail: async (orderId: number) => {
-    const response = await axiosClient.get('/orders/purchase-confirmation', {
-      params: { orderId },
-    });
+    const response = await axiosClient.get(`/orders/${orderId}/purchase-confirmation`);
     return response.data;
   },
 };
