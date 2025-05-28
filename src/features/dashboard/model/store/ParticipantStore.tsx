@@ -20,8 +20,8 @@ export const useParticipantStore = create<ParicipantState>((set, get) => ({
   all: false,
   participants: {},
   approvedParticipants: {},
-   selectedTicketId: 0,
-  selectedOrderId: 0,
+  selectedTicketId: null,
+  selectedOrderId: null,
 
   // 초기 데이터 세팅
   initializeParticipants: participantList => {

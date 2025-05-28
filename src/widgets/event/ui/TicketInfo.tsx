@@ -69,7 +69,7 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
         // 옵션 없음 → 바로 결제
         handleDirectOrder(ticketId, eventId, ticketCnt);
       }
-    } catch (e) {
+    } catch {
       alert('옵션 정보를 불러오는 중 오류가 발생했습니다.');
     }
   };

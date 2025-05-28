@@ -53,14 +53,14 @@ const IndividualResponseViewer = ({ orders, currentIndex, setCurrentIndex }: Ind
                     <div key={optionName} className="border border-gray-300 rounded-md p-4 mb-4 bg-white shadow-sm">
                         <p className="font-semibold mb-2">{optionName}</p>
                         {optionType === 'TEXT' ? (
-                            <UnderlineTextField
-                                label={""}
-                                value={answers[0]}
-                                onChange={() => { }}
-                                className="mb-0"
-                            />
+                            <div className="mb-4">
+                                <p className="w-full border-b border-gray-300 py-2 px-1 text-sm font-semibold text-gray-800">
+                                    {answers[0]}
+                                </p>
+                            </div>
                         ) : (
                             <ul className="space-y-1">
+                                
                                 {answers.map((ans, idx) => (
                                     <li key={idx}>
                                         <Checkbox
