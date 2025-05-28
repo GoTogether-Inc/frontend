@@ -32,7 +32,7 @@ const ResponseManagementPage = () => {
         <div className="flex justify-center">
           <ResponsesFilterBar listType={listType} setListType={setListType} />
         </div>
-        <ResponsesList listType={listType} ticketOptionResponses={data?.result ?? []} />
+        <ResponsesList listType={listType} ticketOptionResponses={data?.result ?? []} ticketId={selectedTicketId || 0} />
       </div>
     </DashboardLayout>
   );

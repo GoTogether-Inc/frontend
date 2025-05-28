@@ -61,15 +61,15 @@ export type TicketOptionAnswerResponse = {
 
 
 // 티켓 옵션 응답 개별 조회
-export type PersonalTicketOptionAnswerResponse = {
-  optionName: string;
-  answer: string;
-};
-
 // export type PersonalTicketOptionAnswerResponse = {
-//   userId: number;
-//   orders: Order[];
+//   optionName: string;
+//   answer: string;
 // };
+
+export type PersonalTicketOptionAnswerResponse = {
+  userId: number;
+  orders: Order[];
+};
 export interface Order {
   orderId: number;
   optionAnswers: OptionAnswer[];
