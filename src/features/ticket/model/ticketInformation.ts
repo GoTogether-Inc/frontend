@@ -44,6 +44,7 @@ export interface TicketOptionAnswerRequest {
     ticketOptionId: number;
     answerText?: string;
     ticketOptionChoiceId?: number;
+    ticketOptionChoiceIds?: number[];
 }
 
 // 티켓 옵션 응답 전체 조회
