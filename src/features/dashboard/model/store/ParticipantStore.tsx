@@ -9,22 +9,29 @@ interface ParicipantState {
   toggleAll: () => void;
   toggleParticipant: (orderNumber: number) => void; // 특정 항목 상태
   toggleApproveParticipant: (orderNumber: number) => void;
+
+  selectedTicketId: number | null;
+  selectedOrderId: number | null;
+  setSelectedTicketId: (id: number) => void;
+  setSelectedOrderId: (id: number) => void;
 }
 
 export const useParticipantStore = create<ParicipantState>((set, get) => ({
   all: false,
   participants: {},
   approvedParticipants: {},
+   selectedTicketId: 0,
+  selectedOrderId: 0,
 
   // 초기 데이터 세팅
   initializeParticipants: participantList => {
     const initialCheckedState = participantList.reduce((acc, p) => {
-      acc[p.orderNumber] = false; // 초기 상태는 모두 체크 해제
+      acc[p.orderId] = false; // 초기 상태는 모두 체크 해제
       return acc;
     }, {} as Record<string, boolean>);
 
     const initialApprovedState = participantList.reduce((acc, p) => {
-      acc[p.orderNumber] = p.approved;
+      acc[p.orderId] = p.approved;
       return acc;
     }, {} as Record<string, boolean>);
 
@@ -70,4 +77,11 @@ export const useParticipantStore = create<ParicipantState>((set, get) => ({
       },
     }));
   },
+
+  setSelectedTicketId: (ticketId) => {
+    set({selectedTicketId: ticketId})
+  },
+  setSelectedOrderId: (orderId) => {
+    set({selectedOrderId: orderId})
+  }
 }));

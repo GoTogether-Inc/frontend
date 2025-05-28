@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '../../../../design-system/ui/Checkbox';
 import ParticipantCard from './ParicipantCard';
 import { useParticipantStore } from '../model/store/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
+import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
+import OrderAnswerModal from '../../../widgets/dashboard/ui/response/OrderAnswerModal';
 
 interface ParticipantsListProps {
   listType: 'all' | 'approved' | 'pending';
@@ -17,7 +19,42 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
     initializeParticipants,
     toggleAll,
     toggleParticipant,
+    selectedTicketId,
+    selectedOrderId,
+    setSelectedTicketId,
+    setSelectedOrderId
   } = useParticipantStore();
+
+  const { data } = usePersonalTicketOptionAnswers(selectedTicketId);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+
+  const handleCheckClick = (ticketId: number, orderId: number) => {
+    setSelectedTicketId(ticketId);
+    setSelectedOrderId(orderId);
+  };
+
+  useEffect(() => {
+    if (!data || !selectedOrderId) {
+      setSelectedOrder(null);
+      setModalOpen(false);
+      return;
+    }
+
+    const order = data.result
+      .flatMap(user => user.orders)
+      .find(order => order.orderId === selectedOrderId);
+
+    if (!order) {
+      alert('응답 데이터가 없습니다.');
+      setSelectedOrder(null);
+      setModalOpen(false);
+      return;
+    }
+
+    setSelectedOrder(order);
+    setModalOpen(true);
+  }, [data, selectedOrderId]);
 
   useEffect(() => {
     initializeParticipants(participants);
@@ -61,10 +98,23 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
           <ParticipantCard
             key={participant.id}
             participant={participant}
-            checked={selectedParticipants[participant.orderNumber] || false}
-            onChange={() => toggleParticipant(participant.orderNumber)}
+            checked={selectedParticipants[participant.orderId] || false}
+            onChange={() => toggleParticipant(participant.orderId)}
+            onCheckClick={() => handleCheckClick(participant.ticketId, participant.orderId)}
           />
         ))
+      )}
+      {selectedOrder && (
+        <OrderAnswerModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setModalOpen(false);
+            setSelectedOrder(null);
+            setSelectedTicketId(0);
+            setSelectedOrderId(0);
+          }}
+          order={selectedOrder}
+        />
       )}
     </div>
   );

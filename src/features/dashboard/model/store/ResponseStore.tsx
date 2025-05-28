@@ -57,5 +57,5 @@ export const useResponseStore = create<ResponseState>(set => ({
 
   setSelectedTicketId: (ticketId) => {
     set({selectedTicketId: ticketId})
-  }
+  },
 }));
