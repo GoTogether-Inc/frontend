@@ -23,20 +23,58 @@ const ResponsesList = ({ listType, ticketOptionResponses }: ResponsesListProps) 
     setCurrentIndex(() => 0);
   }, [listType, setCurrentIndex]);
 
+  // const renderTextResponses = (responses: TicketOptionAnswerResponse[]) => {
+  //   const textResponses = responses.filter((res) => res.optionType === 'TEXT');
+
+  //   if (textResponses.length === 0) return null;
+
+  //   return (
+  //     <>
+  //       {textResponses.map((textResponse) => (
+  //         <div className="bg-white p-4 flex flex-col gap-2 mb-4" key={textResponse.optionId}>
+  //           <div className="flex justify-between items-center text-xs bg-white px-2 md:px-3 py-3">
+  //             <p className="text-base font-bold">{textResponse.optionName}</p>
+  //             <p>응답 {textResponse.answers.length}개</p>
+  //           </div>
+
+  //           {textResponse.answers.length === 0 ? (
+  //             <p>응답이 없습니다.</p>
+  //           ) : (
+  //             <div className="h-full max-h-48 overflow-y-auto space-y-2">
+  //               {textResponse.answers.map((answer) => (
+  //                 <div
+  //                   className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3 gap-2"
+  //                   key={answer.id}
+  //                 >
+  //                   <p>{answer.answer}</p>
+  //                 </div>
+  //               ))}
+  //             </div>
+  //           )}
+  //         </div>
+  //       ))}
+  //     </>
+  //   );
+  // };
+
+
   const renderList = () => {
     switch (listType) {
       case 'summary':
+        // const filteredResponses = ticketOptionResponses.filter(
+        //   (option) => option.optionType !== 'TEXT'
+        // );
         return (
           <>
             <div className="flex justify-center">
               <div style={{ minWidth: '300px', maxWidth: '600px', width: '100%' }}>
                 <MultiplePieCharts responses={ticketOptionResponses} />
               </div>
-              
             </div>
+            {/* {renderTextResponses(ticketOptionResponses)} */}
           </>
         );
-      
+
       case 'individual':
         return (
           <div>

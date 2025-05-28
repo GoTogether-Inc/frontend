@@ -51,15 +51,31 @@ export type TicketOptionAnswer = {
   id: number;
   answer: string;
 };
-
 export type TicketOptionAnswerResponse = {
   optionId: number;
   optionName: string;
+  //optionType: 'SINGLE' | 'MULTIPLE' | 'TEXT';
   answers: TicketOptionAnswer[];
 };
+
+
 
 // 티켓 옵션 응답 개별 조회
 export type PersonalTicketOptionAnswerResponse = {
   optionName: string;
   answer: string;
 };
+
+// export type PersonalTicketOptionAnswerResponse = {
+//   userId: number;
+//   orders: Order[];
+// };
+export interface Order {
+  orderId: number;
+  optionAnswers: OptionAnswer[];
+}
+export interface OptionAnswer {
+  optionName: string;
+  optionType: 'SINGLE' | 'MULTIPLE' | 'TEXT';
+  answer: string;
+}
