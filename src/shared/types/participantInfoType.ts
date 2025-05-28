@@ -1,6 +1,7 @@
 export interface participantsData {
   id: number;
-  orderNumber: number;
+  orderId: number;
+  ticketId: number;
   participant: string;
   email: string;
   phoneNumber: string;

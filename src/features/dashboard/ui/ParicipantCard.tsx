@@ -4,36 +4,25 @@ import { useParticipantStore } from '../model/store/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useApproveParticipants } from '../hook/useParticipants';
-import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
-import { useState } from 'react';
-import { examplePersonalResponse } from './ResponsesList';
-import OrderAnswerModal from '../../../widgets/dashboard/ui/response/OrderAnswerModal';
 
 interface ParticipantCardProps {
   participant: participantsData;
   checked: boolean;
   onChange: () => void;
+  onCheckClick: () => void; 
 }
 
-const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProps) => {
+const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: ParticipantCardProps) => {
   const { approvedParticipants } = useParticipantStore();
 
-  const [isModalOpen, setModalOpen] = useState(false);
-  //const { data } = usePersonalTicketOptionAnswers(Number(id));
-  const order = examplePersonalResponse
-    .flatMap(user => user.orders)
-    .find(order => order.orderId === 3422);
-    console.log('order:', order);
-    // participant.orderNumber로 수정
-
-  const { mutate: approveParticipant } = useApproveParticipants(participant.orderNumber);
+  const { mutate: approveParticipant } = useApproveParticipants(participant.orderId);
 
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
       <div className="flex gap-2 md:gap-3">
         <Checkbox checked={checked} onChange={onChange} label="" />
         <div className="flex items-center gap-4 md:gap-6 text-11 md:text-12">
-          <p>{participant.orderNumber}</p>
+          <p>{participant.orderId}</p>
           <div className="flex flex-col">
             <p>이름: {participant.participant}</p>
             <p>이메일 주소: {participant.email}</p>
@@ -49,12 +38,12 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
             label="확인하기"
             color="pink"
             size="small"
-            onClick={() => setModalOpen(true)}
+            onClick={onCheckClick}
           />
         }
         {participant.checkIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
 
-        {approvedParticipants[participant.orderNumber] ? (
+        {approvedParticipants[participant.orderId] ? (
           <p className="text-[#888686]">승인됨</p>
         ) : (
           <TertiaryButton
@@ -62,16 +51,10 @@ const ParticipantCard = ({ participant, checked, onChange }: ParticipantCardProp
             type="button"
             size="small"
             color="pink"
-            onClick={() => approveParticipant({ orderId: participant.orderNumber })}
+            onClick={() => approveParticipant({ orderId: participant.orderId })}
           />
         )}
-        {order && (
-          <OrderAnswerModal
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}
-            order={order}
-          />
-        )}
+
       </div>
     </div>
   );

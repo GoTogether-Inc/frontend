@@ -10,6 +10,7 @@ const ResponseManagementPage = () => {
   const [listType, setListType] = useState<'summary' | 'individual'>('summary');
   const { isModalOpen, closeModal, selectedTicketId } = useResponseStore();
   const { data } = usePurchaserAnswers(selectedTicketId);
+  console.log(data)
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
       {isModalOpen && (
