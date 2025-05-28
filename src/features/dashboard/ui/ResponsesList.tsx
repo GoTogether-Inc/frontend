@@ -59,32 +59,35 @@ const ResponsesList = ({ listType, ticketOptionResponses, ticketId }: ResponsesL
   const renderList = () => {
     switch (listType) {
       case 'summary':
-        const filteredResponses = ticketOptionResponses.filter(
-          (option) => option.optionType !== 'TEXT'
-        );
-        console.log(filteredResponses)
-        return (
-          <>
-            <div className="flex justify-center">
-              <div style={{ minWidth: '300px', maxWidth: '600px', width: '100%' }}>
-                <MultiplePieCharts responses={filteredResponses} />
+        {
+          const filteredResponses = ticketOptionResponses.filter(
+            (option) => option.optionType !== 'TEXT'
+          );
+          return (
+            <>
+              <div className="flex justify-center">
+                <div style={{ minWidth: '300px', maxWidth: '600px', width: '100%' }}>
+                  <MultiplePieCharts responses={filteredResponses} />
+                </div>
               </div>
-            </div>
-            {renderTextResponses(ticketOptionResponses)}
-          </>
-        );
+              {renderTextResponses(ticketOptionResponses)}
+            </>
+          );
+        }
 
       case 'individual':
-        if (isLoading) return <p>로딩 중...</p>;
-        if (error || !data?.result) return <p>데이터를 불러오지 못했습니다.</p>;
-        const allOrders = data.result.flatMap(user => user.orders);
-        return (
-          <IndividualResponseViewer
-            orders={allOrders}
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-          />
-        );
+        {
+          if (isLoading) return <p>로딩 중...</p>;
+          if (error || !data?.result) return <p>데이터를 불러오지 못했습니다.</p>;
+          const allOrders = data.result.flatMap(user => user.orders);
+          return (
+            <IndividualResponseViewer
+              orders={allOrders}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
+            />
+          );
+        }
       default:
         return null;
     }

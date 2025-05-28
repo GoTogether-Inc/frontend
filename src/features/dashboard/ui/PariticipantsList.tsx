@@ -5,6 +5,7 @@ import { useParticipantStore } from '../model/store/ParticipantStore';
 import { participantsData } from '../../../shared/types/participantInfoType';
 import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
 import OrderAnswerModal from '../../../widgets/dashboard/ui/response/OrderAnswerModal';
+import { Order } from '../../ticket/model/ticketInformation';
 
 interface ParticipantsListProps {
   listType: 'all' | 'approved' | 'pending';
@@ -27,7 +28,7 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
 
   const { data } = usePersonalTicketOptionAnswers(selectedTicketId);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const handleCheckClick = (ticketId: number, orderId: number) => {
     setSelectedTicketId(ticketId);
@@ -70,10 +71,6 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
 
     return false;
   });
-
-  useEffect(() => {
-    initializeParticipants(participants);
-  }, [participants, initializeParticipants]);
 
   return (
     <div className="flex flex-col gap-2 mb-4">
