@@ -3,7 +3,6 @@ import { Order } from "../../ticket/model/ticketInformation";
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import rightButton from '../../../../public/assets/main/RightButton.svg';
 import leftButton from '../../../../public/assets/main/LeftButton.svg';
-import UnderlineTextField from '../../../../design-system/ui/textFields/UnderlineTextField';
 
 interface IndividualResponseViewerProps {
     orders: Order[];
@@ -67,7 +66,6 @@ const IndividualResponseViewer = ({ orders, currentIndex, setCurrentIndex }: Ind
                                             label={ans}
                                             checked={true}
                                             onChange={() => { }}
-                                            disabled={true}
                                         />
                                     </li>
                                 ))}
