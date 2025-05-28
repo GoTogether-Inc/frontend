@@ -1,20 +1,19 @@
 import { useResponseStore } from '../model/store/ResponseStore';
-import ResponseFilter from './ResponseFilter';
-import SelectedResponseList from './SelectedResponseList';
 import { useEffect } from 'react';
-import { TicketOptionAnswerResponse } from '../../ticket/model/ticketInformation';
+import { PersonalTicketOptionAnswerResponse, TicketOptionAnswerResponse } from '../../ticket/model/ticketInformation';
 import MultiplePieCharts from './MultiplePieCharts';
+import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
+import IndividualResponseViewer from './IndividualResponseViewer';
 
 interface ResponsesListProps {
   listType: 'summary' | 'query' | 'individual';
   ticketOptionResponses: TicketOptionAnswerResponse[];
+  ticketId: number;
 }
 
-const ResponsesList = ({ listType, ticketOptionResponses }: ResponsesListProps) => {
+const ResponsesList = ({ listType, ticketOptionResponses, ticketId }: ResponsesListProps) => {
+  //const { data, isLoading, error } = usePersonalTicketOptionAnswers(ticketId);
   const {
-    response,
-    selectedResponse,
-    setSelectedResponse,
     currentIndex,
     setCurrentIndex,
   } = useResponseStore();
@@ -76,24 +75,16 @@ const ResponsesList = ({ listType, ticketOptionResponses }: ResponsesListProps) 
         );
 
       case 'individual':
+        const data = { result: examplePersonalResponse };
+        //if (isLoading) return <p>로딩 중...</p>;
+        //if (error || !data?.result) return <p>데이터를 불러오지 못했습니다.</p>;
+        const allOrders = data.result.flatMap(user => user.orders);
         return (
-          <div>
-            <ResponseFilter
-              responses={response}
-              listType={listType}
-              selectedField={
-                selectedResponse.length > 0
-                  ? { v1: selectedResponse[0].name, v2: selectedResponse[0].email }
-                  : { v1: '전체', v2: '' }
-              }
-              setSelectedField={setSelectedResponse}
-              setCurrentIndex={setCurrentIndex}
-              currentIndex={currentIndex}
-              responsesLength={selectedResponse.length > 0 ? selectedResponse.length : response.length}
-              options={[{ v1: '전체', v2: '' }, ...response.map(res => ({ v1: res.name, v2: res.email }))]}
-            />
-            <SelectedResponseList currentIndex={currentIndex} />
-          </div>
+          <IndividualResponseViewer
+            orders={allOrders}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
+          />
         );
       default:
         return null;
@@ -101,5 +92,43 @@ const ResponsesList = ({ listType, ticketOptionResponses }: ResponsesListProps) 
   };
   return <div>{renderList()}</div>;
 };
-
 export default ResponsesList;
+
+const examplePersonalResponse: PersonalTicketOptionAnswerResponse[] = [
+  {
+    userId: 2,
+    orders: [
+      {
+        orderId: 3422,
+        optionAnswers: [
+          { optionName: '이름', optionType: 'TEXT', answer: '홍길동' },
+          { optionName: '나이', optionType: 'TEXT', answer: '24' },
+          { optionName: '티셔츠 사이즈', optionType: 'SINGLE', answer: 'S' },
+          { optionName: '바지 사이즈', optionType: 'MULTIPLE', answer: 'S' },
+          { optionName: '바지 사이즈', optionType: 'MULTIPLE', answer: 'M' },
+          { optionName: 'MBTI', optionType: 'TEXT', answer: 'ISTJ' },
+        ],
+      },
+      {
+        orderId: 3423,
+        optionAnswers: [
+          { optionName: '티셔츠 사이즈', optionType: 'SINGLE', answer: 'XL' },
+          { optionName: '바지 사이즈', optionType: 'MULTIPLE', answer: 'L' },
+          { optionName: 'MBTI', optionType: 'TEXT', answer: 'ISFJ' },
+        ],
+      },
+    ],
+  },
+  {
+    userId: 3,
+    orders: [
+      {
+        orderId: 3424,
+        optionAnswers: [
+          { optionName: 'MBTI', optionType: 'TEXT', answer: 'INFP' },
+        ],
+      },
+    ],
+  },
+];
+
