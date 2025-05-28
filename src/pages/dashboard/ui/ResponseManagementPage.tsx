@@ -1,27 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
 import ResponsesFilterBar from '../../../widgets/dashboard/ui/ResponsesFilterBar';
 import ResponsesList from '../../../features/dashboard/ui/ResponsesList';
 import { useResponseStore } from '../../../features/dashboard/model/store/ResponseStore';
-import { useLocation } from 'react-router-dom';
 import ResponesModal from '../../../widgets/dashboard/ui/response/ResponseModal';
 import { usePurchaserAnswers } from '../../../features/ticket/hooks/useTicketOptionHook';
 
 const ResponseManagementPage = () => {
   const [listType, setListType] = useState<'summary' | 'individual'>('summary');
-  const { setSelectedResponse, isModalOpen, closeModal, selectedTicketId } = useResponseStore();
+  const { isModalOpen, closeModal, selectedTicketId } = useResponseStore();
   const { data } = usePurchaserAnswers(selectedTicketId);
-  console.log(data)
-  const location = useLocation();
-  const { participantName, participantEmail } = location.state || {};
-
-  useEffect(() => {
-    if (participantName) {
-      setListType('individual');
-      setSelectedResponse(participantName, participantEmail);
-    }
-  }, [participantName]);
-
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
       {isModalOpen && (

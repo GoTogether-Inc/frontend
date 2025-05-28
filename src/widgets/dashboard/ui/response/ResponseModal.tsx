@@ -19,7 +19,6 @@ const ResponesModal = ({ onClose }: ResponesModalProps) => {
 
   const handleClick = (ticketId: number) => {
     setSelectedTicketId(ticketId);
-    console.log(ticketId)
     onClose();
   };
   return (
