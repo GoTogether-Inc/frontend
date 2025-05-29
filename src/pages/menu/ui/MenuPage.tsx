@@ -20,7 +20,7 @@ const MenuPage = () => {
         centerContent="카테고리"
         rightContent={
           <button type="button" className="w-5 z-10" onClick={() => navigate('/search')}>
-            <img src={searchIcon} alt="Search Icon" />
+            <img src={searchIcon} alt="Search Icon" className="w-4" />
           </button>
         }
       />
