@@ -1,19 +1,17 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import Checkbox from '../../../../design-system/ui/Checkbox';
-import { useParticipantStore } from '../model/store/ParticipantStore';
-import { participantsData } from '../../../shared/types/participantInfoType';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useApproveParticipants } from '../hook/useParticipants';
+import { ParticipantResponse } from '../model/participantInformation';
 
 interface ParticipantCardProps {
-  participant: participantsData;
+  participant: ParticipantResponse;
   checked: boolean;
   onChange: () => void;
   onCheckClick: () => void; 
 }
 
 const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: ParticipantCardProps) => {
-  const { approvedParticipants } = useParticipantStore();
 
   const { mutate: approveParticipant } = useApproveParticipants(participant.orderId);
 
@@ -41,9 +39,9 @@ const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: Parti
             onClick={onCheckClick}
           />
         }
-        {participant.checkIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
+        {participant.checkedIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
 
-        {approvedParticipants[participant.orderId] ? (
+        {participant.isApproved ? (
           <p className="text-[#888686]">승인됨</p>
         ) : (
           <TertiaryButton

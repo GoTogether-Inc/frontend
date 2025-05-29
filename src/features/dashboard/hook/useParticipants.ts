@@ -6,7 +6,11 @@ import { AxiosError } from 'axios';
 import { approveParticipants } from '../../../features/dashboard/api/participants';
 import { useParticipantStore } from '../model/store/ParticipantStore';
 
-export const useParticipants = (tags = 'all', page = 0, size = 10) => {
+export const useParticipants = (
+  tags: string = 'all',
+  page: number = 0,
+  size: number = 10
+) => {
   const { id } = useParams();
   const eventId = Number(id);
 
@@ -15,8 +19,9 @@ export const useParticipants = (tags = 'all', page = 0, size = 10) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['participants'],
-    queryFn: () => getParticipants({ eventId, tags, page, size }),
+    queryKey: ['participants', eventId, tags, page, size],
+    queryFn: () => getParticipants(eventId, tags, page, size),
+    enabled: !!eventId,
   });
 
   return {
