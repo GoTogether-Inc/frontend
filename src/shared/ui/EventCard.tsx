@@ -20,6 +20,7 @@ interface EventCardProps {
   location: string;
   hashtags: string[];
   onClick?: () => void;
+  className?: string;
   children?: React.ReactNode;
   isDelete?: boolean;
   onDeleteSuccess?: (eventId: number) => void;
@@ -35,6 +36,7 @@ const EventCard = ({
   location,
   hashtags,
   onClick,
+  className,
   children,
   isDelete = false,
   onDeleteSuccess,
@@ -49,7 +51,7 @@ const EventCard = ({
   return (
     <div
       onClick={onClick}
-      className="w-full max-w-full h-full min-h-[240px] md:min-h-[300px] max-h-full p-2 md:p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between"
+      className={`w-full max-w-full h-full min-h-[240px] md:min-h-[300px] max-h-full p-2 md:p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between ${className}`}
     >
       {/* 이미지 */}
       <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />

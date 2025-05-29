@@ -9,17 +9,35 @@ import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
 import { useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
 import { OrderTicketResponse } from '../../../features/ticket/model/Order';
+import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteModal';
+import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<OrderTicketResponse | null>(null);
+  const [isCancelMode, setIsCancelMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const { data, isLoading, isError } = useTicketOrders(0, 10);
   const myTickets: OrderTicketResponse[] = data?.result || [];
 
   return (
-    <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true}>
+    <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true} isCancelMode={isCancelMode}>
+      {!isModalOpen && (
+        <div className="flex justify-end mx-6 mt-24">
+          <TertiaryButton
+            label={isCancelMode ? '선택 완료' : '티켓 취소'}
+            type="button"
+            color="pink"
+            size="small"
+            onClick={() => setIsCancelMode(prev => !prev)}
+          />
+        </div>
+      )}
+
       {/* 이벤트 카드 목록 */}
-      <div className="grid grid-cols-2 gap-4 mx-6 mt-28 md:grid-cols-2 lg:grid-cols-2 pb-4">
+      <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2 pb-4">
         {isLoading ? (
           <p className="col-span-2 text-center text-sm md:text-base">티켓을 불러오는 중입니다...</p>
         ) : isError ? (
@@ -37,9 +55,18 @@ const MyTicketPage = () => {
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
               onClick={() => {
-                setSelectedTicket(ticket);
-                setIsModalOpen(true);
+                if (isCancelMode) {
+                  setSelectedIds(prev =>
+                    prev.includes(ticket.id) ? prev.filter(id => id !== ticket.id) : [...prev, ticket.id]
+                  );
+                } else {
+                  setSelectedTicket(ticket);
+                  setIsModalOpen(true);
+                }
               }}
+              className={`transition-transform duration-200 ${
+                isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
+              }`}
             >
               <div className="flex items-center text-xs text-gray-500">
                 <img src={ticketImg} alt="티켓" className="w-3 h-3 mr-1" />
@@ -81,6 +108,22 @@ const MyTicketPage = () => {
             />
           </div>
         </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <EmailDeleteModal
+          mainText={`총 ${selectedIds.length}개의 티켓을 취소하시겠습니까? 취소 후에는 복구가 불가능합니다.`}
+          approveButtonText="티켓 취소"
+          rejectButtonText="뒤로가기"
+          onClose={() => setIsDeleteModalOpen(false)}
+          onClick={() => {
+            /* cancelOrderTicket(selectedIds).then(() => {
+              setIsDeleteModalOpen(false);
+              setIsCancelMode(false);
+              setSelectedIds([]);
+            }); */
+          }}
+        />
       )}
     </TicketHostLayout>
   );
