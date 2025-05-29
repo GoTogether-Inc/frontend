@@ -8,7 +8,7 @@ import share from '../../../../public/assets/event-manage/details/Share.svg';
 import like from '../../../../public/assets/event-manage/details/Like.svg';
 import liked from '../../../../public/assets/event-manage/details/ClickedLike.svg';
 import TicketInfo from '../../../widgets/event/ui/TicketInfo';
-import link from '../../../../public/assets/event-manage/details/Link.svg';
+import linkIcon from '../../../../public/assets/event-manage/details/Link.svg';
 import ShareEventModal from '../../../features/event/ui/ShareEventModal';
 import participantsImg from '../../../../public/assets/event-manage/details/People.svg';
 import dateImg from '../../../../public/assets/event-manage/details/Date.svg';
@@ -135,8 +135,15 @@ const EventDetailsPage = () => {
             <div className="flex flex-col gap-2">
               <h2 className="font-bold text-xl">관련 링크</h2>
               <div className="flex items-center gap-3 mb-4">
-                <img src={link} alt="링크 이모지" />
-                <span>공식 웹사이트</span>
+                {event.result.referenceLinks.map((link: { title: string; url: string }, index: number) => (
+                  <div key={index} className="flex items-center gap-2 mb-3">
+                    <img src={linkIcon} alt="링크 이모지" />
+                    <span>{link.title}</span>
+                    <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                      {link.url}
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
