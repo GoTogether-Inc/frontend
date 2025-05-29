@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 interface AuthStore {
   isLoggedIn: boolean;
@@ -14,22 +13,18 @@ interface AuthStore {
   closeModal: () => void;
 }
 
-export const useAuthStore = create<AuthStore>()(
-  persist(
-    (set) => ({
-      isLoggedIn: false,
-      isModalOpen: false,
+export const useAuthStore = create<AuthStore>()(set => ({
+  isLoggedIn: false,
+  isModalOpen: false,
 
-      openModal: () => set({ isModalOpen: true }),
-      closeModal: () => set({ isModalOpen: false }),
+  openModal: () => set({ isModalOpen: true }),
+  closeModal: () => set({ isModalOpen: false }),
 
-      login: () => set({ isLoggedIn: true }),
-      logout: () => set({ isLoggedIn: false, name: null }),
+  login: () => set({ isLoggedIn: true }),
+  logout: () => set({ isLoggedIn: false, name: null }),
 
-      name: null,
-      setName: (name) => set({ name }),
-    }), { name: 'auth-storage' }
-  )
-);
+  name: null,
+  setName: name => set({ name }),
+}));
 
 export default useAuthStore;
