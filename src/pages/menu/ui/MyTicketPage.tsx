@@ -8,31 +8,13 @@ import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
 import { useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
-type Ticket = {
-  id: number;
-  event: {
-    id: number;
-    bannerImageUrl: string;
-    title: string;
-    hostChannelName: string;
-    address: string;
-    startDate: string;
-    remainDays: string;
-    hashtags: string[];
-    onlineType: 'ONLINE' | 'OFFLINE'; // onlineType 추가
-  };
-  ticketQrCode: string;
-  ticketName: string;
-  ticketPrice: number;
-  orderStatus: 'COMPLETED' | 'PENDING' | 'CANCELED';
-  checkIn: boolean;
-};
+import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<OrderTicketResponse | null>(null);
   const { data, isLoading, isError } = useTicketOrders(0, 10);
-  const myTickets: Ticket[] = data?.result || [];
+  const myTickets: OrderTicketResponse[] = data?.result || [];
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true}>
