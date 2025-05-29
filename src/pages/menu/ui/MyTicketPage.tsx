@@ -50,7 +50,7 @@ const MyTicketPage = () => {
     }
   };
 
-  const handelEventCardClick = (ticket: OrderTicketResponse) => {
+  const handleEventCardClick = (ticket: OrderTicketResponse) => {
     if (isCancelMode) {
       setSelectedIds(prev => (prev.includes(ticket.id) ? prev.filter(id => id !== ticket.id) : [...prev, ticket.id]));
     } else {
@@ -103,7 +103,7 @@ const MyTicketPage = () => {
               eventDate={ticket.event.startDate}
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
-              onClick={() => handelEventCardClick(ticket)}
+              onClick={() => handleEventCardClick(ticket)}
               className={`transition-transform duration-200 ${
                 isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
               }`}
