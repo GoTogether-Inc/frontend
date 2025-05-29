@@ -14,6 +14,22 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   config => {
+    if (config.headers?.skipAuth) {
+      return config;
+    }
+
+    const isLoggedIn = useAuthStore.getState().isLoggedIn;
+
+    // 로그인되지 않은 상태라면 요청 차단
+    if (!isLoggedIn) {
+      return Promise.reject({
+        status: 401,
+        message: '로그인이 필요합니다.',
+        code: 'TOKEN_REQUIRED',
+        config,
+      });
+    }
+
     return config;
   },
   (error: AxiosError) => {
