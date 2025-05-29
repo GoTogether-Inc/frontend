@@ -8,9 +8,16 @@ interface TicketHostLayoutProps {
   children: React.ReactNode;
   centerContent: string;
   ticketPage?: boolean;
+  isCancelMode?: boolean;
 }
 
-const TicketHostLayout = ({ image, children, centerContent, ticketPage = true }: TicketHostLayoutProps) => {
+const TicketHostLayout = ({
+  image,
+  children,
+  centerContent,
+  ticketPage = true,
+  isCancelMode = false,
+}: TicketHostLayoutProps) => {
   const navigate = useNavigate();
   const handleBackClick = () => {
     navigate(-1);
@@ -46,7 +53,7 @@ const TicketHostLayout = ({ image, children, centerContent, ticketPage = true }:
 
           {ticketPage && (
             <div className="absolute left-1/2 transform -translate-x-1/2 top-[calc(150%)] text-placeholderText text-center text-sm whitespace-nowrap">
-              티켓을 누르면 입장을 위한 QR코드를 확인할 수 있습니다.
+              {isCancelMode ? '취소할 티켓을 선택해주세요' : '티켓을 누르면 입장을 위한 QR코드를 확인할 수 있습니다.'}
             </div>
           )}
 
