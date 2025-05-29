@@ -5,6 +5,7 @@ import useHostChannelList from '../../../../entities/host/hook/useHostChannelLis
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
 import CloseButton from '../../../../../public/assets/event-manage/creation/CloseBtn.svg';
 import { useHostDeletion } from '../../../../features/host/hook/useHostHook';
+import useAuthStore from '../../../../app/provider/authStore';
 
 interface HostSelectionPageProps {
   onNext: (nextStep: string) => void;
@@ -17,6 +18,7 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
   const [selected, setSelected] = useState<number | null>(null);
   const { data, refetch } = useHostChannelList();
   const { mutate: deleteHost } = useHostDeletion();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
   const handleHostClick = (host: { id: number; hostChannelName: string; profileImageUrl: string }) => {
     setSelected(host.id);
@@ -49,7 +51,13 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
   return (
     <div className="flex flex-col w-full px-2">
       <div
-        onClick={() => onNext(String(currentStep + 1))}
+        onClick={() => {
+          if (!isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.');
+            return;
+          }
+          onNext(String(currentStep + 1));
+        }}
         className="flex justify-start items-center px-3 py-4 cursor-pointer"
       >
         <button className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-gray2 rounded-full">

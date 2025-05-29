@@ -6,6 +6,7 @@ import { useState } from 'react';
 import useHostChannelList from '../../../../entities/host/hook/useHostChannelListHook';
 import useHostDetail from '../../../../entities/host/hook/useHostDetailHook';
 import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
+import useAuthStore from '../../../../app/provider/authStore';
 
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
@@ -14,6 +15,7 @@ const MyHostPage = () => {
 
   const { data } = useHostChannelList();
   const { data: hostDetail } = useHostDetail(selectedHostId ?? 0);
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
   const handleProfileClick = (hostId: number) => {
     setSelectedHostId(hostId);
@@ -22,7 +24,9 @@ const MyHostPage = () => {
   return (
     <TicketHostLayout image={HostLogo} centerContent="내 호스트" ticketPage={false}>
       <div className="flex space-x-5 mt-28 mx-5 overflow-x-auto scrollbar-hide">
-        {data?.result.length ? (
+        {!isLoggedIn ? (
+          <p className="text-center mx-auto text-sm md:text-base text-red-500">로그인이 필요한 서비스입니다.</p>
+        ) : data?.result.length ? (
           data.result.map(profile => (
             <ProfileCircle
               key={profile.id}
@@ -35,7 +39,7 @@ const MyHostPage = () => {
             />
           ))
         ) : (
-          <p className="col-span-2 text-center text-sm md:text-base">호스트 정보가 없습니다.</p>
+          <p className="col-span-2 text-center text-sm md:text-base mx-auto">호스트 정보가 없습니다.</p>
         )}
       </div>
 
