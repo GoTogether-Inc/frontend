@@ -1,13 +1,13 @@
 import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QRbackground from '../../../../design-system/icons/QRbackground.svg';
 import EventCard from '../../../shared/ui/EventCard';
 import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
-import { useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
+import { useCancelTicket, useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
 import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
@@ -18,9 +18,16 @@ const MyTicketPage = () => {
   const [isCancelMode, setIsCancelMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [tickets, setTickets] = useState<OrderTicketResponse[]>([]);
 
   const { data, isLoading, isError } = useTicketOrders(0, 10);
-  const myTickets: OrderTicketResponse[] = data?.result || [];
+  const { mutate: cancelTicket } = useCancelTicket();
+
+  useEffect(() => {
+    if (data?.result) {
+      setTickets(data.result);
+    }
+  }, [data]);
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true} isCancelMode={isCancelMode}>
@@ -31,7 +38,17 @@ const MyTicketPage = () => {
             type="button"
             color="pink"
             size="small"
-            onClick={() => setIsCancelMode(prev => !prev)}
+            onClick={() => {
+              if (isCancelMode) {
+                if (selectedIds.length > 0) {
+                  setIsDeleteModalOpen(true);
+                } else {
+                  alert('취소할 티켓을 선택해주세요.');
+                }
+              } else {
+                setIsCancelMode(true);
+              }
+            }}
           />
         </div>
       )}
@@ -42,8 +59,8 @@ const MyTicketPage = () => {
           <p className="col-span-2 text-center text-sm md:text-base">티켓을 불러오는 중입니다...</p>
         ) : isError ? (
           <p className="col-span-2 text-center text-sm md:text-base text-red-500">티켓을 불러오는데 실패했습니다.</p>
-        ) : myTickets.length > 0 ? (
-          myTickets.map(ticket => (
+        ) : tickets.length > 0 ? (
+          tickets.map(ticket => (
             <EventCard
               key={ticket.id}
               id={ticket.id}
@@ -117,11 +134,12 @@ const MyTicketPage = () => {
           rejectButtonText="뒤로가기"
           onClose={() => setIsDeleteModalOpen(false)}
           onClick={() => {
-            /* cancelOrderTicket(selectedIds).then(() => {
+            Promise.all(selectedIds.map(id => cancelTicket(id))).then(() => {
+              setTickets(prev => prev.filter(ticket => !selectedIds.includes(ticket.id)));
               setIsDeleteModalOpen(false);
               setIsCancelMode(false);
               setSelectedIds([]);
-            }); */
+            });
           }}
         />
       )}
