@@ -9,6 +9,6 @@ export interface ParticipantResponse {
     ticketName: string;
     orderStatus: 'COMPLETED' | 'CANCELLED' | 'PENDING';
     checkedIn: boolean;
-    isApproved: boolean;
+    approved: boolean;
     ticketType: 'FIRST_COME' | 'SELECTION';
 }

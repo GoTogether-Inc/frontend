@@ -54,8 +54,8 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
   }, [data, selectedOrderId]);
 
   const filteredParticipants = participants.filter(participants => {
-    if (listType === 'approved' && !participants.isApproved) return false;
-    if (listType === 'pending' && participants.isApproved) return false;
+    if (listType === 'approved' && !participants.approved) return false;
+    if (listType === 'pending' && participants.approved) return false;
 
     if (selectedFilter.length === 0 || selectedFilter.includes('전체')) return true;
     if (selectedFilter.includes('체크인 완료') && participants.checkedIn) return true;
