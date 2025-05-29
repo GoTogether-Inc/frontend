@@ -1,32 +1,23 @@
 import { ApiResponse } from '../../../shared/types/api/apiResponse';
 
-// 인터페이스 정의
-export interface OptionConfig {
-  limitToggled: boolean;
-  numActivated: boolean;
-  quantity: string;
-}
-
 // 상태 인터페이스 정의
 export interface State {
   warnings: {
-    optionWarning: string;
-    quantityWarning: string;
-    questionWarning: string;
+    questionWarning: string; // 질문 경고 메시지
+    optionWarning: string; // 옵션 경고 메시지
   };
   question: {
-    title: string;
-    answerToggled: boolean;
+    title: string; // 질문 제목
+    description: string; // 질문 설명
+    responseFormat: string; // 응답 형식 (단일 선택 or 여러개 선택 or 자유로운 텍스트)
+    answerToggled: boolean; // 필수 응답 여부
   };
-  responseFormat: string; // 단일 선택 or 여러개 선택 or 자유로운 텍스트
-  focusedIndex: number | null;
+  focusedIndex: number | null; // 포커싱된 옵션 인덱스
   singleOptions: {
-    options: string[]; // 옵션 문자열 배열
-    config: OptionConfig[]; // 각 옵션에 대한 설정 배열
+    options: string[]; // 단일 선택 옵션 문자열 배열
   };
   multiOptions: {
-    options: string[];
-    config: OptionConfig[];
+    options: string[]; // 여러개 선택 옵션 문자열 배열
   };
 }
 
@@ -34,13 +25,14 @@ export interface State {
 export type Action =
   | { type: 'SET_WARNING'; payload: { field: keyof State['warnings']; value: string } } // 경고 메시지
   | { type: 'SET_QUESTION_TITLE'; payload: string } // 질문 제목 업데이트
-  | { type: 'TOGGLE_ANSWER' } // answerToggled 값 반전
-  | { type: 'SET_RESPONSE_FORMAT'; payload: string } // 응답 포멧 변경
+  | { type: 'SET_DESCRIPTION'; payload: string } // 질문 설명 업데이트
+  | { type: 'SET_RESPONSE_TOGGLE'; payload: string } // 응답 형식 토글
+  | { type: 'TOGGLE_ANSWER' } // 필수 응답 여부 토글
   | { type: 'SET_FOCUSED_INDEX'; payload: number | null } // 포커싱된 옵션 인덱스 변경
-  | { type: 'UPDATE_OPTION'; payload: { index: number; value: string; isSingle: boolean } } // 옵션 텍스트를 수정
-  | { type: 'UPDATE_OPTION_CONFIG'; payload: { index: number; config: Partial<OptionConfig>; isSingle: boolean } } // 특정 옵션 설정 업데이트 (config -> optional)
-  | { type: 'ADD_OPTION'; payload: { isSingle: boolean } } // 옵션 추가
-  | { type: 'REMOVE_OPTION'; payload: { index: number; isSingle: boolean } }; // 옵션 삭제
+  | { type: 'UPDATE_OPTION'; payload: { index: number; value: string; isSingle: boolean } } // 추가 옵션의 텍스트를 수정
+  | { type: 'ADD_OPTION'; payload: { isSingle: boolean } } // 추가 옵션 추가
+  | { type: 'REMOVE_OPTION'; payload: { index: number; isSingle: boolean } } // 옵션 삭제
+  | { type: 'SET_ALL'; payload: TicketOptionsType }; // 전체 값 세팅
 
 export interface TicketOptionRequest {
   eventId: number;
@@ -59,7 +51,7 @@ export interface TicketOptionsType {
   isMandatory: boolean;
   choices: {
     id: number;
-    content: string;
+    name: string;
   }[];
 }
 

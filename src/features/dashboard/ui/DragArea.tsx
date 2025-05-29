@@ -4,17 +4,21 @@ import { Droppable } from '@hello-pangea/dnd';
 import AddButton2 from '../../../../public/assets/dashboard/ticket/AddButton2.svg';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
 import { TicketOptionsType } from '../../../features/ticket/model/ticketOption';
+import { useParams } from 'react-router-dom';
 
 interface DragAreaProps {
   options: TicketOptionsType[];
   droppableId: string;
   ticketSurveyAddButton?: boolean;
+  activeButton?: 'modify' | 'delete';
+  ticketName?: string;
 }
 
-const DragArea = ({ options, droppableId, ticketSurveyAddButton = false }: DragAreaProps) => {
+const DragArea = ({ options, droppableId, ticketSurveyAddButton = false, activeButton = 'modify' }: DragAreaProps) => {
   const navigate = useNavigate();
   const isOptionsArea = droppableId === 'options';
-  const isTicketArea = droppableId === 'ticket';
+  const isTicketArea = droppableId === 'ticket' || droppableId.startsWith('ticket-');
+  const { id } = useParams();
 
   return (
     <div className="w-full">
@@ -33,14 +37,16 @@ const DragArea = ({ options, droppableId, ticketSurveyAddButton = false }: DragA
           >
             {options.map((option, index) => (
               <DraggableList
-                key={option.id}
-                id={String(option.id)}
+                key={isOptionsArea ? option.id : `${droppableId}-${option.id}`}
+                optionId={String(option.id)}
                 content={option.name}
                 index={index}
                 answerToggled={option.isMandatory}
                 responseFormat={option.type}
                 droppableId={droppableId}
                 isDragDisabled={false}
+                draggableId={isOptionsArea ? String(option.id) : `${droppableId}-${option.id}`}
+                activeButton={activeButton}
               />
             ))}
             {ticketSurveyAddButton && isOptionsArea && (
@@ -50,7 +56,7 @@ const DragArea = ({ options, droppableId, ticketSurveyAddButton = false }: DragA
                   className="text-sm  !justify-start [&>div]:!justify-start"
                   label="티켓 옵션 새로 생성하기"
                   onClick={() => {
-                    navigate('/dashboard/:id/ticket/option/create');
+                    navigate(`/dashboard/${id}/ticket/option/create`);
                   }}
                 />
               </div>

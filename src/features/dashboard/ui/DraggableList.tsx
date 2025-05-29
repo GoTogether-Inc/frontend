@@ -1,54 +1,74 @@
 import { Draggable } from '@hello-pangea/dnd';
-import { useNavigate } from 'react-router-dom';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import ModifyPencilIcon from '../../../../public/assets/dashboard/ticket/ModifyPencilIcon.svg';
 import DeleteIcon from '../../../../public/assets/dashboard/ticket/DeleteIcon.svg';
-import { useTicketOption } from '../../../features/ticket/model/TicketOptionContext';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDetachTicketOptionMutation, useDeleteTicketOptionMutation } from '../../ticket/hooks/useTicketOptionHook';
 
 interface DraggableListProps {
-  id: string;
+  optionId: string;
   content: string;
   index: number;
   isDragDisabled?: boolean;
   answerToggled: boolean;
   responseFormat: string;
   droppableId: string;
+  draggableId: string;
+  activeButton?: 'modify' | 'delete';
 }
 
 const DraggableList = ({
-  id,
+  optionId,
   content,
   index,
   isDragDisabled = false,
   answerToggled,
   responseFormat,
   droppableId,
+  draggableId,
+  activeButton = 'modify',
 }: DraggableListProps) => {
+  const { mutate: detachOption } = useDetachTicketOptionMutation();
+  const { mutate: deleteOption } = useDeleteTicketOptionMutation();
   const navigate = useNavigate();
-  const { selectedOptions, setSelectedOptions } = useTicketOption();
+  const { id } = useParams();
 
+  const getDisplayFormat = (format: string) => {
+    if (format === 'SINGLE') return '객관식';
+    if (format === 'MULTIPLE') return '여러개 선택';
+    if (format === 'TEXT') return '자유로운 텍스트';
+    
+    return format;
+  };
+
+  // 티켓 옵션 부착 취소
+  const handleDetachOption = () => {
+    if (droppableId.startsWith('ticket-')) {
+      const ticketId = parseInt(droppableId.replace('ticket-', ''), 10);
+      const ticketOptionId = Number(optionId);
+      detachOption({ ticketId, ticketOptionId });
+    }
+  };
+
+  // 티켓 옵션 수정
   const handleEditClick = () => {
-    navigate('/dashboard/:id/ticket/option/create', {
+    navigate(`/dashboard/${id}/ticket/option/create/${optionId}`, {
       state: {
         isEditing: true,
-        editOption: {
-          id: Number(id),
-          content,
-          answerToggled,
-          responseFormat,
-        },
       },
     });
   };
 
-  const handleDelete = () => {
-    if (droppableId === 'ticket') {
-      setSelectedOptions(prev => prev.filter(opt => String(opt.id) !== id));
+  // 티켓 옵션 삭제
+  const handleDeleteOption = () => {
+    if (droppableId === 'options') {
+      const ticketOptionId = Number(optionId);
+      deleteOption(ticketOptionId);
     }
   };
 
   return (
-    <Draggable draggableId={id} index={index} isDragDisabled={isDragDisabled}>
+    <Draggable draggableId={draggableId} index={index} isDragDisabled={isDragDisabled}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -61,9 +81,18 @@ const DraggableList = ({
               {content.length > 6 ? content.slice(0, 6) + '...' : content}
               <div className="flex flex-col justify-center items-center h-full text-placeholderText text-13">
                 {answerToggled && <div className="flex items-center justify-center">필수응답</div>}
-                <div className="flex items-center justify-center">{responseFormat}</div>
+                <div className="flex items-center justify-center">{getDisplayFormat(responseFormat)}</div>
               </div>
-              <IconButton iconPath={<img src={ModifyPencilIcon} />} onClick={handleEditClick} size="medium" />
+              {activeButton === 'modify' && (
+                <IconButton iconPath={<img src={ModifyPencilIcon} />} onClick={handleEditClick} size="medium" />
+              )}
+              {activeButton === 'delete' && (
+                <IconButton
+                  iconPath={<img className="w-3 h-3" src={DeleteIcon} />}
+                  onClick={handleDeleteOption}
+                  size="medium"
+                />
+              )}
             </div>
           ) : (
             <div className="h-full flex flex-row justify-between items-start">
@@ -74,7 +103,11 @@ const DraggableList = ({
                   {responseFormat}
                 </div>
               </div>
-              <IconButton iconPath={<img className="w-3 h-3" src={DeleteIcon} />} onClick={handleDelete} size="small" />
+              <IconButton
+                iconPath={<img className="w-3 h-3" src={DeleteIcon} />}
+                onClick={handleDetachOption}
+                size="small"
+              />
             </div>
           )}
         </div>

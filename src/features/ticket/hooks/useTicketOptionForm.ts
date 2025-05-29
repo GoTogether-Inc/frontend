@@ -1,41 +1,35 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import { ticketOptionReducer, initialState, type State, type Action } from '../model/ticketOptionReducer';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import {
+  useCreateTicketOptionMutation,
+  useModifyTicketOptionMutation,
+  useGetTicketOptionDetail,
+} from './useTicketOptionHook';
+import { TicketOptionsType } from '../model/ticketOption';
 
 export const useTicketOptionForm = () => {
   const [state, dispatch] = useReducer<React.Reducer<State, Action>>(ticketOptionReducer, initialState);
-  const location = useLocation();
-  const isEditing = location.state?.isEditing || false;
-  const editOption = location.state?.editOption;
-  const navigate = useNavigate();
+  const { id: eventId, optionId } = useParams();
+  const { mutate: createTicketOptionMutation } = useCreateTicketOptionMutation();
+  const { mutate: modifyTicketOptionMutation } = useModifyTicketOptionMutation();
+  const { data: optionDetail, isLoading } = useGetTicketOptionDetail(Number(optionId));
+  const isEditing = !!optionId;
+  const editOption = optionDetail?.result;
 
   const getActiveOptions = () => {
-    return state.responseFormat === '객관식' ? state.singleOptions : state.multiOptions;
+    return state.question.responseFormat === '객관식' ? state.singleOptions : state.multiOptions;
   };
 
+  // 필수 응답 여부 토글
   const handleAnswerToggled = () => {
     dispatch({ type: 'TOGGLE_ANSWER' });
   };
 
-  const handleLimitToggled = (index: number) => {
-    const isSingle = state.responseFormat === '객관식';
-    const currentConfig = getActiveOptions().config[index];
-    dispatch({
-      type: 'UPDATE_OPTION_CONFIG',
-      payload: {
-        index,
-        isSingle,
-        config: {
-          limitToggled: !currentConfig.limitToggled,
-          numActivated: !currentConfig.numActivated,
-        },
-      },
-    });
-  };
-
+  // 옵션 삭제
   const handleClearOption = (index: number) => {
     const activeOptions = getActiveOptions();
-    if (activeOptions.options.length <= 1) {
+    if (activeOptions.options.length < 1) {
       dispatch({
         type: 'SET_WARNING',
         payload: {
@@ -50,7 +44,7 @@ export const useTicketOptionForm = () => {
       type: 'REMOVE_OPTION',
       payload: {
         index,
-        isSingle: state.responseFormat === '객관식',
+        isSingle: state.question.responseFormat === '객관식',
       },
     });
     dispatch({
@@ -62,11 +56,12 @@ export const useTicketOptionForm = () => {
     });
   };
 
+  // 옵션 추가
   const handleAddOption = () => {
     dispatch({
       type: 'ADD_OPTION',
       payload: {
-        isSingle: state.responseFormat === '객관식',
+        isSingle: state.question.responseFormat === '객관식',
       },
     });
     dispatch({
@@ -78,6 +73,7 @@ export const useTicketOptionForm = () => {
     });
   };
 
+  // 옵션 수정
   const handleInputChange = (index: number, value: string) => {
     const activeOptions = getActiveOptions();
     const hasValidOption = activeOptions.options.some(opt => opt.trim() !== '');
@@ -87,7 +83,7 @@ export const useTicketOptionForm = () => {
       payload: {
         index,
         value,
-        isSingle: state.responseFormat === '객관식',
+        isSingle: state.question.responseFormat === '객관식',
       },
     });
 
@@ -100,24 +96,50 @@ export const useTicketOptionForm = () => {
     });
   };
 
-  const handleQuantityChange = (index: number, value: string) => {
-    const isSingle = state.responseFormat === '객관식';
-    const currentConfig = getActiveOptions().config[index];
+  const handleEditNavigater = (optionDetail: TicketOptionsType) => {
+    dispatch({ type: 'SET_QUESTION_TITLE', payload: optionDetail.name });
+    dispatch({ type: 'SET_DESCRIPTION', payload: optionDetail.description });
 
-    if (currentConfig.limitToggled) {
-      dispatch({
-        type: 'UPDATE_OPTION_CONFIG',
-        payload: {
-          index,
-          isSingle,
-          config: { quantity: value },
-        },
+    // 응답 형식 세팅
+    dispatch({ type: 'SET_RESPONSE_TOGGLE', payload: optionDetail.type });
+    // 필수 여부 세팅
+    if (optionDetail.isMandatory) {
+      dispatch({ type: 'TOGGLE_ANSWER' });
+    }
+
+    // 옵션(choices) 세팅
+    if (optionDetail.type === 'SINGLE' || optionDetail.type === 'MULTIPLE') {
+      const isSingle = optionDetail.type === 'SINGLE';
+      // 1. 배열 길이 맞추기
+      for (
+        let i = 0;
+        i < optionDetail.choices.length - state[isSingle ? 'singleOptions' : 'multiOptions'].options.length;
+        i++
+      ) {
+        dispatch({
+          type: 'ADD_OPTION',
+          payload: { isSingle },
+        });
+      }
+      // 2. 값 세팅
+      optionDetail.choices.forEach((choice, idx) => {
+        dispatch({
+          type: 'UPDATE_OPTION',
+          payload: {
+            index: idx,
+            value: choice.name,
+            isSingle,
+          },
+        });
       });
     }
   };
 
+  // 생성 및 수정 내용 저장
   const handleSave = () => {
     let isValid = true;
+
+    console.log('Clicked!');
 
     if (state.question.title.trim() === '') {
       dispatch({
@@ -139,7 +161,7 @@ export const useTicketOptionForm = () => {
       });
     }
 
-    if (state.responseFormat === '객관식' || state.responseFormat === '여러개 선택') {
+    if (state.question.responseFormat === '객관식' || state.question.responseFormat === '여러개 선택') {
       const activeOptions = getActiveOptions();
       const hasValidOption = activeOptions.options.some(opt => opt.trim() !== '');
 
@@ -156,101 +178,64 @@ export const useTicketOptionForm = () => {
     }
 
     if (isValid) {
-      const newOptionId = isEditing ? editOption.id : `option-${Date.now()}`;
-      const newOption = {
-        id: newOptionId,
-        content: state.question.title,
-        answerToggled: state.question.answerToggled,
-        responseFormat: state.responseFormat,
-        options: state.responseFormat === '객관식' ? state.singleOptions.options : state.multiOptions.options,
-        optionsConfig:
-          state.responseFormat === '객관식'
-            ? state.singleOptions.config
-            : state.responseFormat === '여러개 선택'
-            ? state.multiOptions.config
-            : [],
-      };
+      const type =
+        state.question.responseFormat === '객관식'
+          ? 'SINGLE'
+          : state.question.responseFormat === '여러개 선택'
+          ? 'MULTIPLE'
+          : 'TEXT';
 
-      navigate(`/dashboard/:id/ticket/option`, {
-        state: {
-          answerToggled: state.question.answerToggled,
-          responseFormat: state.responseFormat,
-          newOption: newOption,
-          isEditing: isEditing,
-        },
-      });
+      const choices =
+        state.question.responseFormat === '객관식'
+          ? state.singleOptions.options.filter(opt => opt.trim() !== '')
+          : state.question.responseFormat === '여러개 선택'
+          ? state.multiOptions.options.filter(opt => opt.trim() !== '')
+          : [];
+
+      if (isEditing && editOption) {
+        modifyTicketOptionMutation({
+          ticketOptionId: editOption.id,
+          data: {
+            eventId: Number(eventId),
+            name: state.question.title,
+            description: state.question.description,
+            type,
+            isMandatory: state.question.answerToggled,
+            choices,
+          },
+        });
+      } else {
+        createTicketOptionMutation({
+          eventId: Number(eventId),
+          name: state.question.title,
+          description: state.question.description,
+          type,
+          isMandatory: state.question.answerToggled,
+          choices,
+        });
+      }
     } else {
       window.alert('필수 입력 사항을 확인해주세요.');
     }
   };
 
-  useEffect(() => {
-    if (isEditing && editOption) {
-      dispatch({ type: 'SET_QUESTION_TITLE', payload: editOption.content });
-      dispatch({ type: 'TOGGLE_ANSWER' });
-      dispatch({ type: 'SET_RESPONSE_FORMAT', payload: editOption.responseFormat });
-
-      // localStorage에서 저장된 데이터 가져오기 (수정 모드에서만 사용)
-      const savedData = localStorage.getItem('ticketOptions');
-      if (savedData) {
-        const parsedData = JSON.parse(savedData); // JS로 파싱된 데이터 가져오기
-        const option = parsedData.options[editOption.id];
-
-        if (option) {
-          if (option.responseFormat === '객관식') {
-            dispatch({
-              type: 'UPDATE_OPTION',
-              payload: {
-                index: 0,
-                value: option.options?.length > 0 ? option.options[0] : '',
-                isSingle: true,
-              },
-            });
-            dispatch({
-              type: 'UPDATE_OPTION_CONFIG',
-              payload: {
-                index: 0,
-                config:
-                  option.optionsConfig?.length > 0 ? option.optionsConfig[0] : initialState.singleOptions.config[0],
-                isSingle: true,
-              },
-            });
-          } else if (option.responseFormat === '여러개 선택') {
-            dispatch({
-              type: 'UPDATE_OPTION',
-              payload: {
-                index: 0,
-                value: option.options?.length > 0 ? option.options[0] : '',
-                isSingle: false,
-              },
-            });
-            dispatch({
-              type: 'UPDATE_OPTION_CONFIG',
-              payload: {
-                index: 0,
-                config:
-                  option.optionsConfig?.length > 0 ? option.optionsConfig[0] : initialState.singleOptions.config[0],
-                isSingle: true,
-              },
-            });
-          }
-        }
-      }
-    }
-  }, [isEditing, editOption]);
+  const setAll = (option: TicketOptionsType) => {
+    dispatch({ type: 'SET_ALL', payload: option });
+  };
 
   return {
     state,
     dispatch,
     isEditing,
     editOption,
+    isLoading,
     getActiveOptions,
     handleAnswerToggled,
-    handleLimitToggled,
     handleClearOption,
     handleAddOption,
     handleInputChange,
-    handleQuantityChange,
     handleSave,
+    handleEditNavigater,
+    setAll,
   };
 };

@@ -1,35 +1,27 @@
 import { State, Action } from './ticketOption';
 
+// 초기 값
 export const initialState: State = {
   warnings: {
     optionWarning: '',
-    quantityWarning: '',
     questionWarning: '',
   },
   question: {
     title: '',
+    description: '',
     answerToggled: false,
+    responseFormat: '객관식',
   },
-  responseFormat: '객관식',
   focusedIndex: null,
   singleOptions: {
     options: Array(3).fill(''),
-    config: Array(3).fill({
-      limitToggled: false,
-      numActivated: true,
-      quantity: '',
-    }),
   },
   multiOptions: {
     options: Array(3).fill(''),
-    config: Array(3).fill({
-      limitToggled: false,
-      numActivated: true,
-      quantity: '',
-    }),
   },
 };
 
+// 각 케이스는 동작하는 함수 정의. 세부 작동은 dispatch
 export function ticketOptionReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'SET_WARNING':
@@ -48,6 +40,23 @@ export function ticketOptionReducer(state: State, action: Action): State {
           title: action.payload,
         },
       };
+    case 'SET_DESCRIPTION':
+      return {
+        ...state,
+        question: {
+          ...state.question,
+          description: action.payload,
+        },
+      };
+
+    case 'SET_RESPONSE_TOGGLE':
+      return {
+        ...state,
+        question: {
+          ...state.question,
+          responseFormat: action.payload,
+        },
+      };
     case 'TOGGLE_ANSWER':
       return {
         ...state,
@@ -56,11 +65,26 @@ export function ticketOptionReducer(state: State, action: Action): State {
           answerToggled: !state.question.answerToggled,
         },
       };
-    case 'SET_RESPONSE_FORMAT':
+    case 'ADD_OPTION': {
+      const { isSingle } = action.payload;
+      const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
       return {
         ...state,
-        responseFormat: action.payload,
+        [optionsKey]: {
+          options: [...state[optionsKey].options, ''],
+        },
       };
+    }
+    case 'REMOVE_OPTION': {
+      const { index, isSingle } = action.payload;
+      const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
+      return {
+        ...state,
+        [optionsKey]: {
+          options: state[optionsKey].options.filter((_, i) => i !== index),
+        },
+      };
+    }
     case 'SET_FOCUSED_INDEX':
       return {
         ...state,
@@ -77,43 +101,29 @@ export function ticketOptionReducer(state: State, action: Action): State {
         },
       };
     }
-    case 'UPDATE_OPTION_CONFIG': {
-      const { index, config, isSingle } = action.payload;
-      const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
+    case 'SET_ALL': {
+      const { name, description, type, isMandatory, choices } = action.payload;
+      // type에 따라 responseFormat 한글로 변환
+      let responseFormat = '객관식';
+      if (type === 'MULTIPLE') responseFormat = '여러개 선택';
+      if (type === 'TEXT') responseFormat = '자유로운 텍스트';
+
+      // choices를 string[]로 변환
+      const optionStrings = choices.map(choice => choice.name);
       return {
         ...state,
-        [optionsKey]: {
-          ...state[optionsKey],
-          config: state[optionsKey].config.map((cfg, i) => (i === index ? { ...cfg, ...config } : cfg)),
+        question: {
+          ...state.question,
+          title: name,
+          description: description,
+          responseFormat,
+          answerToggled: isMandatory,
         },
-      };
-    }
-    case 'ADD_OPTION': {
-      const { isSingle } = action.payload;
-      const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
-      return {
-        ...state,
-        [optionsKey]: {
-          options: [...state[optionsKey].options, ''],
-          config: [
-            ...state[optionsKey].config,
-            {
-              limitToggled: false,
-              numActivated: true,
-              quantity: '',
-            },
-          ],
+        singleOptions: {
+          options: type === 'SINGLE' ? optionStrings : Array(3).fill(''),
         },
-      };
-    }
-    case 'REMOVE_OPTION': {
-      const { index, isSingle } = action.payload;
-      const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
-      return {
-        ...state,
-        [optionsKey]: {
-          options: state[optionsKey].options.filter((_, i) => i !== index),
-          config: state[optionsKey].config.filter((_, i) => i !== index),
+        multiOptions: {
+          options: type === 'MULTIPLE' ? optionStrings : Array(3).fill(''),
         },
       };
     }
@@ -121,6 +131,5 @@ export function ticketOptionReducer(state: State, action: Action): State {
       return state;
   }
 }
-
 // Reducer 관련 타입 한번에 관리 및 내보내기
 export type { State, Action };

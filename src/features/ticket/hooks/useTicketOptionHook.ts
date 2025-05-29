@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   PersonalTicketOptionAnswerResponse,
   TicketOptionAnswerRequest,
@@ -60,5 +59,140 @@ export const usePersonalTicketOptionAnswers = (ticketId: number | null) => {
       return readPersonalTicketOptionAnswers(ticketId);
     },
     enabled: !!ticketId,
+  });
+};
+
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  getTicketOptions,
+  createTicketOption,
+  modifyTicketOption,
+  deleteTicketOption,
+  getAttachedTicketOptions,
+  getTicketOptionDetail,
+  attachTicketOption,
+  detachTicketOption,
+} from '../api/ticketOption';
+import { TicketOptionRequest, TicketOptionResponse } from '../model/ticketOption';
+
+// 티켓 옵션 생성 훅
+export const useCreateTicketOptionMutation = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (data: TicketOptionRequest) => createTicketOption({ ...data, eventId: Number(id) }),
+    onSuccess: () => {
+      alert('티켓 옵션이 성공적으로 저장되었습니다.');
+      navigate(`/dashboard/${id}/ticket/option`);
+    },
+    onError: () => {
+      alert('티켓 옵션 저장에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+};
+
+// 티켓 옵션 수정 훅
+export const useModifyTicketOptionMutation = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ ticketOptionId, data }: { ticketOptionId: number; data: TicketOptionRequest }) =>
+      modifyTicketOption(ticketOptionId, { ...data, eventId: Number(id) }),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['ticketOptions', id] });
+      queryClient.invalidateQueries({ queryKey: ['ticketOptionDetail', variables.ticketOptionId] });
+      alert('티켓 옵션이 성공적으로 수정되었습니다.');
+      navigate(`/dashboard/${id}/ticket/option`);
+    },
+    onError: () => {
+      alert('티켓 옵션 수정에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+};
+
+// 티켓 옵션 삭제 훅
+export const useDeleteTicketOptionMutation = () => {
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (ticketOptionId: number) => deleteTicketOption(ticketOptionId),
+    onSuccess: (_, ticketOptionId) => {
+      // 티켓 옵션 목록과 상세 정보 쿼리 리패칭
+      queryClient.invalidateQueries({ queryKey: ['ticketOptions', id] });
+      queryClient.invalidateQueries({ queryKey: ['ticketOptionDetail', ticketOptionId] });
+      console.log('티켓 옵션이 성공적으로 삭제되었습니다.');
+    },
+    onError: () => {
+      alert('티켓 옵션 삭제에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+};
+
+// 티켓 옵션 목록 조회 훅
+export const useGetTicketOptions = () => {
+  const { id } = useParams();
+  const eventId = Number(id);
+
+  return useQuery<TicketOptionResponse>({
+    queryKey: ['ticketOptions', id],
+    queryFn: () => getTicketOptions(eventId),
+    enabled: !!id,
+  });
+};
+
+// 티켓에 부착된 옵션 목록 조회 훅
+export const useGetAttachedTicketOptions = (ticketId: number) => {
+  return useQuery<TicketOptionResponse>({
+    queryKey: ['attachedTicketOptions', ticketId],
+    queryFn: () => getAttachedTicketOptions(ticketId),
+    enabled: !!ticketId,
+  });
+};
+
+// 티켓 옵션 상세 조회 훅
+export const useGetTicketOptionDetail = (ticketOptionId: number) => {
+  return useQuery<TicketOptionResponse>({
+    queryKey: ['ticketOptionDetail', ticketOptionId],
+    queryFn: () => getTicketOptionDetail(ticketOptionId),
+    enabled: !!ticketOptionId,
+  });
+};
+
+// 티켓 옵션 부착 훅
+export const useAttachTicketOptionMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ ticketId, ticketOptionId }: { ticketId: number; ticketOptionId: number }) =>
+      attachTicketOption(ticketId, ticketOptionId),
+    onSuccess: (_data, variables) => {
+      // 티켓별 옵션 목록 쿼리 리패칭
+      queryClient.invalidateQueries({ queryKey: ['attachedTicketOptions', variables.ticketId] });
+      console.log('티켓 옵션이 성공적으로 부착되었습니다.');
+    },
+    onError: () => {
+      console.log('티켓 옵션 부착에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+};
+
+// 티켓에 부착된 티켓 옵션 부착 취소 훅
+export const useDetachTicketOptionMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ ticketId, ticketOptionId }: { ticketId: number; ticketOptionId: number }) =>
+      detachTicketOption(ticketId, ticketOptionId),
+    onSuccess: (_data, variables) => {
+      // 티켓별 옵션 목록 쿼리 리패칭
+      queryClient.invalidateQueries({ queryKey: ['attachedTicketOptions', variables.ticketId] });
+      console.log('티켓에 부착된 티켓 옵션이 성공적으로 부착 취소되었습니다.');
+    },
+    onError: () => {
+      console.log('티켓에 부착된 티켓 옵션 부착 취소에 실패했습니다. 다시 시도해주세요.');
+    },
   });
 };

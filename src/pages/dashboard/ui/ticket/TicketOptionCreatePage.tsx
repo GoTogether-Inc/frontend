@@ -3,9 +3,26 @@ import Button from '../../../../../design-system/ui/Button';
 import { useTicketOptionForm } from '../../../../features/ticket/hooks/useTicketOptionForm';
 import { TicketOptionFormSection } from '../../../../features/ticket/ui/TicketOptionFormSection';
 import { TicketOptionListSection } from '../../../../features/ticket/ui/TicketOptionListSection';
+import { useLocation } from 'react-router-dom';
+import { useGetTicketOptionDetail } from '../../../../features/ticket/hooks/useTicketOptionHook';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const TicketOptionCreatePage = () => {
+  const [initialized, setInitialized] = useState(false);
+  const { optionId } = useParams();
+  const { isEditing } = useLocation().state || { };
   const form = useTicketOptionForm();
+
+  // 상세 데이터 fetch (수정 모드일 때만)
+  const { data: optionDetail } = useGetTicketOptionDetail(Number(optionId));
+
+  useEffect(() => {
+    if (isEditing && optionDetail?.result && !initialized) {
+      form.setAll(optionDetail.result);
+      setInitialized(true);
+    }
+  }, [isEditing, optionDetail]);
 
   return (
     <DashboardLayout centerContent="WOOACON 2024">
