@@ -107,7 +107,9 @@ const EventDetailsPage = () => {
               </div>
               <div className="flex gap-2">
                 <img src={locationImg} alt="위치 이미지" />
-                <span className="text-sm md:text-base">{event.result.address}</span>
+                <span className="text-sm md:text-base">
+                  {event.result.address} {event.result.detailAddress}
+                </span>
               </div>
               <div
                 className="text-sm md:text-base py-3"
