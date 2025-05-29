@@ -67,27 +67,36 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
       ) : (
         <div className="w-[90%] grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2">
           {data?.pages.map((page, pageIndex) =>
-            page.items.map((event: EventListProps, eventIndex) => {
-              const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
-              return (
-                <div
-                  key={event.id}
-                  ref={isLastElement ? lastEventCardRef : null}
-                  onClick={() => navigate(`/event-details/${event.id}`)}
-                >
-                  <EventCard
-                    id={event.id}
-                    img={event.bannerImageUrl}
-                    eventTitle={event.title}
-                    eventDate={event.startDate}
-                    location={event.address}
-                    host={event.hostChannelName}
-                    hashtags={event.hashtags}
-                    dDay={event.remainDays}
-                  />
-                </div>
-              );
-            })
+            page.items
+              .filter(event => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const endDate = new Date((event as EventListProps).endDate ?? event.startDate);
+
+                return endDate >= today;
+              })
+              .map((event: EventListProps, eventIndex) => {
+                const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
+                return (
+                  <div
+                    key={event.id}
+                    ref={isLastElement ? lastEventCardRef : null}
+                    onClick={() => navigate(`/event-details/${event.id}`)}
+                  >
+                    <EventCard
+                      id={event.id}
+                      img={event.bannerImageUrl}
+                      eventTitle={event.title}
+                      eventDate={event.startDate}
+                      location={event.address}
+                      host={event.hostChannelName}
+                      hashtags={event.hashtags}
+                      dDay={event.remainDays}
+                    />
+                  </div>
+                );
+              })
           )}
         </div>
       )}
