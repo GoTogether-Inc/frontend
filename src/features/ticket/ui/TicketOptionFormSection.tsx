@@ -15,7 +15,7 @@ export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useT
           detail="티켓을 잘 지어낼 수 있는 질문을 써보세요. (무료 입장권, 얼리버드, 학생 전용 등)"
           className={`h-12 ${!state.warnings.questionWarning ? 'mb-5' : ''}`}
           detailClassName="px-0"
-          value={state.question.title}
+          value={state.question.title ?? ''}
           onChange={e => dispatch({ type: 'SET_QUESTION_TITLE', payload: e.target.value })}
         />
         {state.warnings.questionWarning && (
@@ -31,6 +31,8 @@ export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useT
           detail="질문에 대한 부가 설명이 있다면 여기 적으면 돼요."
           className="h-12 mb-5"
           detailClassName="px-0"
+          value={state.question.description?? ''}
+          onChange={e => dispatch({ type: 'SET_DESCRIPTION', payload: e.target.value })}
         />
       </div>
 
@@ -40,16 +42,15 @@ export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useT
           <p className="block text-m font-semibold text-gray-700">응답을 어떤 형식으로 받을까요?</p>
           <p className="block mb-1 text-placeholderText text-11 md:text-13">한 개만 선택할 수 있습니다.</p>
           <ChoiceChip
-            value={state.responseFormat} // 객관식
+            value={state.question.responseFormat} // 객관식
             options={[
               { label: '객관식', value: '객관식' },
               { label: '여러개 선택', value: '여러개 선택' },
               { label: '자유로운 텍스트', value: '자유로운 텍스트' },
             ]}
             onSelect={selected => {
-              dispatch({ type: 'SET_RESPONSE_FORMAT', payload: selected });
+              dispatch({ type: 'SET_RESPONSE_TOGGLE', payload: selected });
               dispatch({ type: 'SET_WARNING', payload: { field: 'optionWarning', value: '' } });
-              dispatch({ type: 'SET_WARNING', payload: { field: 'quantityWarning', value: '' } });
               dispatch({ type: 'SET_FOCUSED_INDEX', payload: null });
             }}
             buttonClassName={'!text-xs'}
