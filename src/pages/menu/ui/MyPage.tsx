@@ -9,11 +9,14 @@ import { useUserInfo, useUserUpdate } from '../../../features/join/hooks/useUser
 import useAuthStore from '../../../app/provider/authStore';
 
 const MyPage = () => {
-  const { data, isLoading, error } = useUserInfo();
-  const { mutate: updateUser } = useUserUpdate();
   const { setName } = useAuthStore();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
+
+  const { data, isLoading, error } = useUserInfo(isLoggedIn);
+  const { mutate: updateUser } = useUserUpdate();
 
   const [isChanged, setIsChanged] = useState<string>('');
+
   const {
     register,
     handleSubmit,
@@ -74,7 +77,7 @@ const MyPage = () => {
           <h1 className="text-xl font-bold">기본 정보</h1>
           <div className="flex flex-col">
             <span className="text-sm md:text-base font-normal">이메일</span>
-            <span className="text-sm md:text-base font-light">{data?.email}</span>
+            <span className="text-sm md:text-base font-light">{data?.email || '로그인이 필요합니다'}</span>
           </div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -85,6 +88,7 @@ const MyPage = () => {
                 placeholder={data?.name}
                 className=" h-8"
                 labelClassName="text-sm md:text-base font-normal"
+                disabled={!isLoggedIn}
                 {...register('name')}
               />
               {errors.name && <span className=" text-sm text-red-500 whitespace-nowrap">{errors.name.message}</span>}
@@ -95,14 +99,24 @@ const MyPage = () => {
                 placeholder={data?.phoneNumber}
                 className="h-8"
                 labelClassName="text-sm md:text-base font-normal"
+                disabled={!isLoggedIn}
                 {...register('phone')}
               />
               {errors.phone && <span className="text-sm text-red-500 whitespace-nowrap">{errors.phone.message}</span>}
             </div>
           </div>
           {isChanged && <span className="text-red-500 text-sm">{isChanged}</span>}
-          <TertiaryButton label="저장하기" color="black" size="large" type="submit" className="w-24 h-8" />
+          <TertiaryButton
+            label="저장하기"
+            color="black"
+            size="large"
+            type="submit"
+            className="w-24 h-8"
+            disabled={!isLoggedIn}
+          />
         </form>
+
+        {!isLoggedIn && <p className="text-sm text-gray-500 mt-2">로그인 후 정보를 수정하실 수 있습니다.</p>}
       </div>
       {/* <PaymentCard title={'등록된 카드'} /> */}
       <BottomBar />
