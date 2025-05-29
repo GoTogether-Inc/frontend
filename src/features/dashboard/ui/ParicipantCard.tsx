@@ -1,5 +1,4 @@
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
-import Checkbox from '../../../../design-system/ui/Checkbox';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useApproveParticipants } from '../hook/useParticipants';
 import { ParticipantResponse } from '../model/participantInformation';
@@ -12,14 +11,13 @@ interface ParticipantCardProps {
   onCheckClick: () => void; 
 }
 
-const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: ParticipantCardProps) => {
+const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) => {
 
   const { mutate: approveParticipant } = useApproveParticipants(participant.orderId);
 
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
       <div className="flex gap-2 md:gap-3">
-        <Checkbox checked={checked} onChange={onChange} label="" />
         <div className="flex items-center gap-4 md:gap-6 text-11 md:text-12">
           <p>{participant.orderId}</p>
           <div className="flex flex-col">
@@ -44,7 +42,7 @@ const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: Parti
 
         {participant.isApproved ? (
           <p className="text-[#888686]">승인됨</p>
-        ) : (
+        ) : participant.ticketType === 'FIRST_COME' ? null : (
           <TertiaryButton
             label="승인"
             type="button"
@@ -53,7 +51,6 @@ const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: Parti
             onClick={() => approveParticipant({ orderId: participant.orderId })}
           />
         )}
-
       </div>
     </div>
   );

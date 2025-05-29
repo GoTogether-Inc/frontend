@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Checkbox from '../../../../design-system/ui/Checkbox';
 import ParticipantCard from './ParicipantCard';
 import { useParticipantStore } from '../model/store/ParticipantStore';
 import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
@@ -15,9 +14,7 @@ interface ParticipantsListProps {
 
 const ParticipantsList = ({ listType, selectedFilter = [], participants }: ParticipantsListProps) => {
   const {
-    all,
     participants: selectedParticipants,
-    toggleAll,
     toggleParticipant,
     selectedTicketId,
     selectedOrderId,
@@ -71,7 +68,6 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
     <div className="flex flex-col gap-2 mb-4">
       <div className="flex justify-between text-xs text-[#888686] bg-white shadow-sm px-2 md:px-3 py-3 rounded-t-lg">
         <div className="flex gap-2 md:gap-3">
-          <Checkbox checked={all} onChange={toggleAll} label="" />
           <div className="flex items-center gap-15 md:gap-24">
             <p>주문 번호</p>
             <p>참여자 정보</p>
