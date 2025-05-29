@@ -16,8 +16,6 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
   const maxCardsToShow = 2;
   const navigate = useNavigate();
 
-  console.log(events);
-
   type SetStartIndex = Dispatch<SetStateAction<number>>;
 
   const handleNext = (setStartIndex: SetStartIndex, currentIndex: number, eventsLength: number): void => {
@@ -28,21 +26,31 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
     setStartIndex((currentIndex - 1 + eventsLength) % eventsLength);
   };
 
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+
+  const filteredEvents = events.filter(event => {
+    const endDate = new Date(event.endDate);
+    endDate.setHours(0, 0, 0, 0);
+    return endDate >= now;
+  });
+
   const eventsToShow =
-    events.length > 0
-      ? events
+    filteredEvents.length > 0
+      ? filteredEvents
           .slice(startIndex, startIndex + maxCardsToShow)
           .concat(
-            startIndex + maxCardsToShow > events.length
-              ? events.slice(0, (startIndex + maxCardsToShow) % events.length)
+            startIndex + maxCardsToShow > filteredEvents.length
+              ? filteredEvents.slice(0, (startIndex + maxCardsToShow) % filteredEvents.length)
               : []
           )
       : [];
+
   return (
     <div className="relative w-full px-6">
       <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">{title}</h2>
       <div className="flex gap-4">
-        {events.length === 0 ? (
+        {filteredEvents.length === 0 ? (
           <div className="w-full text-center text-gray-500">표시할 이벤트가 없습니다.</div>
         ) : (
           eventsToShow.map((event: EventItem) => (
