@@ -2,22 +2,21 @@ import { useEffect, useState } from 'react';
 import Checkbox from '../../../../design-system/ui/Checkbox';
 import ParticipantCard from './ParicipantCard';
 import { useParticipantStore } from '../model/store/ParticipantStore';
-import { participantsData } from '../../../shared/types/participantInfoType';
 import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
 import OrderAnswerModal from '../../../widgets/dashboard/ui/response/OrderAnswerModal';
 import { Order } from '../../ticket/model/ticketInformation';
+import { ParticipantResponse } from '../model/participantInformation';
 
 interface ParticipantsListProps {
   listType: 'all' | 'approved' | 'pending';
   selectedFilter: string[];
-  participants: participantsData[];
+  participants: ParticipantResponse[];
 }
 
 const ParticipantsList = ({ listType, selectedFilter = [], participants }: ParticipantsListProps) => {
   const {
     all,
     participants: selectedParticipants,
-    initializeParticipants,
     toggleAll,
     toggleParticipant,
     selectedTicketId,
@@ -57,17 +56,13 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
     setModalOpen(true);
   }, [data, selectedOrderId]);
 
-  useEffect(() => {
-    initializeParticipants(participants);
-  }, [initializeParticipants]);
-
   const filteredParticipants = participants.filter(participants => {
-    if (listType === 'approved' && !participants.approved) return false;
-    if (listType === 'pending' && participants.approved) return false;
+    if (listType === 'approved' && !participants.isApproved) return false;
+    if (listType === 'pending' && participants.isApproved) return false;
 
     if (selectedFilter.length === 0 || selectedFilter.includes('전체')) return true;
-    if (selectedFilter.includes('체크인 완료') && participants.checkIn) return true;
-    if (selectedFilter.includes('체크인 전') && !participants.checkIn) return true;
+    if (selectedFilter.includes('체크인 완료') && participants.checkedIn) return true;
+    if (selectedFilter.includes('체크인 전') && !participants.checkedIn) return true;
 
     return false;
   });
