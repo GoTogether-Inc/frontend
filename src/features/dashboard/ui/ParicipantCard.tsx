@@ -3,6 +3,7 @@ import Checkbox from '../../../../design-system/ui/Checkbox';
 import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButton';
 import { useApproveParticipants } from '../hook/useParticipants';
 import { ParticipantResponse } from '../model/participantInformation';
+import { formatDate, formatTime } from '../../../shared/lib/date';
 
 interface ParticipantCardProps {
   participant: ParticipantResponse;
@@ -25,7 +26,7 @@ const ParticipantCard = ({ participant, checked, onChange, onCheckClick }: Parti
             <p>이름: {participant.participant}</p>
             <p>이메일 주소: {participant.email}</p>
             <p>휴대폰 번호: {participant.phoneNumber}</p>
-            <div>구매 일자: {participant.purchaseDate}</div>
+            <div>구매 일자: {formatDate(participant.purchaseDate)} {formatTime(participant.purchaseDate)}</div>
             <p>티켓 이름: {participant.ticketName}</p>
           </div>
         </div>
