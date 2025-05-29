@@ -18,11 +18,13 @@ import KakaoMap from '../../../shared/ui/KakaoMap';
 import { useCreateBookmark, useDeleteBookmark } from '../../../features/bookmark/hook/useBookmarkHook';
 import { formatDate, formatTime } from '../../../shared/lib/date';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
+import useAuthStore from '../../../app/provider/authStore';
 
 const EventDetailsPage = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
   const { data: event } = useEventDetail();
 
   const handleShareClick = (title: string) => {
@@ -81,10 +83,12 @@ const EventDetailsPage = () => {
                     iconPath={<img src={share} alt="공유하기 버튼" />}
                     onClick={() => handleShareClick(event.result.title)}
                   />
-                  <IconButton
-                    iconPath={<img src={event.result.bookmarked ? liked : like} alt="좋아요 버튼" />}
-                    onClick={handleLikeClick}
-                  />
+                  {isLoggedIn && (
+                    <IconButton
+                      iconPath={<img src={event.result.bookmarked ? liked : like} alt="좋아요 버튼" />}
+                      onClick={handleLikeClick}
+                    />
+                  )}
                 </div>
               </div>
               <div className="flex gap-2">
