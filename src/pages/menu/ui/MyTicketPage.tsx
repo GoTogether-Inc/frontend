@@ -11,6 +11,7 @@ import { useCancelTicket, useTicketOrders } from '../../../features/ticket/hooks
 import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
+import useAuthStore from '../../../app/provider/authStore';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +23,7 @@ const MyTicketPage = () => {
 
   const { data, isLoading, isError } = useTicketOrders(0, 10);
   const { mutate: cancelTicket } = useCancelTicket();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
   const handleCancelButtonClick = () => {
     if (isCancelMode) {
@@ -48,6 +50,15 @@ const MyTicketPage = () => {
     }
   };
 
+  const handelEventCardClick = (ticket: OrderTicketResponse) => {
+    if (isCancelMode) {
+      setSelectedIds(prev => (prev.includes(ticket.id) ? prev.filter(id => id !== ticket.id) : [...prev, ticket.id]));
+    } else {
+      setSelectedTicket(ticket);
+      setIsModalOpen(true);
+    }
+  };
+
   useEffect(() => {
     if (data?.result) {
       setTickets(data.result);
@@ -56,7 +67,7 @@ const MyTicketPage = () => {
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true} isCancelMode={isCancelMode}>
-      {!isModalOpen && (
+      {!isModalOpen && tickets.length > 0 && (
         <div className="flex justify-end mx-6 mt-24">
           <TertiaryButton
             label={isCancelMode ? '선택 완료' : '티켓 취소'}
@@ -70,10 +81,16 @@ const MyTicketPage = () => {
 
       {/* 이벤트 카드 목록 */}
       <div className="grid grid-cols-2 gap-4 mx-6 mt-2 md:grid-cols-2 lg:grid-cols-2 pb-4">
-        {isLoading ? (
-          <p className="col-span-2 text-center text-sm md:text-base">티켓을 불러오는 중입니다...</p>
+        {!isLoggedIn ? (
+          <p className="col-span-2 mt-28 text-center text-sm md:text-base text-red-500">
+            로그인이 필요한 서비스입니다.
+          </p>
+        ) : isLoading ? (
+          <p className="col-span-2 mt-28 text-center text-sm md:text-base">티켓을 불러오는 중입니다...</p>
         ) : isError ? (
-          <p className="col-span-2 text-center text-sm md:text-base text-red-500">티켓을 불러오는데 실패했습니다.</p>
+          <p className="col-span-2 mt-28 text-center text-sm md:text-base text-red-500">
+            티켓을 불러오는데 실패했습니다.
+          </p>
         ) : tickets.length > 0 ? (
           tickets.map(ticket => (
             <EventCard
@@ -86,16 +103,7 @@ const MyTicketPage = () => {
               eventDate={ticket.event.startDate}
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
-              onClick={() => {
-                if (isCancelMode) {
-                  setSelectedIds(prev =>
-                    prev.includes(ticket.id) ? prev.filter(id => id !== ticket.id) : [...prev, ticket.id]
-                  );
-                } else {
-                  setSelectedTicket(ticket);
-                  setIsModalOpen(true);
-                }
-              }}
+              onClick={() => handelEventCardClick}
               className={`transition-transform duration-200 ${
                 isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
               }`}

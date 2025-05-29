@@ -4,10 +4,12 @@ import searchIcon from '../../../../design-system/icons/Search.svg';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 import EventCard from '../../../shared/ui/EventCard';
 import { useBookmarks } from '../../../features/bookmark/hook/useBookmarkHook';
+import useAuthStore from '../../../app/provider/authStore';
 
 const BookmarkPage = () => {
   const navigate = useNavigate();
   const { data } = useBookmarks();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
   return (
     <div className="relative">
@@ -20,7 +22,11 @@ const BookmarkPage = () => {
         }
       />
       <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2 z-50">
-        {data?.length ? (
+        {!isLoggedIn ? (
+          <p className="col-span-2 mt-20 text-center text-sm md:text-base text-red-500">
+            로그인이 필요한 서비스입니다.
+          </p>
+        ) : data?.length ? (
           data.map(event => (
             <EventCard
               id={event.id}
