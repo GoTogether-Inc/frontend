@@ -17,7 +17,7 @@ const ParticipantsManagementPage = () => {
 
   const { participants } = useParticipants();
   const checkedInCount = participants.filter((p: { checkedIn: boolean; }) => p.checkedIn).length;
-  const unapprovedCount = participants.filter((p: { isApproved: boolean; }) => !p.isApproved).length;
+  const unapprovedCount = participants.filter((p: { approved: boolean; }) => !p.approved).length;
 
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>

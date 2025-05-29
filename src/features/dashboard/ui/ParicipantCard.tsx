@@ -8,7 +8,7 @@ interface ParticipantCardProps {
   participant: ParticipantResponse;
   checked: boolean;
   onChange: () => void;
-  onCheckClick: () => void; 
+  onCheckClick: () => void;
 }
 
 const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) => {
@@ -40,9 +40,11 @@ const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) =>
         }
         {participant.checkedIn ? <p className="text-[#888686]">완료</p> : <p className="text-[#888686]">미완료</p>}
 
-        {participant.isApproved ? (
+        {participant.approved ? (
           <p className="text-[#888686]">승인됨</p>
-        ) : participant.ticketType === 'FIRST_COME' ? null : (
+        ) : participant.ticketType === 'FIRST_COME' ? (
+          <p className="text-[#888686] invisible">승인됨</p>
+        ) : (
           <TertiaryButton
             label="승인"
             type="button"
