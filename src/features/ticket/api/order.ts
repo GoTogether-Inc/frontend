@@ -1,5 +1,5 @@
-import { axiosClient } from "../../../shared/types/api/http-client"
-import { OrderTicketRequest } from "../model/orderInformation";
+import { axiosClient } from '../../../shared/types/api/http-client';
+import { OrderTicketRequest } from '../model/orderInformation';
 
 export const readTicket = {
   // 주문 티켓 전체 조회
@@ -24,6 +24,6 @@ export const orderTickets = async (data: OrderTicketRequest) => {
 
 // 티켓 취소
 export const cancelTickets = async (orderId: number) => {
-  const response = await axiosClient.post(`/orders/cancel?orderId=${orderId}`);
+  const response = await axiosClient.post(`/orders/${orderId}/cancel`);
   return response.data;
 };
