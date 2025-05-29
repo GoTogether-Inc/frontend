@@ -3,11 +3,12 @@ interface TertiaryButtonProps {
   type: 'button' | 'submit';
   color: 'pink' | 'black';
   size: 'small' | 'medium' | 'large';
+  disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
 }
 
-const TertiaryButton = ({ label, type, color, size, onClick, className }: TertiaryButtonProps) => {
+const TertiaryButton = ({ label, type, color, size, disabled, onClick, className }: TertiaryButtonProps) => {
   const baseStyle = `flex justify-center items-center border rounded`;
 
   const sizeClasses = {
@@ -23,7 +24,12 @@ const TertiaryButton = ({ label, type, color, size, onClick, className }: Tertia
       : 'border-black text-black hover:bg-black hover:text-white hover:font-bold';
 
   return (
-    <button type={type} className={`${baseStyle} ${sizeClasses[size]} ${colorStyle} ${className}`} onClick={onClick}>
+    <button
+      type={type}
+      disabled={disabled}
+      className={`${baseStyle} ${sizeClasses[size]} ${colorStyle} ${className}`}
+      onClick={onClick}
+    >
       {label}
     </button>
   );
