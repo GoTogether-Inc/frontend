@@ -3,6 +3,8 @@ import { useInfiniteScroll } from '../../../shared/hooks/useInfiniteScroll';
 import { getAllEventsInfinite, getCategoryEventsInfinite } from '../../../entities/event/api/event';
 import EventCard from '../../../shared/ui/EventCard';
 import { BaseEvent, CategoryType, TagType } from '../../../shared/types/baseEventType';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useNavigate } from 'react-router-dom';
 
 interface EventListProps extends BaseEvent {
   id: number;
@@ -16,6 +18,8 @@ interface EventListComponentProps {
 }
 
 const EventList = ({ category, tag }: EventListComponentProps) => {
+  const navigate = useNavigate();
+
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteScroll<EventListProps>({
     queryKey: ['events', 'infinite', category ?? '', tag ?? ''],
     queryFn: params => {
@@ -66,7 +70,11 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
             page.items.map((event: EventListProps, eventIndex) => {
               const isLastElement = pageIndex === data.pages.length - 1 && eventIndex === page.items.length - 1;
               return (
-                <div key={event.id} ref={isLastElement ? lastEventCardRef : null}>
+                <div
+                  key={event.id}
+                  ref={isLastElement ? lastEventCardRef : null}
+                  onClick={() => navigate(`/event-details/${event.id}`)}
+                >
                   <EventCard
                     id={event.id}
                     img={event.bannerImageUrl}
