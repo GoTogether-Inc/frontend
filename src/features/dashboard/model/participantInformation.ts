@@ -10,4 +10,5 @@ export interface ParticipantResponse {
     orderStatus: 'COMPLETED' | 'CANCELLED' | 'PENDING';
     checkedIn: boolean;
     isApproved: boolean;
+    ticketType: 'FIRST_COME' | 'SELECTION';
 }
