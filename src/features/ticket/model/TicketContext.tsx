@@ -19,8 +19,6 @@ export const TicketProvider = ({ children }: { children: ReactNode }) => {
     availableQuantity: 0,
     startDate: '',
     endDate: '',
-    startTime: '06:00',
-    endTime: '23:00',
   });
 
   const setTicketChannelId = (ticketChannelId: number) => {
