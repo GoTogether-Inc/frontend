@@ -23,6 +23,31 @@ const MyTicketPage = () => {
   const { data, isLoading, isError } = useTicketOrders(0, 10);
   const { mutate: cancelTicket } = useCancelTicket();
 
+  const handleCancelButtonClick = () => {
+    if (isCancelMode) {
+      if (selectedIds.length === 0) {
+        setIsCancelMode(false);
+        return;
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const invalidTickets = tickets.filter(
+        ticket => selectedIds.includes(ticket.id) && new Date(ticket.event.startDate) <= today
+      );
+
+      if (invalidTickets.length > 0) {
+        alert('이미 시작된 이벤트의 티켓은 취소할 수 없습니다.');
+        return;
+      }
+
+      setIsDeleteModalOpen(true);
+    } else {
+      setIsCancelMode(true);
+    }
+  };
+
   useEffect(() => {
     if (data?.result) {
       setTickets(data.result);
@@ -38,17 +63,7 @@ const MyTicketPage = () => {
             type="button"
             color="pink"
             size="small"
-            onClick={() => {
-              if (isCancelMode) {
-                if (selectedIds.length > 0) {
-                  setIsDeleteModalOpen(true);
-                } else {
-                  alert('취소할 티켓을 선택해주세요.');
-                }
-              } else {
-                setIsCancelMode(true);
-              }
-            }}
+            onClick={handleCancelButtonClick}
           />
         </div>
       )}
