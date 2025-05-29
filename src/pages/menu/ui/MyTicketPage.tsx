@@ -103,7 +103,7 @@ const MyTicketPage = () => {
               eventDate={ticket.event.startDate}
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
-              onClick={() => handelEventCardClick}
+              onClick={() => handelEventCardClick(ticket)}
               className={`transition-transform duration-200 ${
                 isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
               }`}
