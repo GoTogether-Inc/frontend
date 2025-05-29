@@ -63,7 +63,9 @@ const EventDetailsPage = () => {
         leftButtonClick={() => navigate(-1)}
         leftButtonLabel="<"
         centerContent="같이가요"
-        rightContent={<img src={Search} alt="검색" className="w-4" />}
+        rightContent={
+          <img src={Search} alt="검색" className="w-5 cursor-pointer z-30" onClick={() => navigate('/search')} />
+        }
       />
       {event ? (
         <>
