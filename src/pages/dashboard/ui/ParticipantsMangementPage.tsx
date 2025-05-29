@@ -16,6 +16,8 @@ const ParticipantsManagementPage = () => {
   const [filter, setFilter] = useState<string[]>([]);
 
   const { participants } = useParticipants();
+  const checkedInCount = participants.filter((p: { checkedIn: boolean; }) => p.checkedIn).length;
+  const unapprovedCount = participants.filter((p: { isApproved: boolean; }) => !p.isApproved).length;
 
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
@@ -23,10 +25,10 @@ const ParticipantsManagementPage = () => {
         <h1 className="text-center font-bold text-xl py-4 md:py-6">구매/참가자 관리</h1>
         <div className="flex justify-end gap-2 md:gap-3 px-4">
           <h3 className="text-placeholderText text-sm md:text-base">체크인</h3>
-          <span className="text-sm md:text-base">0/0</span>
+          <span className="text-sm md:text-base">{checkedInCount}/{participants.length}</span>
           <span className="text-sm md:text-base">|</span>
           <h3 className="text-placeholderText text-sm md:text-base">미승인</h3>
-          <span className="text-sm md:text-base">0</span>
+          <span className="text-sm md:text-base">{unapprovedCount}</span>
         </div>
         <SearchBar placeholder="이름, 이메일, 전화번호, 티켓ID로 검색" className="py-5" />
         <ParticipantsFilterBar
