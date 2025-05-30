@@ -24,6 +24,12 @@ export const useTicketOptionDnD = () => {
     if (source.droppableId === 'options' && destination.droppableId.startsWith('ticket-')) {
       const ticketId = parseInt(destination.droppableId.replace('ticket-', ''), 10);
       const ticketOptionId = parseInt(result.draggableId, 10);
+      
+      if (isNaN(ticketId) || isNaN(ticketOptionId)) {
+        console.error('Invalid ID parsing:', { ticketId, ticketOptionId });
+        return;
+      }
+
       attachOption({ ticketId, ticketOptionId });
       return;
     }
@@ -31,8 +37,12 @@ export const useTicketOptionDnD = () => {
     // 티켓 영역에서 옵션 영역으로 드래그
     if (source.droppableId.startsWith('ticket-') && destination.droppableId === 'options') {
       const ticketId = parseInt(source.droppableId.replace('ticket-', ''), 10);
-      const ticketOptionId = parseInt(result.draggableId.split('-').pop()!, 10);
-      detachOption({ ticketId, ticketOptionId });
+      const ticketOptionIdStr = result.draggableId.split('-').pop();
+      const ticketOptionId = ticketOptionIdStr ? parseInt(ticketOptionIdStr, 10) : undefined;
+
+      if (ticketId && ticketOptionId != undefined) {
+        detachOption({ ticketId, ticketOptionId });
+      }
       return;
     }
   };

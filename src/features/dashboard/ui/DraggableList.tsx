@@ -100,7 +100,7 @@ const DraggableList = ({
                 {content.length > 8 ? content.slice(0, 8) + '...' : content}
                 <div className="flex flex-row text-placeholderText text-13">
                   {answerToggled && <div className="mr-1">필수응답{responseFormat ? ',' : ''}</div>}
-                  {responseFormat}
+                  {getDisplayFormat(responseFormat)}
                 </div>
               </div>
               <IconButton
