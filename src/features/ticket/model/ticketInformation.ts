@@ -45,11 +45,15 @@ export type TicketOptionAnswer = {
   id: number;
   answer: string;
 };
-export type TicketOptionAnswerResponse = {
+export type TicketOption = {
   optionId: number;
   optionName: string;
   optionType: TicketOptionType;
-  answers: TicketOptionAnswer[];
+  ticketOptionAnswers: TicketOptionAnswer[];
+};
+export type TicketOptionAnswerResponse = {
+  orderCount: number;
+  ticketOptions: TicketOption[];
 };
 
 // 티켓 옵션 응답 개별 조회
