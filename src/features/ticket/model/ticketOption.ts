@@ -57,4 +57,4 @@ export interface TicketOptionsType {
   }[];
 }
 
-export interface TicketOptionResponse extends ApiResponse<TicketOptionsType> {}
+export interface TicketOptionTypeResponse extends ApiResponse<TicketOptionsType> {}
