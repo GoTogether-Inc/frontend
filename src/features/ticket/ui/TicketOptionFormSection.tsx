@@ -44,9 +44,9 @@ export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useT
           <ChoiceChip
             value={state.question.responseFormat} // 객관식
             options={[
-              { label: '객관식', value: '객관식' },
-              { label: '여러개 선택', value: '여러개 선택' },
-              { label: '자유로운 텍스트', value: '자유로운 텍스트' },
+              { label: '객관식', value: 'SINGLE' },
+              { label: '여러개 선택', value: 'MULTIPLE' },
+              { label: '자유로운 텍스트', value: 'TEXT' },
             ]}
             onSelect={selected => {
               dispatch({ type: 'SET_RESPONSE_TOGGLE', payload: selected });
