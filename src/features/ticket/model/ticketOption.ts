@@ -28,7 +28,7 @@ export type Action =
   | { type: 'SET_WARNING'; payload: { field: keyof State['warnings']; value: string } } // 경고 메시지
   | { type: 'SET_QUESTION_TITLE'; payload: string } // 질문 제목 업데이트
   | { type: 'SET_DESCRIPTION'; payload: string } // 질문 설명 업데이트
-  | { type: 'SET_RESPONSE_TOGGLE'; payload: string } // 응답 형식 토글
+  | { type: 'SET_RESPONSE_TOGGLE'; payload: TicketOptionType } // 응답 형식 토글
   | { type: 'TOGGLE_ANSWER' } // 필수 응답 여부 토글
   | { type: 'SET_FOCUSED_INDEX'; payload: number | null } // 포커싱된 옵션 인덱스 변경
   | { type: 'UPDATE_OPTION'; payload: { index: number; value: string; isSingle: boolean } } // 추가 옵션의 텍스트를 수정

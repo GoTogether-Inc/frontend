@@ -54,7 +54,7 @@ export function ticketOptionReducer(state: State, action: Action): State {
         ...state,
         question: {
           ...state.question,
-          responseFormat: action.payload as TicketOptionType,
+          responseFormat: action.payload,
         },
       };
     case 'TOGGLE_ANSWER':
