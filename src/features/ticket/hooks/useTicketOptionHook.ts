@@ -1,3 +1,7 @@
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { TicketOptionRequest, TicketOptionTypeResponse } from '../model/ticketOption';
 import {
   PersonalTicketOptionAnswerResponse,
   TicketOptionAnswerRequest,
@@ -10,7 +14,17 @@ import {
   readPurchaserAnswers,
   readTicketOptions,
 } from '../api/ticketOption';
-import { ApiResponse } from '../../../shared/types/api/apiResponse';
+import {
+  getTicketOptions,
+  createTicketOption,
+  modifyTicketOption,
+  deleteTicketOption,
+  getAttachedTicketOptions,
+  getTicketOptionDetail,
+  attachTicketOption,
+  detachTicketOption,
+} from '../api/ticketOption';
+
 
 // 티켓 옵션 조회
 export const useTicketOptions = (ticketId: number) => {
@@ -62,21 +76,7 @@ export const usePersonalTicketOptionAnswers = (ticketId: number | null) => {
   });
 };
 
-import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  getTicketOptions,
-  createTicketOption,
-  modifyTicketOption,
-  deleteTicketOption,
-  getAttachedTicketOptions,
-  getTicketOptionDetail,
-  attachTicketOption,
-  detachTicketOption,
-} from '../api/ticketOption';
-import { TicketOptionRequest, TicketOptionResponse } from '../model/ticketOption';
-
-// 티켓 옵션 생성 훅
+// 티켓 옵션 생성 훅 
 export const useCreateTicketOptionMutation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -138,7 +138,7 @@ export const useGetTicketOptions = () => {
   const { id } = useParams();
   const eventId = Number(id);
 
-  return useQuery<TicketOptionResponse>({
+  return useQuery<TicketOptionTypeResponse>({
     queryKey: ['ticketOptions', id],
     queryFn: () => getTicketOptions(eventId),
     enabled: !!id,
@@ -147,7 +147,7 @@ export const useGetTicketOptions = () => {
 
 // 티켓에 부착된 옵션 목록 조회 훅
 export const useGetAttachedTicketOptions = (ticketId: number) => {
-  return useQuery<TicketOptionResponse>({
+  return useQuery<TicketOptionTypeResponse>({
     queryKey: ['attachedTicketOptions', ticketId],
     queryFn: () => getAttachedTicketOptions(ticketId),
     enabled: !!ticketId,
@@ -156,7 +156,7 @@ export const useGetAttachedTicketOptions = (ticketId: number) => {
 
 // 티켓 옵션 상세 조회 훅
 export const useGetTicketOptionDetail = (ticketOptionId: number) => {
-  return useQuery<TicketOptionResponse>({
+  return useQuery<TicketOptionTypeResponse>({
     queryKey: ['ticketOptionDetail', ticketOptionId],
     queryFn: () => getTicketOptionDetail(ticketOptionId),
     enabled: !!ticketOptionId,

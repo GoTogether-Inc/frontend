@@ -1,4 +1,6 @@
 import { axiosClient } from "../../../shared/types/api/http-client";
+import { ApiResponse } from '../../../shared/types/api/apiResponse';
+import { TicketOptionRequest, TicketOptionTypeResponse } from '../model/ticketOption';
 import { PersonalTicketOptionAnswerResponse, TicketOptionAnswerRequest, TicketOptionAnswerResponse, TicketOptionResponse } from "../model/ticketInformation";
 
 // 티켓 옵션 조회
@@ -28,12 +30,11 @@ export const readPersonalTicketOptionAnswers = async (ticketId: number): Promise
   });
   return response.data;
 };
-import { TicketOptionRequest, TicketOptionResponse } from '../model/ticketOption';
-import { ApiResponse } from '../../../shared/types/api/apiResponse';
+
 
 // 티켓 옵션 생성
-export const createTicketOption = async (data: TicketOptionRequest): Promise<TicketOptionResponse> => {
-  const response = await axiosClient.post<TicketOptionResponse>('/ticket-options', data);
+export const createTicketOption = async (data: TicketOptionRequest): Promise<TicketOptionTypeResponse> => {
+  const response = await axiosClient.post<TicketOptionTypeResponse>('/ticket-options', data);
   return response.data;
 };
 
@@ -53,20 +54,20 @@ export const deleteTicketOption = async (ticketOptionId: number): Promise<ApiRes
 };
 
 // 티켓 옵션 목록 조회
-export const getTicketOptions = async (eventId: number): Promise<TicketOptionResponse> => {
-  const response = await axiosClient.get<TicketOptionResponse>(`/ticket-options/events/${eventId}`);
+export const getTicketOptions = async (eventId: number): Promise<TicketOptionTypeResponse> => {
+  const response = await axiosClient.get<TicketOptionTypeResponse>(`/ticket-options/events/${eventId}`);
   return response.data;
 };
 
 // 티켓에 부착된 옵션 목록 조회
-export const getAttachedTicketOptions = async (ticketId: number): Promise<TicketOptionResponse> => {
-  const response = await axiosClient.get<TicketOptionResponse>(`ticket-options/tickets/${ticketId}`);
+export const getAttachedTicketOptions = async (ticketId: number): Promise<TicketOptionTypeResponse> => {
+  const response = await axiosClient.get<TicketOptionTypeResponse>(`ticket-options/tickets/${ticketId}`);
   return response.data;
 };
 
 // 티켓 옵션 상세 조회
-export const getTicketOptionDetail = async (ticketOptionId: number): Promise<TicketOptionResponse> => {
-  const response = await axiosClient.get<TicketOptionResponse>(`/ticket-options/${ticketOptionId}`);
+export const getTicketOptionDetail = async (ticketOptionId: number): Promise<TicketOptionTypeResponse> => {
+  const response = await axiosClient.get<TicketOptionTypeResponse>(`/ticket-options/${ticketOptionId}`);
   return response.data;
 };
 
