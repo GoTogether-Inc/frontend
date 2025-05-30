@@ -13,7 +13,7 @@ export const useTicketOptionForm = () => {
   const { id: eventId, optionId } = useParams();
   const { mutate: createTicketOptionMutation } = useCreateTicketOptionMutation();
   const { mutate: modifyTicketOptionMutation } = useModifyTicketOptionMutation();
-  const { data: optionDetail, isLoading } = useGetTicketOptionDetail(Number(optionId));
+  const { data: optionDetail, isLoading } = useGetTicketOptionDetail(optionId ? Number(optionId) : 0);
   const isEditing = !!optionId;
   const editOption = optionDetail?.result;
 
