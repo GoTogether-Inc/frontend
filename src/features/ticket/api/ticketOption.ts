@@ -41,8 +41,8 @@ export const createTicketOption = async (data: TicketOptionRequest): Promise<Tic
 export const modifyTicketOption = async (
   ticketOptionId: number,
   data: TicketOptionRequest
-): Promise<TicketOptionRequest> => {
-  const response = await axiosClient.put<TicketOptionRequest>(`/ticket-options/${ticketOptionId}`, data);
+): Promise<ApiResponse<string>> => {
+  const response = await axiosClient.put<ApiResponse<string>>(`/ticket-options/${ticketOptionId}`, data);
   return response.data;
 };
 
