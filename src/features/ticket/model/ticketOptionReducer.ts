@@ -116,8 +116,8 @@ export function ticketOptionReducer(state: State, action: Action): State {
       if (type === 'MULTIPLE') responseFormat = 'MULTIPLE';
       if (type === 'TEXT') responseFormat = 'TEXT';
 
-      // choices를 string[]로 변환
-      const optionStrings = choices.map(choice => choice.name);
+      // choices를 string[]로 변환 (choices가 배열이 아닐 경우 빈 배열 처리)
+      const optionStrings = Array.isArray(choices) ? choices.map(choice => choice.name) : [];
       return {
         ...state,
         question: {
@@ -128,10 +128,10 @@ export function ticketOptionReducer(state: State, action: Action): State {
           answerToggled: isMandatory,
         },
         singleOptions: {
-          options: type === 'SINGLE' ? optionStrings : Array(3).fill(''),
+          options: type === 'SINGLE' && optionStrings.length > 0 ? optionStrings : Array(3).fill(''),
         },
         multiOptions: {
-          options: type === 'MULTIPLE' ? optionStrings : Array(3).fill(''),
+          options: type === 'MULTIPLE' && optionStrings.length > 0 ? optionStrings : Array(3).fill(''),
         },
       };
     }
