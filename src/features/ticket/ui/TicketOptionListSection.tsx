@@ -12,7 +12,7 @@ export const TicketOptionListSection = ({ form }: { form: ReturnType<typeof useT
     <>
       {/*옵션 입력란*/}
       <div>
-        {(state.question.responseFormat === '객관식' || state.question.responseFormat === '여러개 선택') && (
+        {(state.question.responseFormat === 'SINGLE' || state.question.responseFormat === 'MULTIPLE') && (
           <>
             <p className="block text-m font-semibold text-gray-700">옵션</p>
             <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
@@ -52,7 +52,7 @@ export const TicketOptionListSection = ({ form }: { form: ReturnType<typeof useT
             </div>
           </>
         )}
-        {state.question.responseFormat === '자유로운 텍스트' && <div></div>}
+        {state.question.responseFormat === 'TEXT' && <div></div>}
       </div>
     </>
   );

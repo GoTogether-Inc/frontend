@@ -78,10 +78,14 @@ export function ticketOptionReducer(state: State, action: Action): State {
     case 'REMOVE_OPTION': {
       const { index, isSingle } = action.payload;
       const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
+      const optionsArr = state[optionsKey].options;
+      if (index < 0 || index >= optionsArr.length) {
+        return state;
+      }
       return {
         ...state,
         [optionsKey]: {
-          options: state[optionsKey].options.filter((_, i) => i !== index),
+          options: optionsArr.filter((_, i) => i !== index),
         },
       };
     }
@@ -93,20 +97,24 @@ export function ticketOptionReducer(state: State, action: Action): State {
     case 'UPDATE_OPTION': {
       const { index, value, isSingle } = action.payload;
       const optionsKey = isSingle ? 'singleOptions' : 'multiOptions';
+      const optionsArr = state[optionsKey].options;
+      if (index < 0 || index >= optionsArr.length) {
+        return state;
+      }
       return {
         ...state,
         [optionsKey]: {
           ...state[optionsKey],
-          options: state[optionsKey].options.map((opt, i) => (i === index ? value : opt)),
+          options: optionsArr.map((opt, i) => (i === index ? value : opt)),
         },
       };
     }
     case 'SET_ALL': {
       const { name, description, type, isMandatory, choices } = action.payload;
       // type에 따라 responseFormat 한글로 변환
-      let responseFormat = '객관식';
-      if (type === 'MULTIPLE') responseFormat = '여러개 선택';
-      if (type === 'TEXT') responseFormat = '자유로운 텍스트';
+      let responseFormat = 'SINGLE';
+      if (type === 'MULTIPLE') responseFormat = 'MULTIPLE';
+      if (type === 'TEXT') responseFormat = 'TEXT';
 
       // choices를 string[]로 변환
       const optionStrings = choices.map(choice => choice.name);
