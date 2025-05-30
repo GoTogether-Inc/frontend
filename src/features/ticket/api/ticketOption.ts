@@ -14,7 +14,7 @@ export const createTicketOptionAnswers = async (answers: TicketOptionAnswerReque
 };
 
 // 티켓 옵션 응답 전체 조회
-export const readPurchaserAnswers = async (ticketId: number): Promise<{ isSuccess: boolean; result: TicketOptionAnswerResponse[] }> => {
+export const readPurchaserAnswers = async (ticketId: number): Promise<{ isSuccess: boolean; result: TicketOptionAnswerResponse }> => {
   const response = await axiosClient.get("/ticket-option-answers/purchaser-answer", {
     params: { ticketId },
   });

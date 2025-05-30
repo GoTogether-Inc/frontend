@@ -1,10 +1,10 @@
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from 'recharts';
-import { TicketOptionAnswer, TicketOptionAnswerResponse } from '../../ticket/model/ticketInformation';
+import { TicketOption, TicketOptionAnswer} from '../../ticket/model/ticketInformation';
 
 const COLORS = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
 
 type MultiplePieChartsProps = {
-  responses: TicketOptionAnswerResponse[];
+  responses: TicketOption[];
 };
 
 const MultiplePieCharts = ({ responses }: MultiplePieChartsProps) => {
@@ -24,11 +24,11 @@ const MultiplePieCharts = ({ responses }: MultiplePieChartsProps) => {
 
   return (
     <div className="grid grid-cols-1 gap-6 p-4">
-      {responses.map((option, _index) => {
-        const data = aggregateAnswers(option.answers);
+      {responses.map((option, index) => {
+        const data = aggregateAnswers(option.ticketOptionAnswers);
 
         return (
-          <div key={option.optionId} className="flex flex-col items-center">
+          <div key={`${option.optionId}-${index}`} className="flex flex-col items-center">
             <h3 className="mb-2 font-semibold text-lg">{option.optionName}</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>

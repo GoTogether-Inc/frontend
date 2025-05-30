@@ -1,13 +1,13 @@
 import { useResponseStore } from '../model/store/ResponseStore';
 import { useEffect } from 'react';
-import { TicketOptionAnswerResponse } from '../../ticket/model/ticketInformation';
+import { TicketOption } from '../../ticket/model/ticketInformation';
 import MultiplePieCharts from './MultiplePieCharts';
 import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
 import IndividualResponseViewer from './IndividualResponseViewer';
 
 interface ResponsesListProps {
   listType: 'summary' | 'query' | 'individual';
-  ticketOptionResponses: TicketOptionAnswerResponse[];
+  ticketOptionResponses: TicketOption[];
   ticketId: number;
 }
 
@@ -23,24 +23,24 @@ const ResponsesList = ({ listType, ticketOptionResponses, ticketId }: ResponsesL
     setCurrentIndex(() => 0);
   }, [listType, setCurrentIndex]);
 
-  const renderTextResponses = (responses: TicketOptionAnswerResponse[]) => {
+  const renderTextResponses = (responses: TicketOption[]) => {
     const textResponses = responses.filter((res) => res.optionType === 'TEXT');
     if (textResponses.length === 0) return null;
 
     return (
       <>
-        {textResponses.map((textResponse) => (
-          <div className="bg-white p-4 flex flex-col gap-2 mb-4" key={textResponse.optionId}>
+        {textResponses.map((textResponse, idx) => (
+          <div className="bg-white p-4 flex flex-col gap-2 mb-4" key={`${textResponse.optionId}-${idx}`}>
             <div className="flex justify-between items-center text-xs bg-white px-2 md:px-3 py-3">
               <p className="text-base font-bold">{textResponse.optionName}</p>
-              <p>응답 {textResponse.answers.length}개</p>
+              <p>응답 {textResponse.ticketOptionAnswers.length}개</p>
             </div>
 
-            {textResponse.answers.length === 0 ? (
+            {textResponse.ticketOptionAnswers.length === 0 ? (
               <p>응답이 없습니다.</p>
             ) : (
               <div className="h-full max-h-48 overflow-y-auto space-y-2">
-                {textResponse.answers.map((answer) => (
+                {textResponse.ticketOptionAnswers.map((answer) => (
                   <div
                     className="flex justify-between text-xs bg-gray-100 shadow-sm px-2 md:px-3 py-3 gap-2"
                     key={answer.id}

@@ -37,7 +37,7 @@ export const useCreateTicketOptionAnswers = () => {
 
 // 티켓 옵션 응답 전체 조회
 export const usePurchaserAnswers = (ticketId: number | null) => {
-  return useQuery<{ isSuccess: boolean; result: TicketOptionAnswerResponse[] }>({
+  return useQuery<{ isSuccess: boolean; result: TicketOptionAnswerResponse }>({
     queryKey: ['purchaserAnswers', ticketId],
     queryFn: () => {
       if (ticketId === null) {
