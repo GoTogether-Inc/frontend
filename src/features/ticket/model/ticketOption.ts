@@ -1,5 +1,7 @@
 import { ApiResponse } from '../../../shared/types/api/apiResponse';
 
+export type TicketOptionType = 'SINGLE' | 'MULTIPLE' | 'TEXT';
+
 // 상태 인터페이스 정의
 export interface State {
   warnings: {
@@ -9,7 +11,7 @@ export interface State {
   question: {
     title: string; // 질문 제목
     description: string; // 질문 설명
-    responseFormat: string; // 응답 형식 (단일 선택 or 여러개 선택 or 자유로운 텍스트)
+    responseFormat: TicketOptionType; // 응답 형식 (SINGLE, MULTIPLE, TEXT)
     answerToggled: boolean; // 필수 응답 여부
   };
   focusedIndex: number | null; // 포커싱된 옵션 인덱스
@@ -47,7 +49,7 @@ export interface TicketOptionsType {
   id: number;
   name: string;
   description: string;
-  type: 'SINGLE' | 'MULTIPLE' | 'TEXT';
+  type: TicketOptionType;
   isMandatory: boolean;
   choices: {
     id: number;

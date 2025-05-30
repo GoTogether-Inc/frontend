@@ -18,7 +18,7 @@ export const useTicketOptionForm = () => {
   const editOption = optionDetail?.result;
 
   const getActiveOptions = () => {
-    return state.question.responseFormat === '객관식' ? state.singleOptions : state.multiOptions;
+    return state.question.responseFormat === 'SINGLE' ? state.singleOptions : state.multiOptions;
   };
 
   // 필수 응답 여부 토글
@@ -44,7 +44,7 @@ export const useTicketOptionForm = () => {
       type: 'REMOVE_OPTION',
       payload: {
         index,
-        isSingle: state.question.responseFormat === '객관식',
+        isSingle: state.question.responseFormat === 'SINGLE',
       },
     });
     dispatch({
@@ -61,7 +61,7 @@ export const useTicketOptionForm = () => {
     dispatch({
       type: 'ADD_OPTION',
       payload: {
-        isSingle: state.question.responseFormat === '객관식',
+        isSingle: state.question.responseFormat === 'SINGLE',
       },
     });
     dispatch({
@@ -83,7 +83,7 @@ export const useTicketOptionForm = () => {
       payload: {
         index,
         value,
-        isSingle: state.question.responseFormat === '객관식',
+        isSingle: state.question.responseFormat === 'SINGLE',
       },
     });
 
@@ -161,7 +161,7 @@ export const useTicketOptionForm = () => {
       });
     }
 
-    if (state.question.responseFormat === '객관식' || state.question.responseFormat === '여러개 선택') {
+    if (state.question.responseFormat === 'SINGLE' || state.question.responseFormat === 'MULTIPLE') {
       const activeOptions = getActiveOptions();
       const hasValidOption = activeOptions.options.some(opt => opt.trim() !== '');
 
@@ -179,16 +179,16 @@ export const useTicketOptionForm = () => {
 
     if (isValid) {
       const type =
-        state.question.responseFormat === '객관식'
+        state.question.responseFormat === 'SINGLE'
           ? 'SINGLE'
-          : state.question.responseFormat === '여러개 선택'
+          : state.question.responseFormat === 'MULTIPLE'
           ? 'MULTIPLE'
           : 'TEXT';
 
       const choices =
-        state.question.responseFormat === '객관식'
+        state.question.responseFormat === 'SINGLE'
           ? state.singleOptions.options.filter(opt => opt.trim() !== '')
-          : state.question.responseFormat === '여러개 선택'
+          : state.question.responseFormat === 'MULTIPLE'
           ? state.multiOptions.options.filter(opt => opt.trim() !== '')
           : [];
 
