@@ -47,8 +47,8 @@ export const modifyTicketOption = async (
 };
 
 // 티켓 옵션 삭제 (UI 없음, 현재 호출되지 않고있는 상태)
-export const deleteTicketOption = async (ticketOptionId: number): Promise<ApiResponse<{}>> => {
-  const response = await axiosClient.delete<ApiResponse<{}>>(`/ticket-options/${ticketOptionId}`);
+export const deleteTicketOption = async (ticketOptionId: number): Promise<ApiResponse<string>> => {
+  const response = await axiosClient.delete<ApiResponse<string>>(`/ticket-options/${ticketOptionId}`);
   return response.data;
 };
 
