@@ -1,4 +1,4 @@
-import { State, Action } from './ticketOption';
+import { State, Action, TicketOptionType } from './ticketOption';
 
 // 초기 값
 export const initialState: State = {
@@ -10,7 +10,7 @@ export const initialState: State = {
     title: '',
     description: '',
     answerToggled: false,
-    responseFormat: '객관식',
+    responseFormat: 'SINGLE',
   },
   focusedIndex: null,
   singleOptions: {
@@ -54,7 +54,7 @@ export function ticketOptionReducer(state: State, action: Action): State {
         ...state,
         question: {
           ...state.question,
-          responseFormat: action.payload,
+          responseFormat: action.payload as TicketOptionType,
         },
       };
     case 'TOGGLE_ANSWER':
@@ -116,7 +116,7 @@ export function ticketOptionReducer(state: State, action: Action): State {
           ...state.question,
           title: name,
           description: description,
-          responseFormat,
+          responseFormat: responseFormat as TicketOptionType,
           answerToggled: isMandatory,
         },
         singleOptions: {
