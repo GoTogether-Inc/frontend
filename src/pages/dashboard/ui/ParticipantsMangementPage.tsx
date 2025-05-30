@@ -14,10 +14,21 @@ const ParticipantsManagementPage = () => {
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
   const [listType, setListType] = useState<'all' | 'approved' | 'pending'>('all');
   const [filter, setFilter] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { participants } = useParticipants();
   const checkedInCount = participants.filter((p: { checkedIn: boolean; }) => p.checkedIn).length;
   const unapprovedCount = participants.filter((p: { approved: boolean; }) => !p.approved).length;
+
+  const filteredParticipants = participants.filter((p: { participant: string; email: string; phoneNumber: string; ticketId: number; }) => {
+    const lowerSearch = searchTerm.toLowerCase();
+    return (
+      p.participant?.toLowerCase().includes(lowerSearch) ||
+      p.email?.toLowerCase().includes(lowerSearch) ||
+      p.phoneNumber?.toLowerCase().includes(lowerSearch) ||
+      String(p.ticketId).includes(lowerSearch)
+    );
+  });
 
   return (
     <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
@@ -30,14 +41,19 @@ const ParticipantsManagementPage = () => {
           <h3 className="text-placeholderText text-sm md:text-base">미승인</h3>
           <span className="text-sm md:text-base">{unapprovedCount}</span>
         </div>
-        <SearchBar placeholder="이름, 이메일, 전화번호, 티켓ID로 검색" className="py-5" />
+        <SearchBar
+          placeholder="이름, 이메일, 전화번호, 티켓ID로 검색"
+          className="py-5"
+          value={searchTerm}
+          onChange={setSearchTerm}
+        />
         <ParticipantsFilterBar
           listType={listType}
           setListType={setListType}
           setFilterModalOpen={setfilterModalOpen}
           setEmailModalOpen={setEmailModalOpen}
         />
-        <ParticipantsList listType={listType} selectedFilter={filter} participants={participants} />
+        <ParticipantsList listType={listType} selectedFilter={filter} participants={filteredParticipants} />
       </div>
       {filterModalOpen && (
         <ButtonModal
