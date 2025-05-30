@@ -86,8 +86,8 @@ export const attachTicketOption = async (ticketId: number, ticketOptionId: numbe
 export const detachTicketOption = async (
   ticketId: number,
   ticketOptionId: number
-): Promise<ApiResponse<{}>> => {
-  const response = await axiosClient.delete<ApiResponse<{}>>(`/ticket-option-assignments`, {
+): Promise<ApiResponse<string>> => {
+  const response = await axiosClient.delete<ApiResponse<string>>(`/ticket-option-assignments`, {
     params: {
       ticketId,
       ticketOptionId,
