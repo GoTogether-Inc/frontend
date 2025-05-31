@@ -7,7 +7,7 @@ import { EventItem, PaginationParams } from '../model/eventDetail';
 export const eventDetail = async (dto: EventDetailRequest) => {
   const response = await axiosClient.get(`/events/${dto.eventId}`, {
     params: { userId: dto.userId },
-    headers: { skipAuth: true },
+    headers: { isPublicApi: true },
   });
   return response.data;
 };
@@ -25,7 +25,7 @@ export const getAllEventsInfinite = async ({
   params.append('size', size.toString());
 
   const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events?${params.toString()}`, {
-    headers: { skipAuth: true },
+    headers: { isPublicApi: true },
   });
 
   const items = response.data.result ?? [];
@@ -49,7 +49,7 @@ export const getCategoryEventsInfinite = async ({
   params.append('size', size.toString());
 
   const response = await axiosClient.get<ApiResponse<EventItem[]>>(`/events/categories?${params.toString()}`, {
-    headers: { skipAuth: true },
+    headers: { isPublicApi: true },
   });
 
   const items = response.data.result ?? [];
@@ -63,7 +63,7 @@ export const getCategoryEventsInfinite = async ({
 // 태그별 이벤트 목록 조회 (최신, 인기, 마감 / 기본 정보)
 export const getEventByTag = async (tag: TagType, { page, size }: PaginationParams): Promise<EventItem[]> => {
   const response = await axiosClient.get<{ result: EventItem[] }>(`/events?tags=${tag}&page=${page}&size=${size}`, {
-    headers: { skipAuth: true },
+    headers: { isPublicApi: true },
   });
   return response.data.result || [];
 };
@@ -76,7 +76,7 @@ export const getEventByCategory = async (
   const response = await axiosClient.get<EventItem[]>(
     `/events/category?category=${category}&page=${page}&size=${size}`,
     {
-      headers: { skipAuth: true },
+      headers: { isPublicApi: true },
     }
   );
   return response.data;
