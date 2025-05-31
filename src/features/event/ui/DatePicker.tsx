@@ -27,10 +27,12 @@ const EventDatePicker = ({
   isLabel = false,
 }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
-    eventState?.startDate ? new Date(eventState.startDate) : new Date()
+    eventState?.startDate ? new Date(eventState.startDate) : initialStartDate ? new Date(initialStartDate) : null
   );
-  const [endDate, setEndDate] = useState<Date | null>(eventState?.endDate ? new Date(eventState.endDate) : new Date());
 
+  const [endDate, setEndDate] = useState<Date | null>(
+    eventState?.endDate ? new Date(eventState.endDate) : initialEndDate ? new Date(initialEndDate) : null
+  );
   const [startTime, setStartTime] = useState<string>('06:00');
   const [endTime, setEndTime] = useState<string>('23:00');
 
@@ -39,18 +41,18 @@ const EventDatePicker = ({
     const end = eventState?.endDate || initialEndDate;
 
     if (start && !startDate) {
-      const startDate = new Date(start);
-      setStartDate(startDate);
-      const hours = startDate.getHours().toString().padStart(2, '0');
-      const minutes = startDate.getMinutes().toString().padStart(2, '0');
+      const startDateObj = new Date(start);
+      setStartDate(prev => prev ?? startDateObj);
+      const hours = startDateObj.getHours().toString().padStart(2, '0');
+      const minutes = startDateObj.getMinutes().toString().padStart(2, '0');
       setStartTime(`${hours}:${minutes}`);
     }
 
     if (end && !endDate) {
-      const endDate = new Date(end);
-      setEndDate(endDate);
-      const hours = endDate.getHours().toString().padStart(2, '0');
-      const minutes = endDate.getMinutes().toString().padStart(2, '0');
+      const endDateObj = new Date(end);
+      setEndDate(prev => prev ?? endDateObj);
+      const hours = endDateObj.getHours().toString().padStart(2, '0');
+      const minutes = endDateObj.getMinutes().toString().padStart(2, '0');
       setEndTime(`${hours}:${minutes}`);
     }
   }, [eventState, initialStartDate, initialEndDate]);
