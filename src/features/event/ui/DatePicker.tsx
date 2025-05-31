@@ -27,11 +27,11 @@ const EventDatePicker = ({
   isLabel = false,
 }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
-    eventState?.startDate ? new Date(eventState.startDate) : initialStartDate ? new Date(initialStartDate) : null
+    eventState?.startDate ? new Date(eventState.startDate) : initialStartDate ? new Date(initialStartDate) : new Date()
   );
 
   const [endDate, setEndDate] = useState<Date | null>(
-    eventState?.endDate ? new Date(eventState.endDate) : initialEndDate ? new Date(initialEndDate) : null
+    eventState?.endDate ? new Date(eventState.endDate) : initialEndDate ? new Date(initialEndDate) : new Date()
   );
   const [startTime, setStartTime] = useState<string>('06:00');
   const [endTime, setEndTime] = useState<string>('23:00');
