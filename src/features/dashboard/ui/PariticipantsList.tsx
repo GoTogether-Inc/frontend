@@ -19,7 +19,7 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
     selectedTicketId,
     selectedOrderId,
     setSelectedTicketId,
-    setSelectedOrderId
+    setSelectedOrderId,
   } = useParticipantStore();
 
   const { data } = usePersonalTicketOptionAnswers(selectedTicketId);
@@ -38,9 +38,7 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
       return;
     }
 
-    const order = data.result
-      .flatMap(user => user.orders)
-      .find(order => order.orderId === selectedOrderId);
+    const order = data.result.flatMap(user => user.orders).find(order => order.orderId === selectedOrderId);
 
     if (!order) {
       alert('응답 데이터가 없습니다.');
@@ -68,7 +66,7 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
     <div className="flex flex-col gap-2 mb-4">
       <div className="flex justify-between text-xs text-[#888686] bg-white shadow-sm px-2 md:px-3 py-3 rounded-t-lg">
         <div className="flex gap-2 md:gap-3">
-          <div className="flex items-center gap-15 md:gap-24">
+          <div className="flex items-center gap-3 md:gap-16">
             <p>주문 번호</p>
             <p>참여자 정보</p>
           </div>
