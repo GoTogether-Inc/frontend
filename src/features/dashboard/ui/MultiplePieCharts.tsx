@@ -23,7 +23,7 @@ const MultiplePieCharts = ({ responses }: MultiplePieChartsProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-4 bg-white mb-4">
+    <div className="grid grid-cols-1 gap-6 p-4 bg-white">
       {responses.map((option, index) => {
         const data = aggregateAnswers(option.ticketOptionAnswers);
 
