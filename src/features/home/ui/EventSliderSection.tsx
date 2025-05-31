@@ -70,6 +70,22 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
             </div>
           ))
         )}
+        {eventsToShow.length === 1 && (
+          <div className="w-full h-full min-h-[200px] max-w-sm opacity-0" aria-hidden="true">
+            {/* 빈 카드로 자리 유지 */}
+            <EventCard
+              id={-1}
+              img=""
+              eventTitle=""
+              dDay=""
+              host=""
+              eventDate=""
+              location=""
+              hashtags={[]}
+              onClick={() => {}}
+            />
+          </div>
+        )}
       </div>
       {startIndex !== 0 && (
         <IconButton
