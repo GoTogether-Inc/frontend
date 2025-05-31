@@ -126,8 +126,14 @@ export const useDeleteTicketOptionMutation = () => {
       queryClient.invalidateQueries({ queryKey: ['ticketOptionDetail', ticketOptionId] });
       queryClient.invalidateQueries({ queryKey: ['attachedTicketOptions'] });
     },
-    onError: () => {
-      alert('티켓 옵션 삭제에 실패했습니다. 다시 시도해주세요.');
+    onError: error => {
+      const errorCode = error.message;
+
+      if (errorCode === '이미 응답된 티켓 옵션입니다.') {
+        alert('한 명 이상의 유저가 응답한 옵션은 삭제할 수 없습니다.');
+      } else {
+        alert('티켓 옵션 삭제에 실패했습니다. 다시 시도해주세요.');
+      }
     },
   });
 };
