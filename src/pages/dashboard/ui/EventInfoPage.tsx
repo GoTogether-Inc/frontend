@@ -3,7 +3,6 @@ import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import EventDatePicker from '../../../features/event/ui/DatePicker';
 import DashboardLayout from '../../../shared/ui/backgrounds/DashboardLayout';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../../../design-system/ui/Button';
 import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHook';
 import { OnlineType } from '../../../shared/types/baseEventType';
@@ -11,9 +10,10 @@ import { AddressSearch } from '../../../shared/ui/AddressSearch';
 import KakaoMap from '../../../shared/ui/KakaoMap';
 import { UpdateEventRequest } from '../../../features/dashboard/model/event';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
+import { useQueryClient } from '@tanstack/react-query';
 
 const EventInfoPage = () => {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [selectedOption, setSelectedOption] = useState('');
   const { data } = useEventDetail();
   const { mutate } = useUpdateEventHook();
@@ -60,7 +60,7 @@ const EventInfoPage = () => {
     mutate(requestData, {
       onSuccess: () => {
         alert('이벤트 정보가 저장되었습니다.');
-        navigate(`/dashboard/${data?.result.id}`);
+        queryClient.invalidateQueries({ queryKey: ['eventDetail', data.result.id] });
       },
       onError: error => {
         console.error('Error details:', error);
