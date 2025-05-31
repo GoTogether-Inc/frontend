@@ -3,7 +3,6 @@ import { useInfiniteScroll } from '../../../shared/hooks/useInfiniteScroll';
 import { getAllEventsInfinite, getCategoryEventsInfinite } from '../../../entities/event/api/event';
 import EventCard from '../../../shared/ui/EventCard';
 import { BaseEvent, CategoryType, TagType } from '../../../shared/types/baseEventType';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useNavigate } from 'react-router-dom';
 
 interface EventListProps extends BaseEvent {
