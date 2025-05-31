@@ -14,7 +14,7 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   config => {
-    if (config.headers?.skipAuth) {
+    if (config.headers?.isPublicApi) {
       return config;
     }
 
