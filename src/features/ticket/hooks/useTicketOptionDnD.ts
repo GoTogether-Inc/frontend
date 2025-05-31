@@ -1,9 +1,14 @@
 import { DropResult } from '@hello-pangea/dnd';
-import { useAttachTicketOptionMutation, useDetachTicketOptionMutation } from './useTicketOptionHook';
+import {
+  useAttachTicketOptionMutation,
+  useDeleteTicketOptionMutation,
+  useDetachTicketOptionMutation,
+} from './useTicketOptionHook';
 
 export const useTicketOptionDnD = () => {
   const { mutate: attachOption } = useAttachTicketOptionMutation();
   const { mutate: detachOption } = useDetachTicketOptionMutation();
+  const { mutate: deleteOption } = useDeleteTicketOptionMutation();
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -24,13 +29,10 @@ export const useTicketOptionDnD = () => {
     if (source.droppableId === 'options' && destination.droppableId.startsWith('ticket-')) {
       const ticketId = parseInt(destination.droppableId.replace('ticket-', ''), 10);
       const ticketOptionId = parseInt(result.draggableId, 10);
-      
-      if (isNaN(ticketId) || isNaN(ticketOptionId)) {
-        console.error('Invalid ID parsing:', { ticketId, ticketOptionId });
-        return;
-      }
 
-      attachOption({ ticketId, ticketOptionId });
+      if (isNaN(ticketId) || isNaN(ticketOptionId)) {
+        attachOption({ ticketId, ticketOptionId });
+      }
       return;
     }
 
@@ -40,12 +42,20 @@ export const useTicketOptionDnD = () => {
       const ticketOptionIdStr = result.draggableId.split('-').pop();
       const ticketOptionId = ticketOptionIdStr ? parseInt(ticketOptionIdStr, 10) : undefined;
 
-      if (ticketId && ticketOptionId != undefined) {
+      if (ticketId && ticketOptionId !== undefined) {
         detachOption({ ticketId, ticketOptionId });
       }
       return;
     }
-  };
 
+    // 옵션 영역에서 자체 옵션 삭제 (모든 티켓에서 제거)
+    if (source.droppableId === 'options' && destination.droppableId === 'delete') {
+      const ticketOptionId = parseInt(result.draggableId, 10);
+      if (!isNaN(ticketOptionId)) {
+        deleteOption(ticketOptionId);
+      }
+      return;
+    }
+  };
   return { onDragEnd };
 };

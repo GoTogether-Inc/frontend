@@ -25,7 +25,6 @@ import {
   detachTicketOption,
 } from '../api/ticketOption';
 
-
 // 티켓 옵션 조회
 export const useTicketOptions = (ticketId: number) => {
   return useQuery<{ isSuccess: boolean; result: TicketOptionResponse[] }>({
@@ -76,7 +75,7 @@ export const usePersonalTicketOptionAnswers = (ticketId: number | null) => {
   });
 };
 
-// 티켓 옵션 생성 훅 
+// 티켓 옵션 생성 훅
 export const useCreateTicketOptionMutation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -125,7 +124,7 @@ export const useDeleteTicketOptionMutation = () => {
       // 티켓 옵션 목록과 상세 정보 쿼리 리패칭
       queryClient.invalidateQueries({ queryKey: ['ticketOptions', id] });
       queryClient.invalidateQueries({ queryKey: ['ticketOptionDetail', ticketOptionId] });
-      console.log('티켓 옵션이 성공적으로 삭제되었습니다.');
+      queryClient.invalidateQueries({ queryKey: ['attachedTicketOptions'] });
     },
     onError: () => {
       alert('티켓 옵션 삭제에 실패했습니다. 다시 시도해주세요.');
