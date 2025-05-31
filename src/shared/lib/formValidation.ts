@@ -9,8 +9,10 @@ export const formSchema = z.object({
     .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, '올바른 이메일 형식이어야 합니다.'),
   phone: z
     .string()
-    .regex(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/, '연락처는 -을 포함한 형식이어야 합니다.')
-    .min(1, '전화번호를 입력해주세요.'),
+    .regex(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/, '연락처는 하이픈(-)을 포함한 형식이어야 합니다.')
+    .refine(val => val.length === 13, {
+      message: '연락처는 하이픈(-) 포함 13자 형식(예: 010-1234-5678)이어야 합니다.',
+    }),
 });
 export const organizerFormSchema = formSchema.pick({ email: true, phone: true });
 export const eventTitleSchema = z.object({
