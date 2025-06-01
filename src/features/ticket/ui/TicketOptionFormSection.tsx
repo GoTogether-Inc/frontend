@@ -2,6 +2,7 @@ import { useTicketOptionForm } from '../hooks/useTicketOptionForm';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import ToggleButton from '../../../../design-system/ui/buttons/ToggleButton';
 import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
+import { TicketOptionType } from '../../../shared/types/ticketType';
 
 export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useTicketOptionForm> }) => {
   const { state, dispatch, handleAnswerToggled } = form;
@@ -31,7 +32,7 @@ export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useT
           detail="질문에 대한 부가 설명이 있다면 여기 적으면 돼요."
           className="h-12 mb-5"
           detailClassName="px-0"
-          value={state.question.description?? ''}
+          value={state.question.description ?? ''}
           onChange={e => dispatch({ type: 'SET_DESCRIPTION', payload: e.target.value })}
         />
       </div>
@@ -44,12 +45,12 @@ export const TicketOptionFormSection = ({ form }: { form: ReturnType<typeof useT
           <ChoiceChip
             value={state.question.responseFormat} // 객관식
             options={[
-              { label: '객관식', value: 'SINGLE' },
-              { label: '여러개 선택', value: 'MULTIPLE' },
-              { label: '자유로운 텍스트', value: 'TEXT' },
+              { label: '객관식', value: TicketOptionType.SINGLE },
+              { label: '여러개 선택', value: TicketOptionType.MULTIPLE },
+              { label: '자유로운 텍스트', value: TicketOptionType.TEXT },
             ]}
             onSelect={selected => {
-              dispatch({ type: 'SET_RESPONSE_TOGGLE', payload: selected });
+              dispatch({ type: 'SET_RESPONSE_TOGGLE', payload: selected as TicketOptionType });
               dispatch({ type: 'SET_WARNING', payload: { field: 'optionWarning', value: '' } });
               dispatch({ type: 'SET_FOCUSED_INDEX', payload: null });
             }}
