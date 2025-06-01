@@ -1,5 +1,3 @@
-import Header from '../../../../design-system/ui/Header';
-import ticket from '../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
 import PaymentCard from '../../../widgets/payment/ui/PaymentCard';
 import PaymentLayout from '../../../shared/ui/backgrounds/PaymentLayout';
 
