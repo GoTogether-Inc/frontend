@@ -15,7 +15,7 @@ const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
         drag="x"
         dragConstraints={{ left: -80, right: 0 }}
         onDragStart={() => setIsDragging(true)}
-        onDragEnd={(event, info) => {
+        onDragEnd={(_, info) => {
           if (info.offset.x < -50) {
             setIsDragging(true);
           } else {
