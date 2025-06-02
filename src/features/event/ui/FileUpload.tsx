@@ -30,7 +30,7 @@ const FileUpload = ({ value, onChange, setEventState, useDefaultImage, onValidat
   return (
     <div className="flex flex-col justify-start gap-1">
       <h1 className="font-bold text-black text-lg">배너 사진 첨부</h1>
-      <h2 className="text-placeholderText text-xs md:text-sm">500kB 이하의 jpeg, png 파일만 등록할 수 있습니다.</h2>
+      <h2 className="text-placeholderText text-xs md:text-sm">1MB 이하의 jpeg, png 파일만 등록할 수 있습니다.</h2>
       <div
         className={`flex flex-col items-center justify-center h-44 border border-dashed ${
           isDragging ? 'border-main bg-dropdown' : 'border-placeholderText bg-gray3'

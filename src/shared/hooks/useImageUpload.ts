@@ -25,8 +25,8 @@ const useImageUpload = ({
   }, [value, onSuccess, useDefaultImage, previewUrl]);
 
   const validateFile = (file: File) => {
-    if (file.size > 500 * 1024) {
-      alert('파일 크기는 500KB를 초과할 수 없습니다.');
+    if (file.size > 1000 * 1024) {
+      alert('파일 크기는 1MB를 초과할 수 없습니다.');
       return false;
     }
     if (!['image/jpg', 'image/jpeg', 'image/png'].includes(file.type)) {
