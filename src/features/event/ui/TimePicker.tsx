@@ -3,13 +3,34 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface TimePickerProps {
+  value?: string;
   onChange: (datetime: string) => void;
 }
 
-const TimePicker = ({ onChange }: TimePickerProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedHour, setSelectedHour] = useState<string>('00');
-  const [selectedMinute, setSelectedMinute] = useState<string>('00');
+const parseUtcToKst = (utcString: string): Date => {
+  const utcDate = new Date(utcString);
+  const kstTimestamp = utcDate.getTime() + 9 * 60 * 60 * 1000;
+  return new Date(kstTimestamp);
+};
+
+const TimePicker = ({ value, onChange }: TimePickerProps) => {
+  const initialKstDate = value ? parseUtcToKst(value) : new Date();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(initialKstDate);
+  const [selectedHour, setSelectedHour] = useState<string>(
+    initialKstDate.getHours().toString().padStart(2, '0')
+  );
+  const [selectedMinute, setSelectedMinute] = useState<string>(
+    initialKstDate.getMinutes().toString().padStart(2, '0')
+  );
+
+  useEffect(() => {
+    if (value) {
+      const date = new Date(value);
+      setSelectedDate(date);
+      setSelectedHour(date.getHours().toString().padStart(2, '0'));
+      setSelectedMinute(date.getMinutes().toString().padStart(2, '0'));
+    }
+  }, [value]);
 
   // 날짜, 시간 바뀔 때마다 업데이트
   useEffect(() => {

@@ -18,7 +18,6 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  console.log(formatUtcToKst("2025-07-18T18:00"));
   const { setReservationEmailId, setTitle, setContent, setRecipients, setReservationDate } = useEmailStore();
   const handleEditClick = () => {
     setReservationEmailId(mail.id);

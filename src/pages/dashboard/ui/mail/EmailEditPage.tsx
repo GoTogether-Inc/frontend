@@ -46,6 +46,7 @@ const EmailEditPage = () => {
         />
         {/*시간 선택 컴포넌트*/}
         <TimePicker
+          value={reservationDate}
           onChange={isoString => {
             setReservationDate(isoString);
           }}
