@@ -1,7 +1,7 @@
 import arrow from '../../../../../public/assets/dashboard/mail/Arrow.svg';
 import { useState } from 'react';
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
-import { formatDate, formatTime } from '../../../../shared/lib/date';
+import { formatUtcToKst } from '../../../../shared/lib/date';
 import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReadEmailResponse } from '../../../../features/dashboard/model/email';
@@ -18,6 +18,7 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
+  console.log(formatUtcToKst("2025-07-18T18:00"));
   const { setReservationEmailId, setTitle, setContent, setRecipients, setReservationDate } = useEmailStore();
   const handleEditClick = () => {
     setReservationEmailId(mail.id);
@@ -38,7 +39,7 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
             <p>{mail.title}</p>
           </div>
           <p className="text-sm text-placeholderText">
-            {formatDate(mail.reservationDate)} {formatTime(mail.reservationDate)}
+            {formatUtcToKst(mail.reservationDate)}
           </p>
         </div>
         <IconButton
