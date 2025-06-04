@@ -58,7 +58,17 @@ const QrModal = ({
       <div>
         {iconPath1 && <div className="w-full">{iconPath1}</div>}
         <div className={`ml-[5%] -mt-[180%] ${isChecked ? '' : 'opacity-50'}`}>
-          <img src={`data:image/png;base64,${ticketQrCode}`} alt="QR Code" className="w-60 h-60" />
+          {ticketQrCode ? (
+            <img
+              src={`data:image/png;base64,${ticketQrCode}`}
+              alt="QR Code"
+              className="w-60 h-60"
+            />
+          ) : (
+            <div className="w-60 h-60 flex items-center justify-center bg-deDayBgLight rounded-md border border-deDayTextDark text-deDayTextDark text-sm text-center px-4">
+              주최자의 승인이 완료되면<br /> QR이 발급됩니다.
+            </div>
+          )}
         </div>
         <div className={`${flexColumn} justify-start px-6 ${isChecked ? '' : 'opacity-50'}`}>
           <div className={`${flexRowSpaceBetweenCenter} w-full mt-[22%]`}>
@@ -69,19 +79,19 @@ const QrModal = ({
           <div className="space-y-1 text-deDayTextDark">
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_calendar} alt="qr_calendar" className='mr-1'/>}
+              iconPath={<img src={qr_calendar} alt="qr_calendar" className='mr-1' />}
               children={formattedDate}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_location} alt="qr_location" className='mr-1'/>}
+              iconPath={<img src={qr_location} alt="qr_location" className='mr-1' />}
               children={location}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_ticket} alt="qr_ticket" className='mr-1'/>}
+              iconPath={<img src={qr_ticket} alt="qr_ticket" className='mr-1' />}
               children={ticketName}
               className="text-11"
             ></IconText>
@@ -89,13 +99,13 @@ const QrModal = ({
             <hr />
             <IconText
               size="xSmall"
-              iconPath={<img src={orderStatus === 'COMPLETED' ? qr_check : qr_pending} alt="qr_check" className='mr-1'/>}
+              iconPath={<img src={orderStatus === 'COMPLETED' ? qr_check : qr_pending} alt="qr_check" className='mr-1' />}
               children={orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={isCheckIn? qr_check : qr_pending} alt="qr_check" className='mr-1'/>}
+              iconPath={<img src={isCheckIn ? qr_check : qr_pending} alt="qr_check" className='mr-1' />}
               children={isCheckIn ? '체크인 완료' : '체크인 미완료'}
               className="text-11"
             ></IconText>
