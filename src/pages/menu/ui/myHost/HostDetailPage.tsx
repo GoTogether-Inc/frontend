@@ -10,6 +10,7 @@ const HostDetailPage = () => {
 
   const hostChannelId = Number(id);
   const { data } = useHostDetail(hostChannelId);
+  const events = data?.result.events ?? [];
 
   return (
     <HostDetailLayout
@@ -20,19 +21,25 @@ const HostDetailPage = () => {
       }
     >
       <div className="grid grid-cols-2 gap-4 mx-5 mt-3 md:grid-cols-2 lg:grid-cols-2 z-50">
-        {data?.result.events?.map(event => (
-          <EventCard
-            id={event.id}
-            key={event.id}
-            img={event.bannerImageUrl}
-            eventTitle={event.title}
-            dDay={event.remainDays}
-            host={event.hostChannelName}
-            eventDate={event.startDate}
-            location={event.onlineType}
-            hashtags={event.hashtags}
-          />
-        ))}
+        {events.length === 0 ? (
+          <p className="col-span-2 text-center text-gray-500 mt-10">
+            등록된 이벤트가 없습니다.
+          </p>
+        ) : (
+          events.map(event => (
+            <EventCard
+              id={event.id}
+              key={event.id}
+              img={event.bannerImageUrl}
+              eventTitle={event.title}
+              dDay={event.remainDays}
+              host={event.hostChannelName}
+              eventDate={event.startDate}
+              location={event.onlineType}
+              hashtags={event.hashtags}
+            />
+          ))
+        )}
       </div>
     </HostDetailLayout>
   );
