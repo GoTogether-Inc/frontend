@@ -22,7 +22,7 @@ export const useTicketOrderDetail = (orderId: number) => {
 // 주문 취소
 export const useCancelTicket = () => {
   return useMutation({
-    mutationFn: (orderId: number) => cancelTickets(orderId),
+    mutationFn: (orderIds: number[]) => cancelTickets(orderIds),
     onSuccess: () => {
       alert('티켓이 성공적으로 취소되었습니다.');
     },

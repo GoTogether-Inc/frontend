@@ -104,9 +104,8 @@ const MyTicketPage = () => {
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
               onClick={() => handleEventCardClick(ticket)}
-              className={`transition-transform duration-200 ${
-                isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
-              }`}
+              className={`transition-transform duration-200 ${isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
+                }`}
             >
               <div className="flex items-center text-xs text-gray-500">
                 <img src={ticketImg} alt="티켓" className="w-3 h-3 mr-1" />
@@ -157,11 +156,16 @@ const MyTicketPage = () => {
           rejectButtonText="뒤로가기"
           onClose={() => setIsDeleteModalOpen(false)}
           onClick={() => {
-            Promise.all(selectedIds.map(id => cancelTicket(id))).then(() => {
-              setTickets(prev => prev.filter(ticket => !selectedIds.includes(ticket.id)));
-              setIsDeleteModalOpen(false);
-              setIsCancelMode(false);
-              setSelectedIds([]);
+            cancelTicket(selectedIds, {
+              onSuccess: () => {
+                setTickets(prev => prev.filter(ticket => !selectedIds.includes(ticket.id)));
+                setIsDeleteModalOpen(false);
+                setIsCancelMode(false);
+                setSelectedIds([]);
+              },
+              onError: () => {
+                alert('티켓 취소에 실패했습니다.');
+              },
             });
           }}
         />
