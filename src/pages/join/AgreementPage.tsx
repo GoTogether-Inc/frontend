@@ -4,10 +4,31 @@ import Button from '../../../design-system/ui/Button';
 import AgreementList from '../../features/join/ui/AgreementList';
 import { useAgreementStore } from '../../features/join/model/agreementStore';
 import { useNavigate } from 'react-router-dom';
+import { useAgreeTerms } from '../../features/join/hooks/useUserHook';
+import { TermsAgreementRequset } from '../../features/join/model/userInformation';
 
 const AgreementPage: React.FC = () => {
-  const { isAllRequiredAgreed } = useAgreementStore();
+  const { isAllRequiredAgreed, getAgreementStates } = useAgreementStore();
   const navigate = useNavigate();
+  const { mutate:agreeTerms } = useAgreeTerms();
+
+  const handleAgree = () => {
+    const agreementData: TermsAgreementRequset = {
+      serviceAgreed: getAgreementStates().serviceAgreed,
+      privacyPolicyAgree: getAgreementStates().privacyPolicyAgree,
+      personalInfoUsageAgreed: getAgreementStates().personalInfoUsageAgreed,
+      marketingAgreed: getAgreementStates().marketingAgreed,
+    };
+
+    agreeTerms(agreementData, {
+      onSuccess: () => {
+        navigate('/join/info-input');
+      },
+      onError: () => {
+        alert('약관 동의 중 오류가 발생했습니다. 다시 시도해주세요.');
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col w-full h-screen bg-white">
@@ -32,7 +53,7 @@ const AgreementPage: React.FC = () => {
         <Button
           className="w-full h-12 rounded-full"
           label="다음"
-          onClick={() => navigate('/join/info-input')}
+          onClick={handleAgree}
           disabled={!isAllRequiredAgreed()}
         />
       </div>

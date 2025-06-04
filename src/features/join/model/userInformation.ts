@@ -10,3 +10,10 @@ export interface UserInfoRequest {
     phoneNumber: string;
     email: string;
 }
+
+export interface TermsAgreementRequset {
+  serviceAgreed: boolean;
+  privacyPolicyAgree: boolean;
+  personalInfoUsageAgreed: boolean;
+  marketingAgreed: boolean;
+}
