@@ -19,13 +19,11 @@ const AgreementPage: React.FC = () => {
       personalInfoUsageAgreed: getAgreementStates().personalInfoUsageAgreed,
       marketingAgreed: getAgreementStates().marketingAgreed,
     };
+    console.log(agreementData)
 
     agreeTerms(agreementData, {
       onSuccess: () => {
         navigate('/join/info-input');
-      },
-      onError: () => {
-        alert('약관 동의 중 오류가 발생했습니다. 다시 시도해주세요.');
       },
     });
   };
@@ -36,7 +34,7 @@ const AgreementPage: React.FC = () => {
         centerContent="이용약관"
         leftButtonLabel="<"
         leftButtonClassName="text-2xl z-30 font-semibold"
-        leftButtonClick={() => navigate(-1)}
+        leftButtonClick={() => navigate('/')}
         color="black"
       />
       <div className="relative px-10 py-10 md:px-12 md:py-14">

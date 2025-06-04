@@ -22,8 +22,9 @@ export const useAgreeTerms = () => {
     onSuccess: () => {
       alert('이용약관 동의 완료');
     },
-    onError: () => {
+    onError: (error) => {
       alert('동의 처리 실패');
+      console.error('이용약관 동의 실패', error);
     }
   });
 };
