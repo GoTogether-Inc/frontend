@@ -122,7 +122,10 @@ const MyTicketPage = () => {
             </EventCard>
           ))
         ) : (
-          <p className="col-span-2 text-center text-sm md:text-base">구매하신 티켓 정보가 없습니다.</p>
+          <div className="col-span-2 flex items-center justify-center min-h-[200px]">
+            <p className="text-center text-sm md:text-base">구매하신 티켓 정보가 없습니다.</p>
+          </div>
+
         )}
       </div>
 
