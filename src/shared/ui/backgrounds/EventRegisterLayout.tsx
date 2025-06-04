@@ -1,6 +1,9 @@
 import { ReactNode, useState, Children, isValidElement, cloneElement } from 'react';
 import Button from '../../../../design-system/ui/Button';
 import Header from '../../../../design-system/ui/Header';
+import IconButton from '../../../../design-system/ui/buttons/IconButton';
+import { useNavigate } from 'react-router-dom';
+import HomeButton from '../../../../public/assets/menu/HomeButton.svg';
 
 interface EventRegisterLayoutProps {
   children: ReactNode;
@@ -35,6 +38,7 @@ const EventRegisterLayout = ({
     }
     return child;
   });
+  const navigate = useNavigate();
 
   return (
     <div className="relative flex">
@@ -46,6 +50,13 @@ const EventRegisterLayout = ({
           leftButtonClick={onPrev}
           color="white"
           leftButtonClassName="text-xl z-30"
+          rightContent={
+            <IconButton
+              iconPath={<img src={HomeButton} />}
+              onClick={() => navigate('/')}
+              iconClassName="cursor-pointer z-30 ml-auto"
+            />
+          }
         />
       </div>
 
