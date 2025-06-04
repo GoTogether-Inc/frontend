@@ -13,6 +13,12 @@ interface AgreementState {
   agreements: Agreements;
   toggleAgreement: (key: keyof Agreements) => void; // 특정 항목 상태 토글
   isAllRequiredAgreed: () => boolean; // 필수 항목 체크 여부
+  getAgreementStates: () => {
+    serviceAgreed: boolean;
+    privacyPolicyAgree: boolean;
+    personalInfoUsageAgreed: boolean;
+    marketingAgreed: boolean;
+  };
 }
 
 export const useAgreementStore = create<AgreementState>((set, get) => ({
@@ -55,5 +61,14 @@ export const useAgreementStore = create<AgreementState>((set, get) => ({
   isAllRequiredAgreed: () => {
     const { agreements } = get();
     return agreements.terms && agreements.privacy && agreements.dataUsage;
+  },
+  getAgreementStates: () => {
+    const { agreements } = get();
+    return {
+      serviceAgreed: agreements.terms,
+      privacyPolicyAgree: agreements.privacy,
+      personalInfoUsageAgreed: agreements.dataUsage,
+      marketingAgreed: agreements.marketing,
+    };
   },
 }));
