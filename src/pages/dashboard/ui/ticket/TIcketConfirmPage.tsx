@@ -23,9 +23,11 @@ const TicketConfirmPage = () => {
     navigate(-1);
   };
   const cancleOrderTicket = async (orderIds: number[]) => {
-    for (const orderId of orderIds) {
-      cancelTicket(orderId);
-    }
+    cancelTicket(orderIds, {
+      onSuccess: () => {
+        navigate('/menu/myticket');
+      },
+    });
   };
   return (
     <>
@@ -72,11 +74,7 @@ const TicketConfirmPage = () => {
           approveButtonText="티켓 취소"
           rejectButtonText="뒤로가기"
           onClose={() => setIsModalOpen(false)}
-          onClick={() => {
-            cancleOrderTicket(orderIds).then(() => {
-              navigate('/menu/myticket');
-            });
-          }}
+          onClick={() => cancleOrderTicket(orderIds)}
         />
       )}
     </>

@@ -23,7 +23,9 @@ export const orderTickets = async (data: OrderTicketRequest) => {
 };
 
 // 티켓 취소
-export const cancelTickets = async (orderId: number) => {
-  const response = await axiosClient.post(`/orders/${orderId}/cancel`);
+export const cancelTickets = async (orderIds: number[]) => {
+  const response = await axiosClient.post('/orders/cancel', {
+    orderIds,
+  });
   return response.data;
 };
