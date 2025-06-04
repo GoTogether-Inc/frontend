@@ -21,7 +21,10 @@ const Countdown = ({ children, isChecked }: CountdownProps) => {
     border-[0.1px] font-medium ${flexCenter} 
   `;
 
-  return <button className={`${baseStyles} ${isChecked ? activeStyles : inactiveStyles}`}>{children}</button>;
+  const isEnded = children === 'false';
+  const displayText = isEnded ? '종료' : children;
+
+  return <button className={`${baseStyles} ${isChecked && !isEnded ? activeStyles : inactiveStyles}`}>{displayText}</button>
 };
 
 export default Countdown;
