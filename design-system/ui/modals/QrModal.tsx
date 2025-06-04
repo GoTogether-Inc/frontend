@@ -5,7 +5,8 @@ import { flexColumnCenter, flexColumn, flexRowSpaceBetweenCenter } from '../../s
 import qr_calendar from '../../icons/QrCalendar.svg';
 import qr_location from '../../icons/QrLocation.svg';
 import qr_ticket from '../../icons/QrTicket.svg';
-import qr_check from '../../icons/QrCheck.svg';
+import qr_check from '../../../public/assets/menu/completed.svg';
+import qr_pending from '../../../public/assets/menu/pending.svg';
 
 interface QrModalProps {
   isChecked: boolean; // QR 상태
@@ -88,13 +89,13 @@ const QrModal = ({
             <hr />
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_check} alt="qr_check" className='mr-1'/>}
+              iconPath={<img src={orderStatus === 'COMPLETED' ? qr_check : qr_pending} alt="qr_check" className='mr-1'/>}
               children={orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
               className="text-11"
             ></IconText>
             <IconText
               size="xSmall"
-              iconPath={<img src={qr_check} alt="qr_check" className='mr-1'/>}
+              iconPath={<img src={isCheckIn? qr_check : qr_pending} alt="qr_check" className='mr-1'/>}
               children={isCheckIn ? '체크인 완료' : '체크인 미완료'}
               className="text-11"
             ></IconText>
