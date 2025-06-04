@@ -16,7 +16,9 @@ export const updateUser = async (data: UserInfoRequest): Promise<UserInfoRespons
 };
 
 // 이용 약관
-export const agreeTerms = async (payload: TermsAgreementRequset) => {
-  const response = await axiosClient.post('/terms', payload);
+export const agreeTerms = async (data: TermsAgreementRequset) => {
+  const response = await axiosClient.post('/terms', data, {
+    headers: { isPublicApi: true },
+  });
   return response.data;
 };
