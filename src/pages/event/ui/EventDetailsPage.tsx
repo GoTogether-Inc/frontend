@@ -138,12 +138,17 @@ const EventDetailsPage = () => {
 
             <div className="flex flex-col gap-2">
               <h2 className="font-bold text-xl">관련 링크</h2>
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex flex-col gap-3 mb-4">
                 {event.result.referenceLinks.map((link: { title: string; url: string }, index: number) => (
-                  <div key={index} className="flex items-center gap-2 mb-3">
+                  <div key={index} className="flex items-center gap-2">
                     <img src={linkIcon} alt="링크 이모지" />
                     <span>{link.title}</span>
-                    <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
                       {link.url}
                     </a>
                   </div>
