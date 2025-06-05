@@ -1,6 +1,6 @@
-import { ChangeEvent, forwardRef } from 'react';
+import { ChangeEvent, forwardRef, InputHTMLAttributes } from 'react';
 
-interface UnderlineTextFieldProps {
+interface UnderlineTextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   type?: string;
   value?: string;
