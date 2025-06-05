@@ -67,7 +67,7 @@ const MyTicketPage = () => {
 
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true} isCancelMode={isCancelMode}>
-      {!isModalOpen && tickets.length > 0 && (
+      {tickets.length > 0 && (
         <div className="flex justify-end mx-6 mt-24">
           <TertiaryButton
             label={isCancelMode ? '선택 완료' : '티켓 취소'}
@@ -130,8 +130,7 @@ const MyTicketPage = () => {
       </div>
 
       {isModalOpen && selectedTicket && (
-        <div className="fixed top-0 left-0 w-full h-full z-20">
-          <div className="relative mx-auto w-full max-w-lg bg-black bg-opacity-30">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
             <QrModal
               isChecked={true}
               iconPath1={<img src={QRbackground} alt="QRbackground" />}
@@ -149,7 +148,6 @@ const MyTicketPage = () => {
               onClick={() => setIsModalOpen(false)}
             />
           </div>
-        </div>
       )}
 
       {isDeleteModalOpen && (
