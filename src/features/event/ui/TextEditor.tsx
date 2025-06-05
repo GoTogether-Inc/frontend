@@ -8,30 +8,17 @@ interface TextEditorProps {
   value?: string;
   onChange?: (value: string) => void;
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  onValidationChange?: (isValid: boolean) => void;
 }
 
 const formats = [
-  'font',
-  'header',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'align',
-  'color',
-  'background',
-  'size',
-  'h1',
+  'font', 'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent', 'link', 'image', 'align', 'color', 'background',
+  'size', 'h1',
 ];
 
-const TextEditor = ({ value, onChange, setEventState }: TextEditorProps) => {
-  const [content, setContent] = useState('');
+const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }: TextEditorProps) => {
+  const [content, setContent] = useState(value);
   const quillRef = useRef<ReactQuill | null>(null);
 
   const imageHandler = async () => {
@@ -81,15 +68,18 @@ const TextEditor = ({ value, onChange, setEventState }: TextEditorProps) => {
   );
 
   const handleChange = (value: string) => {
-    setContent(value);
-    onChange?.(value);
-    if (setEventState) {
-      setEventState(prev => ({ ...prev, description: value }));
-    }
+    setContent(value); // 내부 상태 업데이트
+    onChange?.(value); // 외부로 전달
+    setEventState?.(prev => ({ ...prev, description: value }));
+
+    const plainText = value.replace(/<[^>]*>/g, '').trim();
+    onValidationChange?.(plainText.length > 0);
   };
 
   useEffect(() => {
-    setContent(value ?? '');
+    setContent(value); // 외부 value가 바뀌면 내부에 반영
+    const plainText = value.replace(/<[^>]*>/g, '').trim();
+    onValidationChange?.(plainText.length > 0);
   }, [value]);
 
   return (
@@ -107,4 +97,5 @@ const TextEditor = ({ value, onChange, setEventState }: TextEditorProps) => {
     </div>
   );
 };
+
 export default TextEditor;
