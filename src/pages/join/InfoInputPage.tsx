@@ -95,6 +95,7 @@ const InfoInputPage = () => {
           type="email"
           errorMessage={errors.email?.message}
           className="text-xl"
+          readOnly
           {...register('email')}
         />
       </form>
