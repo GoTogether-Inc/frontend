@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import UnderlineTextField from '../../../../../design-system/ui/textFields/UnderlineTextField';
 import { useFunnelState } from '../../../../features/event/model/FunnelContext';
 import { OrganizerFormData, organizerZodValidation } from '../../../../shared/lib/formValidation';
+import { formatPhoneNumber } from '../../../../shared/utils/phoneFormatter';
 
 interface EventOrganizerInfoPageProps {
   onValidationChange?: (isValid: boolean) => void;
@@ -10,13 +11,6 @@ interface EventOrganizerInfoPageProps {
 
 const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPageProps) => {
   const { eventState, setEventState } = useFunnelState();
-
-  const formatPhoneNumber = (value: string) => {
-    const numbers = value.replace(/[^\d]/g, '').slice(0, 11); // 11자리까지만 허용
-    if (numbers.length <= 3) return numbers;
-    if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
-  };
 
   const {
     register,
