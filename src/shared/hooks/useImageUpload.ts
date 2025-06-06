@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { uploadFile } from '../../features/event/hooks/usePresignedUrlHook';
+import basicProfile from '../../../public/assets/event-manage/creation/BasicProfile.png';
 
 const useImageUpload = ({
   value,
@@ -10,7 +11,6 @@ const useImageUpload = ({
   onSuccess?: (url: string) => void;
   useDefaultImage?: boolean;
 }) => {
-  const DEFAULT_BASIC_PROFILE = 'https://gotogetherbucket.s3.ap-northeast-2.amazonaws.com/default.png';
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -18,9 +18,9 @@ const useImageUpload = ({
   useEffect(() => {
     if (value) {
       setPreviewUrl(value);
-    } else if (useDefaultImage && previewUrl !== DEFAULT_BASIC_PROFILE) {
-      setPreviewUrl(DEFAULT_BASIC_PROFILE);
-      onSuccess?.(DEFAULT_BASIC_PROFILE);
+    } else if (useDefaultImage && previewUrl !== basicProfile) {
+      setPreviewUrl(basicProfile);
+      onSuccess?.(basicProfile);
     }
   }, [value, onSuccess, useDefaultImage, previewUrl]);
 
