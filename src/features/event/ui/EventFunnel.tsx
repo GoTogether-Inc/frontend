@@ -12,10 +12,11 @@ import { EventFunnelInterface, StepNames } from '../../../shared/types/funnelTyp
 import { useFunnelState } from '../model/FunnelContext';
 import { useEventCreation } from '../hooks/useEventHook';
 import { useHostCreation } from '../../host/hook/useHostHook';
+import { HostCreationRequest } from '../../host/model/host';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();
-  const { eventState, hostState } = useFunnelState();
+  const { eventState, hostState, setHostState } = useFunnelState();
   const { mutate: createEvent } = useEventCreation();
   const { mutate: createHost } = useHostCreation();
 
@@ -33,10 +34,17 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       onNext(nextStep);
     }
   };
+  const initialHostState: HostCreationRequest = {
+    profileImageUrl: '',
+    hostChannelName: '',
+    hostEmail: '',
+    channelDescription: '',
+  };
 
   const handleHostCreation = () => {
     createHost(hostState, {
       onSuccess: () => {
+        setHostState(initialHostState);
         handleNext(String(currentStep - 1));
       },
     });
