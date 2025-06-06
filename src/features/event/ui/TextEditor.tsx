@@ -11,7 +11,8 @@ interface TextEditorProps {
   onValidationChange?: (isValid: boolean) => void;
 }
 
-const MAX_LENGTH = 200;
+const MAX_LENGTH = 2000;
+const IMAGE_WEIGHT = 200;
 
 const formats = [
   'font', 'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
@@ -48,6 +49,15 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
       }
     };
   };
+  const getImageCount = (htmlContent: string): number => {
+    const matches = htmlContent.match(/<img [^>]*src="[^"]*"[^>]*>/g);
+    return matches ? matches.length : 0;
+  };
+  const getTotalContentLength = (htmlContent: string): number => {
+    const textLength = getPlainText(htmlContent).length;
+    const imageCount = getImageCount(htmlContent);
+    return textLength + imageCount * IMAGE_WEIGHT;
+  };
 
   const modules = useMemo(
     () => ({
@@ -72,18 +82,18 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
   const getPlainText = (htmlContent: string): string => {
     return htmlContent.replace(/<[^>]*>/g, '').trim();
   };
-  
-  const handleChange = (value: string) => {
-    const editorInstance = quillRef.current?.getEditor();
-    const plainTextLength = editorInstance ? editorInstance.getText().trim().length : getPlainText(value).length;
 
-    if (plainTextLength <= MAX_LENGTH) {
+  const handleChange = (value: string) => {
+    const totalLength = getTotalContentLength(value);
+
+    if (totalLength <= MAX_LENGTH) {
       setContent(value);
       onChange?.(value);
       setEventState?.(prev => ({ ...prev, description: value }));
-      onValidationChange?.(plainTextLength > 0);
+      onValidationChange?.(getPlainText(value).length > 0);
       setIsOverLimit(false);
     } else {
+      const editorInstance = quillRef.current?.getEditor();
       if (editorInstance) {
         editorInstance.setContents(editorInstance.clipboard.convert(content));
       }
@@ -97,7 +107,8 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
     onValidationChange?.(plainText.length > 0);
   }, [value]);
 
-  const plainTextLength = getPlainText(content).length;
+  const totalLength = getTotalContentLength(content);
+  const imageCount = getImageCount(content);
 
 
   return (
@@ -114,11 +125,12 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
       />
       <div className="flex justify-between items-center mt-1">
         <p className={`text-sm ${isOverLimit ? 'text-red-500' : 'text-gray-500'}`}>
-          {plainTextLength} / {MAX_LENGTH}자
+          {totalLength} / {MAX_LENGTH}자
+          {imageCount > 0 && ` (이미지 ${imageCount}개 포함)`}
         </p>
         {isOverLimit && (
           <p className="text-sm text-red-500 font-medium">
-            200자를 초과할 수 없습니다.
+            {MAX_LENGTH}자를 초과할 수 없습니다.
           </p>
         )}
       </div>
