@@ -5,7 +5,7 @@ import AgreementList from '../../features/join/ui/AgreementList';
 import { useAgreementStore } from '../../features/join/model/agreementStore';
 import { useNavigate } from 'react-router-dom';
 import { useAgreeTerms } from '../../features/join/hooks/useUserHook';
-import { TermsAgreementRequset } from '../../features/join/model/userInformation';
+import { TermsAgreementRequest } from '../../features/join/model/userInformation';
 
 const AgreementPage: React.FC = () => {
   const { isAllRequiredAgreed, getAgreementStates } = useAgreementStore();
@@ -13,13 +13,13 @@ const AgreementPage: React.FC = () => {
   const { mutate:agreeTerms } = useAgreeTerms();
 
   const handleAgree = () => {
-    const agreementData: TermsAgreementRequset = {
-      serviceAgreed: getAgreementStates().serviceAgreed,
-      privacyPolicyAgree: getAgreementStates().privacyPolicyAgree,
-      personalInfoUsageAgreed: getAgreementStates().personalInfoUsageAgreed,
-      marketingAgreed: getAgreementStates().marketingAgreed,
+    const states = getAgreementStates();
+    const agreementData: TermsAgreementRequest = {
+      serviceAgreed: states.serviceAgreed,
+      privacyPolicyAgree: states.privacyPolicyAgree,
+      personalInfoUsageAgreed: states.personalInfoUsageAgreed,
+      marketingAgreed: states.marketingAgreed,
     };
-    console.log(agreementData)
 
     agreeTerms(agreementData, {
       onSuccess: () => {

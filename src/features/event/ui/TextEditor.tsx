@@ -69,18 +69,21 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
     }),
     []
   );
-
+  const getPlainText = (htmlContent: string): string => {
+    return htmlContent.replace(/<[^>]*>/g, '').trim();
+  };
+  
   const handleChange = (value: string) => {
-    const plainText = value.replace(/<[^>]*>/g, '').trim();
+    const editorInstance = quillRef.current?.getEditor();
+    const plainTextLength = editorInstance ? editorInstance.getText().trim().length : getPlainText(value).length;
 
-    if (plainText.length <= MAX_LENGTH) {
+    if (plainTextLength <= MAX_LENGTH) {
       setContent(value);
       onChange?.(value);
       setEventState?.(prev => ({ ...prev, description: value }));
-      onValidationChange?.(plainText.length > 0);
+      onValidationChange?.(plainTextLength > 0);
       setIsOverLimit(false);
     } else {
-      const editorInstance = quillRef.current?.getEditor();
       if (editorInstance) {
         editorInstance.setContents(editorInstance.clipboard.convert(content));
       }
@@ -90,11 +93,11 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
 
   useEffect(() => {
     setContent(value); // 외부 value가 바뀌면 내부에 반영
-    const plainText = value.replace(/<[^>]*>/g, '').trim();
+    const plainText = getPlainText(value);
     onValidationChange?.(plainText.length > 0);
   }, [value]);
 
-  const plainTextLength = content.replace(/<[^>]*>/g, '').trim().length;
+  const plainTextLength = getPlainText(content).length;
 
 
   return (

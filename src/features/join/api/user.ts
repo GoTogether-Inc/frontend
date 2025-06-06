@@ -1,5 +1,5 @@
 import { axiosClient } from '../../../shared/types/api/http-client';
-import { TermsAgreementRequset, UserInfoRequest, UserInfoResponse } from '../model/userInformation';
+import { TermsAgreementRequest, UserInfoRequest, UserInfoResponse } from '../model/userInformation';
 
 export const readUser = async (): Promise<UserInfoResponse> => {
   const response = await axiosClient.get<{ result: UserInfoResponse }>('/users', {
@@ -16,7 +16,7 @@ export const updateUser = async (data: UserInfoRequest): Promise<UserInfoRespons
 };
 
 // 이용 약관
-export const agreeTerms = async (data: TermsAgreementRequset) => {
+export const agreeTerms = async (data: TermsAgreementRequest) => {
   const response = await axiosClient.post('/terms', data, {
     headers: { isPublicApi: true },
   });
