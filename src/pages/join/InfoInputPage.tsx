@@ -1,12 +1,19 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
 import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTextField';
-import { useNavigate } from 'react-router-dom';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
 import { useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
 import useAuthStore from '../../app/provider/authStore';
-import { useEffect } from 'react';
+
+const formatPhoneNumber = (value: string) => {
+  const numbers = value.replace(/[^\d]/g, '').slice(0, 11); // 11자리까지만 허용
+  if (numbers.length <= 3) return numbers;
+  if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+  return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+};
 
 const InfoInputPage = () => {
   const { data, isLoading } = useUserInfo();
@@ -17,6 +24,8 @@ const InfoInputPage = () => {
     handleSubmit,
     formState: { errors, isValid },
     reset,
+    setValue,
+    watch,
   } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
@@ -28,20 +37,27 @@ const InfoInputPage = () => {
   });
   const navigate = useNavigate();
 
+  const phoneValue = watch('phone');
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setValue('phone', formatted, { shouldValidate: true });
+  };
+
   const onSubmit: SubmitHandler<FormData> = formData => {
     const updatedData = {
-      name: data?.name || "",
-      email: data?.email || "",
+      name: data?.name || '',
+      email: data?.email || '',
       phoneNumber: formData.phone,
     };
     updateUser(updatedData, {
       onSuccess: () => {
         login();
-        setName(data?.name || "사용자");
+        setName(data?.name || '사용자');
         alert('정보가 성공적으로 업데이트되었습니다.');
         navigate('/');
       },
-      onError: (err) => {
+      onError: err => {
         alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
         console.error(err);
       },
@@ -81,11 +97,12 @@ const InfoInputPage = () => {
         {/* 연락처 필드 */}
         <UnderlineTextField
           label="연락처"
-          placeholder={"전화번호를 010-1234-5678 형식으로 입력해주세요."}
+          placeholder={'연락처'}
           type="tel"
           errorMessage={errors.phone?.message}
           className="text-xl"
-          {...register('phone')}
+          value={phoneValue}
+          onChange={handlePhoneChange}
         />
 
         {/* 이메일 필드 */}
