@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import ChoiceChip from '../../../../design-system/ui/ChoiceChip';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import EventDatePicker from '../../../features/event/ui/DatePicker';
@@ -10,13 +11,19 @@ import { AddressSearch } from '../../../shared/ui/AddressSearch';
 import KakaoMap from '../../../shared/ui/KakaoMap';
 import { UpdateEventRequest } from '../../../features/dashboard/model/event';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
-import { useQueryClient } from '@tanstack/react-query';
 
 const EventInfoPage = () => {
   const queryClient = useQueryClient();
   const [selectedOption, setSelectedOption] = useState('');
   const { data } = useEventDetail();
   const { mutate } = useUpdateEventHook();
+
+  const formatPhoneNumber = (value: string) => {
+    const numbers = value.replace(/[^\d]/g, '').slice(0, 11); // 11자리까지만 허용
+    if (numbers.length <= 3) return numbers;
+    if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+  };
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
@@ -54,7 +61,7 @@ const EventInfoPage = () => {
       category: data.result.category || 'DEVELOPMENT_STUDY',
       hashtags: data.result.hashtags || [],
       organizerEmail: email || data.result.organizerEmail || '',
-      organizerPhoneNumber: phone || data.result.organizerPhoneNumber || '',
+      organizerPhoneNumber: phone.replace(/-/g, '') || data.result.organizerPhoneNumber || '',
     };
 
     mutate(requestData, {
@@ -113,10 +120,10 @@ const EventInfoPage = () => {
         />
         <DefaultTextField
           label="주최자 연락처"
-          placeholder="01012345678(‘-’를 제외한 숫자만 입력해주세요)"
+          placeholder="010-1234-5678"
           className="h-12"
           value={phone}
-          onChange={e => setPhone(e.target.value)}
+          onChange={e => setPhone(formatPhoneNumber(e.target.value))}
         />
         <ChoiceChip
           label="온라인/오프라인 여부"
