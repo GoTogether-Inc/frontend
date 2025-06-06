@@ -11,8 +11,16 @@ interface EventOrganizerInfoPageProps {
 const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPageProps) => {
   const { eventState, setEventState } = useFunnelState();
 
+  const formatPhoneNumber = (value: string) => {
+    const numbers = value.replace(/[^\d]/g, '').slice(0, 11); // 11자리까지만 허용
+    if (numbers.length <= 3) return numbers;
+    if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+  };
+
   const {
     register,
+    setValue,    
     watch,
     formState: { errors, isValid },
   } = useForm<OrganizerFormData>({
@@ -26,6 +34,11 @@ const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPagePr
 
   const phoneValue = watch('phone');
   const emailValue = watch('email');
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setValue('phone', formatted, { shouldValidate: true });
+  };
 
   useEffect(() => {
     onValidationChange?.(isValid);
@@ -50,12 +63,13 @@ const EventOrganizerInfoPage = ({ onValidationChange }: EventOrganizerInfoPagePr
         {...register('email')}
       />
       <UnderlineTextField
-        label="전화번호"
-        placeholder={`"-"를 포함하여 입력해주세요`}
+        label="연락처"
+        placeholder="010-1234-5678"
         type="tel"
         errorMessage={errors.phone?.message}
         className="w-full"
-        {...register('phone')}
+        value={phoneValue}
+        onChange={handlePhoneChange}
       />
     </div>
   );
