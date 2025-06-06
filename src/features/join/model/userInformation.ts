@@ -11,7 +11,7 @@ export interface UserInfoRequest {
     email: string;
 }
 
-export interface TermsAgreementRequset {
+export interface TermsAgreementRequest {
   serviceAgreed: boolean;
   privacyPolicyAgree: boolean;
   personalInfoUsageAgreed: boolean;
