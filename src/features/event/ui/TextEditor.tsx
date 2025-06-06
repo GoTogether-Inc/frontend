@@ -11,6 +11,8 @@ interface TextEditorProps {
   onValidationChange?: (isValid: boolean) => void;
 }
 
+const MAX_LENGTH = 200;
+
 const formats = [
   'font', 'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent', 'link', 'image', 'align', 'color', 'background',
@@ -20,6 +22,7 @@ const formats = [
 const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }: TextEditorProps) => {
   const [content, setContent] = useState(value);
   const quillRef = useRef<ReactQuill | null>(null);
+  const [isOverLimit, setIsOverLimit] = useState(false);
 
   const imageHandler = async () => {
     if (!quillRef.current) return;
@@ -68,12 +71,21 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
   );
 
   const handleChange = (value: string) => {
-    setContent(value); // 내부 상태 업데이트
-    onChange?.(value); // 외부로 전달
-    setEventState?.(prev => ({ ...prev, description: value }));
-
     const plainText = value.replace(/<[^>]*>/g, '').trim();
-    onValidationChange?.(plainText.length > 0);
+
+    if (plainText.length <= MAX_LENGTH) {
+      setContent(value);
+      onChange?.(value);
+      setEventState?.(prev => ({ ...prev, description: value }));
+      onValidationChange?.(plainText.length > 0);
+      setIsOverLimit(false);
+    } else {
+      const editorInstance = quillRef.current?.getEditor();
+      if (editorInstance) {
+        editorInstance.setContents(editorInstance.clipboard.convert(content));
+      }
+      setIsOverLimit(true);
+    }
   };
 
   useEffect(() => {
@@ -81,6 +93,9 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
     const plainText = value.replace(/<[^>]*>/g, '').trim();
     onValidationChange?.(plainText.length > 0);
   }, [value]);
+
+  const plainTextLength = content.replace(/<[^>]*>/g, '').trim().length;
+
 
   return (
     <div className="flex flex-col justify-start gap-2 mb-4">
@@ -94,6 +109,16 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
         onChange={handleChange}
         className="custom-quill-editor"
       />
+      <div className="flex justify-between items-center mt-1">
+        <p className={`text-sm ${isOverLimit ? 'text-red-500' : 'text-gray-500'}`}>
+          {plainTextLength} / {MAX_LENGTH}자
+        </p>
+        {isOverLimit && (
+          <p className="text-sm text-red-500 font-medium">
+            200자를 초과할 수 없습니다.
+          </p>
+        )}
+      </div>
     </div>
   );
 };
