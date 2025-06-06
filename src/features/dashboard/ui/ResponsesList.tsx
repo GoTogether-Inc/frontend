@@ -63,6 +63,9 @@ const ResponsesList = ({ listType, ticketOptionResponses, ticketId }: ResponsesL
         if (isLoading) return <p>로딩 중...</p>;
         if (error || !data?.result) return <p>데이터를 불러오지 못했습니다.</p>;
         const allOrders = data.result.flatMap(user => user.orders);
+        if (allOrders.length === 0) {
+          return <p className="text-center text-gray-500">응답이 없습니다.</p>;
+        }
         return (
           <IndividualResponseViewer orders={allOrders} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
         );
