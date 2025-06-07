@@ -29,3 +29,12 @@ export const cancelTickets = async (orderIds: number[]) => {
   });
   return response.data;
 };
+
+// qr 스캔
+export const ticketQrCode = async (orderId: number, sig: string) => {
+  const response = await axiosClient.post('/ticket-qr-codes/validate', {
+    orderId,
+    sig,
+  });
+  return response.data;
+};
