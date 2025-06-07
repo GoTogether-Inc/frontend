@@ -16,6 +16,13 @@ interface EventListComponentProps {
   tag?: TagType;
 }
 
+const categoryToKorean: Record<CategoryType, string> = {
+  DEVELOPMENT_STUDY: '개발 스터디',
+  NETWORKING: '네트워킹',
+  HACKATHON: '해커톤',
+  CONFERENCE: '컨퍼런스',
+};
+
 const EventList = ({ category, tag }: EventListComponentProps) => {
   const navigate = useNavigate();
 
@@ -58,9 +65,9 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
       {data?.pages[0]?.items.length === 0 ? (
         <div className="sm:text-12 md:text-14 lg:text-16 py-8 text-placeholderText ">
           {tag ? (
-            <div>생성된 이벤트가 없습니다.</div>
+            <div>열린 이벤트가 없습니다.</div>
           ) : category ? (
-            <div>생성된 {category} 이벤트가 없습니다.</div>
+            <div>열린 {categoryToKorean[category]} 이벤트가 없습니다.</div>
           ) : null}
         </div>
       ) : (
