@@ -26,11 +26,6 @@ const MainPage = () => {
     link: `/event-details/${event.id}`,
   }));
 
-  const handleRefresh = () => {
-    navigate('/');
-    window.location.reload();
-  };
-
   return (
     <div className="flex flex-col items-center pb-24">
       <Header
@@ -43,7 +38,7 @@ const MainPage = () => {
           />
         }
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
-        leftButtonClick={handleRefresh}
+        leftButtonClick={() => {}}
         leftButtonLabel="같이가요"
         rightContent={
           isLoggedIn ? (
