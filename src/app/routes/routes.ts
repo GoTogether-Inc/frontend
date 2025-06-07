@@ -48,6 +48,7 @@ export const DASHBOARD_ROUTES = {
   emailEdit: `${MAIN_ROUTES.dashboard}/edit-email`,
   participantsMangement: `${MAIN_ROUTES.dashboard}/participants-management`,
   responsesManagement: `${MAIN_ROUTES.dashboard}/responses-management`,
+  checkIn: `${MAIN_ROUTES.dashboard}/check-in`,
 };
 
 export const PAYMENT_ROUTES = {

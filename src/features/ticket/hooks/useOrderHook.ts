@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { cancelTickets, orderTickets, readTicket } from '../api/order';
+import { cancelTickets, orderTickets, readTicket, ticketQrCode } from '../api/order';
 import { OrderTicketRequest } from '../model/orderInformation';
 
 // 주문 전체 조회
@@ -38,6 +38,20 @@ export const useOrderTicket = () => {
     mutationFn: (data: OrderTicketRequest) => orderTickets(data),
     onError: () => {
       alert('티켓 구매 중 오류가 발생했습니다.');
+    },
+  });
+};
+
+// qr 스캔
+export const useTicketQrCodeValidate = () => {
+  return useMutation({
+    mutationFn: ({ orderId, sig }: { orderId: number; sig: string }) =>
+      ticketQrCode(orderId, sig),
+    onSuccess: () => {
+      alert('체크인 성공!');
+    },
+    onError: () => {
+      alert('체크인 실패했습니다. 다시 시도해주세요.');
     },
   });
 };

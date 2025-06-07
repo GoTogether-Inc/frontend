@@ -37,6 +37,7 @@ import AuthCallback from '../../pages/join/AuthCallback';
 import LogoutPage from '../../pages/join/LogoutPage';
 import BookmarkPage from '../../pages/bookmark/ui/BookmarkPage';
 import CategoryPage from '../../pages/event/ui/CategoryPage';
+import CheckInPage from '../../pages/dashboard/ui/ticket/CheckInPage';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
@@ -81,6 +82,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_ROUTES.emailEdit, element: <EmailEditPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.participantsMangement, element: <ParticipantsManagementPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.responsesManagement, element: <ResponseManagementPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.checkIn, element: <CheckInPage />, requiresAuth: false },
 ];
 
 const paymentRoutes = [
