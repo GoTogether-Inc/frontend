@@ -2,7 +2,7 @@ import { flexColumn } from '../../../../design-system/styles/flex';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
-import { buttonData } from '../../../shared/types/menuType';
+import { getButtonData } from '../../../shared/types/menuType';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 
 const handleIconClick = (navigate: (path: string) => void, path: string) => {
@@ -11,12 +11,11 @@ const handleIconClick = (navigate: (path: string) => void, path: string) => {
 
 const MenuPage = () => {
   const navigate = useNavigate();
+  const buttonData = getButtonData();
 
   return (
     <>
-      <Header
-        centerContent="메뉴"
-      />
+      <Header centerContent="메뉴" />
       <div className={`${flexColumn} gap-4 px-8 md:px-10 mt-8`}>
         {buttonData.map((button, index) => (
           <div key={button.label}>

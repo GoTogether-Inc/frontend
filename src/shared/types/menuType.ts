@@ -8,6 +8,7 @@ import SelectedEvent from '../../..//design-system/icons/SelectedEvent.svg';
 import SelectedHost from '../../../public/assets/menu/SelectedHost.svg';
 import SelectedLogout from '../../../public/assets/menu/SelectedLogout.svg';
 import SelectedSetting from '../../../public/assets/menu/SelectedSetting.svg';
+import useAuthStore from '../../app/provider/authStore';
 
 export interface buttonData {
   iconPath: string; // 아이콘 경로
@@ -16,10 +17,22 @@ export interface buttonData {
   path: string; // 경로
 }
 
-export const buttonData: buttonData[] = [
-  { iconPath: Ticket, hoverIconPath: SelectedTicket, label: '구입한 티켓', path: '/menu/myTicket' },
-  { iconPath: Host, hoverIconPath: SelectedHost, label: '내 호스트', path: '/menu/myHost' },
-  { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation' },
-  { iconPath: Setting, hoverIconPath: SelectedSetting, label: '마이페이지', path: '/menu/myPage' },
-  { iconPath: Logout, hoverIconPath: SelectedLogout, label: '로그아웃', path: '/menu/logout' },
-];
+export const getButtonData = (): buttonData[] => {
+  const isLoggedIn = useAuthStore.getState().isLoggedIn;
+
+  const baseButtons: buttonData[] = [
+    { iconPath: Ticket, hoverIconPath: SelectedTicket, label: '구입한 티켓', path: '/menu/myTicket' },
+    { iconPath: Host, hoverIconPath: SelectedHost, label: '내 호스트', path: '/menu/myHost' },
+    { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation' },
+    { iconPath: Setting, hoverIconPath: SelectedSetting, label: '마이페이지', path: '/menu/myPage' },
+  ];
+
+  if (isLoggedIn) {
+    return [
+      ...baseButtons,
+      { iconPath: Logout, hoverIconPath: SelectedLogout, label: '로그아웃', path: '/menu/logout' },
+    ];
+  }
+
+  return baseButtons;
+};
