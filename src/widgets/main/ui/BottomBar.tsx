@@ -10,11 +10,7 @@ const BottomBar = () => {
           key={index}
           className="flex flex-col justify-center items-center w-24 h-20 cursor-pointer"
           onClick={() => {
-            if (location.pathname === item.path) {
-              navigate(-1);
-            } else {
-              navigate(item.path);
-            }
+            navigate(item.path);
           }}
         >
           <img src={item.icon} alt={`${item.label}Icon`} className={`${item.iconClassName} object-contain`} />
