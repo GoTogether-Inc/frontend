@@ -1,8 +1,6 @@
 import { flexColumn } from '../../../../design-system/styles/flex';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
 import { useNavigate } from 'react-router-dom';
-
-import searchIcon from '../../../../design-system/icons/Search.svg';
 import Header from '../../../../design-system/ui/Header';
 import { buttonData } from '../../../shared/types/menuType';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
@@ -17,12 +15,7 @@ const MenuPage = () => {
   return (
     <>
       <Header
-        centerContent="카테고리"
-        rightContent={
-          <button type="button" className="w-5 z-10" onClick={() => navigate('/search')}>
-            <img src={searchIcon} alt="Search Icon" className="w-4" />
-          </button>
-        }
+        centerContent="메뉴"
       />
       <div className={`${flexColumn} gap-4 px-8 md:px-10 mt-8`}>
         {buttonData.map((button, index) => (
