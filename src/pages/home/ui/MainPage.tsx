@@ -27,8 +27,11 @@ const MainPage = () => {
   }));
 
   const handleRefresh = () => {
-    navigate('/');
-    window.location.reload();
+    if (location.pathname === '/') {
+      window.location.reload();
+    } else {
+      navigate('/');
+    }
   };
 
   return (
