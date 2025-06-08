@@ -76,7 +76,7 @@ const EventCard = ({
 
         <div className="flex items-center text-xs text-gray-500">
           <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
-          <div className="line-clamp-2 overflow-hidden">{location}</div>
+          <div className="w-full truncate overflow-hidden">{location}</div>
         </div>
 
         {/* 승인 여부 표시 */}
