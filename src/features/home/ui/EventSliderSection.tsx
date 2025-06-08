@@ -54,7 +54,7 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
           <div className="w-full text-center text-gray-500">표시할 이벤트가 없습니다.</div>
         ) : (
           eventsToShow.map((event: EventItem) => (
-            <div key={event.id} className="w-full h-full min-h-[200px] max-w-sm">
+            <div key={event.id} className="w-full h-full min-h-[200px] max-w-sm min-w-[200px]">
               <EventCard
                 key={event.id}
                 id={event.id}
