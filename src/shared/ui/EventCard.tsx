@@ -59,7 +59,7 @@ const EventCard = ({
       {/* 상세 정보 */}
       <div className="flex flex-col gap-1 mt-4">
         <div className="flex justify-between">
-          <h2 className="text-sm font-semibold line-clamp-2 overflow-hidden">{eventTitle}</h2>
+          <h2 className="max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
           {dDay !== 'false' && (
             <div className="sm:max-w-10 md:max-w-15">
               <Countdown isChecked>{dDay}</Countdown>
