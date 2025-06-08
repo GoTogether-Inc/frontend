@@ -63,7 +63,7 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
                 dDay={event.remainDays}
                 host={event.hostChannelName}
                 eventDate={event.startDate}
-                location={event.onlineType}
+                location={event.address}
                 hashtags={event.hashtags}
                 onClick={() => navigate(`/event-details/${event.id}`)}
               />
