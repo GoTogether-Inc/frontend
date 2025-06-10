@@ -37,9 +37,9 @@ export const useOrderTicket = () => {
   return useMutation({
     mutationFn: (data: OrderTicketRequest) => orderTickets(data),
     onError: (error: any) => {
-      const errorCode = error?.response?.data?.code;
+      const errorCode = error?.code;
       if (errorCode === 'TICKET4004') {
-        alert('해당 티켓은 구매 가능한 날짜가 아닙니다.');
+        alert('해당 티켓은 현재 판매 기간이 아닙니다.');
       } else {
         alert('티켓 구매 중 오류가 발생했습니다.');
       }
