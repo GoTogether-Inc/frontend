@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
 import { useOrderTicket } from '../../../features/ticket/hooks/useOrderHook';
 import { readTicketOptions } from '../../../features/ticket/api/ticketOption';
+import useAuthStore from '../../../app/provider/authStore';
 
 const TicketInfo = ({ eventId }: { eventId: number }) => {
   const limitNum = 4;
@@ -12,6 +13,7 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
   const [quantity, setQuantity] = useState<{ [key: number]: number }>({});
   const navigate = useNavigate();
   const { mutate: orderTickets } = useOrderTicket();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
   useEffect(() => {
     if (data && data.isSuccess) {
@@ -37,15 +39,11 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
     }));
   };
 
-  // 바로 결제 
-  const handleDirectOrder = (
-    ticketId: number,
-    eventId: number,
-    ticketCnt: number
-  ) => {
+  // 바로 결제
+  const handleDirectOrder = (ticketId: number, eventId: number, ticketCnt: number) => {
     const ticketInfo = { ticketId, eventId, ticketCnt };
     orderTickets(ticketInfo, {
-      onSuccess: (response) => {
+      onSuccess: response => {
         if (response.isSuccess && Array.isArray(response.result)) {
           const orderIds = response.result;
           navigate('/payment/ticket-confirm', {
@@ -60,6 +58,11 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
 
   // 티켓 옵션 응답 페이지 이동.
   const orderTicket = async (ticketId: number, eventId: number, ticketCnt: number) => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+
     try {
       const res = await readTicketOptions(ticketId);
       if (res.isSuccess && res.result.length > 0) {
@@ -74,7 +77,7 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
     }
   };
   if (isLoading) return <div>Loading...</div>;
-  if (isError || !data || !data.isSuccess) return <div>티켓 정보를 불러올 수 없습니다.</div>;
+  if (isError || !data || !data.isSuccess) return <div>로그인이 필요한 서비스입니다.</div>;
 
   return (
     <div className="w-full h-full">
