@@ -84,9 +84,9 @@ const ParticipantsList = ({ listType, selectedFilter = [], participants }: Parti
           <ParticipantCard
             key={participant.id}
             participant={participant}
-            checked={selectedParticipants[participant.orderId] || false}
-            onChange={() => toggleParticipant(participant.orderId)}
-            onCheckClick={() => handleCheckClick(participant.ticketId, participant.orderId)}
+            checked={selectedParticipants[participant.id] || false}
+            onChange={() => toggleParticipant(participant.id)}
+            onCheckClick={() => handleCheckClick(participant.ticketId, participant.id)}
           />
         ))
       )}
