@@ -1,7 +1,7 @@
 export interface ParticipantResponse {
     id: number;
     ticketId: number;
-    orderId: number;
+    orderCode: number;
     participant: string;
     email: string;
     phoneNumber: string;

@@ -12,13 +12,12 @@ interface ParticipantCardProps {
 }
 
 const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) => {
-  const { mutate: approveParticipant } = useApproveParticipants(participant.orderId);
-
+  const { mutate: approveParticipant } = useApproveParticipants(participant.id);
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
       <div className="flex gap-2 md:gap-3">
         <div className="flex items-center gap-8 md:gap-20 text-10 md:text-12">
-          <p className="ml-3">{participant.orderId}</p>
+          <p className="ml-3">{participant.orderCode}</p>
           <div className="flex flex-col">
             <p>이름: {participant.participant}</p>
             <p>이메일 주소: {participant.email}</p>
@@ -48,7 +47,7 @@ const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) =>
             type="button"
             size="small"
             color="pink"
-            onClick={() => approveParticipant({ orderId: participant.orderId })}
+            onClick={() => approveParticipant({ orderId: participant.id })}
           />
         )}
       </div>
