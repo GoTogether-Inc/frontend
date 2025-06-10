@@ -142,14 +142,13 @@ const EventDetailsPage = () => {
                 {event.result.referenceLinks.map((link: { title: string; url: string }, index: number) => (
                   <div key={index} className="flex items-center gap-2">
                     <img src={linkIcon} alt="링크 이모지" />
-                    <span>{link.title}</span>
                     <a
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"
                     >
-                      {link.url}
+                      {link.title}
                     </a>
                   </div>
                 ))}
