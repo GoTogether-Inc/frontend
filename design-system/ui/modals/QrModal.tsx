@@ -63,7 +63,7 @@ const QrModal = ({
               <img
                 src={`data:image/png;base64,${ticketQrCode}`}
                 alt="QR Code"
-                className="w-[240px] h-[240px] "
+                className="w-60 h-60 "
               />
             ) : (
               <div className="w-40 h-40 flex items-center justify-center bg-deDayBgLight rounded-md border border-deDayTextDark text-deDayTextDark text-sm text-center px-4">
