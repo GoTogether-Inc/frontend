@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createTicket, deleteTicket, readTicket } from "../api/ticket";
-import { CreateTicketRequest, ReadTicketResponse} from "../model/ticketInformation";
+import { CreateTicketRequest, ReadTicketResponse } from "../model/ticketInformation";
 import { ApiResponse } from "../../../shared/types/api/apiResponse";
 import { AxiosError } from "axios";
 
@@ -13,11 +13,12 @@ export const useTickets = (eventId: number) => {
 };
 
 export const useCreateTicket = () => {
+  const queryClient = useQueryClient();
   return useMutation<ApiResponse<null>, AxiosError, CreateTicketRequest>({
     mutationFn: createTicket,
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       alert('티켓이 성공적으로 저장되었습니다.');
-      window.location.reload();
+      queryClient.invalidateQueries({ queryKey: ['tickets', variables.eventId] });
     },
     onError: () => {
       alert('티켓 저장에 실패했습니다. 다시 시도해주세요.');
@@ -25,12 +26,13 @@ export const useCreateTicket = () => {
   });
 };
 
-export const useDeleteTicket = () => {
+export const useDeleteTicket = (eventId: number) => {
+  const queryClient = useQueryClient();
   return useMutation<ApiResponse<null>, AxiosError, number>({
     mutationFn: deleteTicket,
     onSuccess: () => {
       alert('티켓이 삭제되었습니다.');
-      window.location.reload();
+      queryClient.invalidateQueries({ queryKey: ['tickets', eventId] });
     },
     onError: () => {
       alert('티켓 삭제 중 오류가 발생했습니다.');

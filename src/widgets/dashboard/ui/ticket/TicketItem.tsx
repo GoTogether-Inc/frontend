@@ -4,10 +4,13 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { ReadTicketResponse } from '../../../../features/ticket/model/ticket';
 import { useDeleteTicket } from '../../../../features/ticket/hooks/useTicketHook';
+import { useParams } from 'react-router-dom';
 
 const TicketItem = ({ ticket }: { ticket: ReadTicketResponse }) => {
+   const { id } = useParams();
+  const eventId = id ? parseInt(id) : 0;
   const [isDragging, setIsDragging] = useState(false);
-  const { mutate: handleDelete } = useDeleteTicket();
+  const { mutate: handleDelete } = useDeleteTicket(eventId);
   return (
     <div className="relative overflow-hidden w-full mb-4">
       <motion.div
