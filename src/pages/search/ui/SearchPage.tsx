@@ -69,7 +69,7 @@ const SearchPage = () => {
           <input
             ref={inputRef}
             className="w-full h-8 px-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-main"
-            placeholder="검색어를 입력하세요."
+            placeholder="검색어를 입력해주세요."
             type="text"
             onChange={changeInputKeyword}
           />
