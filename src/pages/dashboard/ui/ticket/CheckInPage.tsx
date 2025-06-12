@@ -1,11 +1,17 @@
 import QrScannerComponent from "../../../../features/ticket/ui/QrScanner";
+import DashboardLayout from "../../../../shared/ui/backgrounds/DashboardLayout";
 
 const CheckInPage = () => {
   return (
-    <div className="max-w-screen-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">체크인 스캐너</h1>
-      <QrScannerComponent />
-    </div>
+    <DashboardLayout centerContent="WOOACON 2024">
+      <div className='flex flex-col gap-2 mt-8 px-7'>
+        <h1 className="w-full text-center font-bold text-xl">QR 코드 스캔</h1>
+        <div className="max-w-screen-md mx-auto">
+          <QrScannerComponent />
+        </div>
+      </div>
+    </DashboardLayout>
+
   );
 };
 

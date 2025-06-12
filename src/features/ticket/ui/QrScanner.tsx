@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 import { useTicketQrCodeValidate } from "../hooks/useOrderHook";
+import Button from "../../../../design-system/ui/Button";
 
 const QrScannerComponent = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -71,24 +72,13 @@ const QrScannerComponent = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-2">QR 코드 스캔</h2>
             <video
                 ref={videoRef}
                 className="border rounded w-full max-w-md"
-                style={{ aspectRatio: "4 / 3" }}
+                style={{ aspectRatio: "3 / 4" }}
             />
             {!isScanning && (
-                <button
-                    onClick={handleStartScan}
-                    className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
-                >
-                    스캔 시작
-                </button>
-            )}
-            {scanResult && (
-                <p className="mt-4 text-green-700 font-semibold">
-                    스캔 완료
-                </p>
+                <Button label="스캔하기" onClick={handleStartScan} className="w-full h-12 rounded-full mt-10 px-4 py-2" />
             )}
         </div>
     );
