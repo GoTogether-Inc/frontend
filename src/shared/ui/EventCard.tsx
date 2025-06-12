@@ -51,7 +51,7 @@ const EventCard = ({
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
   return (
-    <div className="aspect-[3/4] w-full">
+    <div className="md:aspect-[3/4.5] sm:aspect-[1/2] w-full">
       <div
         onClick={onClick}
         className={`w-full h-full p-4 bg-white rounded-lg shadow-md flex flex-col justify-between ${className}`}
@@ -64,9 +64,9 @@ const EventCard = ({
         {/* 상세 정보 */}
         <div className="flex flex-col gap-1 mt-2 overflow-hidden">
           <div className="flex justify-between">
-            <h2 className="max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
+            <h2 className="md:max-w-[130px] sm:max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
             {dDay !== 'false' && (
-              <div className="sm:max-w-10 md:max-w-15">
+              <div className="sm:max-w-15 md:max-w-15">
                 <Countdown isChecked>{dDay}</Countdown>
               </div>
             )}
