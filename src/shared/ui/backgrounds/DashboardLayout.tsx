@@ -39,10 +39,10 @@ const DashboardLayout = ({ pinkBg = false, children, centerContent }: DashboardL
       {/* 헤더 영역 */}
       <div className="absolute top-0 w-full h-44 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] py-3">
         <Header
-          leftButtonLabel={home ? <img src={homeButton} /> : '<'}
+          leftButtonLabel={<img src={homeButton} />}
           leftButtonClassName="text-2xl z-30 font-semibold"
           leftButtonClick={handleBackClick}
-          centerContent={centerContent}
+          centerContent={centerContent} 
           color="white"
           rightContent={
             <img src={dashboardMenu} alt="메뉴바" onClick={handleModalOpen} className="cursor-pointer z-30" />
