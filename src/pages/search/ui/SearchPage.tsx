@@ -96,6 +96,7 @@ const SearchPage = () => {
                     host={event.hostChannelName}
                     hashtags={event.hashtags}
                     dDay={event.remainDays}
+                    onClick={() => navigate(`/event-details/${event.id}`)}
                   />
                 </div>
               );
