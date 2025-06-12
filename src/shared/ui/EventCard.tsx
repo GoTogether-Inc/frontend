@@ -24,6 +24,7 @@ interface EventCardProps {
   children?: React.ReactNode;
   isDelete?: boolean;
   onDeleteSuccess?: (eventId: number) => void;
+  onlineType?: 'OFFLINE' | 'ONLINE';
 }
 
 const EventCard = ({
@@ -40,6 +41,7 @@ const EventCard = ({
   children,
   isDelete = false,
   onDeleteSuccess,
+  onlineType,
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -79,7 +81,9 @@ const EventCard = ({
 
           <div className="flex items-center text-xs text-gray-500">
             <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
-            <div className="w-full truncate overflow-hidden">{location}</div>
+            <div className="w-full truncate overflow-hidden">
+              {onlineType === 'ONLINE' ? 'ONLINE' : location}
+            </div>
           </div>
 
           {/* 승인 여부 표시 */}
