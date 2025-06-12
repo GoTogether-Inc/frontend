@@ -40,7 +40,11 @@ const MyTicketPage = () => {
       );
 
       if (invalidTickets.length > 0) {
-        alert('이미 시작된 이벤트의 티켓은 취소할 수 없습니다.');
+        const titles = invalidTickets.map(ticket => `• ${ticket.event.title}`).join('\n');
+        alert(`❗해당 이벤트는 이미 시작되어 취소할 수 없습니다\n\n${titles}`);
+        setIsDeleteModalOpen(false);
+        setIsCancelMode(false);
+        setSelectedIds([]);
         return;
       }
 
@@ -131,23 +135,23 @@ const MyTicketPage = () => {
 
       {isModalOpen && selectedTicket && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
-            <QrModal
-              isChecked={true}
-              iconPath1={<img src={QRbackground} alt="QRbackground" />}
-              ticketQrCode={selectedTicket.ticketQrCode}
-              title={selectedTicket.event.title}
-              hostName={selectedTicket.event.hostChannelName}
-              date={selectedTicket.event.startDate}
-              location={selectedTicket.event.address}
-              ticketName={selectedTicket.ticketName}
-              price={selectedTicket.ticketPrice}
-              orderStatus={selectedTicket.orderStatus}
-              isCheckIn={selectedTicket.checkIn}
-              isCountdownChecked={true}
-              remainDays={selectedTicket.event.remainDays}
-              onClick={() => setIsModalOpen(false)}
-            />
-          </div>
+          <QrModal
+            isChecked={true}
+            iconPath1={<img src={QRbackground} alt="QRbackground" />}
+            ticketQrCode={selectedTicket.ticketQrCode}
+            title={selectedTicket.event.title}
+            hostName={selectedTicket.event.hostChannelName}
+            date={selectedTicket.event.startDate}
+            location={selectedTicket.event.address}
+            ticketName={selectedTicket.ticketName}
+            price={selectedTicket.ticketPrice}
+            orderStatus={selectedTicket.orderStatus}
+            isCheckIn={selectedTicket.checkIn}
+            isCountdownChecked={true}
+            remainDays={selectedTicket.event.remainDays}
+            onClick={() => setIsModalOpen(false)}
+          />
+        </div>
       )}
 
       {isDeleteModalOpen && (
@@ -166,6 +170,9 @@ const MyTicketPage = () => {
               },
               onError: () => {
                 alert('티켓 취소에 실패했습니다.');
+                setIsDeleteModalOpen(false);
+                setIsCancelMode(false);
+                setSelectedIds([]);
               },
             });
           }}
