@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
 import dashboardMenu from '../../../../public/assets/dashboard/DashboardMenu.svg';
 import SideBar from '../../../widgets/dashboard/ui/main/SideBar';
@@ -17,12 +17,13 @@ const DashboardLayout = ({ pinkBg = false, children, centerContent }: DashboardL
   const [modalOpen, setModalOpen] = useState(false);
 
   const home = /^\/dashboard\/[^/]+$/.test(location.pathname);
+  const { id } = useParams();
 
   const handleBackClick = () => {
     if (home) {
       navigate('/');
     } else {
-      navigate(-1);
+      navigate(`/dashboard/${id}`, { relative: 'path' });
     }
   };
 

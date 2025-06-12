@@ -31,7 +31,7 @@ const SideBar = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col mx-auto w-full h-full max-w-lg fixed z-40 bg-white border-[0.5px] border-black py-3">
+    <div className="flex flex-col mx-auto w-full h-full max-w-lg fixed z-40 bg-white border-[0.5px] border-black py-3 overflow-y-auto">
       <Header
         centerContent="대시보드"
         rightContent={<img src={menuBar} onClick={onClose} className="cursor-pointer z-80 relative" />}

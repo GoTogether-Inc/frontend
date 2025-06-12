@@ -18,6 +18,8 @@ import participants from '../../../public/assets/dashboard/menu/Participants(bla
 import clickedParticipants from '../../../public/assets/dashboard/menu/Participants(pink).svg';
 import response from '../../../public/assets/dashboard/menu/Response(black).svg';
 import clickedResponse from '../../../public/assets/dashboard/menu/Response(pink).svg';
+import qr from '../../../public/assets/dashboard/menu/QR(black).svg';
+import clickedQr from '../../../public/assets/dashboard/menu/QR(pink).svg';
 
 export const getMenuLists = (id: string | number) => [
   { text: '대시보드', icon: dashboard, clickedIcon: clickedDashboard, path: `/dashboard/${id}` },
@@ -34,10 +36,6 @@ export const getMenuLists = (id: string | number) => [
   { text: '사용자 응답 관리', icon: response, clickedIcon: clickedResponse, path: `/dashboard/${id}/responses-management`},
   { text: '이메일 예약 발송', icon: email, clickedIcon: clickedEmail, path: `/dashboard/${id}/email` },
   { text: '보낸 이메일', icon: sentEmail, clickedIcon: clickedSentEmail, path: `/dashboard/${id}/mailBox` },
-  {
-    text: '구매/참가자 관리',
-    icon: participants,
-    clickedIcon: clickedParticipants,
-    path: `/dashboard/${id}/participants-management`,
-  },
+  { text: '구매/참가자 관리', icon: participants, clickedIcon: clickedParticipants, path: `/dashboard/${id}/participants-management` },
+  { text: 'QR코드로 체크인', icon: qr, clickedIcon: clickedQr, path: `/dashboard/${id}/check-in` },
 ];
