@@ -51,7 +51,7 @@ const EventCard = ({
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
   return (
-    <div className="md:aspect-[3/4.5] sm:aspect-[1/2] w-full">
+    <div className="md:aspect-[3/4.7] sm:aspect-[1/2] w-full">
       <div
         onClick={onClick}
         className={`w-full h-full p-4 bg-white rounded-lg shadow-md flex flex-col justify-between ${className}`}
