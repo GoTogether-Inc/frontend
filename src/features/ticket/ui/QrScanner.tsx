@@ -53,7 +53,6 @@ const QrScannerComponent = () => {
     };
 
     const checkInApiCall = async (qrData: string) => {
-        console.log("스캔된 QR 데이터:", qrData);
         try {
             const params = new URLSearchParams(qrData.replace(/-/g, '='));
             const orderIdStr = params.get('orderId');
@@ -88,7 +87,7 @@ const QrScannerComponent = () => {
             )}
             {scanResult && (
                 <p className="mt-4 text-green-700 font-semibold">
-                    스캔 결과: {scanResult}
+                    스캔 완료
                 </p>
             )}
         </div>
