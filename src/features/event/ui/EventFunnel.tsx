@@ -47,6 +47,10 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
         setHostState(initialHostState);
         handleNext(String(currentStep - 1));
       },
+      onError: (error: any) => {
+        const message = error?.message || '호스트 생성에 실패했습니다. 다시 시도해주세요.';
+        alert(message);
+      },
     });
   };
 
@@ -56,7 +60,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
         <EventRegisterLayout
           title="이벤트를 호스팅할 채널을 선택해주세요"
           onNext={() => handleNext(String(currentStep + 2))}
-          onPrev={() => navigate(-1)}
+          onPrev={() => navigate('/')}
           requireValidation={true}
         >
           <HostSelectionPage onNext={handleNext} currentStep={currentStep} />
