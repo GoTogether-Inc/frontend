@@ -136,24 +136,27 @@ const EventDetailsPage = () => {
             <h2 className="font-bold text-xl">티켓 옵션</h2>
             <TicketInfo eventId={event.result.id} />
 
-            <div className="flex flex-col gap-2">
-              <h2 className="font-bold text-xl">관련 링크</h2>
-              <div className="flex flex-col gap-3 mb-4">
-                {event.result.referenceLinks.map((link: { title: string; url: string }, index: number) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <img src={linkIcon} alt="링크 이모지" />
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 underline"
-                    >
-                      {link.title}
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {event.result.referenceLinks && event.result.referenceLinks.length > 0 && (
+  <div className="flex flex-col gap-2">
+    <h2 className="font-bold text-xl">관련 링크</h2>
+    <div className="flex flex-col gap-3 mb-4">
+      {event.result.referenceLinks.map((link: { title: string; url: string }, index: number) => (
+        <div key={index} className="flex items-center gap-2">
+          <img src={linkIcon} alt="링크 이모지" />
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
+            {link.title}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
           </div>
         </>
       ) : (
