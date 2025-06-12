@@ -49,96 +49,100 @@ const EventCard = ({
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
   return (
-    <div
-      onClick={onClick}
-      className={`w-full max-w-full h-full min-h-[240px] md:min-h-[300px] max-h-full p-2 md:p-4 bg-white rounded-lg shadow-md cursor-pointer flex flex-col justify-between ${className}`}
-    >
-      {/* 이미지 */}
-      <img src={img} alt={eventTitle} className="object-cover w-full rounded-md sm:h-20 md:h-24 lg:h-28" />
+    <div className="aspect-[3/4] w-full">
+      <div
+        onClick={onClick}
+        className={`w-full h-full p-4 bg-white rounded-lg shadow-md flex flex-col justify-between ${className}`}
+      >
+        {/* 이미지 */}
+        <div className="w-full aspect-[4/3] overflow-hidden rounded-md">
+          <img src={img} alt={eventTitle} className="w-full h-full object-cover" />
+        </div>
 
-      {/* 상세 정보 */}
-      <div className="flex flex-col gap-1 mt-4">
-        <div className="flex justify-between">
-          <h2 className="max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
-          {dDay !== 'false' && (
-            <div className="sm:max-w-10 md:max-w-15">
-              <Countdown isChecked>{dDay}</Countdown>
+        {/* 상세 정보 */}
+        <div className="flex flex-col gap-1 mt-2 overflow-hidden">
+          <div className="flex justify-between">
+            <h2 className="max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
+            {dDay !== 'false' && (
+              <div className="sm:max-w-10 md:max-w-15">
+                <Countdown isChecked>{dDay}</Countdown>
+              </div>
+            )}
+          </div>
+
+          <p className="text-xs text-gray-500">{host}</p>
+
+          <div className="flex items-center text-xs text-gray-500">
+            <img src={dateImg} alt="날짜" className="w-3 h-3 mr-1" />
+            {formatDate(eventDate)}
+          </div>
+
+          <div className="flex items-center text-xs text-gray-500">
+            <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
+            <div className="w-full truncate overflow-hidden">{location}</div>
+          </div>
+
+          {/* 승인 여부 표시 */}
+          {children}
+          {/* 해시태그 */}
+          {hashtags && (
+            <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
+              {(hashtags ?? []).map((tag, index) => (
+                <span
+                  key={index}
+                  className="flex items-center justify-center h-6 px-2 mr-2 bg-gray-200 rounded last:mr-0"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* 대시보드 버튼 */}
+          {isHostPage && (
+            <div className="flex justify-between items-center h-7">
+              <TertiaryButton
+                label="호스트 대시보드 바로가기"
+                type="button"
+                color="pink"
+                size="small"
+                onClick={event => {
+                  event?.stopPropagation();
+                  navigate(`/dashboard/${id}`);
+                }}
+                className="w-31.5 md:w-33"
+              />
+              {isDelete && (
+                <IconButton
+                  iconPath={<img src={deleteButton} />}
+                  size="small"
+                  onClick={e => {
+                    e.stopPropagation();
+                    setIsModalOpen(true);
+                  }}
+                  iconClassName="w-5 h-5 md:w-7 md:h-7 bg-red-500 hover:bg-red-600 rounded-[5px] p-1"
+                />
+              )}
+
+              <DeleteConfirmModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={() => {
+                  mutate(id, {
+                    onSuccess: () => {
+                      onDeleteSuccess?.(id);
+                      setIsModalOpen(false);
+                    },
+                    onError: () => {
+                      alert('이벤트 삭제에 실패했습니다.');
+                      setIsModalOpen(false);
+                    },
+                  });
+                }}
+              />
             </div>
           )}
         </div>
-
-        <p className="text-xs text-gray-500">{host}</p>
-
-        <div className="flex items-center text-xs text-gray-500">
-          <img src={dateImg} alt="날짜" className="w-3 h-3 mr-1" />
-          {formatDate(eventDate)}
-        </div>
-
-        <div className="flex items-center text-xs text-gray-500">
-          <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
-          <div className="w-full truncate overflow-hidden">{location}</div>
-        </div>
-
-        {/* 승인 여부 표시 */}
-        {children}
-        {/* 해시태그 */}
-        {hashtags && (
-          <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
-            {(hashtags ?? []).map((tag, index) => (
-              <span
-                key={index}
-                className="flex items-center justify-center h-6 px-2 mr-2 bg-gray-200 rounded last:mr-0"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* 대시보드 버튼 */}
-        {isHostPage && (
-          <div className="flex justify-between items-center h-7">
-            <TertiaryButton
-              label="호스트 대시보드 바로가기"
-              type="button"
-              color="pink"
-              size="small"
-              onClick={event => {
-                event?.stopPropagation();
-                navigate(`/dashboard/${id}`);
-              }}
-              className="w-31.5 md:w-33"
-            />
-            {isDelete && (
-              <IconButton
-                iconPath={<img src={deleteButton} />}
-                size="small"
-                onClick={e => {
-                  e.stopPropagation();
-                  setIsModalOpen(true);
-                }}
-                iconClassName="w-5 h-5 md:w-7 md:h-7 bg-red-500 hover:bg-red-600 rounded-[5px] p-1"
-              />
-            )}
-
-            <DeleteConfirmModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              onConfirm={() => {
-                mutate(id, {
-                  onSuccess: () => {
-                    onDeleteSuccess?.(id);
-                    setIsModalOpen(false);
-                  },
-                  onError: () => {
-                    alert('이벤트 삭제에 실패했습니다.');
-                    setIsModalOpen(false);
-                  },
-                });
-              }}
-            />
-          </div>
-        )}
       </div>
     </div>
   );
