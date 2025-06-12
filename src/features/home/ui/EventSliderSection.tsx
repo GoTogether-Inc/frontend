@@ -65,6 +65,7 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
                 eventDate={event.startDate}
                 location={event.address}
                 hashtags={event.hashtags}
+                onlineType={event.onlineType}
                 onClick={() => navigate(`/event-details/${event.id}`)}
               />
             </div>
