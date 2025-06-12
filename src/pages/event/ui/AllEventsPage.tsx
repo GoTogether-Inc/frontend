@@ -22,7 +22,7 @@ const AllEventsPage = () => {
             iconPath={<img src={searchIcon} alt="searchIcon" />}
             onClick={() => navigater('/search')}
             onChange={() => {}}
-            placeholder="입력해주세요"
+            placeholder="검색어를 입력해주세요"
           />
         }
         leftButtonClassName="sm:text-lg md:text-xl lg:text-2xl font-extrabold font-nexon"
