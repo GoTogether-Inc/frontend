@@ -4,28 +4,13 @@ import Button from '../../../design-system/ui/Button';
 import AgreementList from '../../features/join/ui/AgreementList';
 import { useAgreementStore } from '../../features/join/model/agreementStore';
 import { useNavigate } from 'react-router-dom';
-import { useAgreeTerms } from '../../features/join/hooks/useUserHook';
-import { TermsAgreementRequest } from '../../features/join/model/userInformation';
 
 const AgreementPage: React.FC = () => {
-  const { isAllRequiredAgreed, getAgreementStates } = useAgreementStore();
+  const { isAllRequiredAgreed } = useAgreementStore();
   const navigate = useNavigate();
-  const { mutate:agreeTerms } = useAgreeTerms();
 
   const handleAgree = () => {
-    const states = getAgreementStates();
-    const agreementData: TermsAgreementRequest = {
-      serviceAgreed: states.serviceAgreed,
-      privacyPolicyAgree: states.privacyPolicyAgree,
-      personalInfoUsageAgreed: states.personalInfoUsageAgreed,
-      marketingAgreed: states.marketingAgreed,
-    };
-
-    agreeTerms(agreementData, {
-      onSuccess: () => {
-        navigate('/join/info-input');
-      },
-    });
+    navigate('/join/info-input');
   };
 
   return (
