@@ -11,7 +11,7 @@ const DashboardPage = () => {
   const formattedPrice = data?.totalPrice.toLocaleString();
 
   return (
-    <DashboardLayout centerContent="대시보드" pinkBg={true}>
+    <DashboardLayout centerContent="DASHBOARD" pinkBg={true}>
       <div className="flex flex-col mt-8 md:mt-13 px-7 gap-4">
         <h1 className="text-2xl font-bold">{data?.eventName || '이벤트 이름 없음'}</h1>
         <CheckList />

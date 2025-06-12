@@ -90,7 +90,7 @@ const TicketCreatePage = () => {
   };
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className=" flex flex-col gap-3 md:gap-5 px-7 py-5">
         <div className="w-full text-center font-bold text-xl">티켓(입장권)</div>
         <p className="text-gray-400 text-11 md:text-xs">

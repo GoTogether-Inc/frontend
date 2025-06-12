@@ -37,6 +37,7 @@ const HostDetailPage = () => {
               eventDate={event.startDate}
               location={event.onlineType}
               hashtags={event.hashtags}
+              aspectRatio='md:aspect-[3/4.7] sm:aspect-[1/1.8]'
             />
           ))
         )}

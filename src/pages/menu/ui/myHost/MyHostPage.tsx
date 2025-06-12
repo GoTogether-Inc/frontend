@@ -74,6 +74,7 @@ const MyHostPage = () => {
               onDeleteSuccess={(deletedEventId: number) => {
                 setDeletedEventId(prev => [...prev, deletedEventId]);
               }}
+              aspectRatio='md:aspect-[3/4.7] sm:aspect-[1/1.8]'
             />
           ))}
       </div>

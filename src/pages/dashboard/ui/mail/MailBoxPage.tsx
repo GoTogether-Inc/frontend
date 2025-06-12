@@ -24,7 +24,7 @@ const MailBoxPage = () => {
   };
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className={`flex flex-col gap-2 mt-8 px-7 ${isModalOpen ? 'blur-sm' : ''}`}>
         <h1 className="w-full text-center font-bold text-xl">보낸 메일함</h1>
         <div className="flex justify-end">

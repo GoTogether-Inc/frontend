@@ -20,7 +20,7 @@ const TicketListPage = () => {
   if (isError) return <div>티켓 정보를 불러오는 중 오류가 발생했습니다.</div>;
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className="mt-8 px-7">
         <div className="text-center text-xl font-bold mb-5">티켓(입장권)</div>
         <p className="text-gray-400 text-sm mb-5">

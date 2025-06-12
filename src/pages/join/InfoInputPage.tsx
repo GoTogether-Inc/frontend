@@ -44,7 +44,7 @@ const InfoInputPage = () => {
   const onSubmit: SubmitHandler<FormData> = formData => {
     const agreementStates = getAgreementStates();
     const updatedData = {
-      name: data?.name || '',
+      name: formData.name,
       email: data?.email || '',
       phoneNumber: formData.phone,
     };

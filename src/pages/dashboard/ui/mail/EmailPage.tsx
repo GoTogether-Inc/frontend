@@ -51,7 +51,7 @@ const EmailPage = () => {
   };
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className="p-5 flex flex-col gap-10 min-h-full">
         <EmailInput
           openSelectTicket={() => setTicketModalOpen(true)}
