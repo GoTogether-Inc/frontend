@@ -6,7 +6,6 @@ import Button from "../../../../design-system/ui/Button";
 const QrScannerComponent = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isScanning, setIsScanning] = useState(false);
-    const [scanResult, setScanResult] = useState<string | null>(null);
     const qrScannerRef = useRef<QrScanner | null>(null);
 
     const { mutate: validateQr } = useTicketQrCodeValidate();
@@ -18,7 +17,6 @@ const QrScannerComponent = () => {
             videoRef.current,
             (decoded) => {
                 const data = decoded.data;
-                setScanResult(data);
                 setIsScanning(false);
                 scanner.stop();
                 checkInApiCall(data);
@@ -45,7 +43,6 @@ const QrScannerComponent = () => {
             await navigator.mediaDevices.getUserMedia({ video: true });
             qrScannerRef.current?.start();
             setIsScanning(true);
-            setScanResult(null);
         } catch (e) {
             alert(
                 "카메라 접근이 차단되어 있어 스캔할 수 없습니다.\n시스템 설정 또는 브라우저 설정에서 권한을 허용해 주세요."
