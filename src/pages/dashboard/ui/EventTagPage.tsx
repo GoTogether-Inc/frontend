@@ -8,7 +8,7 @@ const EventTagPage = () => {
   const navigate = useNavigate();
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 태그 정보</h1>
         <EventCategory />

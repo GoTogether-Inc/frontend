@@ -36,7 +36,7 @@ const EmailEditPage = () => {
   };
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className="flex flex-col gap-5 mt-8 px-7">
         <EmailInput
           type="이메일 내용 수정"

@@ -25,7 +25,7 @@ const TicketOptionCreatePage = () => {
   }, [isEditing, optionDetail]);
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024">
+    <DashboardLayout centerContent="대시보드">
       <div className="mt-8 px-7">
         <div className="text-center text-xl font-bold mb-5">티켓 옵션 생성</div>
         <p className="text-gray-400 text-sm mb-5">티켓 옵션을 생성할 수 있습니다.</p>

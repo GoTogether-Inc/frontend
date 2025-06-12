@@ -110,6 +110,7 @@ const MyTicketPage = () => {
               onClick={() => handleEventCardClick(ticket)}
               className={`transition-transform duration-200 ${isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
                 }`}
+              aspectRatio='md:aspect-[3/4.7] sm:aspect-[1/2]'
             >
               <div className="flex items-center text-xs text-gray-500">
                 <img src={ticketImg} alt="티켓" className="w-3 h-3 mr-1" />

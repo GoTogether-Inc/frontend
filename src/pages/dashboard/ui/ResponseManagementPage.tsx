@@ -12,7 +12,7 @@ const ResponseManagementPage = () => {
   const { data, isLoading, isError } = usePurchaserAnswers(selectedTicketId);
   const orderCount = data?.result?.orderCount ?? 0;
   return (
-    <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
+    <DashboardLayout centerContent="DASHBOARD" pinkBg={true}>
       {isModalOpen && (
         <ResponesModal onClose={closeModal}></ResponesModal>
       )}

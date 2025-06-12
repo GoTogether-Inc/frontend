@@ -31,7 +31,7 @@ const ParticipantsManagementPage = () => {
   });
 
   return (
-    <DashboardLayout centerContent="WOOACON 2024" pinkBg={true}>
+    <DashboardLayout centerContent="DASHBOARD" pinkBg={true}>
       <div className="flex flex-col px-2 md:px-4">
         <h1 className="text-center font-bold text-xl py-4 md:py-6">구매/참가자 관리</h1>
         <div className="flex justify-end gap-2 md:gap-3 px-4">

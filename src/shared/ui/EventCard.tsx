@@ -25,6 +25,7 @@ interface EventCardProps {
   isDelete?: boolean;
   onDeleteSuccess?: (eventId: number) => void;
   onlineType?: 'OFFLINE' | 'ONLINE';
+  aspectRatio?: string;
 }
 
 const EventCard = ({
@@ -42,6 +43,7 @@ const EventCard = ({
   isDelete = false,
   onDeleteSuccess,
   onlineType,
+  aspectRatio = 'md:aspect-[3/4.3] sm:aspect-[3/4.5]'
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -51,7 +53,7 @@ const EventCard = ({
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
   return (
-    <div className="md:aspect-[3/4.7] sm:aspect-[1/2] w-full">
+    <div className={`${aspectRatio} w-full`}>
       <div
         onClick={onClick}
         className={`w-full h-full p-4 bg-white rounded-lg shadow-md flex flex-col justify-between ${className}`}
