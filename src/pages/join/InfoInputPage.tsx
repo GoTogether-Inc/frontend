@@ -5,9 +5,10 @@ import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
 import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTextField';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
-import { useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
+import { useAgreeTerms, useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
 import useAuthStore from '../../app/provider/authStore';
 import { formatPhoneNumber } from '../../shared/utils/phoneFormatter';
+import { useAgreementStore } from '../../features/join/model/agreementStore';
 
 const InfoInputPage = () => {
   const { data, isLoading } = useUserInfo();
@@ -32,6 +33,8 @@ const InfoInputPage = () => {
   const navigate = useNavigate();
 
   const phoneValue = watch('phone');
+  const { getAgreementStates } = useAgreementStore();
+  const { mutate: agreeTerms } = useAgreeTerms();
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
@@ -39,6 +42,7 @@ const InfoInputPage = () => {
   };
 
   const onSubmit: SubmitHandler<FormData> = formData => {
+    const agreementStates = getAgreementStates();
     const updatedData = {
       name: data?.name || '',
       email: data?.email || '',
@@ -46,10 +50,25 @@ const InfoInputPage = () => {
     };
     updateUser(updatedData, {
       onSuccess: () => {
-        login();
-        setName(data?.name || '사용자');
-        alert('정보가 성공적으로 업데이트되었습니다.');
-        navigate('/');
+        agreeTerms(
+          {
+            serviceAgreed: agreementStates.serviceAgreed,
+            privacyPolicyAgree: agreementStates.privacyPolicyAgree,
+            personalInfoUsageAgreed: agreementStates.personalInfoUsageAgreed,
+            marketingAgreed: agreementStates.marketingAgreed,
+          },
+          {
+            onSuccess: () => {
+              login();
+              setName(formData.name);
+              alert('회원가입이 완료되었습니다.');
+              navigate('/');
+            },
+            onError: () => {
+              alert('약관 동의 처리에 실패했습니다.');
+            },
+          }
+        );
       },
       onError: err => {
         alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');

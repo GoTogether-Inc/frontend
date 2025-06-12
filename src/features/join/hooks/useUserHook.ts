@@ -13,15 +13,15 @@ export const useUserInfo = (enabled: boolean = true) => {
 export const useUserUpdate = () => {
   return useMutation<UserInfoResponse, Error, UserInfoRequest>({
     mutationFn: updateUser,
+    onError: (error) => {
+      alert(error.message);
+    }
   });
 };
 
 export const useAgreeTerms = () => {
   return useMutation({
     mutationFn: agreeTerms,
-    onSuccess: () => {
-      alert('이용약관 동의 완료');
-    },
     onError: (error) => {
       alert('동의 처리 실패');
       console.error('이용약관 동의 실패', error);
