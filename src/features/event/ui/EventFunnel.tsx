@@ -13,6 +13,7 @@ import { useFunnelState } from '../model/FunnelContext';
 import { useEventCreation } from '../hooks/useEventHook';
 import { useHostCreation } from '../../host/hook/useHostHook';
 import { HostCreationRequest } from '../../host/model/host';
+import { useEffect } from 'react';
 
 const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();
@@ -53,6 +54,10 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       },
     });
   };
+
+  useEffect(()=> {
+    console.log("Current Step Number : ", currentStep);
+  },[currentStep])
 
   return (
     <Funnel>

@@ -50,24 +50,19 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
 
   return (
     <div className="flex flex-col w-full px-2">
-      <div
-        onClick={() => {
-          if (!isLoggedIn) {
-            alert('로그인이 필요한 서비스입니다.');
-            return;
-          }
-          onNext(String(currentStep + 1));
-        }}
-        className="flex justify-start items-center px-3 py-4 cursor-pointer"
-      >
-        <button className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-gray2 rounded-full">
-          <IconButton
-            iconPath={<img src={AddButton} alt="추가 버튼" className="w-6 h-6 md:w-7 md:h-7" />}
-            onClick={() => onNext(String(currentStep + 1))}
-          />
-        </button>
-        <span className="font-bold text-base md:text-xl ml-4">채널 새로 만들기</span>
-      </div>
+      {isLoggedIn ? (
+        <>
+          <button className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-gray2 rounded-full">
+            <IconButton
+              iconPath={<img src={AddButton} alt="추가 버튼" className="w-6 h-6 md:w-7 md:h-7" />}
+              onClick={() => onNext(String(currentStep + 1))}
+            />
+          </button>
+          <span className="font-bold text-base md:text-xl ml-4">채널 새로 만들기</span>
+        </>
+      ) : (
+        <p className="col-span-2 mt-10 text-center text-sm md:text-base text-red-500">로그인이 필요한 서비스입니다.</p>
+      )}
       {data?.result.map(host => (
         <div
           key={host.id}
