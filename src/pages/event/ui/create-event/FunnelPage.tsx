@@ -20,6 +20,11 @@ const FunnelPage = () => {
   };
 
   const onPrevClick = () => {
+    if (currentStep === 1) {
+      // HostCreation에서 뒤로가기: 브라우저 히스토리 뒤로
+      navigate(-1);
+      return;
+    }
     const prevStep = previousStep.pop();
     if (prevStep !== undefined) {
       setStep(prevStep);
@@ -38,10 +43,14 @@ const FunnelPage = () => {
     }
   }, [location.search, setStep, steps]);
 
-  useEffect(()=>{
+  // Funnel current step을 HostSelection으로 초기화
+  useEffect(() => {
     setStep(0);
     setPreviousStep([]);
-  }, [])
+    if (!new URLSearchParams(location.search).get('step')) {
+      navigate(`${location.pathname}?step=${steps[0]}`, { replace: true });
+    }
+  }, []);
 
   return (
     <FunnelProvider>
