@@ -38,6 +38,11 @@ const FunnelPage = () => {
     }
   }, [location.search, setStep, steps]);
 
+  useEffect(()=>{
+    setStep(0);
+    setPreviousStep([]);
+  }, [])
+
   return (
     <FunnelProvider>
       <EventFunnel
