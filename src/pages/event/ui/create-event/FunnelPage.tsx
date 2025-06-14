@@ -20,7 +20,7 @@ const FunnelPage = () => {
   };
 
   const onPrevClick = () => {
-    if (currentStep === 1) {
+    if (currentStep === 1 || currentStep === 2) {
       // HostCreation에서 뒤로가기: 브라우저 히스토리 뒤로
       navigate(-1);
       return;
