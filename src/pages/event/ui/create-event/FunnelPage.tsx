@@ -3,6 +3,7 @@ import { useFunnel } from '../../../../features/event/hooks/useFunnelHook';
 import EventFunnel from '../../../../features/event/ui/EventFunnel';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FunnelProvider } from '../../../../features/event/model/FunnelContext';
+// import { MAIN_ROUTES } from '../../../../app/routes/routes';
 
 const FunnelPage = () => {
   const { Funnel, Step, setStep, currentStep, steps } = useFunnel(0);
@@ -19,6 +20,8 @@ const FunnelPage = () => {
     }
   };
 
+
+  // ${MAIN_ROUTES.eventCreation}?step=${steps[0]}`
   const onPrevClick = () => {
     if (currentStep === 1 || currentStep === 2) {
       // HostCreation에서 뒤로가기: 브라우저 히스토리 뒤로

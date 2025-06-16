@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ParticipantCard from './ParicipantCard';
+import ParticipantCard from './ParticipantCard';
 import { useParticipantStore } from '../model/store/ParticipantStore';
 import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
 import OrderAnswerModal from '../../../widgets/dashboard/ui/response/OrderAnswerModal';
