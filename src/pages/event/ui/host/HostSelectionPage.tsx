@@ -40,6 +40,7 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
       },
       onError: error => {
         console.error('호스트 삭제 실패:', error);
+        alert(`${error.message}`);
       },
     });
   };
