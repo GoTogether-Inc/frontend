@@ -3,6 +3,7 @@ import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButto
 import { useApproveParticipants } from '../hook/useParticipants';
 import { ParticipantResponse } from '../model/participantInformation';
 import { formatDate, formatTime } from '../../../shared/lib/date';
+import { usePersonalTicketOptionAnswers } from '../../ticket/hooks/useTicketOptionHook';
 
 interface ParticipantCardProps {
   participant: ParticipantResponse;
@@ -12,7 +13,21 @@ interface ParticipantCardProps {
 }
 
 const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) => {
-  const { mutate: approveParticipant } = useApproveParticipants(participant.id);
+  const { mutate: approveParticipant } = useApproveParticipants(participant.orderId);
+
+  // useQuery를 사용한 에러 핸들링
+  const { error } = usePersonalTicketOptionAnswers(participant.ticketId);
+
+
+  // 티켓 옵션 응답 개별 조회 사용 중 -> 올바른 API 수정해야함(에러 핸들링만 처리한 상태)
+  const handleCheckClick = () => {
+    if (error) {
+      alert('참가자 정보를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+    onCheckClick();
+  };
+
   return (
     <div className="flex items-center justify-between w-full text-xs bg-white px-2 md:px-3 py-2 shadow-sm">
       <div className="flex gap-2 md:gap-3">
@@ -30,7 +45,8 @@ const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) =>
         </div>
       </div>
       <div className="flex items-center justify-center gap-3">
-        {<SecondaryButton label="확인하기" color="pink" size="small" onClick={onCheckClick} />}
+        {/* 에러 핸들링 여기도 수정해야함 */}
+        {<SecondaryButton label="확인하기" color="pink" size="small" onClick={handleCheckClick} />}
         {participant.checkedIn ? (
           <p className="text-[#888686] text-10 md:text-12">완료</p>
         ) : (
