@@ -107,7 +107,6 @@ const EventDatePicker = ({
               locale={ko}
               dateFormat="MM월 dd일"
               autoComplete="off"
-              onKeyDown={(e) => e.preventDefault()}
               className="
                 w-20 h-9 md:w-24 md:h-10 
                 border border-placeholderText 
@@ -163,7 +162,6 @@ const EventDatePicker = ({
               locale={ko}
               dateFormat="MM월 dd일"
               autoComplete="off"
-              onKeyDown={(e) => e.preventDefault()}
               className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2 cursor-pointer caret-transparent"
               renderCustomHeader={({
                 date,
