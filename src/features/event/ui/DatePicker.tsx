@@ -99,7 +99,7 @@ const EventDatePicker = ({
       <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-2">
         <div className="flex flex-col w-full sm:w-auto gap-2">
           {!isLabel && <span className="text-sm font-medium">시작 날짜</span>}
-          <div className="flex gap-1">
+          <div className="flex gap-1 ">
             <DatePicker
               id="startDate"
               selected={startDate}
@@ -107,7 +107,15 @@ const EventDatePicker = ({
               locale={ko}
               dateFormat="MM월 dd일"
               autoComplete="off"
-              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
+              onKeyDown={(e) => e.preventDefault()}
+              className="
+                w-20 h-9 md:w-24 md:h-10 
+                border border-placeholderText 
+                text-sm md:text-md 
+                rounded-[5px] 
+                p-2 cursor-pointer 
+                caret-transparent
+              "
               renderCustomHeader={({
                 date,
                 decreaseMonth,
@@ -132,7 +140,7 @@ const EventDatePicker = ({
               id="startTime"
               value={startTime}
               onChange={e => setStartTime(e.target.value)}
-              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
+              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2 cursor-pointer"
             >
               {timeOptions.map(time => (
                 <option key={time} value={time}>
@@ -155,7 +163,8 @@ const EventDatePicker = ({
               locale={ko}
               dateFormat="MM월 dd일"
               autoComplete="off"
-              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
+              onKeyDown={(e) => e.preventDefault()}
+              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2 cursor-pointer caret-transparent"
               renderCustomHeader={({
                 date,
                 decreaseMonth,
@@ -180,7 +189,7 @@ const EventDatePicker = ({
               id="endTime"
               value={endTime}
               onChange={e => setEndTime(e.target.value)}
-              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2"
+              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2 cursor-pointer"
             >
               {timeOptions.map(time => (
                 <option key={time} value={time}>

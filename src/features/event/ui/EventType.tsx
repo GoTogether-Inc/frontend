@@ -46,7 +46,7 @@ const EventType = ({ className }: EventTypeProps) => {
       locationLng,
     }));
   };
-
+  console.log(eventState.locationLat, eventState.locationLng);
   return (
     <div className={`flex flex-col justify-center w-full ${className}`}>
       <div className="flex flex-col justify-start">
