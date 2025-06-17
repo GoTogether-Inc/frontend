@@ -22,7 +22,7 @@ const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) =>
   // 티켓 옵션 응답 개별 조회 사용 중 -> 올바른 API 수정해야함(에러 핸들링만 처리한 상태)
   const handleCheckClick = () => {
     if (error) {
-      alert('참가자 정보를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      alert('응답 데이터가 없습니다.');
       return;
     }
     onCheckClick();
