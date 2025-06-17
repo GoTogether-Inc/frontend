@@ -30,7 +30,7 @@ export const useTicketOptionDnD = () => {
       const ticketId = parseInt(destination.droppableId.replace('ticket-', ''), 10);
       const ticketOptionId = parseInt(result.draggableId, 10);
 
-      if (!isNaN(ticketId) || !isNaN(ticketOptionId)) {
+      if (!isNaN(ticketId) && !isNaN(ticketOptionId)) {
         attachOption({ ticketId, ticketOptionId });
       }
       return;
