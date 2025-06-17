@@ -10,15 +10,24 @@ interface HeaderProps {
   leftButtonLabel?: ReactNode; // 왼쪽 콘텐츠 (버튼)
   leftButtonClick?: () => void; // 왼쪽 버튼 클릭 핸들러
   leftButtonClassName?: string; // 왼쪽 버튼 추가 스타일링 클래스
-  rightContent?: Button; // 오른쪽 콘텐츠 (버튼)
+  rightContent?: Button | null; // 오른쪽 콘텐츠 (버튼)
   color?: 'white' | 'black'; // white 또는 black 중 선택
   className?: string; // 추가 스타일링 클래스
+}
+
+// Button 타입 가드 함수 추가
+function isButtonElement(element: any): element is React.ReactElement<ButtonHTMLAttributes<HTMLButtonElement>> {
+  return (
+    React.isValidElement(element) &&
+    typeof element.type === 'string' &&
+    element.type === 'button'
+  );
 }
 
 const Header = ({
   centerContent,
   leftButtonLabel,
-  leftButtonClick = () => {},
+  leftButtonClick = () => { },
   leftButtonClassName,
   rightContent,
   color = 'black',
@@ -26,14 +35,17 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <header
-      className={`relative flex items-center justify-between w-full h-16 px-6 ${className} ${
-        color === 'white' ? 'text-white' : 'text-black'
-      }`}
+      className={`relative flex items-center justify-between w-full h-16 px-6 ${className} ${color === 'white' ? 'text-white' : 'text-black'
+        }`}
     >
       {/* 왼쪽 콘텐츠 */}
       <div className="flex items-center space-x-2">
         {leftButtonLabel ? (
-          <TextButton label={leftButtonLabel} onClick={leftButtonClick} className={`${leftButtonClassName} mr-6`} />
+          isButtonElement(leftButtonLabel) ? (
+            <div className="flex items-center ml-6 space-x-2">{leftButtonLabel}</div>
+          ) : (
+            <TextButton label={leftButtonLabel} onClick={leftButtonClick} className={`${leftButtonClassName} mr-6`} />
+          )
         ) : null}
       </div>
 

@@ -12,6 +12,7 @@ interface EventRegisterLayoutProps {
   onNext: () => void;
   onPrev: () => void;
   requireValidation?: boolean;
+  goHome?: boolean;
 }
 
 interface ValidationChildProps {
@@ -25,6 +26,7 @@ const EventRegisterLayout = ({
   onNext,
   onPrev,
   requireValidation = false,
+  goHome = false,
 }: EventRegisterLayoutProps) => {
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -46,16 +48,22 @@ const EventRegisterLayout = ({
       <div className="absolute top-0 w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
         <Header
           centerContent="이벤트 등록"
-          leftButtonLabel="<"
-          leftButtonClick={onPrev}
+          leftButtonLabel={goHome ? (              <IconButton
+            iconPath={<img src={HomeButton} />}
+            onClick={() => navigate('/')}
+            iconClassName="cursor-pointer z-30 ml-auto"
+          />) : '<'}
+          leftButtonClick={goHome ? () => navigate('/') : onPrev}
           color="white"
           leftButtonClassName="text-xl z-30"
           rightContent={
-            <IconButton
-              iconPath={<img src={HomeButton} />}
-              onClick={() => navigate('/')}
-              iconClassName="cursor-pointer z-30 ml-auto"
-            />
+            goHome ? null : (
+              <IconButton
+                iconPath={<img src={HomeButton} />}
+                onClick={() => navigate('/')}
+                iconClassName="cursor-pointer z-30 ml-auto"
+              />
+            )
           }
         />
       </div>

@@ -81,6 +81,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
           title="이벤트 제목을 입력해주세요"
           onNext={() => handleNext(String(currentStep + 1))}
           onPrev={() => onPrev(String(currentStep - 1))}
+          goHome={true}
           requireValidation={true}
         >
           <EventTitlePage />
