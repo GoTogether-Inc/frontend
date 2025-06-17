@@ -13,8 +13,7 @@ interface ParticipantCardProps {
 }
 
 const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) => {
-  const { mutate: approveParticipant } = useApproveParticipants(participant.orderId);
-
+  const { mutate: approveParticipant } = useApproveParticipants(participant.id);
   // useQuery를 사용한 에러 핸들링
   const { error } = usePersonalTicketOptionAnswers(participant.ticketId);
 
