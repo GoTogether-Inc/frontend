@@ -16,7 +16,7 @@ interface HeaderProps {
 }
 
 // Button 타입 가드 함수 추가
-function isButtonElement(element: any): element is React.ReactElement<ButtonHTMLAttributes<HTMLButtonElement>> {
+function isButtonElement(element: ReactNode | Button): element is React.ReactElement<ButtonHTMLAttributes<HTMLButtonElement>> {
   return (
     React.isValidElement(element) &&
     typeof element.type === 'string' &&
