@@ -1,22 +1,18 @@
-import { useEffect, useState } from 'react';
-import { FunnelState } from '../model/FunnelContext';
+import { useState } from 'react';
+import { useFunnelState } from '../model/FunnelContext';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
 import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
 import Link from '../../../../public/assets/event-manage/creation/Link.svg';
-
-interface LinkInputProps {
-  value?: Link[];
-  onChange?: (links: Link[]) => void;
-  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
-}
 
 export interface Link {
   title: string;
   url: string;
 }
 
-const LinkInput = ({ value, onChange, setEventState }: LinkInputProps) => {
-  const [links, setLinks] = useState<Link[]>([]);
+const LinkInput = () => {
+  const { eventState, setEventState } = useFunnelState();
+  const links = eventState.referenceLinks;
+
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
@@ -25,17 +21,11 @@ const LinkInput = ({ value, onChange, setEventState }: LinkInputProps) => {
   });
 
   const updateAll = (newLinks: Link[]) => {
-    setLinks(newLinks);
-    onChange?.(newLinks);
     setEventState?.(prev => ({ ...prev, referenceLinks: newLinks }));
   };
 
   const addNewLink = () => {
-    const newLink = {
-      title: '',
-      url: '',
-    };
-    updateAll([...links, newLink]);
+    updateAll([...(links || []), { title: '', url: '' }]);
   };
 
   const removeLink = (index: number) => {
@@ -48,10 +38,6 @@ const LinkInput = ({ value, onChange, setEventState }: LinkInputProps) => {
     newLinks[index] = { ...newLinks[index], [field]: value };
     updateAll(newLinks);
   };
-
-  useEffect(() => {
-    setLinks(value ?? []);
-  }, [value]);
 
   return (
     <div className="flex flex-col gap-1">

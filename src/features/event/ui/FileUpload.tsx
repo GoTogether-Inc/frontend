@@ -1,19 +1,20 @@
 import FileUploadImage from '../../../../public/assets/event-manage/creation/FileUpload.svg';
-import { FunnelState } from '../model/FunnelContext';
+import { FunnelState, useFunnelState } from '../model/FunnelContext';
 import useImageUpload from '../../../shared/hooks/useImageUpload';
 import { useEffect } from 'react';
 
 interface FileUploadProps {
-  value?: string;
   onChange?: (url: string) => void;
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
   useDefaultImage?: boolean;
   onValidationChange?: (isValid: boolean) => void;
 }
 
-const FileUpload = ({ value, onChange, setEventState, useDefaultImage, onValidationChange }: FileUploadProps) => {
+const FileUpload = ({ onChange, setEventState, useDefaultImage, onValidationChange }: FileUploadProps) => {
+  const { eventState } = useFunnelState();
+
   const { previewUrl, fileInputRef, handleFileChange, handleDrop, setIsDragging, isDragging } = useImageUpload({
-    value, // 서버에서 받아온 기본 이미지
+    value: eventState.bannerImageUrl,
     onSuccess: url => {
       onChange?.(url);
       setEventState?.(prev => ({ ...prev, bannerImageUrl: url }));
@@ -22,9 +23,7 @@ const FileUpload = ({ value, onChange, setEventState, useDefaultImage, onValidat
   });
 
   useEffect(() => {
-    if (onValidationChange) {
-      onValidationChange(!!previewUrl);
-    }
+    onValidationChange?.(!!previewUrl);
   }, [previewUrl, onValidationChange]);
 
   return (

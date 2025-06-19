@@ -47,7 +47,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
         setHostState(initialHostState);
         handleNext(String(currentStep - 1));
       },
-      onError: (error: any) => {
+      onError: error => {
         const message = error?.message || '호스트 생성에 실패했습니다. 다시 시도해주세요.';
         alert(message);
       },

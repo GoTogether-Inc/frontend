@@ -24,12 +24,12 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
     const allValid = isFileValid && isTextValid;
     onValidationChange?.(allValid);
   }, [isFileValid, isTextValid, onValidationChange]);
-  
+
   return (
     <div className="w-full px-5 space-y-8">
       <FileUpload setEventState={setEventState} useDefaultImage={false} onValidationChange={handleFileValidation} />
-      <TextEditor setEventState={setEventState} onValidationChange={handleTextValidation} />
-      <LinkInput setEventState={setEventState} />
+      <TextEditor onValidationChange={handleTextValidation} />
+      <LinkInput />
     </div>
   );
 };
