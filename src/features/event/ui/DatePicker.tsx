@@ -95,11 +95,11 @@ const EventDatePicker = ({
   }, [startDate, endDate, startTime, endTime, setEventState, onStartDateChange, onEndDateChange]);
 
   return (
-    <div className={`flex flex-col w-full ${className}`}>
-      <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-2">
+    <div className={`w-full ${className}`}>
+      <div className="flex flex-wrap justify-between">
         <div className="flex flex-col w-full sm:w-auto gap-2">
           {!isLabel && <span className="text-sm font-medium">시작 날짜</span>}
-          <div className="flex gap-1 ">
+          <div className="flex">
             <DatePicker
               id="startDate"
               selected={startDate}
@@ -113,7 +113,7 @@ const EventDatePicker = ({
                 text-sm md:text-md 
                 rounded-[5px] 
                 p-2 cursor-pointer 
-                caret-transparent
+                caret-transparent mr-1
               "
               renderCustomHeader={({
                 date,
@@ -154,7 +154,7 @@ const EventDatePicker = ({
 
         <div className="flex flex-col w-full sm:w-auto gap-2">
           {!isLabel && <span className="text-sm font-medium">종료 날짜</span>}
-          <div className="flex gap-1">
+          <div className="flex">
             <DatePicker
               id="endDate"
               selected={endDate}
@@ -162,7 +162,7 @@ const EventDatePicker = ({
               locale={ko}
               dateFormat="MM월 dd일"
               autoComplete="off"
-              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2 cursor-pointer caret-transparent"
+              className="w-20 h-9 md:w-24 md:h-10 border border-placeholderText text-sm md:text-md rounded-[5px] p-2 cursor-pointer caret-transparent mr-1"
               renderCustomHeader={({
                 date,
                 decreaseMonth,

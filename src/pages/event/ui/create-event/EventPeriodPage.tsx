@@ -5,7 +5,7 @@ const EventPeriodPage = () => {
   const { eventState, setEventState } = useFunnelState();
 
   return (
-    <div className="flex justify-start items-center w-full p-5">
+    <div className="flex justify-start items-center w-full py-5 px-4">
       <EventDatePicker eventState={eventState} setEventState={setEventState} />
     </div>
   );
