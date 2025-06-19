@@ -2,12 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
-import { FunnelState } from '../model/FunnelContext';
+import { useFunnelState } from '../model/FunnelContext';
 
 interface TextEditorProps {
-  value?: string;
-  onChange?: (value: string) => void;
-  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
   onValidationChange?: (isValid: boolean) => void;
 }
 
@@ -15,13 +12,27 @@ const MAX_LENGTH = 2000;
 const IMAGE_WEIGHT = 200;
 
 const formats = [
-  'font', 'header', 'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent', 'link', 'image', 'align', 'color', 'background',
-  'size', 'h1',
+  'font',
+  'header',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'align',
+  'color',
+  'background',
+  'size',
+  'h1',
 ];
 
-const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }: TextEditorProps) => {
-  const [content, setContent] = useState(value);
+const TextEditor = ({ onValidationChange }: TextEditorProps) => {
+  const { eventState, setEventState } = useFunnelState();
   const quillRef = useRef<ReactQuill | null>(null);
   const [isOverLimit, setIsOverLimit] = useState(false);
 
@@ -49,15 +60,39 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
       }
     };
   };
+
   const getImageCount = (htmlContent: string): number => {
     const matches = htmlContent.match(/<img [^>]*src="[^"]*"[^>]*>/g);
     return matches ? matches.length : 0;
+  };
+  const getPlainText = (htmlContent: string): string => {
+    return htmlContent.replace(/<[^>]*>/g, '').trim();
   };
   const getTotalContentLength = (htmlContent: string): number => {
     const textLength = getPlainText(htmlContent).length;
     const imageCount = getImageCount(htmlContent);
     return textLength + imageCount * IMAGE_WEIGHT;
   };
+
+  const handleChange = (value: string) => {
+    const totalLength = getTotalContentLength(value);
+
+    if (totalLength <= MAX_LENGTH) {
+      setEventState?.(prev => ({ ...prev, description: value }));
+      onValidationChange?.(getPlainText(value).length > 0);
+      setIsOverLimit(false);
+    } else {
+      const editorInstance = quillRef.current?.getEditor();
+      if (editorInstance) {
+        editorInstance.setContents(editorInstance.clipboard.convert(eventState.description));
+      }
+      setIsOverLimit(true);
+    }
+  };
+
+  useEffect(() => {
+    onValidationChange?.(getPlainText(eventState.description).length > 0);
+  }, [eventState.description, onValidationChange]);
 
   const modules = useMemo(
     () => ({
@@ -79,44 +114,16 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
     }),
     []
   );
-  const getPlainText = (htmlContent: string): string => {
-    return htmlContent.replace(/<[^>]*>/g, '').trim();
-  };
 
-  const handleChange = (value: string) => {
-    const totalLength = getTotalContentLength(value);
-
-    if (totalLength <= MAX_LENGTH) {
-      setContent(value);
-      onChange?.(value);
-      setEventState?.(prev => ({ ...prev, description: value }));
-      onValidationChange?.(getPlainText(value).length > 0);
-      setIsOverLimit(false);
-    } else {
-      const editorInstance = quillRef.current?.getEditor();
-      if (editorInstance) {
-        editorInstance.setContents(editorInstance.clipboard.convert(content));
-      }
-      setIsOverLimit(true);
-    }
-  };
-
-  useEffect(() => {
-    setContent(value); // 외부 value가 바뀌면 내부에 반영
-    const plainText = getPlainText(value);
-    onValidationChange?.(plainText.length > 0);
-  }, [value]);
-
-  const totalLength = getTotalContentLength(content);
-  const imageCount = getImageCount(content);
-
+  const totalLength = getTotalContentLength(eventState.description);
+  const imageCount = getImageCount(eventState.description);
 
   return (
     <div className="flex flex-col justify-start gap-2 mb-4">
       <h1 className="font-bold text-black text-lg">이벤트에 대한 상세 설명</h1>
       <ReactQuill
         theme="snow"
-        value={content}
+        value={eventState.description}
         ref={quillRef}
         modules={modules}
         formats={formats}
@@ -125,14 +132,9 @@ const TextEditor = ({ value = '', onChange, setEventState, onValidationChange }:
       />
       <div className="flex justify-between items-center mt-1">
         <p className={`text-sm ${isOverLimit ? 'text-red-500' : 'text-gray-500'}`}>
-          {totalLength} / {MAX_LENGTH}자
-          {imageCount > 0 && ` (이미지 ${imageCount}개 포함)`}
+          {totalLength} / {MAX_LENGTH}자{imageCount > 0 && ` (이미지 ${imageCount}개 포함)`}
         </p>
-        {isOverLimit && (
-          <p className="text-sm text-red-500 font-medium">
-            {MAX_LENGTH}자를 초과할 수 없습니다.
-          </p>
-        )}
+        {isOverLimit && <p className="text-sm text-red-500 font-medium">{MAX_LENGTH}자를 초과할 수 없습니다.</p>}
       </div>
     </div>
   );

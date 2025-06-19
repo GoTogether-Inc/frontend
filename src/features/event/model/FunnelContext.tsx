@@ -32,7 +32,7 @@ export const FunnelProvider = ({ children }: { children: ReactNode }) => {
     address: '',
     detailAddress: '',
     locationLat: 37.5665,
-    locationLng: 126.9780,
+    locationLng: 126.978,
     category: 'DEVELOPMENT_STUDY',
     hashtags: [],
     organizerEmail: '',

@@ -38,10 +38,19 @@ import LogoutPage from '../../pages/join/LogoutPage';
 import BookmarkPage from '../../pages/bookmark/ui/BookmarkPage';
 import CategoryPage from '../../pages/event/ui/CategoryPage';
 import CheckInPage from '../../pages/dashboard/ui/ticket/CheckInPage';
+import { FunnelProvider } from '../../features/event/model/FunnelContext';
 
 const mainRoutes = [
   { path: MAIN_ROUTES.main, element: <MainPage />, requiresAuth: false },
-  { path: MAIN_ROUTES.eventCreation, element: <FunnelPage />, requiresAuth: false },
+  {
+    path: MAIN_ROUTES.eventCreation,
+    element: (
+      <FunnelProvider>
+        <FunnelPage />
+      </FunnelProvider>
+    ),
+    requiresAuth: false,
+  },
   { path: MAIN_ROUTES.allEvents, element: <AllEventsPage />, requiresAuth: false },
   { path: MAIN_ROUTES.eventDatail, element: <EventDetailsPage />, requiresAuth: false },
   { path: MAIN_ROUTES.search, element: <SearchPage />, requiresAuth: false },

@@ -3,7 +3,6 @@ import OfflineIcon from '../../../../public/assets/event-manage/creation/Offline
 import { useFunnelState } from '../model/FunnelContext';
 import KakaoMap from '../../../shared/ui/KakaoMap';
 import { AddressSearch } from '../../../shared/ui/AddressSearch';
-import { useState } from 'react';
 
 interface EventTypeProps {
   className?: string;
@@ -11,8 +10,6 @@ interface EventTypeProps {
 
 const EventType = ({ className }: EventTypeProps) => {
   const { eventState, setEventState } = useFunnelState();
-  const [address, setAddress] = useState('');
-  const [detailAddress, setDetailAddress] = useState('');
 
   const handleTypeClick = (type: 'ONLINE' | 'OFFLINE') => {
     setEventState(prev => ({
@@ -22,19 +19,15 @@ const EventType = ({ className }: EventTypeProps) => {
   };
 
   const handleAddressChange = (address: string) => {
-    setAddress(address);
     setEventState(prev => ({
       ...prev,
       address,
-      detailAddress,
     }));
   };
 
   const handleDetailAddressChange = (detailAddress: string) => {
-    setDetailAddress(detailAddress);
     setEventState(prev => ({
       ...prev,
-      address,
       detailAddress,
     }));
   };
@@ -46,7 +39,7 @@ const EventType = ({ className }: EventTypeProps) => {
       locationLng,
     }));
   };
-  console.log(eventState.locationLat, eventState.locationLng);
+
   return (
     <div className={`flex flex-col justify-center w-full ${className}`}>
       <div className="flex flex-col justify-start">
@@ -78,8 +71,9 @@ const EventType = ({ className }: EventTypeProps) => {
         <div className="mt-6 space-y-2">
           <h1 className="font-bold text-black text-lg">이벤트는 어디서 진행되나요?</h1>
           <AddressSearch
-            address={address}
+            address={eventState.address}
             setAddress={handleAddressChange}
+            detailAddress={eventState.detailAddress}
             onLocationChange={handleLocationChange}
             onDetailAddressChange={handleDetailAddressChange}
           />
