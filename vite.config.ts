@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
+import fs from 'fs';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -19,6 +20,10 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true,
+      https: {
+        key: fs.readFileSync('_wildcard.gotogether.io.kr+2-key.pem'),
+        cert: fs.readFileSync('_wildcard.gotogether.io.kr+2.pem'),
+      },
       allowedHosts: ['gotogether.io.kr'],
       proxy: {
         '/api/v1': {
