@@ -27,4 +27,4 @@ dist-ssr
 .env
 
 # mkcert local certificates
-*_wildcard*.pem
+*gotogether.io.kr+3*.pem

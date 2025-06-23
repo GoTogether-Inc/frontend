@@ -21,8 +21,8 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       https: {
-        key: fs.readFileSync('_wildcard.gotogether.io.kr+2-key.pem'),
-        cert: fs.readFileSync('_wildcard.gotogether.io.kr+2.pem'),
+        key: fs.readFileSync('gotogether.io.kr+3-key.pem'),
+        cert: fs.readFileSync('gotogether.io.kr+3.pem'),
       },
       allowedHosts: ['gotogether.io.kr'],
       proxy: {
