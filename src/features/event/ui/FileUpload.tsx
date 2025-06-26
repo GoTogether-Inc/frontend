@@ -1,20 +1,27 @@
 import FileUploadImage from '../../../../public/assets/event-manage/creation/FileUpload.svg';
-import { FunnelState, useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 import useImageUpload from '../../../shared/hooks/useImageUpload';
 import { useEffect } from 'react';
 
 interface FileUploadProps {
+  value?: string;
   onChange?: (url: string) => void;
+  eventState?: FunnelState['eventState'];
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
   useDefaultImage?: boolean;
   onValidationChange?: (isValid: boolean) => void;
 }
 
-const FileUpload = ({ onChange, setEventState, useDefaultImage, onValidationChange }: FileUploadProps) => {
-  const { eventState } = useFunnelState();
-
+const FileUpload = ({
+  value = '',
+  onChange,
+  eventState,
+  setEventState,
+  useDefaultImage,
+  onValidationChange,
+}: FileUploadProps) => {
   const { previewUrl, fileInputRef, handleFileChange, handleDrop, setIsDragging, isDragging } = useImageUpload({
-    value: eventState.bannerImageUrl,
+    value: value ?? eventState?.bannerImageUrl ?? '',
     onSuccess: url => {
       onChange?.(url);
       setEventState?.(prev => ({ ...prev, bannerImageUrl: url }));

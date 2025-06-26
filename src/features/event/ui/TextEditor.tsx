@@ -2,9 +2,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { uploadFile } from '../hooks/usePresignedUrlHook';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 
 interface TextEditorProps {
+  eventState?: FunnelState['eventState'];
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  value?: string;
   onValidationChange?: (isValid: boolean) => void;
 }
 
@@ -31,8 +34,8 @@ const formats = [
   'h1',
 ];
 
-const TextEditor = ({ onValidationChange }: TextEditorProps) => {
-  const { eventState, setEventState } = useFunnelState();
+const TextEditor = ({ eventState, setEventState, value = '', onValidationChange }: TextEditorProps) => {
+  const content = value ?? eventState?.description ?? '';
   const quillRef = useRef<ReactQuill | null>(null);
   const [isOverLimit, setIsOverLimit] = useState(false);
 
@@ -84,15 +87,15 @@ const TextEditor = ({ onValidationChange }: TextEditorProps) => {
     } else {
       const editorInstance = quillRef.current?.getEditor();
       if (editorInstance) {
-        editorInstance.setContents(editorInstance.clipboard.convert(eventState.description));
+        editorInstance.setContents(editorInstance.clipboard.convert(eventState?.description));
       }
       setIsOverLimit(true);
     }
   };
 
   useEffect(() => {
-    onValidationChange?.(getPlainText(eventState.description).length > 0);
-  }, [eventState.description, onValidationChange]);
+    onValidationChange?.(getPlainText(content).length > 0);
+  }, [content, onValidationChange]);
 
   const modules = useMemo(
     () => ({
@@ -115,15 +118,15 @@ const TextEditor = ({ onValidationChange }: TextEditorProps) => {
     []
   );
 
-  const totalLength = getTotalContentLength(eventState.description);
-  const imageCount = getImageCount(eventState.description);
+  const totalLength = getTotalContentLength(eventState?.description || '');
+  const imageCount = getImageCount(eventState?.description || '');
 
   return (
     <div className="flex flex-col justify-start gap-2 mb-4">
       <h1 className="font-bold text-black text-lg">이벤트에 대한 상세 설명</h1>
       <ReactQuill
         theme="snow"
-        value={eventState.description}
+        value={content}
         ref={quillRef}
         modules={modules}
         formats={formats}

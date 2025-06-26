@@ -9,7 +9,7 @@ interface EventInfoPageProps {
 }
 
 const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
-  const { setEventState } = useFunnelState();
+  const { eventState, setEventState } = useFunnelState();
   const [isFileValid, setIsFileValid] = useState(false);
   const [isTextValid, setIsTextValid] = useState(false);
 
@@ -27,9 +27,14 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
 
   return (
     <div className="w-full px-5 space-y-8">
-      <FileUpload setEventState={setEventState} useDefaultImage={false} onValidationChange={handleFileValidation} />
-      <TextEditor onValidationChange={handleTextValidation} />
-      <LinkInput />
+      <FileUpload
+        eventState={eventState}
+        setEventState={setEventState}
+        useDefaultImage={false}
+        onValidationChange={handleFileValidation}
+      />
+      <TextEditor eventState={eventState} setEventState={setEventState} onValidationChange={handleTextValidation} />
+      <LinkInput eventState={eventState} setEventState={setEventState} />
     </div>
   );
 };
