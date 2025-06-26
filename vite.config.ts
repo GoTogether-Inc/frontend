@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
-import fs from 'fs';
 import { visualizer } from 'rollup-plugin-visualizer';
+// import fs from 'fs';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -35,10 +35,11 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true,
-      https: {
+      // 로컬 실행을 위해 일시적으로 https 로컬 설정 주석처리
+      /* https: {
         key: fs.readFileSync('gotogether.io.kr+3-key.pem'),
         cert: fs.readFileSync('gotogether.io.kr+3.pem'),
-      },
+      }, */
       allowedHosts: ['gotogether.io.kr'],
       proxy: {
         '/api/v1': {
