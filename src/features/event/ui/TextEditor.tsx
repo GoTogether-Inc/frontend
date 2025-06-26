@@ -8,6 +8,7 @@ interface TextEditorProps {
   eventState?: FunnelState['eventState'];
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
   value?: string;
+  onChange?: (value: string) => void;
   onValidationChange?: (isValid: boolean) => void;
 }
 
@@ -34,10 +35,18 @@ const formats = [
   'h1',
 ];
 
-const TextEditor = ({ eventState, setEventState, value = '', onValidationChange }: TextEditorProps) => {
-  const content = value ?? eventState?.description ?? '';
+const TextEditor = ({ eventState, setEventState, value = '', onChange, onValidationChange }: TextEditorProps) => {
   const quillRef = useRef<ReactQuill | null>(null);
+
+  const [editorContent, setEditorContent] = useState('');
   const [isOverLimit, setIsOverLimit] = useState(false);
+
+  useEffect(() => {
+    const initial = value ?? eventState?.description ?? '';
+    if (!editorContent && initial) {
+      setEditorContent(initial);
+    }
+  }, [value, eventState?.description, editorContent]);
 
   const imageHandler = async () => {
     if (!quillRef.current) return;
@@ -77,12 +86,14 @@ const TextEditor = ({ eventState, setEventState, value = '', onValidationChange 
     return textLength + imageCount * IMAGE_WEIGHT;
   };
 
-  const handleChange = (value: string) => {
-    const totalLength = getTotalContentLength(value);
+  const handleChange = (val: string) => {
+    const totalLength = getTotalContentLength(val);
 
     if (totalLength <= MAX_LENGTH) {
-      setEventState?.(prev => ({ ...prev, description: value }));
-      onValidationChange?.(getPlainText(value).length > 0);
+      setEditorContent(val);
+      onChange?.(val);
+      setEventState?.(prev => ({ ...prev, description: val }));
+      onValidationChange?.(getPlainText(val).length > 0);
       setIsOverLimit(false);
     } else {
       const editorInstance = quillRef.current?.getEditor();
@@ -94,8 +105,8 @@ const TextEditor = ({ eventState, setEventState, value = '', onValidationChange 
   };
 
   useEffect(() => {
-    onValidationChange?.(getPlainText(content).length > 0);
-  }, [content, onValidationChange]);
+    onValidationChange?.(getPlainText(editorContent).length > 0);
+  }, [editorContent, onValidationChange]);
 
   const modules = useMemo(
     () => ({
@@ -118,15 +129,15 @@ const TextEditor = ({ eventState, setEventState, value = '', onValidationChange 
     []
   );
 
-  const totalLength = getTotalContentLength(eventState?.description || '');
-  const imageCount = getImageCount(eventState?.description || '');
+  const totalLength = getTotalContentLength(editorContent);
+  const imageCount = getImageCount(editorContent);
 
   return (
     <div className="flex flex-col justify-start gap-2 mb-4">
       <h1 className="font-bold text-black text-lg">이벤트에 대한 상세 설명</h1>
       <ReactQuill
         theme="snow"
-        value={content}
+        value={editorContent}
         ref={quillRef}
         modules={modules}
         formats={formats}
