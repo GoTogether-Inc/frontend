@@ -55,7 +55,7 @@ const EventInfoPage = () => {
       category: data.result.category || 'DEVELOPMENT_STUDY',
       hashtags: data.result.hashtags || [],
       organizerEmail: email || data.result.organizerEmail || '',
-      organizerPhoneNumber: phone.replace(/-/g, '') || data.result.organizerPhoneNumber || '',
+      organizerPhoneNumber: phone || data.result.organizerPhoneNumber || '',
     };
 
     mutate(requestData, {
