@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useFunnelState } from '../model/FunnelContext';
+import { FunnelState } from '../model/FunnelContext';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
 import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
 import Link from '../../../../public/assets/event-manage/creation/Link.svg';
@@ -9,9 +9,15 @@ export interface Link {
   url: string;
 }
 
-const LinkInput = () => {
-  const { eventState, setEventState } = useFunnelState();
-  const links = eventState.referenceLinks;
+interface LinkInputProps {
+  value?: Link[];
+  onChange?: (value: Link[]) => void;
+  eventState?: FunnelState['eventState'];
+  setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+}
+
+const LinkInput = ({ value, onChange, eventState, setEventState }: LinkInputProps) => {
+  const links = value ?? eventState?.referenceLinks ?? [];
 
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
@@ -21,20 +27,19 @@ const LinkInput = () => {
   });
 
   const updateAll = (newLinks: Link[]) => {
+    onChange?.(newLinks);
     setEventState?.(prev => ({ ...prev, referenceLinks: newLinks }));
   };
 
-  const addNewLink = () => {
-    updateAll([...(links || []), { title: '', url: '' }]);
-  };
+  const addNewLink = () => updateAll([...links, { title: '', url: '' }]);
 
   const removeLink = (index: number) => {
     const newLinks = links.filter((_, i) => i !== index);
-    updateAll(newLinks);
+    if (newLinks) updateAll(newLinks);
   };
 
   const updateLink = (index: number, field: keyof Link, value: string) => {
-    const newLinks = [...links];
+    const newLinks = [...(links ?? [])];
     newLinks[index] = { ...newLinks[index], [field]: value };
     updateAll(newLinks);
   };
