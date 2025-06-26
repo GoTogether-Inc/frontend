@@ -1,8 +1,8 @@
 import { PresignedUrlRequest, PresignedUrlResponse } from '../model/presignedUrl';
 import { axiosClient } from '../../../shared/types/api/http-client';
-
 import axios from 'axios';
 import { ApiResponse } from '../../../shared/types/api/apiResponse';
+import { convertImageToWebP } from '../../../shared/lib/convertImageToWebP';
 
 const getPresignedUrl = async (dto: PresignedUrlRequest) => {
   try {
@@ -24,7 +24,7 @@ export const putS3Image = async ({ url, file }: { url: string; file: File }) => 
     console.log('업로드할 URL:', url);
     await axios.put(url, file, {
       headers: {
-        'Content-Type': file.type,
+        'Content-Type': 'image/webp',
       },
     });
   } catch (error) {
@@ -35,8 +35,10 @@ export const putS3Image = async ({ url, file }: { url: string; file: File }) => 
 };
 
 export const uploadFile = async (file: File) => {
-  const { name } = file;
-  const presignedUrlResponse = await getPresignedUrl({ fileName: name });
+  const webFile = await convertImageToWebP(file);
+  const fileName = webFile.name;
+
+  const presignedUrlResponse = await getPresignedUrl({ fileName });
 
   if (!presignedUrlResponse) {
     throw new Error('Failed to get presigned url');
@@ -45,7 +47,7 @@ export const uploadFile = async (file: File) => {
   const url = presignedUrlResponse;
   console.log('Presigned URL:', url);
 
-  await putS3Image({ url, file });
+  await putS3Image({ url, file: webFile });
 
   // S3 URL에서 presigned URL 파라미터를 제거하고 기본 URL 반환
   return url.split('?')[0];

@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { uploadFile } from '../../features/event/hooks/usePresignedUrlHook';
+import { convertImageToWebP } from '../lib/convertImageToWebP';
 export const DEFAULT_BASIC_PROFILE = 'https://gotogetherbucket.s3.ap-northeast-2.amazonaws.com/default.png';
 
 const useImageUpload = ({
@@ -41,7 +42,8 @@ const useImageUpload = ({
       if (!validateFile(file)) return;
 
       try {
-        const imageUrl = await uploadFile(file);
+        const webpFile = await convertImageToWebP(file);
+        const imageUrl = await uploadFile(webpFile);
         setPreviewUrl(imageUrl);
         onSuccess?.(imageUrl);
       } catch (error) {
