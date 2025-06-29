@@ -25,6 +25,8 @@ const MyTicketPage = () => {
   const { mutate: cancelTicket } = useCancelTicket();
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
+  console.log("Selected ticket details:", tickets.map(ticket => ticket.orderId));
+
   const handleCancelButtonClick = () => {
     if (isCancelMode) {
       if (selectedIds.length === 0) {
@@ -36,7 +38,7 @@ const MyTicketPage = () => {
       today.setHours(0, 0, 0, 0);
 
       const invalidTickets = tickets.filter(
-        ticket => selectedIds.includes(ticket.id) && new Date(ticket.event.startDate) <= today
+        ticket => selectedIds.includes(ticket.orderId) && new Date(ticket.event.startDate) <= today
       );
 
       if (invalidTickets.length > 0) {
@@ -56,7 +58,7 @@ const MyTicketPage = () => {
 
   const handleEventCardClick = (ticket: OrderTicketResponse) => {
     if (isCancelMode) {
-      setSelectedIds(prev => (prev.includes(ticket.id) ? prev.filter(id => id !== ticket.id) : [...prev, ticket.id]));
+      setSelectedIds(prev => (prev.includes(ticket.orderId) ? prev.filter(id => id !== ticket.orderId) : [...prev, ticket.orderId]));
     } else {
       setSelectedTicket(ticket);
       setIsModalOpen(true);
@@ -66,6 +68,7 @@ const MyTicketPage = () => {
   useEffect(() => {
     if (data?.result) {
       setTickets(data.result);
+      console.log("tickets", tickets);
     }
   }, [data]);
 
@@ -98,8 +101,8 @@ const MyTicketPage = () => {
         ) : tickets.length > 0 ? (
           tickets.map(ticket => (
             <EventCard
-              key={ticket.id}
-              id={ticket.id}
+              key={ticket.orderId}
+              id={ticket.orderId}
               img={ticket.event.bannerImageUrl}
               eventTitle={ticket.event.title}
               dDay={ticket.event.remainDays}
@@ -108,7 +111,7 @@ const MyTicketPage = () => {
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
               onClick={() => handleEventCardClick(ticket)}
-              className={`transition-transform duration-200 ${isCancelMode && selectedIds.includes(ticket.id) ? 'scale-95 border-2 border-pink-400' : ''
+              className={`transition-transform duration-200 ${isCancelMode && selectedIds.includes(ticket.orderId) ? 'scale-95 border-2 border-pink-400' : ''
                 }`}
               aspectRatio='md:aspect-[3/4.7] sm:aspect-[1/2]'
             >
@@ -164,7 +167,7 @@ const MyTicketPage = () => {
           onClick={() => {
             cancelTicket(selectedIds, {
               onSuccess: () => {
-                setTickets(prev => prev.filter(ticket => !selectedIds.includes(ticket.id)));
+                setTickets(prev => prev.filter(ticket => !selectedIds.includes(ticket.orderId)));
                 setIsDeleteModalOpen(false);
                 setIsCancelMode(false);
                 setSelectedIds([]);

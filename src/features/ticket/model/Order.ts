@@ -7,7 +7,7 @@ export interface OrderTicketRequest {
 }
 
 export interface OrderTicketResponse {
-  id: number;
+  orderId: number;
   event: {
     id: number;
     bannerImageUrl: string;
