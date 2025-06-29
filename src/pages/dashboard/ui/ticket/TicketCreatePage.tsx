@@ -116,6 +116,7 @@ const TicketCreatePage = () => {
             detail="티켓을 잘 나타낼 수 있는 이름을 써보세요.(무료 입장권, VIP 입장권,얼리버드)"
             className="h-12"
             onChange={handleInputChange('ticketName')}
+            maxLength={17}
           />
         </div>
         {/*티켓 설명 입력란*/}
