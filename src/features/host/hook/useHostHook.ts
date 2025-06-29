@@ -8,6 +8,9 @@ export const useHostCreation = () => {
     mutationFn: async (requestBody: HostCreationRequest) => {
       return await createHost(requestBody);
     },
+    onError: (error) => {
+      console.log("error", error.message);
+    },
   });
 };
 
