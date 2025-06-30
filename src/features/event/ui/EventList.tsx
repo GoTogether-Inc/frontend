@@ -100,7 +100,7 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
       ) : (
         <div
           ref={parentRef}
-          className="relative w-[90%] mx-auto "
+          className="relative w-[90%] mx-auto h-[80vh] md:h-[85vh] lg:h-[90vh] overflow-auto pb-20"
           role="region"
           aria-label="이벤트 목록"
           tabIndex={0}
