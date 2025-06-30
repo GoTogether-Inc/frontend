@@ -28,7 +28,7 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
   const navigate = useNavigate();
 
   const MOBILE_CARD_HEIGHT = 250;
-  const DESKTOP_CARD_HEIGHT = 350;
+  const DESKTOP_CARD_HEIGHT = 330;
 
 
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteScroll<EventListProps>({
@@ -100,7 +100,7 @@ const EventList = ({ category, tag }: EventListComponentProps) => {
       ) : (
         <div
           ref={parentRef}
-          className="relative w-[90%] mx-auto h-[80vh] md:h-[85vh] lg:h-[90vh] overflow-auto"
+          className="relative w-[90%] mx-auto "
           role="region"
           aria-label="이벤트 목록"
           tabIndex={0}
