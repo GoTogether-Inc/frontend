@@ -7,6 +7,8 @@ import useHostChannelList from '../../../../entities/host/hook/useHostChannelLis
 import useHostDetail from '../../../../entities/host/hook/useHostDetailHook';
 import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import useAuthStore from '../../../../app/provider/authStore';
+import FloatingButton from '../../../../shared/ui/FloatingButton';
+import manualIcon from '../../../../../public/assets/menu/help.svg';
 
 const MyHostPage = () => {
   const [selectedHostId, setSelectedHostId] = useState<number | null>(null);
@@ -77,6 +79,11 @@ const MyHostPage = () => {
               aspectRatio='md:aspect-[3/4.7] sm:aspect-[1/1.8]'
             />
           ))}
+      </div>
+      <div className="sticky bottom-6 w-full flex justify-end px-6 z-50">
+        <FloatingButton ariaLabel="사용법" onClick={() => window.open('https://namu00.notion.site/209eaffb9b0e803d9bc3da1fa0be5496', '_blank')} className='bottom-6'>
+          <img src={manualIcon} alt="사용법" className="w-full h-full" />
+        </FloatingButton>
       </div>
     </TicketHostLayout>
   );
