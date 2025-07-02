@@ -15,6 +15,7 @@ import ProfileCircle from '../../../../design-system/ui/Profile';
 import useEventList from '../../../entities/event/hook/useEventListHook';
 import FloatingButton from '../../../shared/ui/FloatingButton';
 import manualIcon from '../../../../public/assets/menu/help.svg';
+import { USER_MANUAL_URL } from '../../../shared/types/menuType';
 const MainPage = () => {
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal, isLoggedIn, name } = useAuthStore();
@@ -85,8 +86,8 @@ const MainPage = () => {
       >
         전체 이벤트 보러가기 <span className="ml-1.5">&gt;</span>
       </button>
-      <div className="sticky bottom-6 w-full flex justify-end px-6 z-50">
-        <FloatingButton ariaLabel="사용법" onClick={() => window.open('https://namu00.notion.site/209eaffb9b0e803d9bc3da1fa0be5496', '_blank')} className='bottom-24'>
+      <div className="sticky w-full flex justify-end px-6 z-50">
+        <FloatingButton ariaLabel="사용법" onClick={() => window.open(USER_MANUAL_URL, '_blank')} className='bottom-24'>
           <img src={manualIcon} alt="사용법" className="w-full h-full" />
         </FloatingButton>
       </div>

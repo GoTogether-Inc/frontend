@@ -12,6 +12,10 @@ import useAuthStore from '../../app/provider/authStore';
 import Manual from '../../../public/assets/menu/manual.svg';
 import SelectedManual from '../../../public/assets/menu/SelectedManual.svg';
 
+export const USER_MANUAL_URL = 'https://namu00.notion.site/209eaffb9b0e803d9bc3da1fa0be5496';
+export const HOST_MANUAL_URL = 'https://namu00.notion.site/209eaffb9b0e80caa0dae68c1e12ed0f';
+
+
 export interface buttonData {
   iconPath: string; // 아이콘 경로
   hoverIconPath: string; // 호버 아이콘 경로
@@ -28,7 +32,7 @@ export const getButtonData = (): buttonData[] => {
     { iconPath: Host, hoverIconPath: SelectedHost, label: '내 호스트', path: '/menu/myHost' },
     { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation' },
     { iconPath: Setting, hoverIconPath: SelectedSetting, label: '마이페이지', path: '/menu/myPage' },
-    { iconPath: Manual, hoverIconPath: SelectedManual, label: '사용법', path: '/menu/myTicket', url: 'https://namu00.notion.site/209eaffb9b0e803d9bc3da1fa0be5496' },
+    { iconPath: Manual, hoverIconPath: SelectedManual, label: '사용법', path: '/menu/myTicket', url: USER_MANUAL_URL },
   ];
 
   if (isLoggedIn) {
