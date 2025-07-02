@@ -8,12 +8,7 @@ interface FloatingButtonProps {
   ariaLabel: string;
 }
 
-const FloatingButton = ({
-  onClick,
-  children,
-  className,
-  ariaLabel,
-}: FloatingButtonProps) => {
+const FloatingButton = ({ onClick, children, className, ariaLabel }: FloatingButtonProps) => {
   return (
     <motion.button
       whileTap={{ scale: 0.9 }}
@@ -25,7 +20,7 @@ const FloatingButton = ({
         'z-50 flex items-center justify-center',
         'rounded-full shadow-lg',
         'w-12 h-12 sm:w-10 sm:h-10 lg:w-12 lg:h-12',
-        className,
+        className
       )}
     >
       {children}
