@@ -5,8 +5,8 @@ import useAuthStore from '../../../app/provider/authStore';
 // 로그아웃 처리 및 리다이렉트
 function logoutAndRedirect(error: unknown) {
   const authStore = useAuthStore.getState();
+  // Zustand persist가 자동으로 localStorage를 정리하므로 수동 정리 불필요
   authStore.logout();
-  localStorage.removeItem('auth-storage');
   authStore.openModal();
 
   console.log('logoutAndRedirect', error);
@@ -69,14 +69,10 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`,
-          {},
-          { withCredentials: true }
-        );
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`, {}, { withCredentials: true });
         // 새 토큰이 쿠키에 재설정되었으므로 원래 요청 재시도
         return axiosClient(originalRequest);
-      } catch (refreshError) {
+      } catch (refreshError: unknown) {
         // 리프레시 실패 시 로그아웃 처리
         logoutAndRedirect(refreshError);
 
