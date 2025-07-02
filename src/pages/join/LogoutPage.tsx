@@ -26,6 +26,7 @@ const LogoutPage = () => {
         ) {
           // 토큰 만료로 인한 자동 로그아웃이므로 조용히 처리
           console.log('토큰 만료로 인한 자동 로그아웃', error);
+          alert('다시 로그인 해주세요.');
           logout();
           navigate('/');
         } else {
