@@ -3,7 +3,7 @@ import useAuthStore from '../../../app/provider/authStore';
 
 // 타입 가드 함수
 function isTokenError(error: unknown): error is { code: string; status?: number } {
-  return error !== null && typeof error === 'object' && 'code' in error && typeof (error as any).code === 'string';
+  return error !== null && typeof error === 'object' && 'code' in error && typeof (error as { code: unknown }).code === 'string';
 }
 
 // 토큰 유효성 검증 함수 (httpOnly 쿠키 사용)
