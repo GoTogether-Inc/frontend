@@ -25,8 +25,6 @@ const MyTicketPage = () => {
   const { mutate: cancelTicket } = useCancelTicket();
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
 
-  console.log("Selected ticket details:", tickets.map(ticket => ticket.orderId));
-
   const handleCancelButtonClick = () => {
     if (isCancelMode) {
       if (selectedIds.length === 0) {
@@ -67,8 +65,7 @@ const MyTicketPage = () => {
 
   useEffect(() => {
     if (data?.result) {
-      setTickets(data.result);
-      console.log("tickets", tickets);
+      setTickets(data.result); 
     }
   }, [data]);
 
