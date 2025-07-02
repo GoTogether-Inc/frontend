@@ -9,12 +9,15 @@ import SelectedHost from '../../../public/assets/menu/SelectedHost.svg';
 import SelectedLogout from '../../../public/assets/menu/SelectedLogout.svg';
 import SelectedSetting from '../../../public/assets/menu/SelectedSetting.svg';
 import useAuthStore from '../../app/provider/authStore';
+import Manual from '../../../public/assets/menu/manual.svg';
+import SelectedManual from '../../../public/assets/menu/SelectedManual.svg';
 
 export interface buttonData {
   iconPath: string; // 아이콘 경로
   hoverIconPath: string; // 호버 아이콘 경로
   label: string; // 버튼 텍스트
   path: string; // 경로
+  url?: string; // 외부 url
 }
 
 export const getButtonData = (): buttonData[] => {
@@ -25,6 +28,7 @@ export const getButtonData = (): buttonData[] => {
     { iconPath: Host, hoverIconPath: SelectedHost, label: '내 호스트', path: '/menu/myHost' },
     { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation' },
     { iconPath: Setting, hoverIconPath: SelectedSetting, label: '마이페이지', path: '/menu/myPage' },
+    { iconPath: Manual, hoverIconPath: SelectedManual, label: '사용법', path: '/menu/myTicket', url: 'https://namu00.notion.site/209eaffb9b0e803d9bc3da1fa0be5496' },
   ];
 
   if (isLoggedIn) {

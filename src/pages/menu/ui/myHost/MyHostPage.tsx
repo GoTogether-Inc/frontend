@@ -81,7 +81,7 @@ const MyHostPage = () => {
           ))}
       </div>
       <div className="sticky bottom-6 w-full flex justify-end px-6 z-50">
-        <FloatingButton ariaLabel="사용법" onClick={() => window.open('https://namu00.notion.site/209eaffb9b0e803d9bc3da1fa0be5496', '_blank')} className='bottom-6'>
+        <FloatingButton ariaLabel="사용법" onClick={() => window.open('https://namu00.notion.site/209eaffb9b0e80caa0dae68c1e12ed0f', '_blank')} className='bottom-6'>
           <img src={manualIcon} alt="사용법" className="w-full h-full" />
         </FloatingButton>
       </div>

@@ -5,8 +5,12 @@ import Header from '../../../../design-system/ui/Header';
 import { getButtonData } from '../../../shared/types/menuType';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 
-const handleIconClick = (navigate: (path: string) => void, path: string) => {
-  navigate(path);
+const handleIconClick = (navigate: (path: string) => void, path: string, url?: string) => {
+  if (url) {
+    window.open(url, '_blank');
+  } else if (path) {
+    navigate(path);
+  }
 };
 
 const MenuPage = () => {
@@ -23,7 +27,7 @@ const MenuPage = () => {
               iconPath={<img src={button.iconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
               hoverIconPath={<img src={button.hoverIconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
               label={button.label}
-              onClick={() => handleIconClick(navigate, button.path)}
+              onClick={() => handleIconClick(navigate, button.path, button.url)}
             />
             {button.label !== '내 호스트' && index !== buttonData.length - 1 && (
               <hr className="mt-5 border-[0.5px] border-gray4" />
