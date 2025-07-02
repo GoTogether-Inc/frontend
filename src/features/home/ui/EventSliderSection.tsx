@@ -38,23 +38,30 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
   const eventsToShow =
     filteredEvents.length > 0
       ? filteredEvents
-          .slice(startIndex, startIndex + maxCardsToShow)
-          .concat(
-            startIndex + maxCardsToShow > filteredEvents.length
-              ? filteredEvents.slice(0, (startIndex + maxCardsToShow) % filteredEvents.length)
-              : []
-          )
+        .slice(startIndex, startIndex + maxCardsToShow)
+        .concat(
+          startIndex + maxCardsToShow > filteredEvents.length
+            ? filteredEvents.slice(0, (startIndex + maxCardsToShow) % filteredEvents.length)
+            : []
+        )
       : [];
 
   return (
     <div className="relative w-full px-6">
       <h2 className="sm:mb-3 md:mb-3.5 lg:mb-4 font-bold sm:text-sm md:text-base lg:text-lg">{title}</h2>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-center">
         {filteredEvents.length === 0 ? (
           <div className="w-full text-center text-gray-500">표시할 이벤트가 없습니다.</div>
         ) : (
           eventsToShow.map((event: EventItem) => (
-            <div key={event.id} className="w-full h-full min-h-[200px] max-w-sm min-w-[200px]">
+            <div
+              key={event.id}
+              className="
+                  h-full min-h-[200px]
+                  lg:min-w-[220px]  sm:min-w-[160px] w-[100%] sm:w-[40%]
+                  max-w-sm
+                "
+            >
               <EventCard
                 key={event.id}
                 id={event.id}
@@ -69,6 +76,7 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
                 onClick={() => navigate(`/event-details/${event.id}`)}
               />
             </div>
+
           ))
         )}
         {eventsToShow.length === 1 && (
@@ -83,7 +91,7 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
               eventDate=""
               location=""
               hashtags={[]}
-              onClick={() => {}}
+              onClick={() => { }}
             />
           </div>
         )}
