@@ -5,6 +5,7 @@ import SecondaryButton from '../../../../design-system/ui/buttons/SecondaryButto
 import SearchTextField from '../../../../design-system/ui/textFields/SearchTextField';
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCardButton';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
@@ -33,6 +34,12 @@ const MainPage = () => {
       navigate('/');
     }
   };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      openModal();
+    }
+  }, [isLoggedIn, openModal]);
 
   return (
     <div className="flex flex-col items-center pb-24">

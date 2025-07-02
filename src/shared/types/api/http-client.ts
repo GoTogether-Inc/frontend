@@ -7,11 +7,13 @@ import useAuthStore from '../../../app/provider/authStore';
 function logoutAndRedirect(error: unknown) {
   Cookies.remove('accessToken');
   Cookies.remove('refreshToken');
+  localStorage.removeItem('auth-storage');
   const authStore = useAuthStore.getState();
   authStore.logout();
   authStore.openModal();
 
-  return Promise.reject(error);
+  console.log('logoutAndRedirect', error);
+  // return Promise.reject(error);
 }
 
 export const axiosClient = axios.create({
@@ -72,7 +74,9 @@ axiosClient.interceptors.response.use(
 
       try {
         await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`, {}, { withCredentials: true, }
+          `${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`,
+          {},
+          { withCredentials: true, headers: { isPublicApi: true } }
         );
         // 새 토큰이 쿠키에 재설정되었으므로 원래 요청 재시도
         return axiosClient(originalRequest);
@@ -86,6 +90,7 @@ axiosClient.interceptors.response.use(
 
     if (errorInfo.code === 'TOKEN4004') {
       logoutAndRedirect(errorInfo);
+      return;
     }
 
     return Promise.reject(errorInfo);

@@ -11,12 +11,21 @@ const LogoutPage = () => {
     const handleLogout = async () => {
       try {
         await axiosClient.post('/oauth/logout');
+        console.log('이 에러는 토큰 만료로 인한 정상적인 동작입니다. 다시 로그인해주세요.');
         logout();
         navigate('/');
-      } catch (error: any) {
+      } catch (error: unknown) {
         // 토큰 만료로 인한 자동 로그아웃인지 확인
-        if (error?.code === 'TOKEN4001' || error?.code === 'TOKEN4004') {
+        if (
+          typeof error === 'object' &&
+          error !== null &&
+          'code' in error &&
+          (
+            (error as { code?: string }).code === 'TOKEN4001' ||
+            (error as { code?: string }).code === 'TOKEN4004')
+        ) {
           // 토큰 만료로 인한 자동 로그아웃이므로 조용히 처리
+          console.log('토큰 만료로 인한 자동 로그아웃', error);
           logout();
           navigate('/');
         } else {
