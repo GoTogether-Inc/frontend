@@ -43,7 +43,7 @@ const EventCard = ({
   isDelete = false,
   onDeleteSuccess,
   onlineType,
-  aspectRatio = 'md:aspect-[3/4.3] sm:aspect-[3/4.5]'
+  aspectRatio = 'md:aspect-[3/4.3] sm:aspect-[3/5]'
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
