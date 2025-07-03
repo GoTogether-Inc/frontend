@@ -65,7 +65,7 @@ const MyTicketPage = () => {
 
   useEffect(() => {
     if (data?.result) {
-      setTickets(data.result); 
+      setTickets(data.result);
     }
   }, [data]);
 
@@ -107,6 +107,7 @@ const MyTicketPage = () => {
               eventDate={ticket.event.startDate}
               location={ticket.event.address}
               hashtags={ticket.event.hashtags}
+              status={ticket.event.status}
               onClick={() => handleEventCardClick(ticket)}
               className={`transition-transform duration-200 ${isCancelMode && selectedIds.includes(ticket.orderId) ? 'scale-95 border-2 border-pink-400' : ''
                 }`}

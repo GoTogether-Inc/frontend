@@ -26,6 +26,7 @@ interface EventCardProps {
   isDelete?: boolean;
   onDeleteSuccess?: (eventId: number) => void;
   onlineType?: 'OFFLINE' | 'ONLINE';
+  status?: 'PROGRESS' | 'COMPLETE' | 'DELETED';
   aspectRatio?: string;
 }
 
@@ -44,6 +45,7 @@ const EventCard = ({
   isDelete = false,
   onDeleteSuccess,
   onlineType,
+  status,
   aspectRatio = 'md:aspect-[3/4.3] sm:aspect-[3/5]'
 }: EventCardProps) => {
   const navigate = useNavigate();
@@ -70,7 +72,7 @@ const EventCard = ({
             <h2 className="md:max-w-[130px] sm:max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
             {dDay !== 'false' && (
               <div className="sm:max-w-15 md:max-w-15">
-                <Countdown isChecked>{dDay}</Countdown>
+                <Countdown isChecked status={status}>{dDay}</Countdown>
               </div>
             )}
           </div>
@@ -96,7 +98,7 @@ const EventCard = ({
             <HashtagCarousel hashtagSlides={hashtags} onClick={e => e.stopPropagation()} />
           )}
 
-          {/* 대시보드 버튼 */} 
+          {/* 대시보드 버튼 */}
           {isHostPage && (
             <div className="flex justify-between items-center h-7">
               <TertiaryButton

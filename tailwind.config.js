@@ -74,6 +74,8 @@ export default {
         deDayBgLight: 'rgba(209, 208, 208, 0.60)', // 디데이(배경)
         deDayTextDark: '#4F4F4F', // 디데이(글씨, 라인)
         disAbledText: '#bebebe', // 비활성화 버튼 텍스트
+        eventEndText: '#42568a', // 종료 텍스트
+        eventEndBg: '#a0b2ff', // 종료 텍스트
         gray1: '#F9F9F9', // 회색1
         gray2: '#F5F5F5', // 회색2
         gray3: '#EEEEEE', // 회색3
