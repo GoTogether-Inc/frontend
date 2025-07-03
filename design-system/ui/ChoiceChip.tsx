@@ -27,14 +27,16 @@ const ChoiceChip = ({
   const [selected, setSelected] = useState<string>(value || options[0].value || '');
 
   useEffect(() => {
-    if (value) {
+    if (value !== undefined && value !== selected) {
       setSelected(value);
     }
   }, [value]);
 
   const handleClick = (optionValue: string) => {
-    setSelected(optionValue);
-    onSelect(optionValue);
+    if (optionValue !== selected) {
+      setSelected(optionValue);      // 내부 하이라이트
+      onSelect(optionValue);         // 부모에 알림
+    }
   };
 
   return (

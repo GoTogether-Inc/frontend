@@ -14,7 +14,6 @@ const TicketCreatePage = () => {
   const { mutate: createTicket } = useCreateTicket();
   const { id } = useParams();
   const eventId = Number(id);
-
   const [ticketData, setTicketData] = useState<CreateTicketRequest>({
     eventId: eventId,
     ticketType: 'FIRST_COME',
@@ -26,18 +25,6 @@ const TicketCreatePage = () => {
     endDate: '',
   });
 
-  const handleTicketTypeChange = (type: string) => {
-    let mappedType: string;
-    if (type === '선착순') {
-      mappedType = 'FIRST_COME';
-    } else {
-      mappedType = 'SELECTION';
-    }
-    setTicketData(prev => ({
-      ...prev,
-      ticketType: mappedType,
-    }));
-  };
 
   // 필드값 업데이트
   const handleInputChange = (field: keyof CreateTicketRequest) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,11 +89,21 @@ const TicketCreatePage = () => {
         <div>
           <div className="w-32 md:w-40 my-1">
             <p className="font-semibold px-1 mb-1 text-gray-700">티켓 종류</p>
-            <ChoiceChip {...TwoOptions.args} onSelect={handleTicketTypeChange} />
+            <ChoiceChip {...TwoOptions.args} value={ticketData.ticketType}          // ← 부모가 현재 값 전달
+              onSelect={(type) =>
+                setTicketData((prev) => ({ ...prev, ticketType: type }))
+              } />
           </div>
-          <p className="block px-1 mb-1 text-placeholderText text-11 md:text-13">
-            참가자가 선착순으로 발행된 티켓을 구매합니다.
-          </p>
+          {ticketData.ticketType === 'FIRST_COME' ? (
+            <p className="block px-1 mb-1 text-placeholderText text-11 md:text-13">
+              참가자가 선착순으로 발행된 티켓을 구매합니다.
+            </p>
+          ) : (
+            <p className="block px-1 mb-1 text-placeholderText text-11 md:text-13">
+              참가자가 티켓을 구매하면, 주최자가 선별하여 승인합니다.
+            </p>
+          )}
+
         </div>
         {/*티켓 이름 입력란*/}
         <div>
