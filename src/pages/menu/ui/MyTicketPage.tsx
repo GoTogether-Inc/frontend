@@ -16,6 +16,7 @@ import TextModal from '../../../shared/ui/TextModal';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pendingTicket, setPendingTicket] = useState<OrderTicketResponse | null>(null);
   const [selectedTicket, setSelectedTicket] = useState<OrderTicketResponse | null>(null);
   const [isCancelMode, setIsCancelMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -63,9 +64,7 @@ const MyTicketPage = () => {
       setSelectedIds(prev => (prev.includes(ticket.orderId) ? prev.filter(id => id !== ticket.orderId) : [...prev, ticket.orderId]));
     } else {
       setSelectedTicket(null);
-      setTimeout(() => {
-        setSelectedTicket(ticket);
-      }, 0);
+      setPendingTicket(ticket);
       setIsModalOpen(true);
     }
   };
@@ -75,6 +74,13 @@ const MyTicketPage = () => {
       setTickets(data.result);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (pendingTicket) {
+      setSelectedTicket(pendingTicket);
+      setPendingTicket(null);
+    }
+  }, [pendingTicket]);
 
   useEffect(() => {
     if (selectedTicket) {
