@@ -12,6 +12,7 @@ import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import useAuthStore from '../../../app/provider/authStore';
+import TextModal from '../../../shared/ui/TextModal';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +25,9 @@ const MyTicketPage = () => {
   const { data, isLoading, isError } = useTicketOrders(0, 10);
   const { mutate: cancelTicket } = useCancelTicket();
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
+
+  const [isDoneEventModalOpen, setIsDoneEventModalOpen] = useState(false);
+  const [eventModalText, setEventModalText] = useState('');
 
   const handleCancelButtonClick = () => {
     if (isCancelMode) {
@@ -58,7 +62,10 @@ const MyTicketPage = () => {
     if (isCancelMode) {
       setSelectedIds(prev => (prev.includes(ticket.orderId) ? prev.filter(id => id !== ticket.orderId) : [...prev, ticket.orderId]));
     } else {
-      setSelectedTicket(ticket);
+      setSelectedTicket(null);
+      setTimeout(() => {
+        setSelectedTicket(ticket);
+      }, 0);
       setIsModalOpen(true);
     }
   };
@@ -69,6 +76,19 @@ const MyTicketPage = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (selectedTicket) {
+      if (selectedTicket.event.status === 'COMPLETE') {
+        setEventModalText('이벤트가 종료되었습니다.');
+        setIsDoneEventModalOpen(true);
+      } else if (selectedTicket.event.status === 'DELETED') {
+        setEventModalText('호스트가 이벤트를 삭제했습니다.');
+        setIsDoneEventModalOpen(true);
+      }
+    }
+  }, [selectedTicket]);
+
+  console.log('isDoneEventModalOpen', isDoneEventModalOpen);
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true} isCancelMode={isCancelMode}>
       {tickets.length > 0 && (
@@ -135,7 +155,7 @@ const MyTicketPage = () => {
         )}
       </div>
 
-      {isModalOpen && selectedTicket && (
+      {isModalOpen && selectedTicket && (selectedTicket.event.status !== 'DELETED' && selectedTicket.event.status !== 'COMPLETE') && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
           <QrModal
             isChecked={true}
@@ -155,6 +175,13 @@ const MyTicketPage = () => {
           />
         </div>
       )}
+
+      {isDoneEventModalOpen && selectedTicket && (
+        <TextModal isOpen={isDoneEventModalOpen} onClick={() => setIsDoneEventModalOpen(false)}>
+          {eventModalText}
+        </TextModal>
+      )
+      }
 
       {isDeleteModalOpen && (
         <EmailDeleteModal
