@@ -14,7 +14,7 @@ export const TicketOptionListSection = ({ form }: { form: ReturnType<typeof useT
       <div>
         {(state.question.responseFormat === 'SINGLE' || state.question.responseFormat === 'MULTIPLE') && (
           <>
-            <p className="block text-m font-semibold text-gray-700">옵션</p>
+            <p className="block text-m font-semibold text-gray-700">선택지</p>
             <p className="text-gray-400 text-xs">선택지를 여러개 만들 수 있습니다.</p>
             {state.warnings.optionWarning && (
               <p className="text-red-500 text-xs mb-2">{state.warnings.optionWarning}</p>
