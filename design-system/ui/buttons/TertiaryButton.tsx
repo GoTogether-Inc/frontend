@@ -2,7 +2,7 @@ interface TertiaryButtonProps {
   label: string;
   type: 'button' | 'submit';
   color: 'pink' | 'black';
-  size: 'small' | 'medium' | 'large';
+  size: 'small' | 'medium' | 'large' | 'full';
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
@@ -16,6 +16,7 @@ const TertiaryButton = ({ label, type, color, size, disabled, onClick, className
     medium: 'px-4 py-1 text-sm',
     large:
       'text-sm sm:px-2.5 sm:py-2 sm:text-xs sm:rounded md:px-3 md:py-2.5 md:text-sm md:rounded-md lg:px-3 lg:py-2.5 lg:text-base lg:rounded-md',
+    full: 'w-full py-1 text-sm',
   };
 
   const colorStyle =
