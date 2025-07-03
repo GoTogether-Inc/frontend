@@ -98,11 +98,13 @@ const EventSliderSection = ({ title, events }: EventSliderSectionProps) => {
       </div>
       {startIndex !== 0 && (
         <IconButton
+          className="absolute top-1/2 left-0.5"
           iconPath={<img src={leftButton} alt="왼쪽 버튼" className="absolute top-1/2 left-0.5" />}
           onClick={() => handlePrev(setStartIndex, startIndex, events.length)}
         />
       )}
       <IconButton
+        className="absolute top-1/2 right-0.5"
         iconPath={<img src={rightButton} alt="오른쪽 버튼" className="absolute top-1/2 right-0.5" />}
         onClick={() => handleNext(setStartIndex, startIndex, events.length)}
       />
