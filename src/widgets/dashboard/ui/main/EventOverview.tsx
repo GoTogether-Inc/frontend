@@ -8,8 +8,8 @@ const EventOverview = ({ eventInfo }: { eventInfo?: HostDashboardResponse }) => 
         <h2 className="text-base font-semibold mb-2">이벤트 개요</h2>
         <hr />
       </div>
-      <div className="flex items-center text-xs md:text-sm">
-        <h4 className="text-main font-semibold mr-4">
+      <div className="flex items-center text-xs md:text-sm ">
+        <h4 className="text-main font-semibold mr-4 sm:mr-2">
           <span className="block md:inline">{`온라인`}</span>
           <span className="block md:inline">{`이벤트`}</span>
         </h4>
