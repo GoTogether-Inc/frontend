@@ -13,11 +13,13 @@ export interface OrderTicketResponse {
     bannerImageUrl: string;
     title: string;
     hostChannelName: string;
-    address: string;
     startDate: string;
-    remainDays: string;
-    hashtags: string[];
+    endDate: string;
+    address: string;
     onlineType: OnlineType;
+    hashtags: string[];
+    remainDays: string;
+    status: 'PROGRESS' | 'COMPLETE' | 'DELETED';
   };
   ticketQrCode: string;
   ticketName: string;
