@@ -31,7 +31,7 @@ export default function HorizontalCardButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={`flex items-center justify-center gap-5 ${className}`}>
+      <div className={`flex items-center justify-center gap-5 sm:gap-1 md:gap-5 ${className}`}>
         {isHovered && hoverIconPath ? hoverIconPath : iconPath}
         <p>{label}</p>
       </div>
