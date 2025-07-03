@@ -9,6 +9,7 @@ import deleteButton from '../../../public/assets/menu/Delete.svg';
 import { useState } from 'react';
 import DeleteConfirmModal from '../../widgets/host/DeleteConfirmModal';
 import { useEventDeletion } from '../../entities/event/hook/useEventHook';
+import HashtagCarousel from './HashtagCarousel';
 
 interface EventCardProps {
   id: number;
@@ -92,19 +93,10 @@ const EventCard = ({
           {children}
           {/* 해시태그 */}
           {hashtags && (
-            <div className="flex flex-wrap w-full h-6 mt-2 overflow-hidden text-xs font-semibold text-gray-700 whitespace-nowrap">
-              {(hashtags ?? []).map((tag, index) => (
-                <span
-                  key={index}
-                  className="flex items-center justify-center h-6 px-2 mr-2 bg-gray-200 rounded last:mr-0"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <HashtagCarousel hashtagSlides={hashtags} onClick={e => e.stopPropagation()} />
           )}
 
-          {/* 대시보드 버튼 */}
+          {/* 대시보드 버튼 */} 
           {isHostPage && (
             <div className="flex justify-between items-center h-7">
               <TertiaryButton
