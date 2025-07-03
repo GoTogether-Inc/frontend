@@ -53,7 +53,7 @@ const DragArea = ({ options, droppableId, ticketSurveyAddButton = false, activeB
               <div className="col-span-1 flex items-center h-[3.5rem] bg-deDayBgLight rounded">
                 <HorizontalCardButton
                   iconPath={<img src={AddButton2} alt="추가 버튼" />}
-                  className="text-sm  !justify-start [&>div]:!justify-start"
+                  className="text-sm sm:text-xs md:text-sm !justify-start [&>div]:!justify-start"
                   label="티켓 옵션 새로 생성하기"
                   onClick={() => {
                     navigate(`/dashboard/${id}/ticket/option/create`);
