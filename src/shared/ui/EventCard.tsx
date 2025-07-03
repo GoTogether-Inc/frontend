@@ -98,7 +98,7 @@ const EventCard = ({
             <HashtagCarousel hashtagSlides={hashtags} onClick={e => e.stopPropagation()} />
           )}
 
-          {/* 대시보드 버튼 */}
+          {/* 대시보드 버튼 */} 
           {isHostPage && (
             <div className="flex justify-between items-center h-7">
               <TertiaryButton
