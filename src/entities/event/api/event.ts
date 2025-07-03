@@ -20,7 +20,7 @@ export const getAllEventsInfinite = async ({
 }: PaginationParams & { tag?: TagType }): Promise<{ items: EventItem[]; hasNextPage: boolean }> => {
   const params = new URLSearchParams();
 
-  if (tag) params.append('tags', tag);
+  if (tag) params.append('tag', tag);
   params.append('page', page.toString());
   params.append('size', size.toString());
 
@@ -62,7 +62,7 @@ export const getCategoryEventsInfinite = async ({
 
 // 태그별 이벤트 목록 조회 (최신, 인기, 마감 / 기본 정보)
 export const getEventByTag = async (tag: TagType, { page, size }: PaginationParams): Promise<EventItem[]> => {
-  const response = await axiosClient.get<{ result: EventItem[] }>(`/events?tags=${tag}&page=${page}&size=${size}`, {
+  const response = await axiosClient.get<{ result: EventItem[] }>(`/events?tag=${tag}&page=${page}&size=${size}`, {
     headers: { isPublicApi: true },
   });
   return response.data.result || [];
