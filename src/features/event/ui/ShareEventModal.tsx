@@ -2,6 +2,7 @@ import link from '../../../../public/assets/event-manage/details/Link.svg';
 import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
 import { shareToKakao } from '../../../shared/lib/kakaoShare';
 import stripHtml from '../lib/stripHtml';
+import EventInfo from '../../../entities/user/ui/EventInfo';
 
 interface ShareEventModalProps {
   closeModal: () => void;
@@ -71,8 +72,7 @@ const ShareEventModal = ({
         </div>
         <h1 className="font-semibold text-xl text-center mb-6">공유하기</h1>
         <div className="flex items-center gap-5 mb-8">
-          <img src={eventImageUrl} alt="프로필 사진" className="w-20 h-20 rounded-[5px]" />
-          <span className="font-semibold text-lg">{title}</span>
+          <EventInfo eventImageUrl={eventImageUrl} title={title} />
         </div>
         <div className="flex flex-col gap-4 py-3">
           <div onClick={handleCopyLink} className="flex items-center gap-4 cursor-pointer">
