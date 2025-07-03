@@ -31,7 +31,7 @@ const meta = {
     },
     size: {
       control: 'radio',
-      options: ['small', 'medium', 'large'], // medium 추가
+      options: ['small', 'medium', 'large', 'full'],
       description: '버튼 크기',
       defaultValue: 'large',
     },
@@ -86,5 +86,14 @@ export const Medium: Story = {
     type: 'button',
     color: 'pink',
     size: 'medium',
+  },
+};
+
+export const Full: Story = {
+  args: {
+    label: '가장 큰 버튼',
+    type: 'button',
+    color: 'pink',
+    size: 'full',
   },
 };

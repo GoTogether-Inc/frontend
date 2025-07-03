@@ -67,6 +67,7 @@ export default {
         gradation: '#FF7577',
         dropdown: 'rgba(255, 85, 147, 0.05)', // 드롭다운 선택배경
         dashboardBg: '#FFFCFC', // 대시보드 배경
+        myPageBg: '#F9FAFB', // 마이페이지 배경
         text: '#000000', // 텍스트, 로그인과 구매하기 버튼, 메인 검색창 구분선
         placeholderText: '#A1A1A1', // 텍스트(플레이스홀더), 이벤트정보카드 라인, 라인(작성칸)
         deDayBg: 'rgba(254, 183, 128, 0.60)', // 디데이(배경)
