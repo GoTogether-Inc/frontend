@@ -65,6 +65,7 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
               onBlur={onBlur}
               placeholder={placeholder}
               disabled={disabled}
+              maxLength={maxLength}
               {...rest}
               className={`w-full h-11 px-3 py-2 border ${
                 errorMessage ? 'border-red-500' : 'border-placeholderText'
