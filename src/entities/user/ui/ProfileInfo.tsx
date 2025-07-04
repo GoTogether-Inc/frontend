@@ -66,9 +66,9 @@ const ProfileInfo = () => {
   }
 
   return (
-    <div className="relative w-full h-48 md:h-56">
+    <div className="relative w-full h-52 md:h-56">
       <div className="absolute inset-0 bg-main rounded-[10px]" />
-      <div className="relative z-10 bg-dashboardBg rounded-[10px] p-4 md:p-6 ml-2 h-full">
+      <div className="relative z-10 bg-dashboardBg rounded-[10px] p-5 ml-2 h-full">
         <div className="flex flex-col items-start h-full">
           <h1 className="text-20 md:text-22 font-bold">프로필 정보</h1>
           {!isEditing ? (
