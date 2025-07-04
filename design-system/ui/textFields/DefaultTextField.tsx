@@ -71,9 +71,14 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(
               } rounded-[6px] text-sm placeholder:text-placeholderText outline-none ${className}`}
             />
             {errorMessage && errorPosition === 'right' && (
-              <p className="absolute left-full top-1/2 -translate-y-1/2 ml-2 text-xs text-red-500 whitespace-nowrap">
-                {errorMessage}
-              </p>
+              <>
+                {/* 데스크탑일 때만 오른쪽에 보이기 */}
+                <p className="hidden md:block absolute left-full top-1/2 -translate-y-1/2 ml-2 text-xs text-red-500 whitespace-nowrap">
+                  {errorMessage}
+                </p>
+                {/* 모바일에서는 아래에 표시 */}
+                <p className="md:hidden mt-1 text-xs text-red-500">{errorMessage}</p>
+              </>
             )}
           </div>
 
