@@ -12,7 +12,7 @@ const BookmarkList = () => {
   const visibleEvents = sortedData.slice(0, 2);
 
   return (
-    <div className="w-full h-full max-h-84 bg-white rounded-[10px] px-7 py-5">
+    <div className="w-full h-full max-h-84 bg-white border-[0.5px] rounded-[10px] px-7 py-5">
       <div className="flex flex-col gap-6 h-full">
         <div className="flex items-center gap-3">
           <img src={bookmark} alt="북마크 아이콘" className="w-6 h-6" />
