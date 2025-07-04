@@ -66,18 +66,22 @@ const ProfileInfo = () => {
   }
 
   return (
-    <div className="relative w-full h-56">
+    <div className="relative w-full h-48 md:h-56">
       <div className="absolute inset-0 bg-main rounded-[10px]" />
-      <div className="relative z-10 bg-dashboardBg rounded-[10px] p-6 ml-2 h-full">
+      <div className="relative z-10 bg-dashboardBg rounded-[10px] p-4 md:p-6 ml-2 h-full">
         <div className="flex flex-col items-start h-full">
-          <h1 className="text-22 font-bold">프로필 정보</h1>
+          <h1 className="text-20 md:text-22 font-bold">프로필 정보</h1>
           {!isEditing ? (
             <>
               <div className="flex items-center gap-3">
-                <ProfileCircle profile="userProfile" name={data?.name?.slice(1, 3)} className="w-18 h-18 text-2xl" />
-                <div className="flex flex-col gap-1 py-7 mb-2">
-                  <span className="text-19 font-bold">{data?.name}</span>
-                  <span className="text-16 text-gray-500">{data?.phoneNumber}</span>
+                <ProfileCircle
+                  profile="userProfile"
+                  name={data?.name?.slice(1, 3)}
+                  className="w-16 h-16 md:w-18 md:h-18 text-xl md:text-2xl"
+                />
+                <div className="flex flex-col gap-1 py-5 md:py-7 mb-2">
+                  <span className="text-17 md:text-19 font-bold">{data?.name}</span>
+                  <span className="text-14 md:text-16 text-gray-500">{data?.phoneNumber}</span>
                 </div>
               </div>
               <TertiaryButton
@@ -90,15 +94,25 @@ const ProfileInfo = () => {
             </>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-              <div className="flex py-3 gap-3">
-                <ProfileCircle profile="userProfile" name={data?.name?.slice(1, 3)} className="w-18 h-18 text-2xl" />
+              <div className="flex py-2 md:py-3 gap-3">
+                <ProfileCircle
+                  profile="userProfile"
+                  name={data?.name?.slice(1, 3)}
+                  className="w-16 h-16 md:w-18 md:h-18 text-xl md:text-2xl"
+                />
                 <div className="flex flex-col gap-1">
-                  <DefaultTextField {...register('name')} errorPosition="right" errorMessage={errors.name?.message} />
+                  <DefaultTextField
+                    {...register('name')}
+                    errorPosition="right"
+                    errorMessage={errors.name?.message}
+                    className="h-9"
+                  />
                   <DefaultTextField
                     {...register('phone')}
                     onChange={handlePhoneChange}
                     errorPosition="right"
                     errorMessage={errors.phone?.message}
+                    className="h-9"
                   />
                 </div>
               </div>
