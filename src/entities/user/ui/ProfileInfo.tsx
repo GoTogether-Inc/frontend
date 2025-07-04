@@ -39,11 +39,17 @@ const ProfileInfo = () => {
 
   const onSubmit: SubmitHandler<{ name: string; phone: string }> = formData => {
     const { name, phone } = formData;
+
+    if (!data?.id) {
+      alert('사용자 정보를 불러오는 데 실패했습니다. 다시 시도해주세요.');
+      return;
+    }
+
     const updatedData = {
-      id: data?.id || 0,
-      name: name || '',
-      email: data?.email || '',
-      phoneNumber: phone || '',
+      id: data.id,
+      name: name,
+      email: data.email,
+      phoneNumber: phone,
     };
 
     updateUser(updatedData, {
