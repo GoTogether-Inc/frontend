@@ -47,8 +47,18 @@ const MyPage = () => {
             </div>
             {open && (
               <div className="mt-3">
-                이메일 주소로 문의 부탁드립니다:
-                <span className="ml-1 font-semibold">gotogether@gmail.com</span>
+                <span className="mr-1">이메일 주소로 문의 부탁드립니다:</span>
+                <a
+                  href={`mailto:gotogether@gmail.com?subject=${encodeURIComponent(
+                    '같이가요 서비스 문의'
+                  )}&body=${encodeURIComponent(`안녕하세요, 같이가요 서비스 개발팀입니다.
+
+서비스 이용 중 발생한 오류나 불편 사항을 공유해주시면, 더 나은 서비스 제공에 큰 도움이 됩니다.
+정확한 확인을 위해 [화면 캡처, 페이지 위치, 에러 내용] 등을 함께 작성해주시면 감사하겠습니다.`)}`}
+                  className="ml-1 font-semibold underline text-blue-600"
+                >
+                  gotogether@gmail.com
+                </a>
               </div>
             )}
           </div>
