@@ -8,6 +8,7 @@ import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton'
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import useAuthStore from '../../../app/provider/authStore';
 import { useUserInfo, useUserUpdate } from '../../../features/join/hooks/useUserHook';
+import { formatProfilName } from '../../../shared/lib/formatProfileName';
 
 const ProfileInfo = () => {
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
@@ -82,7 +83,7 @@ const ProfileInfo = () => {
               <div className="flex items-center gap-3">
                 <ProfileCircle
                   profile="userProfile"
-                  name={data?.name?.slice(1, 3)}
+                  name={formatProfilName(data?.name || '')}
                   className="w-16 h-16 md:w-18 md:h-18 text-xl md:text-2xl"
                 />
                 <div className="flex flex-col gap-1 py-5 md:py-7 mb-2">
@@ -103,7 +104,7 @@ const ProfileInfo = () => {
               <div className="flex py-2 md:py-3 gap-3">
                 <ProfileCircle
                   profile="userProfile"
-                  name={data?.name?.slice(1, 3)}
+                  name={formatProfilName(data?.name || '')}
                   className="w-16 h-16 md:w-18 md:h-18 text-xl md:text-2xl"
                 />
                 <div className="flex flex-col gap-1">
