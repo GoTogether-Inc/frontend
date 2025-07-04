@@ -9,6 +9,7 @@ import useAuthStore from '../../../app/provider/authStore';
 import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
 import ProfileCircle from '../../../../design-system/ui/Profile';
+import { formatProfilName } from '../../../shared/lib/formatProfileName';
 
 const AllEventsPage = () => {
   const navigater = useNavigate();
@@ -30,7 +31,7 @@ const AllEventsPage = () => {
         leftButtonLabel="같이가요"
         rightContent={
           isLoggedIn ? (
-            <ProfileCircle profile="userProfile" name={name?.slice(1, 3) || ''} className="w-11 h-11 text-15" />
+            <ProfileCircle profile="userProfile" name={formatProfilName(name || '')} className="w-11 h-11 text-15" />
           ) : (
             <SecondaryButton size="large" color="black" label="로그인" onClick={openModal} />
           )
