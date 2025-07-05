@@ -7,7 +7,7 @@ import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
 import { useCancelTicket, useTicketOrderDetail } from '../../../../features/ticket/hooks/useOrderHook';
 import { TicketConfirm } from '../../../../features/ticket/model/orderInformation';
-import HomeButton from '../../../../../public/assets/Home.svg';
+import HomeButton from '../../../../../public/assets/bottomBar/HomeIcon.svg';
 
 const TicketConfirmPage = () => {
   const navigate = useNavigate();
