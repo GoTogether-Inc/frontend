@@ -21,6 +21,21 @@ export const formatISO = (date: Date, time: string): string => {
   const kstDate = new Date(newDate.getTime() + 9 * 60 * 60 * 1000); // UTC+9
   return kstDate.toISOString();
 };
+
+export const formatDateToKst = (date: Date, time: string): string => {
+  const [hours, minutes] = time.split(':').map(Number);
+  const newDate = new Date(date);
+  newDate.setHours(hours, minutes, 0, 0);
+
+  const year = newDate.getFullYear();
+  const month = String(newDate.getMonth() + 1).padStart(2, '0');
+  const day = String(newDate.getDate()).padStart(2, '0');
+  const hour = String(newDate.getHours()).padStart(2, '0');
+  const minute = String(newDate.getMinutes()).padStart(2, '0');
+
+  return `${year}-${month}-${day}T${hour}:${minute}:00`;
+};
+
 export const formatUtcToKst = (utcString: string): string => {
   const utcDate = new Date(utcString);
 
@@ -35,4 +50,3 @@ export const formatUtcToKst = (utcString: string): string => {
 
   return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
 };
-
