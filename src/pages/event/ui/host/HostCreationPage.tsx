@@ -1,4 +1,3 @@
-import basicProfile from '../../../../../public/assets/event-manage/creation/BasicProfile.png';
 import addImage from '../../../../../public/assets/event-manage/creation/AddImage.svg';
 import DefaultTextField from '../../../../../design-system/ui/textFields/DefaultTextField';
 import MultilineTextField from '../../../../../design-system/ui/textFields/MultilineTextField';
@@ -60,11 +59,7 @@ const HostCreationPage = ({ onValidationChange }: HostCreationPageProps) => {
   return (
     <div className="flex flex-col gap-5 px-4">
       <div className="relative flex items-center justify-center mb-4">
-        <img
-          src={previewUrl || basicProfile}
-          alt="기본 프로필 이미지"
-          className="w-24 h-24 object-cover rounded-full"
-        />
+        <img src={previewUrl || ''} alt="기본 프로필 이미지" className="w-24 h-24 object-cover rounded-full" />
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
