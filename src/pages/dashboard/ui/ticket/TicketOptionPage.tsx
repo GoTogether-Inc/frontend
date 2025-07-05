@@ -66,7 +66,7 @@ const TicketOptionPage = () => {
     : [];
 
   return (
-    <DashboardLayout centerContent="DASHBOARDs">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className="mt-8 px-7">
         <div className="text-center text-xl font-bold mb-5">티켓에 추가 옵션 부착 하기</div>
         <p className="text-placeholderText text-xs mb-5">
