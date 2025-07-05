@@ -5,6 +5,7 @@ import { HostChannelInfoResponse } from '../../../entities/host/model/hostChanne
 export const useHostInfoSave = (
   hostChannelId: number,
   hostInfo: HostChannelInfoResponse,
+  email: string,
   channelDescription: string
 ) => {
   const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ export const useHostInfoSave = (
       hostChannelId,
       profileImageUrl: hostInfo.result.profileImageUrl,
       hostChannelName: hostInfo.result.hostChannelName,
-      hostEmail: hostInfo.result.email,
+      hostEmail: email,
       channelDescription,
     };
 

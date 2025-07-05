@@ -9,11 +9,13 @@ import MemberEmailInput from '../../../../features/menu/ui/MemberEmailInput';
 import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInfoHook';
 import { useHostInfoSave } from '../../../../features/host/hook/useHostInfoHook';
 import { useInviteMembers } from '../../../../features/host/hook/useInviteHostHook';
+import { hostInfoSchema } from '../../../../shared/lib/formValidation';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedHost, setSelectedHost] = useState(true);
   const [selectedInfo, setSelectedInfo] = useState(false);
+  const [email, setEmail] = useState('');
   const [channelDescription, setChannelDescription] = useState('');
   const [emails, setEmails] = useState<string[]>([]);
 
@@ -21,7 +23,8 @@ const HostEditPage = () => {
   const { data: hostInfo } = useHostChannelInfo(hostChannelId);
   const { inviteMembers } = useInviteMembers(hostChannelId);
 
-  const { handleSave } = useHostInfoSave(hostChannelId, hostInfo!, channelDescription);
+  const { handleSave } = useHostInfoSave(hostChannelId, hostInfo!, email, channelDescription);
+  const emailValidation = hostInfoSchema.safeParse({ email });
 
   const handeHostInfoClick = () => {
     setSelectedHost(true);
@@ -37,6 +40,12 @@ const HostEditPage = () => {
 
     inviteMembers(emails, () => setEmails([]));
   };
+
+  useEffect(() => {
+    if (hostInfo?.result.email) {
+      setEmail(hostInfo.result.email);
+    }
+  }, [hostInfo]);
 
   useEffect(() => {
     if (hostInfo?.result.channelDescription && channelDescription === '') {
@@ -73,7 +82,7 @@ const HostEditPage = () => {
           <div className="flex flex-col px-8 md:px-12 gap-6">
             <div className="flex flex-col gap-4 py-4">
               <p className="text-xl text-black font-semibold">대표 이메일</p>
-              <p>{hostInfo?.result.email}</p>
+              <p>{email}</p>
             </div>
             <div className="flex flex-col gap-4 lg:gap-6">
               <p className="text-xl text-black font-semibold">멤버 목록</p>
@@ -96,13 +105,18 @@ const HostEditPage = () => {
 
         {selectedInfo && (
           <div className="flex flex-col gap-8 px-8 md:px-6">
-            <DefaultTextField
-              label="대표 이메일"
-              detail="채널 혹은, 채널에서 주최하는 이벤트에 대해 문의 할 수 있는 메일로 작성해주세요."
-              value={hostInfo?.result.email || ''}
-              className="h-12"
-              labelClassName="sm:text-base md:text-lg"
-            />
+            <div className="flex flex-col gap-2">
+              <DefaultTextField
+                label="대표 이메일"
+                detail="채널 혹은, 채널에서 주최하는 이벤트에 대해 문의 할 수 있는 메일로 작성해주세요."
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="h-12"
+                labelClassName="sm:text-base md:text-lg"
+                errorMessage={!emailValidation.success ? emailValidation.error.errors[0].message : ''}
+              />
+              <TertiaryButton type="button" label="수정하기" size="large" color="pink" onClick={handleSave} />
+            </div>
             <div className="flex flex-col gap-2">
               <MultilineTextField
                 label="채널에 대한 설명"
@@ -110,13 +124,22 @@ const HostEditPage = () => {
                 onChange={e => setChannelDescription(e.target.value)}
                 className="h-24 mb-8"
               />
-              <TertiaryButton type="button" label="저장하기" size="large" color="pink" onClick={handleSave} />
+              <TertiaryButton
+                type="button"
+                disabled={!emailValidation.success}
+                label="수정하기"
+                size="large"
+                color="pink"
+                onClick={handleSave}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex flex-col">
                 <h1 className="font-bold text-black text-lg">멤버 등록</h1>
                 <p className="text-placeholderText text-10 md:text-13">
-                  이메일로 회원을 검색해 추가 할 수 있습니다. 삭제 하려면 추가된 이메일 아이콘의 x를 눌러주세요.{' '}
+                  추가할 회원의 이메일을 입력한 뒤, 엔터를 눌러 검색해 주세요.
+                  <br />
+                  삭제 하려면 추가된 이메일 아이콘의 x를 눌러주세요.{' '}
                 </p>
               </div>
               <MemberEmailInput emails={emails} setEmails={setEmails} />
