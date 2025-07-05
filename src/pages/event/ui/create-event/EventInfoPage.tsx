@@ -28,12 +28,18 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
   return (
     <div className="w-full px-5 space-y-8">
       <FileUpload
+        value={eventState?.bannerImageUrl ?? ''}
         eventState={eventState}
         setEventState={setEventState}
         useDefaultImage={false}
         onValidationChange={handleFileValidation}
       />
-      <TextEditor eventState={eventState} setEventState={setEventState} onValidationChange={handleTextValidation} />
+      <TextEditor 
+        value={eventState?.description ?? ''}
+        eventState={eventState}
+        setEventState={setEventState}
+        onValidationChange={handleTextValidation}
+      />
       <LinkInput eventState={eventState} setEventState={setEventState} />
     </div>
   );
