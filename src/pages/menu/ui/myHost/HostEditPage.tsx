@@ -10,6 +10,7 @@ import useHostChannelInfo from '../../../../entities/host/hook/useHostChannelInf
 import { useHostInfoSave } from '../../../../features/host/hook/useHostInfoHook';
 import { useInviteMembers } from '../../../../features/host/hook/useInviteHostHook';
 import { hostInfoSchema } from '../../../../shared/lib/formValidation';
+import { formatProfilName } from '../../../../shared/lib/formatProfileName';
 
 const HostEditPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -92,7 +93,7 @@ const HostEditPage = () => {
                     key={user.id}
                     id={user.id}
                     profile="userProfile"
-                    name={user.memberName.slice(1)}
+                    name={formatProfilName(user.memberName)}
                     className="w-12 h-12 md:w-13 md:h-13 lg:w-14 lg:h-14 text-sm md:text-16 lg:text-base"
                   >
                     {user.memberName}
