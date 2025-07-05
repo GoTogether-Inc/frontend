@@ -56,6 +56,17 @@ const HostCreationPage = ({ onValidationChange }: HostCreationPageProps) => {
     }));
   }, [hostChannelName, hostEmail, channelDescription, setHostState]);
 
+  useEffect(() => {
+    return () => {
+      setHostState({
+        profileImageUrl: '',
+        hostChannelName: '',
+        hostEmail: '',
+        channelDescription: '',
+      });
+    };
+  }, [setHostState]);
+
   return (
     <div className="flex flex-col gap-5 px-4">
       <div className="relative flex items-center justify-center mb-4">
