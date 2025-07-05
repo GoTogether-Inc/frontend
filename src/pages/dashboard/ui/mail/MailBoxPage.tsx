@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import TextButton from '../../../../../design-system/ui/buttons/TextButton';
 import DashboardLayout from '../../../../shared/ui/backgrounds/DashboardLayout';
 import SearchBar from '../../../../shared/ui/SearchBar';
@@ -13,10 +13,20 @@ const MailBoxPage = () => {
   const [listType, setListType] = useState<'completed' | 'pending'>('completed');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmailId, setSelectedEmailId] = useState<number | null>(null);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const status = listType === 'pending' ? 'PENDING' : 'SENT';
   const { data: emails = [], isLoading } = useReadEmail(eventId, status);
   const { mutate: deleteEmail } = useDeleteEmail();
+
+  const filteredEmails = useMemo(() => {
+  if (!searchKeyword.trim()) return emails;
+  const keyword = searchKeyword.toLowerCase();
+  return emails.filter(email =>
+    email.title.toLowerCase().includes(keyword) ||
+    email.targetName.toLowerCase().includes(keyword)
+  );
+}, [emails, searchKeyword]);
 
   const handleDelete = (reservationEmailId: number) => {
     deleteEmail(reservationEmailId);
@@ -28,7 +38,12 @@ const MailBoxPage = () => {
       <div className={`flex flex-col gap-2 mt-8 px-7 ${isModalOpen ? 'blur-sm' : ''}`}>
         <h1 className="w-full text-center font-bold text-xl">보낸 메일함</h1>
         <div className="flex justify-end">
-          <SearchBar placeholder="제목 검색" className="w-[35%] my-2" />
+          <SearchBar
+            placeholder="제목 검색"
+            className="w-[35%] my-2"
+            value={searchKeyword}
+            onChange={setSearchKeyword}
+          />
         </div>
         <div className="flex gap-3 font-semibold text-15">
           <TextButton
@@ -45,7 +60,7 @@ const MailBoxPage = () => {
         {isLoading ? (
           <div>로딩 중...</div>
         ) : (
-          emails.map(mail => (
+          filteredEmails.map(mail => (
             <SentMailCard
               key={mail.id}
               mail={mail}

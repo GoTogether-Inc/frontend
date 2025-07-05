@@ -87,3 +87,8 @@ export const eventDeletion = async (eventId: number) => {
   const response = await axiosClient.delete(`/events/${eventId}`);
   return response.data;
 };
+
+
+// 해시태그 조회
+
+// 해시태그 수정
