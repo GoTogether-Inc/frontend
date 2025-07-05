@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import scrollbarHide from 'tailwind-scrollbar-hide';
+import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 
@@ -89,5 +90,5 @@ export default {
       lg: '512px', // 큰 화면
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [require('tailwind-scrollbar-hide'),typography,],
 };
