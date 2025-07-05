@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TicketState } from '../model/TicketContext';
-import { formatISO } from '../../../shared/lib/date';
+import { formatDateToKst } from '../../../shared/lib/date';
 
 interface DatePickerProps {
   className?: string;
@@ -44,8 +44,8 @@ const TicketDatePicker = ({
   const timeOptions = generateTimeOptions();
 
   useEffect(() => {
-    const newStartDate = startDate ? formatISO(startDate, startTime) : '';
-    const newEndDate = endDate ? formatISO(endDate, endTime) : '';
+    const newStartDate = startDate ? formatDateToKst(startDate, startTime) : '';
+    const newEndDate = endDate ? formatDateToKst(endDate, endTime) : '';
 
     if (setTicketState) {
       setTicketState(prev => ({
