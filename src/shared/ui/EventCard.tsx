@@ -52,6 +52,7 @@ const EventCard = ({
   const { pathname } = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate } = useEventDeletion();
+  const filteredHashtags = hashtags.filter(tag => tag.trim() !== '');
 
   const isHostPage = pathname.startsWith(`/menu/myHost`) || pathname.startsWith(`/menu/hostDetail`);
 
@@ -94,11 +95,14 @@ const EventCard = ({
           {/* 승인 여부 표시 */}
           {children}
           {/* 해시태그 */}
-          {hashtags && (
-            <HashtagCarousel hashtagSlides={hashtags} onClick={e => e.stopPropagation()} />
+          {filteredHashtags && (
+            <HashtagCarousel
+              hashtagSlides={filteredHashtags}
+              onClick={e => e.stopPropagation()}
+            />
           )}
 
-          {/* 대시보드 버튼 */} 
+          {/* 대시보드 버튼 */}
           {isHostPage && (
             <div className="flex justify-between items-center h-7">
               <TertiaryButton
