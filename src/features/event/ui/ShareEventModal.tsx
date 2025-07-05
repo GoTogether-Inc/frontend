@@ -3,6 +3,7 @@ import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
 import { shareToKakao } from '../../../shared/lib/kakaoShare';
 import stripHtml from '../lib/stripHtml';
 import EventInfo from '../../../entities/user/ui/EventInfo';
+import { useRef } from 'react';
 
 interface ShareEventModalProps {
   closeModal: () => void;
@@ -20,6 +21,47 @@ const ShareEventModal = ({
   eventUrl = window.location.href,
 }: ShareEventModalProps) => {
   const description = stripHtml(eventDescription);
+  const startYRef = useRef<number | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const startY = startYRef.current;
+    if (startY === null) return;
+
+    const deltaY = e.touches[0].clientY - startY;
+
+    // 모달이 따라 내려오는 효과 (optional)
+    if (modalRef.current && deltaY > 0) {
+      modalRef.current.style.transform = `translateY(${deltaY}px)`;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const startY = startYRef.current;
+    if (startY === null) return;
+
+    const endY = e.changedTouches[0].clientY;
+    const deltaY = endY - startY;
+
+    if (deltaY > 100) {
+      // 일정 거리 이상 내려갔을 때 모달 닫기
+      closeModal();
+    } else {
+      // 다시 원위치
+      if (modalRef.current) {
+        modalRef.current.style.transform = 'translateY(0)';
+        modalRef.current.style.transition = 'transform 0.2s ease-out';
+        setTimeout(() => {
+          if (modalRef.current) modalRef.current.style.transition = '';
+        }, 200);
+      }
+    }
+    startYRef.current = null;
+  };
 
   const handleKakaoShare = async () => {
     try {
@@ -66,7 +108,13 @@ const ShareEventModal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center">
       <div className="absolute inset-0 mx-auto w-full max-w-lg bg-black bg-opacity-30" onClick={closeModal}></div>
-      <div onClick={e => e.stopPropagation()} className="relative w-full max-w-lg bg-white rounded-t-[20px] px-6 py-4">
+      <div
+        ref={modalRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full max-w-lg bg-white rounded-t-[20px] px-6 py-4"
+      >
         <div className="flex justify-center">
           <div className="w-20 h-1 bg-black bg-opacity-30 rounded-full mb-3" />
         </div>
