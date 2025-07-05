@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Header from '../../../../../design-system/ui/Header';
-import Search from '../../../../../design-system/icons/Search.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import EmailDeleteModal from '../../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import PurchaseBanner from '../../../../widgets/dashboard/ui/ticket/PurchaseBanner';
@@ -8,6 +7,7 @@ import OrganizerInfo from '../../../../widgets/event/ui/OrganizerInfo';
 import KakaoMap from '../../../../shared/ui/KakaoMap';
 import { useCancelTicket, useTicketOrderDetail } from '../../../../features/ticket/hooks/useOrderHook';
 import { TicketConfirm } from '../../../../features/ticket/model/orderInformation';
+import HomeButton from '../../../../../public/assets/Home.svg';
 
 const TicketConfirmPage = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const TicketConfirmPage = () => {
   const { mutate: cancelTicket } = useCancelTicket();
 
   const handlePreviousButton = () => {
-    navigate(-1);
+    navigate("/");
   };
   const cancleOrderTicket = async (orderIds: number[]) => {
     cancelTicket(orderIds, {
@@ -34,9 +34,8 @@ const TicketConfirmPage = () => {
       <Header
         leftButtonClassName="text-xl hover:no-underline z-30"
         leftButtonClick={handlePreviousButton}
-        leftButtonLabel="<"
+        leftButtonLabel={<img src={HomeButton} />}
         centerContent="티켓 구매 확인"
-        rightContent={<img src={Search} alt="검색" className="w-4" />}
       />
       {isLoading ? (
         <p className="text-center text-gray-500">티켓 정보를 불러오는 중...</p>
