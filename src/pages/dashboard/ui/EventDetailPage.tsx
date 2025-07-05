@@ -63,7 +63,7 @@ const EventDetailPage = () => {
   };
 
   return (
-    <DashboardLayout centerContent="대시보드">
+    <DashboardLayout centerContent="DASHBOARD">
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 상세 정보</h1>
         <FileUpload value={bannerImageUrl} onChange={setBannerImageUrl} useDefaultImage={false} />
