@@ -9,6 +9,9 @@ export const createTicket = async (data: CreateTicketRequest) => {
 export const readTicket = async (eventId: number): Promise<{ isSuccess: boolean; result: ReadTicketResponse[] }> => {
   const response = await axiosClient.get('/tickets', {
     params: { eventId },
+    headers: {
+      isPublicApi: true, 
+    },
   });
   return response.data;
 };
