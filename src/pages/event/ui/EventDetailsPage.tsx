@@ -114,9 +114,9 @@ const EventDetailsPage = () => {
                 </div>
               )}
               <div
-                className="text-sm md:text-base py-3"
+                className="prose prose-sm md:prose-base py-3 max-w-none"
                 dangerouslySetInnerHTML={{ __html: event.result.description }}
-              ></div>
+              />
             </div>
 
             {event.result.locationLat !== 0.0 && event.result.locationLng !== 0.0 && (
