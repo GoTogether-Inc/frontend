@@ -80,7 +80,7 @@ const dashboardRoutes = [
   { path: DASHBOARD_ROUTES.dashboard, element: <DashboardPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.eventInfo, element: <EventInfoPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.eventDetail, element: <EventDetailPage />, requiresAuth: false },
-  { path: DASHBOARD_ROUTES.eventTag, element: <EventTagPage />, requiresAuth: false },
+  { path: DASHBOARD_ROUTES.eventTag, element: (<FunnelProvider><EventTagPage /></FunnelProvider>),requiresAuth: false,},
   { path: DASHBOARD_ROUTES.ticketCreate, element: <TicketCreatePage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticket, element: <TicketListPage />, requiresAuth: false },
   { path: DASHBOARD_ROUTES.ticketOption, element: <TicketOptionPage />, requiresAuth: false },
