@@ -22,7 +22,7 @@ export const formatISO = (date: Date, time: string): string => {
   return kstDate.toISOString();
 };
 
-export const formatDateToKst = (date: Date, time: string): string => {
+export const formatDateLocalString = (date: Date, time: string): string => {
   const [hours, minutes] = time.split(':').map(Number);
   const newDate = new Date(date);
   newDate.setHours(hours, minutes, 0, 0);

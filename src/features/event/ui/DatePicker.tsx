@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FunnelState } from '../model/FunnelContext';
-import { formatDateToKst } from '../../../shared/lib/date';
+import { formatDateLocalString } from '../../../shared/lib/date';
 
 interface DatePickerProps {
   className?: string;
@@ -81,8 +81,8 @@ const EventDatePicker = ({
 
   useEffect(() => {
     if (startDate && endDate) {
-      const startISO = formatDateToKst(startDate, startTime);
-      const endISO = formatDateToKst(endDate, endTime);
+      const startISO = formatDateLocalString(startDate, startTime);
+      const endISO = formatDateLocalString(endDate, endTime);
 
       if (setEventState) {
         setEventState(prev => ({

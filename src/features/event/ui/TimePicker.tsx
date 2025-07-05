@@ -36,13 +36,18 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
   useEffect(() => {
     if (selectedDate) {
       const formattedDate = new Date(selectedDate);
-      formattedDate.setHours(parseInt(selectedHour, 10));
-      formattedDate.setMinutes(parseInt(selectedMinute, 10));
-      formattedDate.setSeconds(0);
-      formattedDate.setMilliseconds(0);
+      formattedDate.setHours(Number(selectedHour), Number(selectedMinute), 0, 0);
 
-      const isoString = formattedDate.toISOString(); // 2025-05-01T14:00:00.000Z
-      onChange(isoString);
+      const year = formattedDate.getFullYear();
+      const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(formattedDate.getDate()).padStart(2, '0');
+      const hour = String(formattedDate.getHours()).padStart(2, '0');
+      const minute = String(formattedDate.getMinutes()).padStart(2, '0');
+
+      const localString = `${year}-${month}-${day}T${hour}:${minute}:00`;
+
+      onChange(localString);
+      console.log(localString);
     }
   }, [selectedDate, selectedHour, selectedMinute]);
 

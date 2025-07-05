@@ -5,7 +5,7 @@ interface EmailState {
     title: string;
     content: string;
     recipients: string[];
-    reservationDate: string; // 2025-05-01T14:00:00.000Z
+    reservationDate: string; // 2025-05-01T14:00:00
     targetType: 'ALL' | 'TICKET';
     ticketId: number;
     setReservationEmailId: (reservationEmailId: number) => void;
