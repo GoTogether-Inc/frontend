@@ -48,8 +48,6 @@ const HashtagCarousel = ({ hashtagSlides, onClick }: HashtagCarouselProps) => {
     }
   };
 
-  console.log('hashtagSlides', hashtagSlides);
-
   return (
     <div onClick={onClick} className="relative w-full max-w-xl mx-auto group">
       {!isAtStart && (
