@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OrganizerInfo from '../../../widgets/event/ui/OrganizerInfo';
 import Header from '../../../../design-system/ui/Header';
-import Search from '../../../../design-system/icons/Search.svg';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import share from '../../../../public/assets/event-manage/details/Share.svg';
 import like from '../../../../public/assets/event-manage/details/Like.svg';
@@ -19,7 +18,7 @@ import { useCreateBookmark, useDeleteBookmark } from '../../../features/bookmark
 import { formatDate, formatTime } from '../../../shared/lib/date';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
 import useAuthStore from '../../../app/provider/authStore';
-
+import HomeButton from '../../../../public/assets/bottomBar/HomeIcon.svg'
 const EventDetailsPage = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -60,12 +59,9 @@ const EventDetailsPage = () => {
     <>
       <Header
         leftButtonClassName="text-xl hover:no-underline z-30"
-        leftButtonClick={() => navigate(-1)}
-        leftButtonLabel="<"
+        leftButtonClick={() => navigate('/')}
+        leftButtonLabel={<img src={HomeButton} />}
         centerContent="같이가요"
-        rightContent={
-          <img src={Search} alt="검색" className="w-5 cursor-pointer z-30" onClick={() => navigate('/search')} />
-        }
       />
       {event ? (
         <>
