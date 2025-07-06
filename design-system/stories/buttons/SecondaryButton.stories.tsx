@@ -25,7 +25,7 @@ const meta = {
     },
     size: {
       control: 'radio',
-      options: ['large', 'small'],
+      options: ['full', 'large', 'small'],
       description: '버튼 크기',
       defaultValue: 'large',
     },
@@ -46,6 +46,14 @@ export const Default: Story = {
   },
 };
 
+export const FullPink: Story = {
+  args: {
+    label: 'Full Button',
+    color: 'pink',
+    size: 'full',
+  },
+};
+
 export const SmallPink: Story = {
   args: {
     label: '작은 버튼',
@@ -59,6 +67,14 @@ export const BigBlack: Story = {
     label: '큰 버튼',
     color: 'black',
     size: 'large',
+  },
+};
+
+export const FullBlack: Story = {
+  args: {
+    label: 'Full Button',
+    color: 'black',
+    size: 'full',
   },
 };
 
