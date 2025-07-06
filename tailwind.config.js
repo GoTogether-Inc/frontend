@@ -89,5 +89,5 @@ export default {
       lg: '512px', // 큰 화면
     },
   },
-  plugins: [require('tailwind-scrollbar-hide'),require('@tailwindcss/typography'),],
+  plugins: [require('tailwind-scrollbar-hide'),require('@tailwindcss/typography')],
 };
