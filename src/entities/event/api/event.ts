@@ -88,7 +88,3 @@ export const eventDeletion = async (eventId: number) => {
   return response.data;
 };
 
-
-// 해시태그 조회
-
-// 해시태그 수정
