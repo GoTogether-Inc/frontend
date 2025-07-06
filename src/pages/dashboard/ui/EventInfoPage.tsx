@@ -12,12 +12,14 @@ import KakaoMap from '../../../shared/ui/KakaoMap';
 import { UpdateEventRequest } from '../../../features/dashboard/model/event';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
 import { formatPhoneNumber } from '../../../shared/utils/phoneFormatter';
+import { useNavigate } from 'react-router-dom';
 
 const EventInfoPage = () => {
   const queryClient = useQueryClient();
   const [selectedOption, setSelectedOption] = useState('');
   const { data } = useEventDetail();
   const { mutate } = useUpdateEventHook();
+  const navigate = useNavigate();
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
@@ -62,6 +64,7 @@ const EventInfoPage = () => {
       onSuccess: () => {
         alert('이벤트 정보가 저장되었습니다.');
         queryClient.invalidateQueries({ queryKey: ['eventDetail', data.result.id] });
+        navigate(`/dashboard/${data?.result.id}`);
       },
       onError: error => {
         console.error('Error details:', error);
