@@ -15,7 +15,6 @@ const EventTagPage = () => {
   const { mutate } = useUpdateEventHook();
   const { data } = useEventDetail();
   useEffect(() => {
-    console.log(data.result)
     if (data?.result.hashtags && setEventState) {
       setEventState(prev => ({
         ...prev,
@@ -30,8 +29,7 @@ const EventTagPage = () => {
 
     const requestData = {
       ...data.result, 
-      // hostChannelId: data.result.hostChannelId,
-      hostChannelId: 5,
+      hostChannelId: data.result.hostChannelId,
       hashtags: cleanedTags, 
     };
 
