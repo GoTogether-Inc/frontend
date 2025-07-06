@@ -133,8 +133,17 @@ const EventCard = ({
                       onDeleteSuccess?.(id);
                       setIsModalOpen(false);
                     },
-                    onError: () => {
-                      alert('이벤트 삭제에 실패했습니다.');
+                    onError: (error: unknown) => {
+                      if ( 
+                        typeof error === 'object' && 
+                        error !== null && 
+                        'code' in error && 
+                        (
+                          error as { code? : string}).code === "EVENT4002"
+                        ) {
+                        console.log('참여자로 인한 이벤트 삭제 실패');
+                        alert('구매자가 있는 이벤트는 삭제가 불가합니다.');
+                      }
                       setIsModalOpen(false);
                     },
                   });
