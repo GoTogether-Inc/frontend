@@ -22,9 +22,8 @@ export const useUserUpdate = () => {
 export const useAgreeTerms = () => {
   return useMutation({
     mutationFn: agreeTerms,
-    onError: (error) => {
-      alert('동의 처리 실패');
-      console.error('이용약관 동의 실패', error);
+    onError: () => {
+      alert('약관 동의 처리에 실패했습니다.');
     }
   });
 };

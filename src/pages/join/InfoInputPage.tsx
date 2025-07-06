@@ -64,9 +64,6 @@ const InfoInputPage = () => {
               alert('회원가입이 완료되었습니다.');
               navigate('/');
             },
-            onError: () => {
-              alert('약관 동의 처리에 실패했습니다.');
-            },
           }
         );
       },
