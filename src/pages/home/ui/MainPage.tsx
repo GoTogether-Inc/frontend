@@ -6,7 +6,7 @@ import SearchTextField from '../../../../design-system/ui/textFields/SearchTextF
 import searchIcon from '../../../../design-system/icons/Search.svg';
 import VerticalCardButton from '../../../../design-system/ui/buttons/VerticalCardButton';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import LoginModal from '../../../widgets/main/ui/LoginModal';
 import { cardButtons } from '../../../shared/types/mainCardButtonType';
@@ -20,6 +20,7 @@ import { USER_MANUAL_URL } from '../../../shared/types/menuType';
 import { formatProfilName } from '../../../shared/lib/formatProfileName';
 const MainPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isModalOpen, openModal, closeModal, isLoggedIn, name } = useAuthStore();
   const { data } = useEventList();
 
@@ -39,10 +40,10 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && location.state?.openLogin) {
       openModal();
     }
-  }, [isLoggedIn, openModal]);
+  }, [isLoggedIn, openModal, location.state]);
 
   return (
     <div className="relative flex flex-col items-center pb-24">

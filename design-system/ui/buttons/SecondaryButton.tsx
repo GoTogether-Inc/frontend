@@ -1,7 +1,7 @@
 interface SecondaryButtonProps {
   label: string;
   color: 'pink' | 'black';
-  size: 'small' | 'large';
+  size: 'small' | 'large' | 'full';
   onClick?: () => void;
   className?: string;
 }
@@ -14,6 +14,8 @@ const SecondaryButton = ({ label, color, size, onClick, className }: SecondaryBu
       ? `text-sm sm:px-3 sm:py-2 sm:text-xs sm:rounded
          md:px-3.5 md:py-2.5 md:text-sm md:rounded-md
          lg:px-4 lg:py-2.5 lg:text-base lg:rounded-md`
+      : size === 'full'
+      ? `w-full text-sm px-4 py-2 rounded-md`
       : `px-2 py-1 text-xs`;
 
   const colorStyle = color === 'pink' ? 'bg-main' : 'bg-black';
