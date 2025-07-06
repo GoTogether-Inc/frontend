@@ -17,6 +17,8 @@ export interface ReadTicketResponse {
   ticketDescription: string;
   ticketPrice: number;
   availableQuantity: number;
+  startDate: string;
+  endDate: string;
 }
 
 export interface TicketOptionChoice {

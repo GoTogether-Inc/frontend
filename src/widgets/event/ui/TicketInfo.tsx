@@ -6,6 +6,7 @@ import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
 import { useOrderTicket } from '../../../features/ticket/hooks/useOrderHook';
 import { readTicketOptions } from '../../../features/ticket/api/ticketOption';
 import useAuthStore from '../../../app/provider/authStore';
+import clock from '../../../../public/assets/event-manage/details/Clock.svg';
 
 const TicketInfo = ({ eventId }: { eventId: number }) => {
   const limitNum = 4;
@@ -84,7 +85,9 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
       {data.result.map(ticket => (
         <div key={ticket.ticketId} className="bg-gray1 px-3 py-3 md:px-6 md:py-4 rounded-[10px] mb-3">
           <div className="flex justify-between items-center">
-            <div className="flex  flex-col gap-2"> {/*  w-[230px]  */}
+            <div className="flex  flex-col gap-2">
+              {' '}
+              {/*  w-[230px]  */}
               <div className="flex items-center gap-2 md:gap-4">
                 <span className="font-bold text-base md:text-md">{ticket.ticketName}</span> {/* w-[170px] */}
               </div>
@@ -121,6 +124,15 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
                 className="w-22 h-8"
                 onClick={() => orderTicket(ticket.ticketId, eventId, quantity[ticket.ticketId])}
               />
+            </div>
+          </div>
+          <div className="w-full bg-[#E4EFFF] border px-4 py-3 rounded-[5px] mt-2">
+            <div className="flex items-center gap-2">
+              <img src={clock} alt="시계 아이콘" className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="text-sm font-semibold">
+                구매 가능기간: {new Date(ticket.startDate).toLocaleDateString()} ~{' '}
+                {new Date(ticket.endDate).toLocaleDateString()}
+              </span>
             </div>
           </div>
         </div>
