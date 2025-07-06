@@ -87,22 +87,23 @@ const TextEditor = ({ eventState, setEventState, value = '', onChange, onValidat
   };
 
   const handleChange = (val: string) => {
-    const totalLength = getTotalContentLength(val);
+  const totalLength = getTotalContentLength(val);
 
-    if (totalLength <= MAX_LENGTH) {
-      setEditorContent(val);
-      onChange?.(val);
-      setEventState?.(prev => ({ ...prev, description: val }));
-      onValidationChange?.(getPlainText(val).length > 0);
-      setIsOverLimit(false);
-    } else {
-      const editorInstance = quillRef.current?.getEditor();
-      if (editorInstance) {
-        editorInstance.setContents(editorInstance.clipboard.convert(eventState?.description));
-      }
-      setIsOverLimit(true);
+  if (totalLength <= MAX_LENGTH) {
+    setEditorContent(val);
+    onChange?.(val);
+    setEventState?.(prev => ({ ...prev, description: val }));
+    onValidationChange?.(getPlainText(val).length > 0);
+    setIsOverLimit(false);
+  } else {
+    const editorInstance = quillRef.current?.getEditor();
+    if (editorInstance) {
+      editorInstance.clipboard.dangerouslyPasteHTML(eventState?.description ?? '');
     }
-  };
+    setIsOverLimit(true);
+  }
+};
+
 
   useEffect(() => {
     onValidationChange?.(getPlainText(editorContent).length > 0);

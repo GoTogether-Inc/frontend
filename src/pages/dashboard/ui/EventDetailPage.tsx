@@ -9,6 +9,7 @@ import { useUpdateEventHook } from '../../../features/dashboard/hook/useEventHoo
 import { UpdateEventRequest } from '../../../features/dashboard/model/event';
 import { OnlineType } from '../../../shared/types/baseEventType';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
+import { useQueryClient } from '@tanstack/react-query';
 
 const EventDetailPage = () => {
   const navigate = useNavigate();
@@ -20,10 +21,13 @@ const EventDetailPage = () => {
   const [description, setDescription] = useState('');
   const [referenceLinks, setReferenceLinks] = useState<Link[]>([]);
 
+  const queryClient = useQueryClient();
+  
   useEffect(() => {
+    console.log(data?.result.bannerImageUrl)
     if (data?.result) {
       setHostChannelId(data.result.hostChannelId || 0);
-      setBannerImageUrl(data.result.bannerImageUrl || '');
+      setBannerImageUrl(prev => prev || data.result.bannerImageUrl || '');
       setDescription(data.result.description || '');
       setReferenceLinks(data.result.referenceLinks || []);
     }
@@ -37,7 +41,7 @@ const EventDetailPage = () => {
       title: data.result.title,
       startDate: data.result.startDate,
       endDate: data.result.endDate,
-      bannerImageUrl: bannerImageUrl || data.result.bannerImageUrl || '',
+      bannerImageUrl: bannerImageUrl.trim() !== '' ? bannerImageUrl : data.result.bannerImageUrl || '',
       description: description || data.result.description || '',
       referenceLinks: referenceLinks.map(({ title, url }) => ({ title, url })) || data.result.referenceLinks || [],
       onlineType: data.result.onlineType as OnlineType,
@@ -54,6 +58,8 @@ const EventDetailPage = () => {
     mutate(requestData, {
       onSuccess: () => {
         alert('이벤트 정보가 저장되었습니다.');
+        queryClient.invalidateQueries({ queryKey: ['eventDetail', data?.result.id] });
+
         navigate(`/dashboard/${data?.result.id}`);
       },
       onError: () => {
@@ -67,7 +73,7 @@ const EventDetailPage = () => {
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 상세 정보</h1>
         <FileUpload value={bannerImageUrl} onChange={setBannerImageUrl} useDefaultImage={false} />
-        <TextEditor value={description} />
+        <TextEditor value={description} onChange={setDescription}/>
         <LinkInput value={referenceLinks} onChange={setReferenceLinks} />
       </div>
       <div className="w-full p-7">
