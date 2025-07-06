@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FunnelState } from '../model/FunnelContext';
-import { formatDateLocalString } from '../../../shared/lib/date';
+import { formatDateLocalString, extractTimeFromDateString } from '../../../shared/lib/date';
 
 interface DatePickerProps {
   className?: string;
@@ -14,14 +14,6 @@ interface DatePickerProps {
   onStartDateChange?: (date: string) => void;
   onEndDateChange?: (date: string) => void;
   isLabel?: boolean;
-}
-
-function extractTimeFromDateString(dateString?: string, defaultTime = '06:00') {
-  if (!dateString) return defaultTime;
-  const date = new Date(dateString);
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  return `${hours}:${minutes}`;
 }
 
 const EventDatePicker = ({
@@ -82,13 +74,18 @@ const EventDatePicker = ({
   }, [eventState, initialStartDate, initialEndDate]);
 
   useEffect(() => {
-    if (eventState?.startDate) {
-      setStartTime(extractTimeFromDateString(eventState.startDate, '06:00'));
+    if (eventState?.startDate || initialStartDate) {
+      const date = new Date(eventState?.startDate || initialStartDate!);
+      setStartDate(date);
+      setStartTime(extractTimeFromDateString(eventState?.startDate || initialStartDate, '06:00'));
     }
-    if (eventState?.endDate) {
-      setEndTime(extractTimeFromDateString(eventState.endDate, '23:00'));
+    if (eventState?.endDate || initialEndDate) {
+      const date = new Date(eventState?.endDate || initialEndDate!);
+      setEndDate(date);
+      setEndTime(extractTimeFromDateString(eventState?.endDate || initialEndDate, '23:00'));
     }
-  }, [eventState?.startDate, eventState?.endDate]);
+  }, [eventState?.startDate, eventState?.endDate, initialStartDate, initialEndDate]);
+
 
   const generateTimeOptions = () => {
     const options = [];
