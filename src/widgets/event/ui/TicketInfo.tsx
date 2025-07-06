@@ -9,7 +9,7 @@ import useAuthStore from '../../../app/provider/authStore';
 import clock from '../../../../public/assets/event-manage/details/Clock.svg';
 
 const TicketInfo = ({ eventId }: { eventId: number }) => {
-  const limitNum = 4;
+  const limitNum = 1;
   const { data, isError, isLoading } = useTickets(eventId);
   const [quantity, setQuantity] = useState<{ [key: number]: number }>({});
   const navigate = useNavigate();
