@@ -16,6 +16,14 @@ interface DatePickerProps {
   isLabel?: boolean;
 }
 
+function extractTimeFromDateString(dateString?: string, defaultTime = '06:00') {
+  if (!dateString) return defaultTime;
+  const date = new Date(dateString);
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
 const EventDatePicker = ({
   className,
   eventState,
@@ -27,22 +35,30 @@ const EventDatePicker = ({
   isLabel = false,
 }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
-    eventState?.startDate 
-      ? new Date(eventState.startDate) 
-      : initialStartDate 
-      ? new Date(initialStartDate) 
-      : new Date()
+    eventState?.startDate
+      ? new Date(eventState.startDate)
+      : initialStartDate
+        ? new Date(initialStartDate)
+        : new Date()
   );
 
   const [endDate, setEndDate] = useState<Date | null>(
-    eventState?.endDate 
-    ? new Date(eventState.endDate) 
-    : initialEndDate 
-    ? new Date(initialEndDate) 
-    : new Date()
+    eventState?.endDate
+      ? new Date(eventState.endDate)
+      : initialEndDate
+        ? new Date(initialEndDate)
+        : new Date()
   );
-  const [startTime, setStartTime] = useState<string>('06:00');
-  const [endTime, setEndTime] = useState<string>('23:00');
+
+  console.log('startDate', startDate);
+  console.log('endDate', endDate);
+
+  const [startTime, setStartTime] = useState<string>(
+    extractTimeFromDateString(eventState?.startDate || initialStartDate, '06:00')
+  );
+  const [endTime, setEndTime] = useState<string>(
+    extractTimeFromDateString(eventState?.endDate || initialEndDate, '23:00')
+  );
 
   useEffect(() => {
     const start = eventState?.startDate || initialStartDate;
@@ -64,6 +80,15 @@ const EventDatePicker = ({
       setEndTime(`${hours}:${minutes}`);
     }
   }, [eventState, initialStartDate, initialEndDate]);
+
+  useEffect(() => {
+    if (eventState?.startDate) {
+      setStartTime(extractTimeFromDateString(eventState.startDate, '06:00'));
+    }
+    if (eventState?.endDate) {
+      setEndTime(extractTimeFromDateString(eventState.endDate, '23:00'));
+    }
+  }, [eventState?.startDate, eventState?.endDate]);
 
   const generateTimeOptions = () => {
     const options = [];
