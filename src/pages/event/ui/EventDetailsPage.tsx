@@ -18,7 +18,7 @@ import { useCreateBookmark, useDeleteBookmark } from '../../../features/bookmark
 import { formatDate, formatTime } from '../../../shared/lib/date';
 import { useEventDetail } from '../../../entities/event/hook/useEventHook';
 import useAuthStore from '../../../app/provider/authStore';
-import HomeButton from '../../../../public/assets/bottomBar/HomeIcon.svg'
+import HomeButton from '../../../../public/assets/bottomBar/HomeIcon.svg';
 const EventDetailsPage = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -115,12 +115,14 @@ const EventDetailsPage = () => {
               />
             </div>
 
-            {event.result.locationLat !== 0.0 && event.result.locationLng !== 0.0 && (
-              <>
-                <h2 className="font-bold text-xl">위치</h2>
-                <KakaoMap lat={event.result.locationLat} lng={event.result.locationLng} />
-              </>
-            )}
+            {event.result.onlineType !== 'ONLINE' &&
+              event.result.locationLat !== 0.0 &&
+              event.result.locationLng !== 0.0 && (
+                <>
+                  <h2 className="font-bold text-xl">위치</h2>
+                  <KakaoMap lat={event.result.locationLat} lng={event.result.locationLng} />
+                </>
+              )}
 
             <OrganizerInfo
               name={event.result.hostChannelName}
