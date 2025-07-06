@@ -8,8 +8,8 @@ const BookmarkList = () => {
   const { data } = useBookmarks();
   const navigate = useNavigate();
 
-  const sortedData = data ? [...data].sort((a, b) => a.id - b.id) : [];
-  const visibleEvents = sortedData.slice(0, 2);
+  if (!data) return null;
+  const visibleEvents = data.slice(0, 2);
 
   return (
     <div className="w-full h-full max-h-84 bg-white border-[0.5px] rounded-[10px] px-5 md:px-7 py-4 md:py-5">
