@@ -22,6 +22,14 @@ export const formatISO = (date: Date, time: string): string => {
   return kstDate.toISOString();
 };
 
+export const extractTimeFromDateString = (dateString?: string, defaultTime = '06:00') => {
+  if (!dateString) return defaultTime;
+  const date = new Date(dateString);
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
 export const formatDateLocalString = (date: Date, time: string): string => {
   const [hours, minutes] = time.split(':').map(Number);
   const newDate = new Date(date);
