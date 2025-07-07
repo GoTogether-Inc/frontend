@@ -61,7 +61,9 @@ const MyTicketPage = () => {
 
   const handleEventCardClick = (ticket: OrderTicketResponse) => {
     if (isCancelMode) {
-      setSelectedIds(prev => (prev.includes(ticket.orderId) ? prev.filter(id => id !== ticket.orderId) : [...prev, ticket.orderId]));
+      setSelectedIds(prev =>
+        prev.includes(ticket.orderId) ? prev.filter(id => id !== ticket.orderId) : [...prev, ticket.orderId]
+      );
     } else {
       setSelectedTicket(null);
       setPendingTicket(ticket);
@@ -135,9 +137,10 @@ const MyTicketPage = () => {
               hashtags={ticket.event.hashtags}
               status={ticket.event.status}
               onClick={() => handleEventCardClick(ticket)}
-              className={`transition-transform duration-200 ${isCancelMode && selectedIds.includes(ticket.orderId) ? 'scale-95 border-2 border-pink-400' : ''
-                }`}
-              aspectRatio='md:aspect-[3/4.7] sm:aspect-[1/2]'
+              className={`transition-transform duration-200 ${
+                isCancelMode && selectedIds.includes(ticket.orderId) ? 'scale-95 border-2 border-pink-400' : ''
+              }`}
+              aspectRatio="md:aspect-[3/4.7] sm:aspect-[1/2]"
             >
               <div className="flex items-center text-xs text-gray-500">
                 <img src={ticketImg} alt="티켓" className="w-3 h-3 mr-1" />
@@ -157,37 +160,39 @@ const MyTicketPage = () => {
           <div className="col-span-2 flex items-center justify-center min-h-[200px]">
             <p className="text-center text-sm md:text-base">구매하신 티켓 정보가 없습니다.</p>
           </div>
-
         )}
       </div>
 
-      {isModalOpen && selectedTicket && (selectedTicket.event.status !== 'DELETED' && selectedTicket.event.status !== 'COMPLETE') && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
-          <QrModal
-            isChecked={true}
-            iconPath1={<img src={QRbackground} alt="QRbackground" />}
-            ticketQrCode={selectedTicket.ticketQrCode}
-            title={selectedTicket.event.title}
-            hostName={selectedTicket.event.hostChannelName}
-            date={selectedTicket.event.startDate}
-            location={selectedTicket.event.address}
-            ticketName={selectedTicket.ticketName}
-            price={selectedTicket.ticketPrice}
-            orderStatus={selectedTicket.orderStatus}
-            isCheckIn={selectedTicket.checkIn}
-            isCountdownChecked={true}
-            remainDays={selectedTicket.event.remainDays}
-            onClick={() => setIsModalOpen(false)}
-          />
-        </div>
-      )}
+      {isModalOpen &&
+        selectedTicket &&
+        selectedTicket.event.status !== 'DELETED' &&
+        selectedTicket.event.status !== 'COMPLETE' && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
+            <QrModal
+              isChecked={true}
+              iconPath1={<img src={QRbackground} alt="QRbackground" />}
+              ticketQrCode={selectedTicket.ticketQrCode}
+              title={selectedTicket.event.title}
+              hostName={selectedTicket.event.hostChannelName}
+              date={selectedTicket.event.startDate}
+              location={selectedTicket.event.address}
+              ticketName={selectedTicket.ticketName}
+              price={selectedTicket.ticketPrice}
+              orderStatus={selectedTicket.orderStatus}
+              eventType={selectedTicket.event.onlineType}
+              isCheckIn={selectedTicket.checkIn}
+              isCountdownChecked={true}
+              remainDays={selectedTicket.event.remainDays}
+              onClick={() => setIsModalOpen(false)}
+            />
+          </div>
+        )}
 
       {isDoneEventModalOpen && selectedTicket && (
         <TextModal isOpen={isDoneEventModalOpen} onClick={() => setIsDoneEventModalOpen(false)}>
           {eventModalText}
         </TextModal>
-      )
-      }
+      )}
 
       {isDeleteModalOpen && (
         <EmailDeleteModal

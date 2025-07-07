@@ -20,6 +20,7 @@ interface QrModalProps {
   ticketName: string; // 티켓 이름
   price: number; // 티켓 가격
   orderStatus: string; // 티켓 승인 여부
+  eventType: 'ONLINE' | 'OFFLINE'; // 이벤트 타입
   isCheckIn: boolean; // 참가자 체크인 여부
   isCountdownChecked: boolean;
   remainDays: string; //d-day
@@ -37,10 +38,10 @@ const QrModal = ({
   ticketName,
   price,
   orderStatus,
+  eventType,
   isCheckIn,
   isCountdownChecked,
   remainDays,
-
   onClick,
 }: QrModalProps) => {
   const formattedPrice = price.toLocaleString();
@@ -59,16 +60,19 @@ const QrModal = ({
 
         <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between items-center px-4 py-4">
           <div className="flex items-center justify-center h-1/2 w-full">
-            {ticketQrCode ? (
-              <img
-                src={`data:image/png;base64,${ticketQrCode}`}
-                alt="QR Code"
-                className="w-60 h-60 " 
-                // breakpoint 추가 필요
-              />
+            {eventType === 'ONLINE' ? (
+              <div className="w-40 h-40 flex items-center justify-center bg-deDayBgLight rounded-md border border-deDayTextDark text-deDayTextDark text-sm text-center px-4">
+                온라인 이벤트는
+                <br /> QR코드가 발급되지
+                <br /> 않습니다.
+              </div>
+            ) : ticketQrCode ? (
+              <img src={`data:image/png;base64,${ticketQrCode}`} alt="QR Code" className="w-60 h-60" />
             ) : (
               <div className="w-40 h-40 flex items-center justify-center bg-deDayBgLight rounded-md border border-deDayTextDark text-deDayTextDark text-sm text-center px-4">
-                주최자의 승인이 완료되면 QR이 발급됩니다.
+                주최자의 승인이
+                <br /> 완료되면 QR이
+                <br /> 발급됩니다.
               </div>
             )}
           </div>
@@ -81,19 +85,19 @@ const QrModal = ({
             <div className="space-y-1 text-deDayTextDark">
               <IconText
                 size="xSmall"
-                iconPath={<img src={qr_calendar} alt="qr_calendar" className='mr-1' />}
+                iconPath={<img src={qr_calendar} alt="qr_calendar" className="mr-1" />}
                 children={formattedDate}
                 className="text-11"
               ></IconText>
               <IconText
                 size="xSmall"
-                iconPath={<img src={qr_location} alt="qr_location" className='mr-1' />}
+                iconPath={<img src={qr_location} alt="qr_location" className="mr-1" />}
                 children={location}
                 className="text-11"
               ></IconText>
               <IconText
                 size="xSmall"
-                iconPath={<img src={qr_ticket} alt="qr_ticket" className='mr-1' />}
+                iconPath={<img src={qr_ticket} alt="qr_ticket" className="mr-1" />}
                 children={ticketName}
                 className="text-11"
               ></IconText>
@@ -101,13 +105,15 @@ const QrModal = ({
               <hr />
               <IconText
                 size="xSmall"
-                iconPath={<img src={orderStatus === 'COMPLETED' ? qr_check : qr_pending} alt="qr_check" className='mr-1' />}
+                iconPath={
+                  <img src={orderStatus === 'COMPLETED' ? qr_check : qr_pending} alt="qr_check" className="mr-1" />
+                }
                 children={orderStatus === 'COMPLETED' ? '승인됨' : '대기 중'}
                 className="text-11"
               ></IconText>
               <IconText
                 size="xSmall"
-                iconPath={<img src={isCheckIn ? qr_check : qr_pending} alt="qr_check" className='mr-1' />}
+                iconPath={<img src={isCheckIn ? qr_check : qr_pending} alt="qr_check" className="mr-1" />}
                 children={isCheckIn ? '체크인 완료' : '체크인 미완료'}
                 className="text-11"
               ></IconText>
@@ -121,6 +127,5 @@ const QrModal = ({
       </div>
     </div>
   );
-
 };
 export default QrModal;
