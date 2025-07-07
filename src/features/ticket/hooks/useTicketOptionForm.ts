@@ -139,8 +139,6 @@ export const useTicketOptionForm = () => {
   const handleSave = () => {
     let isValid = true;
 
-    console.log('Clicked!');
-
     if (state.question.title.trim() === '') {
       dispatch({
         type: 'SET_WARNING',

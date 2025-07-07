@@ -67,9 +67,8 @@ const InfoInputPage = () => {
           }
         );
       },
-      onError: err => {
+      onError: () => {
         alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
-        console.error(err);
       },
     });
   };
