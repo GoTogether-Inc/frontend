@@ -30,9 +30,9 @@ const MultiplePieCharts = ({ responses }: MultiplePieChartsProps) => {
         return (
           <div key={`${option.optionId}-${index}`} className="flex flex-col items-center">
             <h3 className="mb-2 font-semibold text-lg">{option.optionName}</h3>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={350}>
               <PieChart>
-                <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label stroke="none">
+                <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} label stroke="none">
                   {data.map((_, i) => (
                     <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
                   ))}
