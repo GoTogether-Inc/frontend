@@ -31,7 +31,7 @@ const ResponesModal = ({ onClose }: ResponesModalProps) => {
               onClose();
             }}
           />
-          <h1 className="font-bold text-lg">응답을 확인할 티켓을 선택하세요</h1>
+          <h1 className="font-bold text-lg sm:text-sm">응답을 확인할 티켓을 선택하세요</h1>
         </div>
         {isLoading ? (
           <div>로딩 중...</div>
