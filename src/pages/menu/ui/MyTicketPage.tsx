@@ -141,9 +141,9 @@ const MyTicketPage = () => {
               }`}
               aspectRatio="md:aspect-[3/4.7] sm:aspect-[1/2]"
             >
-              <div className="flex items-center text-xs text-gray-500">
+              <div className="flex items-center text-xs text-gray-500 w-full">
                 <img src={ticketImg} alt="티켓" className="w-3 h-3 mr-1" />
-                {ticket.ticketName}
+                <span className="truncate whitespace-nowrap overflow-hidden">{ticket.ticketName}</span>
               </div>
               <div className="flex items-center text-xs text-gray-500">
                 <img
