@@ -1,13 +1,17 @@
 import { flexColumn } from '../../../../design-system/styles/flex';
 import HorizontalCardButton from '../../../../design-system/ui/buttons/HorizontalCardButton';
-import { useNavigate } from 'react-router-dom';
+import { NavigateOptions, To, useNavigate } from 'react-router-dom';
 import Header from '../../../../design-system/ui/Header';
 import { getButtonData } from '../../../shared/types/menuType';
 import BottomBar from '../../../widgets/main/ui/BottomBar';
 
-const handleIconClick = (navigate: (path: string) => void, path: string, url?: string) => {
+const handleIconClick = (navigate: (to: To, options?: NavigateOptions) => void, path: string, url?: string, backPath?: string) => {
   if (url) {
     window.open(url, '_blank');
+  } else if (path && backPath) {
+    navigate(path, {
+      state: { backPath: '/menu' },
+    });
   } else if (path) {
     navigate(path);
   }
@@ -27,7 +31,7 @@ const MenuPage = () => {
               iconPath={<img src={button.iconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
               hoverIconPath={<img src={button.hoverIconPath} alt={button.label} className="w-6 h-6 md:w-7 md:h-7" />}
               label={button.label}
-              onClick={() => handleIconClick(navigate, button.path, button.url)}
+              onClick={() => handleIconClick(navigate, button.path, button.url, button.backPath)}
             />
             {button.label !== '내 호스트' && index !== buttonData.length - 1 && (
               <hr className="mt-5 border-[0.5px] border-gray4" />

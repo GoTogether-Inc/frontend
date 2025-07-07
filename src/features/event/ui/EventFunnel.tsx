@@ -7,33 +7,52 @@ import EventTypePage from '../../../pages/event/ui/create-event/EventTypePage';
 import EventTagPage from '../../../pages/event/ui/create-event/EventTagPage';
 import EventOrganizerInfoPage from '../../../pages/event/ui/create-event/EventOrganizerInfoPage';
 import EventRegisterLayout from '../../../shared/ui/backgrounds/EventRegisterLayout';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { EventFunnelInterface, StepNames } from '../../../shared/types/funnelType';
 import { useFunnelState } from '../model/FunnelContext';
 import { useEventCreation } from '../hooks/useEventHook';
 import { useHostCreation } from '../../host/hook/useHostHook';
 import { HostCreationRequest } from '../../host/model/host';
+import { useState } from 'react';
 
-const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelInterface) => {
+const EventFunnel = ({ onNext, Funnel, Step, currentStep }: EventFunnelInterface) => {
   const navigate = useNavigate();
   const { eventState, hostState, setHostState } = useFunnelState();
   const { mutate: createEvent } = useEventCreation();
   const { mutate: createHost } = useHostCreation();
+  const location = useLocation();
+  const [backPath] = useState(location.state?.backPath ?? '/');
+
+  const stepOrder = [
+    StepNames.HostSelection,
+    StepNames.HostCreation,
+    StepNames.EventTitle,
+    StepNames.EventPeriod,
+    StepNames.EventOrganizerInfo,
+    StepNames.EventInfo,
+    StepNames.EventType,
+    StepNames.EventTag,
+  ] as const;
+  const stepNameToIndex = (name: StepNames) => stepOrder.indexOf(name);
+
+  const goTo = (stepName: StepNames) => {
+    const index = stepNameToIndex(stepName);
+    onNext(String(index));
+  };
 
   const handleNext = (nextStep: string) => {
-    if (currentStep === 7) {
-      createEvent(eventState, {
-        onSuccess: () => {
-          navigate('/menu/myHost');
-        },
-        onError: error => {
-          console.error('API 호출 실패:', error);
-        },
-      });
-    } else {
-      onNext(nextStep);
-    }
+    onNext(nextStep);
   };
+  const handleCreateEvent = () => {
+    createEvent(eventState, {
+      onSuccess: () => {
+        navigate('/menu/myHost');
+      },
+      onError: error => {
+        console.error('API 호출 실패:', error);
+      },
+    });
+  }
   const initialHostState: HostCreationRequest = {
     profileImageUrl: '',
     hostChannelName: '',
@@ -45,7 +64,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
     createHost(hostState, {
       onSuccess: () => {
         setHostState(initialHostState);
-        handleNext(String(currentStep - 1));
+        goTo(StepNames.HostSelection);
       },
       onError: error => {
         const message = error?.message || '호스트 생성에 실패했습니다. 다시 시도해주세요.';
@@ -59,8 +78,8 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.HostSelection}>
         <EventRegisterLayout
           title="이벤트를 호스팅할 채널을 선택해주세요"
-          onNext={() => handleNext(String(currentStep + 2))}
-          onPrev={() => navigate('/')}
+          onNext={() => goTo(StepNames.EventTitle)}
+          onPrev={() => navigate(backPath)}
           requireValidation={true}
         >
           <HostSelectionPage onNext={handleNext} currentStep={currentStep} />
@@ -70,7 +89,7 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
         <EventRegisterLayout
           title="채널을 새로 생성합니다"
           onNext={() => handleHostCreation()}
-          onPrev={() => onPrev(String(currentStep - 1))}
+          onPrev={() => goTo(StepNames.HostSelection)}
           requireValidation={true}
         >
           <HostCreationPage />
@@ -79,9 +98,8 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.EventTitle}>
         <EventRegisterLayout
           title="이벤트 제목을 입력해주세요"
-          onNext={() => handleNext(String(currentStep + 1))}
-          onPrev={() => onPrev(String(currentStep - 1))}
-          goHome={true}
+          onNext={() => goTo(StepNames.EventPeriod)}
+          onPrev={() => goTo(StepNames.HostSelection)}
           requireValidation={true}
         >
           <EventTitlePage />
@@ -90,8 +108,8 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.EventPeriod}>
         <EventRegisterLayout
           title="이벤트 기간을 입력해주세요"
-          onNext={() => handleNext(String(currentStep + 1))}
-          onPrev={() => onPrev(String(currentStep - 1))}
+          onNext={() => goTo(StepNames.EventOrganizerInfo)}
+          onPrev={() => goTo(StepNames.EventTitle)}
         >
           <EventPeriodPage />
         </EventRegisterLayout>
@@ -99,8 +117,8 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.EventOrganizerInfo}>
         <EventRegisterLayout
           title="이벤트 주최자 정보를 입력해주세요"
-          onNext={() => handleNext(String(currentStep + 1))}
-          onPrev={() => onPrev(String(currentStep - 1))}
+          onNext={() => goTo(StepNames.EventInfo)}
+          onPrev={() => goTo(StepNames.EventPeriod)}
           requireValidation={true}
         >
           <EventOrganizerInfoPage />
@@ -109,8 +127,8 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.EventInfo}>
         <EventRegisterLayout
           title="이벤트 정보를 입력해주세요"
-          onNext={() => handleNext(String(currentStep + 1))}
-          onPrev={() => onPrev(String(currentStep - 1))}
+          onNext={() => goTo(StepNames.EventType)}
+          onPrev={() => goTo(StepNames.EventOrganizerInfo)}
           requireValidation={true}
         >
           <EventInfoPage />
@@ -119,16 +137,16 @@ const EventFunnel = ({ onNext, onPrev, Funnel, Step, currentStep }: EventFunnelI
       <Step name={StepNames.EventType}>
         <EventRegisterLayout
           title="이벤트 진행방식을 선택해주세요"
-          onNext={() => handleNext(String(currentStep + 1))}
-          onPrev={() => onPrev(String(currentStep - 1))}
+          onNext={() => goTo(StepNames.EventTag)}
+          onPrev={() => goTo(StepNames.EventInfo)}
         >
           <EventTypePage />
         </EventRegisterLayout>
       </Step>
       <Step name={StepNames.EventTag}>
         <EventRegisterLayout
-          onNext={() => handleNext(String(currentStep + 1))}
-          onPrev={() => onPrev(String(currentStep - 1))}
+          onNext={() => handleCreateEvent()}
+          onPrev={() => goTo(StepNames.EventType)}
         >
           <EventTagPage />
         </EventRegisterLayout>

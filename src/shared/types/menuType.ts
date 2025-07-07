@@ -22,6 +22,7 @@ export interface buttonData {
   label: string; // 버튼 텍스트
   path: string; // 경로
   url?: string; // 외부 url
+  backPath?: string
 }
 
 export const getButtonData = (): buttonData[] => {
@@ -30,7 +31,7 @@ export const getButtonData = (): buttonData[] => {
   const baseButtons: buttonData[] = [
     { iconPath: Ticket, hoverIconPath: SelectedTicket, label: '구입한 티켓', path: '/menu/myTicket' },
     { iconPath: Host, hoverIconPath: SelectedHost, label: '내 호스트', path: '/menu/myHost' },
-    { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation' },
+    { iconPath: Event, hoverIconPath: SelectedEvent, label: '이벤트 주최하기', path: '/event-creation', backPath:'/menu' },
     { iconPath: Setting, hoverIconPath: SelectedSetting, label: '마이페이지', path: '/menu/myPage' },
     { iconPath: Manual, hoverIconPath: SelectedManual, label: '사용법', path: '/menu/myTicket', url: USER_MANUAL_URL },
   ];
