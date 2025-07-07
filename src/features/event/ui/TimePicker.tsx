@@ -16,12 +16,8 @@ const parseUtcToKst = (utcString: string): Date => {
 const TimePicker = ({ value, onChange }: TimePickerProps) => {
   const initialKstDate = value ? parseUtcToKst(value) : new Date();
   const [selectedDate, setSelectedDate] = useState<Date | null>(initialKstDate);
-  const [selectedHour, setSelectedHour] = useState<string>(
-    initialKstDate.getHours().toString().padStart(2, '0')
-  );
-  const [selectedMinute, setSelectedMinute] = useState<string>(
-    initialKstDate.getMinutes().toString().padStart(2, '0')
-  );
+  const [selectedHour, setSelectedHour] = useState<string>(initialKstDate.getHours().toString().padStart(2, '0'));
+  const [selectedMinute, setSelectedMinute] = useState<string>(initialKstDate.getMinutes().toString().padStart(2, '0'));
 
   useEffect(() => {
     if (value) {
@@ -47,7 +43,6 @@ const TimePicker = ({ value, onChange }: TimePickerProps) => {
       const localString = `${year}-${month}-${day}T${hour}:${minute}:00`;
 
       onChange(localString);
-      console.log(localString);
     }
   }, [selectedDate, selectedHour, selectedMinute]);
 

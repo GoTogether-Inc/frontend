@@ -11,7 +11,6 @@ const LogoutPage = () => {
     const handleLogout = async () => {
       try {
         await axiosClient.post('/oauth/logout');
-        console.log('이 에러는 토큰 만료로 인한 정상적인 동작입니다. 다시 로그인해주세요.');
         logout();
         navigate('/');
       } catch (error: unknown) {
@@ -20,19 +19,14 @@ const LogoutPage = () => {
           typeof error === 'object' &&
           error !== null &&
           'code' in error &&
-          (
-            (error as { code?: string }).code === 'TOKEN4001' ||
-            (error as { code?: string }).code === 'TOKEN4004'
-          )
+          ((error as { code?: string }).code === 'TOKEN4001' || (error as { code?: string }).code === 'TOKEN4004')
         ) {
           // 토큰 만료로 인한 자동 로그아웃이므로 조용히 처리
-          console.log('토큰 만료로 인한 자동 로그아웃', error);
           alert('다시 로그인 해주세요.');
           logout();
           navigate('/');
         } else {
           // 실제 로그아웃 실패
-          console.error('로그아웃 실패:', error);
           alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
           navigate('/menu');
         }

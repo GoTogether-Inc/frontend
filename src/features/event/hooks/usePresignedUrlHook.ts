@@ -9,7 +9,6 @@ const getPresignedUrl = async (dto: PresignedUrlRequest) => {
     const response = await axiosClient.get<ApiResponse<PresignedUrlResponse>>('/generate-presigned-url', {
       params: dto,
     });
-    console.log('Presigned URL 응답:', response.data.result?.preSignedUrl);
 
     return response.data.result?.preSignedUrl;
   } catch (error) {
@@ -21,14 +20,12 @@ const getPresignedUrl = async (dto: PresignedUrlRequest) => {
 export const putS3Image = async ({ url, file }: { url: string; file: File }) => {
   try {
     delete axiosClient.defaults.headers.common.Authorization;
-    console.log('업로드할 URL:', url);
     await axios.put(url, file, {
       headers: {
         'Content-Type': 'image/webp',
       },
     });
-  } catch (error) {
-    console.error('S3 업로드 실패:', error);
+  } catch {
     alert('이미지 업로드에 실패했습니다.');
     throw new Error('Failed to upload image');
   }
@@ -45,7 +42,6 @@ export const uploadFile = async (file: File) => {
   }
 
   const url = presignedUrlResponse;
-  console.log('Presigned URL:', url);
 
   await putS3Image({ url, file: webFile });
 

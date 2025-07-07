@@ -96,7 +96,6 @@ const MyTicketPage = () => {
     }
   }, [selectedTicket]);
 
-  console.log('isDoneEventModalOpen', isDoneEventModalOpen);
   return (
     <TicketHostLayout image={TicketLogo} centerContent="내 티켓" ticketPage={true} isCancelMode={isCancelMode}>
       {tickets.length > 0 && (

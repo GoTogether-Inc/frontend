@@ -27,23 +27,12 @@ const EventDatePicker = ({
   isLabel = false,
 }: DatePickerProps) => {
   const [startDate, setStartDate] = useState<Date | null>(
-    eventState?.startDate
-      ? new Date(eventState.startDate)
-      : initialStartDate
-        ? new Date(initialStartDate)
-        : new Date()
+    eventState?.startDate ? new Date(eventState.startDate) : initialStartDate ? new Date(initialStartDate) : new Date()
   );
 
   const [endDate, setEndDate] = useState<Date | null>(
-    eventState?.endDate
-      ? new Date(eventState.endDate)
-      : initialEndDate
-        ? new Date(initialEndDate)
-        : new Date()
+    eventState?.endDate ? new Date(eventState.endDate) : initialEndDate ? new Date(initialEndDate) : new Date()
   );
-
-  console.log('startDate', startDate);
-  console.log('endDate', endDate);
 
   const [startTime, setStartTime] = useState<string>(
     extractTimeFromDateString(eventState?.startDate || initialStartDate, '06:00')
@@ -85,7 +74,6 @@ const EventDatePicker = ({
       setEndTime(extractTimeFromDateString(eventState?.endDate || initialEndDate, '23:00'));
     }
   }, [eventState?.startDate, eventState?.endDate, initialStartDate, initialEndDate]);
-
 
   const generateTimeOptions = () => {
     const options = [];

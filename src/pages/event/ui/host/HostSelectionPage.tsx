@@ -39,7 +39,6 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
         }
       },
       onError: error => {
-        console.error('호스트 삭제 실패:', error);
         alert(`${error.message}`);
       },
     });
@@ -61,7 +60,7 @@ const HostSelectionPage = ({ onNext, currentStep, onValidationChange }: HostSele
           <button className="flex justify-center items-center w-12 h-12 md:w-14 md:h-14 bg-gray2 rounded-full">
             <IconButton
               iconPath={<img src={AddButton} alt="추가 버튼" className="w-6 h-6 md:w-7 md:h-7" />}
-              onClick={() => { }}
+              onClick={() => {}}
             />
           </button>
           <span className="font-bold text-base md:text-xl ml-4">채널 새로 만들기</span>

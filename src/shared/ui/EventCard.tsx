@@ -46,7 +46,7 @@ const EventCard = ({
   onDeleteSuccess,
   onlineType,
   status,
-  aspectRatio = 'md:aspect-[3/4.3] sm:aspect-[3/5]'
+  aspectRatio = 'md:aspect-[3/4.3] sm:aspect-[3/5]',
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -70,10 +70,14 @@ const EventCard = ({
         {/* 상세 정보 */}
         <div className="flex flex-col gap-1 mt-2 overflow-hidden">
           <div className="flex justify-between">
-            <h2 className="md:max-w-[130px] sm:max-w-[130px] text-sm font-semibold truncate overflow-hidden">{eventTitle}</h2>
+            <h2 className="md:max-w-[130px] sm:max-w-[130px] text-sm font-semibold truncate overflow-hidden">
+              {eventTitle}
+            </h2>
             {dDay !== 'false' && (
               <div className="sm:max-w-15 md:max-w-15">
-                <Countdown isChecked status={status}>{dDay}</Countdown>
+                <Countdown isChecked status={status}>
+                  {dDay}
+                </Countdown>
               </div>
             )}
           </div>
@@ -87,20 +91,13 @@ const EventCard = ({
 
           <div className="flex items-center text-xs text-gray-500">
             <img src={locationImg} alt="위치" className="w-3 h-3 mr-1" />
-            <div className="w-full truncate overflow-hidden">
-              {onlineType === 'ONLINE' ? 'ONLINE' : location}
-            </div>
+            <div className="w-full truncate overflow-hidden">{onlineType === 'ONLINE' ? 'ONLINE' : location}</div>
           </div>
 
           {/* 승인 여부 표시 */}
           {children}
           {/* 해시태그 */}
-          {filteredHashtags && (
-            <HashtagCarousel
-              hashtagSlides={filteredHashtags}
-              onClick={e => e.stopPropagation()}
-            />
-          )}
+          {filteredHashtags && <HashtagCarousel hashtagSlides={filteredHashtags} onClick={e => e.stopPropagation()} />}
 
           {/* 대시보드 버튼 */}
           {isHostPage && (
@@ -138,14 +135,12 @@ const EventCard = ({
                       setIsModalOpen(false);
                     },
                     onError: (error: unknown) => {
-                      if ( 
-                        typeof error === 'object' && 
-                        error !== null && 
-                        'code' in error && 
-                        (
-                          error as { code? : string}).code === "EVENT4002"
-                        ) {
-                        console.log('참여자로 인한 이벤트 삭제 실패');
+                      if (
+                        typeof error === 'object' &&
+                        error !== null &&
+                        'code' in error &&
+                        (error as { code?: string }).code === 'EVENT4002'
+                      ) {
                         alert('구매자가 있는 이벤트는 삭제가 불가합니다.');
                       }
                       setIsModalOpen(false);

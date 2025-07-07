@@ -38,9 +38,6 @@ export const useTicketOptions = (ticketId: number) => {
 export const useCreateTicketOptionAnswers = () => {
   return useMutation<ApiResponse<null>, Error, TicketOptionAnswerRequest>({
     mutationFn: createTicketOptionAnswers,
-    onSuccess: () => {
-      console.log('티켓 옵션 응답 전송 성공');
-    },
     onError: () => {
       alert('티켓 옵션 응답 전송 중 오류가 발생했습니다.');
     },
@@ -177,10 +174,6 @@ export const useAttachTicketOptionMutation = () => {
     onSuccess: (_data, variables) => {
       // 티켓별 옵션 목록 쿼리 리패칭
       queryClient.invalidateQueries({ queryKey: ['attachedTicketOptions', variables.ticketId] });
-      console.log('티켓 옵션이 성공적으로 부착되었습니다.');
-    },
-    onError: () => {
-      console.log('티켓 옵션 부착에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };
@@ -194,10 +187,6 @@ export const useDetachTicketOptionMutation = () => {
     onSuccess: (_data, variables) => {
       // 티켓별 옵션 목록 쿼리 리패칭
       queryClient.invalidateQueries({ queryKey: ['attachedTicketOptions', variables.ticketId] });
-      console.log('티켓에 부착된 티켓 옵션이 성공적으로 부착 취소되었습니다.');
-    },
-    onError: () => {
-      console.log('티켓에 부착된 티켓 옵션 부착 취소에 실패했습니다. 다시 시도해주세요.');
     },
   });
 };

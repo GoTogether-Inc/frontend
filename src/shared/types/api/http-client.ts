@@ -69,11 +69,7 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`,
-          {},
-          { withCredentials: true }
-        );
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/oauth/reissue`, {}, { withCredentials: true });
         // 새 토큰이 쿠키에 재설정되었으므로 원래 요청 재시도
         return axiosClient(originalRequest);
       } catch (refreshError: unknown) {

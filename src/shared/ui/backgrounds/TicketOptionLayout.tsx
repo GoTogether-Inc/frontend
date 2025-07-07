@@ -1,150 +1,140 @@
-import { useNavigate } from "react-router-dom";
-import Header from "../../../../design-system/ui/Header";
-import ticket from "../../../../public/assets/dashboard/ticket/Ticket(horizon).svg";
-import Button from "../../../../design-system/ui/Button";
-import active from "../../../../public/assets/payment/Active.svg";
-import inactive from "../../../../public/assets/payment/Inactive.svg";
-import { useTicketOptionStore } from "../../../features/dashboard/model/store/TicketOptionStore";
-import { useOrderTicket } from "../../../features/ticket/hooks/useOrderHook";
-import { OrderTicketRequest } from "../../../features/ticket/model/orderInformation";
-import { useTickets } from "../../../features/ticket/hooks/useTicketHook";
-import { TicketOptionResponse } from "../../../features/ticket/model/ticketInformation";
-import { buildTicketOptionAnswers } from "../../../features/ticket/util/buildTicketOptionAnswers";
+import { useNavigate } from 'react-router-dom';
+import Header from '../../../../design-system/ui/Header';
+import ticket from '../../../../public/assets/dashboard/ticket/Ticket(horizon).svg';
+import Button from '../../../../design-system/ui/Button';
+import active from '../../../../public/assets/payment/Active.svg';
+import inactive from '../../../../public/assets/payment/Inactive.svg';
+import { useTicketOptionStore } from '../../../features/dashboard/model/store/TicketOptionStore';
+import { useOrderTicket } from '../../../features/ticket/hooks/useOrderHook';
+import { OrderTicketRequest } from '../../../features/ticket/model/orderInformation';
+import { useTickets } from '../../../features/ticket/hooks/useTicketHook';
+import { TicketOptionResponse } from '../../../features/ticket/model/ticketInformation';
+import { buildTicketOptionAnswers } from '../../../features/ticket/util/buildTicketOptionAnswers';
 
 interface TicketOptionLayoutProps {
-    children: React.ReactNode;
-    ticketAmount: number;
-    ticketInfo: OrderTicketRequest;
-    options: TicketOptionResponse[];
+  children: React.ReactNode;
+  ticketAmount: number;
+  ticketInfo: OrderTicketRequest;
+  options: TicketOptionResponse[];
 }
 
 const TicketOptionLayout = ({ children, ticketAmount, ticketInfo, options }: TicketOptionLayoutProps) => {
-    const navigate = useNavigate();
-    const { currentPage, setCurrentPage, selectedOptions, resetOptions } = useTicketOptionStore();
-    const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
+  const navigate = useNavigate();
+  const { currentPage, setCurrentPage, selectedOptions, resetOptions } = useTicketOptionStore();
+  const centerContent = `티켓 옵션 선택 (${currentPage}/${ticketAmount})`;
 
-    const { mutate: orderTickets } = useOrderTicket();
-    const { data: ticketData } = useTickets(ticketInfo.eventId);
-    const ticketObj = ticketData?.result.find(
-        (ticket) => ticket.ticketId === ticketInfo.ticketId
-    );
+  const { mutate: orderTickets } = useOrderTicket();
+  const { data: ticketData } = useTickets(ticketInfo.eventId);
+  const ticketObj = ticketData?.result.find(ticket => ticket.ticketId === ticketInfo.ticketId);
 
-    //페이지
-    const pageIndicator = Array(ticketAmount).fill(" . ");
-    pageIndicator[currentPage - 1] = " - ";
+  //페이지
+  const pageIndicator = Array(ticketAmount).fill(' . ');
+  pageIndicator[currentPage - 1] = ' - ';
 
-    //버튼 텍스트
-    const isLastPage = currentPage === ticketAmount;
-    const buttonText = isLastPage ? "결제하기" : "다음 티켓 옵션 선택하기";
+  //버튼 텍스트
+  const isLastPage = currentPage === ticketAmount;
+  const buttonText = isLastPage ? '결제하기' : '다음 티켓 옵션 선택하기';
 
-    const handleNextPage = () => {
-        const currentOptions = selectedOptions[currentPage];
-        const requiredOptions = options.filter((opt) => opt.isMandatory);
-        const isValid = requiredOptions.every((opt) => {
-            const answer = currentOptions?.[opt.id];
-            if (opt.type === "TEXT") {
-                return typeof answer === "string" && answer.trim() !== "";
+  const handleNextPage = () => {
+    const currentOptions = selectedOptions[currentPage];
+    const requiredOptions = options.filter(opt => opt.isMandatory);
+    const isValid = requiredOptions.every(opt => {
+      const answer = currentOptions?.[opt.id];
+      if (opt.type === 'TEXT') {
+        return typeof answer === 'string' && answer.trim() !== '';
+      }
+      if (opt.type === 'SINGLE') {
+        return typeof answer === 'number';
+      }
+      if (opt.type === 'MULTIPLE') {
+        return Array.isArray(answer) && answer.length > 0;
+      }
+      return false;
+    });
+    if (!isValid) {
+      alert('필수 옵션을 모두 입력해주세요.');
+      return;
+    }
+
+    if (isLastPage) {
+      if (isLastPage) {
+        const sendAnswersByPage = async () => {
+          const ticketOptionAnswers = buildTicketOptionAnswers(selectedOptions);
+          // 주문
+          orderTickets(
+            {
+              ...ticketInfo,
+              ticketOptionAnswers,
+            },
+            {
+              onSuccess: response => {
+                if (response.isSuccess && Array.isArray(response.result)) {
+                  const orderIds = response.result;
+                  resetOptions();
+                  navigate('/payment/ticket-confirm', { state: { orderIds } });
+                }
+              },
             }
-            if (opt.type === "SINGLE") {
-                return typeof answer === "number";
-            }
-            if (opt.type === "MULTIPLE") {
-                return Array.isArray(answer) && answer.length > 0;
-            }
-            return false;
-        });
-        if (!isValid) {
-            alert("필수 옵션을 모두 입력해주세요.");
-            return;
-        }
+          );
+        };
+        sendAnswersByPage();
+      }
+    } else {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-        if (isLastPage) {
-            if (isLastPage) {
-                const sendAnswersByPage = async () => {
-                    const ticketOptionAnswers = buildTicketOptionAnswers(selectedOptions);
-
-                    console.log(ticketOptionAnswers)
-
-                    // 주문
-                    orderTickets(
-                        {
-                            ...ticketInfo,
-                            ticketOptionAnswers, 
-                        },
-                        {
-                            onSuccess: (response) => {
-                                if (response.isSuccess && Array.isArray(response.result)) {
-                                    const orderIds = response.result;
-                                    resetOptions();
-                                    navigate("/payment/ticket-confirm", { state: { orderIds } });
-                                }
-                            },
-                        }
-                    );
-                };
-                sendAnswersByPage();
-            }
-
-        } else {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    return (
-        <div className="relative flex flex-col">
-            {/* 헤더 영역 */}
-            <div className="w-full h-28 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[20px] z-10">
-                <Header
-                    leftButtonLabel="<"
-                    leftButtonClassName="text-2xl z-30 font-semibold"
-                    leftButtonClick={() => navigate(-1)}
-                    centerContent={centerContent}
-                    color="white"
-                />
-                {ticketAmount > 1 && (
-                    <div className="flex justify-center gap-2 mt-4 md:mt-12">
-                        {Array.from({ length: ticketAmount }, (_, index) => (
-                            <img
-                                key={index}
-                                src={index + 1 === currentPage ? active : inactive}
-                                className="object-contain"
-                            />
-                        ))}
-                    </div>
-                )}
+  return (
+    <div className="relative flex flex-col">
+      {/* 헤더 영역 */}
+      <div className="w-full h-28 md:h-36 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[20px] z-10">
+        <Header
+          leftButtonLabel="<"
+          leftButtonClassName="text-2xl z-30 font-semibold"
+          leftButtonClick={() => navigate(-1)}
+          centerContent={centerContent}
+          color="white"
+        />
+        {ticketAmount > 1 && (
+          <div className="flex justify-center gap-2 mt-4 md:mt-12">
+            {Array.from({ length: ticketAmount }, (_, index) => (
+              <img key={index} src={index + 1 === currentPage ? active : inactive} className="object-contain" />
+            ))}
+          </div>
+        )}
+      </div>
+      {/* 티켓 정보 영역 */}
+      <div className="flex flex-col justify-between w-[90%] h-36 md:h-40 bg-white rounded-md mt-8 mx-auto z-10 shadow-md px-6 md:px-8 py-5 md:py-6">
+        <div className="flex flex-row justify-between items-center">
+          <div className="flex gap-4">
+            <img src={ticket} alt="ticket logo" className="w-7" />
+            <div>
+              <p className="font-bold text-base md:text-lg">{ticketObj?.ticketName}</p>
             </div>
-            {/* 티켓 정보 영역 */}
-            <div className="flex flex-col justify-between w-[90%] h-36 md:h-40 bg-white rounded-md mt-8 mx-auto z-10 shadow-md px-6 md:px-8 py-5 md:py-6">
-                <div className="flex flex-row justify-between items-center">
-                    <div className="flex gap-4">
-                        <img src={ticket} alt="ticket logo" className="w-7" />
-                        <div>
-                            <p className="font-bold text-base md:text-lg">{ticketObj?.ticketName}</p>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <p className="text-xs md:text-sm">{ticketObj?.ticketDescription}</p>
-                </div>
-            </div>
-
-            <div className="flex flex-col mt-8 mx-auto w-[85%]">
-                <p className="font-bold text-sm md:text-base">추가 옵션</p>
-                <p className="text-xs md:text-sm text-gray-500 mt-2">
-                    구매하는 티켓에 추가적으로 선택할 수 있는 옵션들이 있습니다.
-                </p>
-            </div>
-
-            {/* 내용 영역 */}
-            <div className="flex flex-col w-[85%] mx-auto mt-4">
-                {children}
-                <div className="flex flex-grow" />
-                <div className="w-full p-6">
-                    <Button label={buttonText} onClick={handleNextPage} className="w-full h-12 rounded-full" />
-                </div>
-            </div>
+          </div>
         </div>
-    );
+        <div>
+          <p className="text-xs md:text-sm">{ticketObj?.ticketDescription}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-col mt-8 mx-auto w-[85%]">
+        <p className="font-bold text-sm md:text-base">추가 옵션</p>
+        <p className="text-xs md:text-sm text-gray-500 mt-2">
+          구매하는 티켓에 추가적으로 선택할 수 있는 옵션들이 있습니다.
+        </p>
+      </div>
+
+      {/* 내용 영역 */}
+      <div className="flex flex-col w-[85%] mx-auto mt-4">
+        {children}
+        <div className="flex flex-grow" />
+        <div className="w-full p-6">
+          <Button label={buttonText} onClick={handleNextPage} className="w-full h-12 rounded-full" />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default TicketOptionLayout;

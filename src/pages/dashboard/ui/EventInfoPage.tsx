@@ -66,8 +66,7 @@ const EventInfoPage = () => {
         queryClient.invalidateQueries({ queryKey: ['eventDetail', data.result.id] });
         navigate(`/dashboard/${data?.result.id}`);
       },
-      onError: error => {
-        console.error('Error details:', error);
+      onError: () => {
         alert('저장에 실패했습니다.');
       },
     });
@@ -93,7 +92,7 @@ const EventInfoPage = () => {
 
   return (
     // <DashboardLayout centerContent={title}>
-    <DashboardLayout centerContent={"DASHBOARD"}>
+    <DashboardLayout centerContent={'DASHBOARD'}>
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 기본 정보</h1>
         <DefaultTextField

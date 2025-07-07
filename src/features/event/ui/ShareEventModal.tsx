@@ -66,8 +66,7 @@ const ShareEventModal = ({
   const handleKakaoShare = async () => {
     try {
       await shareToKakao(title, description, eventImageUrl, eventUrl);
-    } catch (error) {
-      console.error('카카오 공유 실패:', error);
+    } catch {
       alert('카카오 공유하기에 실패했습니다.');
     }
   };
@@ -89,8 +88,7 @@ const ShareEventModal = ({
       navigator.clipboard
         .writeText(eventUrl)
         .then(() => alert('링크가 복사되었습니다!'))
-        .catch(err => {
-          console.error('복사 실패:', err);
+        .catch(() => {
           alert('링크 복사에 실패했습니다.');
         });
     } else {
