@@ -5,11 +5,7 @@ import { ApiResponse } from '../../../shared/types/api/apiResponse';
 import { AxiosError } from 'axios';
 import { approveParticipants } from '../../../features/dashboard/api/participants';
 
-export const useParticipants = (
-  tags: string = 'all',
-  page: number = 0,
-  size: number = 10
-) => {
+export const useParticipants = (tags: string = 'all', page: number = 0, size: number = 300) => {
   const { id } = useParams();
   const eventId = Number(id);
 
@@ -31,15 +27,13 @@ export const useParticipants = (
 };
 
 export const useApproveParticipants = (orderId: number) => {
-
   const queryClient = useQueryClient();
 
   return useMutation<ApiResponse<string>, AxiosError, { orderId: number }>({
     mutationFn: () => approveParticipants({ orderId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        predicate: (query) =>
-          Array.isArray(query.queryKey) && query.queryKey[0] === 'participants',
+        predicate: query => Array.isArray(query.queryKey) && query.queryKey[0] === 'participants',
       });
     },
   });
