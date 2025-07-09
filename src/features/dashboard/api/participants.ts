@@ -29,16 +29,18 @@ export const downloadExcel = async (eventId:number): Promise<void> => {
       params: { eventId }, 
     }
   );
+  console.log(response.headers)
 
   //파일이름 추출
   const disposition = response.headers['content-disposition'];
-  let filename = '같이가요_구매참가자목록.xlsx'; // 기본값
-  if (disposition) {
-    const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-    if (match && match[1]) {
-      filename = decodeURIComponent(match[1].replace(/['"]/g, ''));
-    }
+let filename = '기본값.xlsx';
+if (disposition) {
+  const match = disposition.match(/filename\*=UTF-8''(.+)/);
+  if (match && match[1]) {
+    filename = decodeURIComponent(match[1]);
   }
+}
+console.log(disposition)
 
   //저장
   const blob = new Blob([response.data], {
