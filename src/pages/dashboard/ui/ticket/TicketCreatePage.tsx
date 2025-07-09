@@ -14,6 +14,7 @@ const TicketCreatePage = () => {
   const { mutate: createTicket } = useCreateTicket();
   const { id } = useParams();
   const eventId = Number(id);
+  const [isSubmitting, setIsSubmitting] = useState(false); // 중복 클릭 방지
   const [ticketData, setTicketData] = useState<CreateTicketRequest>({
     eventId: eventId,
     ticketType: 'FIRST_COME',
@@ -63,6 +64,7 @@ const TicketCreatePage = () => {
 
   // API 호출
   const handleSaveClick = async () => {
+    if (isSubmitting) return;
     if (
       !ticketData.ticketName ||
       !ticketData.ticketDescription ||
@@ -72,8 +74,19 @@ const TicketCreatePage = () => {
       alert('모든 필수 입력 항목을 작성해주세요.');
       return;
     }
-    createTicket(ticketData);
-    navigate(`/dashboard/${id}/ticket`);
+    try {
+      setIsSubmitting(true);
+      createTicket(ticketData, {
+        onSuccess: () => {
+          navigate(`/dashboard/${id}/ticket`);
+        },
+        onSettled: () => {
+          setIsSubmitting(false);
+        }
+      });
+    } catch (e) {
+      setIsSubmitting(false);
+    }
   };
 
   return (
