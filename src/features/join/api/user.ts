@@ -22,3 +22,13 @@ export const agreeTerms = async (data: TermsAgreementRequest) => {
   });
   return response.data;
 };
+
+//인증번호 발급
+export const sendCertificationCode = async (phoneNum: string): Promise<void> => {
+  await axiosClient.post('/sms/send', { phoneNum });
+};
+
+//인증번호 검증 
+export const verifyCertificationCode = async (phoneNum: string, certificationCode: string): Promise<void> => {
+  await axiosClient.post('/sms/verify', { phoneNum, certificationCode });
+};

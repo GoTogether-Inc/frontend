@@ -3,11 +3,13 @@ interface ButtonProps {
   onClick: () => void; // 클릭 핸들러
   disabled?: boolean; // 비활성화 여부
   className?: string; // 추가 스타일링 클래스
+  type?: 'button' | 'submit' | 'reset';
 }
 
-const Button = ({ label, onClick, disabled = false, className = '' }: ButtonProps) => {
+const Button = ({ label, onClick, disabled = false, className = '', type = 'submit' }: ButtonProps) => {
   return (
     <button
+    type={type} 
       onClick={onClick}
       disabled={disabled}
       className={`py-2 px-4 text-white font-semibold transition text-base sm:text-xs md:text-sm lg:text-base
