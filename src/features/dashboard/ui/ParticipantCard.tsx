@@ -39,7 +39,9 @@ const ParticipantCard = ({ participant, onCheckClick }: ParticipantCardProps) =>
             <div>
               구매 일자: {formatDate(participant.purchaseDate)} {formatTime(participant.purchaseDate)}
             </div>
-            <p>티켓 이름: {participant.ticketName}</p>
+            <p className="max-w-[120px] truncate text-ellipsis whitespace-nowrap">
+              티켓 이름: {participant.ticketName}
+            </p>
           </div>
         </div>
       </div>
