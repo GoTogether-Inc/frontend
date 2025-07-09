@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
@@ -14,6 +14,7 @@ const InfoInputPage = () => {
   const { data, isLoading } = useUserInfo();
   const { login, setName } = useAuthStore();
   const { mutate: updateUser } = useUserUpdate();
+
   const {
     register,
     handleSubmit,
@@ -39,6 +40,20 @@ const InfoInputPage = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
     setValue('phone', formatted, { shouldValidate: true });
+  };
+  // 전화번호 인증
+  const [isVerifyVisible, setIsVerifyVisible] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const handlePhoneVerifyClick = () => {
+    if (!phoneValue) {
+      alert('연락처를 입력해주세요.');
+      return;
+    }
+    setIsVerifyVisible(true);
+  };
+  const handleVerifySubmit = () => {
+    // 여기서 인증번호 검증 로직 실행 (백엔드 호출 등)
+    console.log("tets");
   };
 
   const onSubmit: SubmitHandler<FormData> = formData => {
@@ -104,16 +119,41 @@ const InfoInputPage = () => {
         />
 
         {/* 연락처 필드 */}
-        <UnderlineTextField
-          label="연락처"
-          placeholder={'연락처'}
-          type="tel"
-          errorMessage={errors.phone?.message}
-          className="text-xl"
-          value={phoneValue}
-          onChange={handlePhoneChange}
-        />
+        <div className="flex items-end gap-3 pb-8">
+          <div className="flex-1">
+            <UnderlineTextField
+              label="연락처"
+              placeholder="연락처"
+              type="tel"
+              errorMessage={errors.phone?.message}
+              className="text-xl"
+              value={phoneValue}
+              onChange={handlePhoneChange}
+            />
+          </div>
+          <Button
+            label="인증하기"
+            onClick={handlePhoneVerifyClick}
+            className="h-11 px-4 rounded-md"
+          />
+        </div>
 
+        {/* 인증번호 입력 필드 */}
+        {isVerifyVisible && (
+          <div className="flex flex-col gap-2 mt-2">
+            <UnderlineTextField
+              placeholder="인증번호 4자리"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              className="text-xl" 
+              label={''} />
+            <Button
+              label="인증 확인"
+              onClick={handleVerifySubmit}
+              className="w-full h-10 rounded-full"
+            />
+          </div>
+        )}
         {/* 이메일 필드 */}
         <UnderlineTextField
           label="이메일"
