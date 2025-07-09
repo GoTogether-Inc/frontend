@@ -23,6 +23,10 @@ const EventFunnel = ({ onNext, Funnel, Step, currentStep }: EventFunnelInterface
   const location = useLocation();
   const [backPath] = useState(location.state?.backPath ?? '/');
 
+  //중복 클릭 방지
+  const [isSubmittingEvent, setIsSubmittingEvent] = useState(false);
+  const [isSubmittingHost, setIsSubmittingHost] = useState(false);
+
   const stepOrder = [
     StepNames.HostSelection,
     StepNames.HostCreation,
@@ -44,6 +48,8 @@ const EventFunnel = ({ onNext, Funnel, Step, currentStep }: EventFunnelInterface
     onNext(nextStep);
   };
   const handleCreateEvent = () => {
+    if (isSubmittingEvent) return;
+    setIsSubmittingEvent(true);
     createEvent(eventState, {
       onSuccess: () => {
         navigate('/menu/myHost');
@@ -61,6 +67,8 @@ const EventFunnel = ({ onNext, Funnel, Step, currentStep }: EventFunnelInterface
   };
 
   const handleHostCreation = () => {
+    if (isSubmittingHost) return;
+    setIsSubmittingHost(true);
     createHost(hostState, {
       onSuccess: () => {
         setHostState(initialHostState);
