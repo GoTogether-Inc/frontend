@@ -63,6 +63,25 @@ const TicketInfo = ({ eventId }: { eventId: number }) => {
       alert('로그인이 필요한 서비스입니다.');
       return;
     }
+    const ticket = data?.result.find(t => t.ticketId === ticketId);
+    const now = new Date();
+
+    if (!ticket) {
+      alert('티켓 정보를 찾을 수 없습니다.');
+      return;
+    }
+
+    const start = new Date(ticket.startDate);
+    const end = new Date(ticket.endDate);
+    if (now < start || now > end) {
+      alert('이 티켓은 현재 구매할 수 없습니다. 판매 기간을 확인해주세요.');
+      return;
+    }
+
+    if (ticket.availableQuantity < ticketCnt) {
+      alert(`남은 티켓이 부족합니다. (남은 수량: ${ticket.availableQuantity}장)`);
+      return;
+    }
 
     try {
       const res = await readTicketOptions(ticketId);
