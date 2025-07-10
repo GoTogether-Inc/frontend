@@ -12,7 +12,7 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
   const { eventState, setEventState } = useFunnelState();
   const [isFileValid, setIsFileValid] = useState(false);
   const [isTextValid, setIsTextValid] = useState(false);
-  const [isLinkValid, setIsLinkValid] = useState(false);
+  const [isLinkValid, setIsLinkValid] = useState(true);
 
   const handleFileValidation = (valid: boolean) => {
     setIsFileValid(valid);
@@ -46,7 +46,12 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
         setEventState={setEventState}
         onValidationChange={handleTextValidation}
       />
-      <LinkInput eventState={eventState} setEventState={setEventState} onValidationChange={handleLinkValidation} />
+      <LinkInput 
+        eventState={eventState} 
+        setEventState={setEventState} 
+        onValidationChange={handleLinkValidation} 
+        value={eventState?.referenceLinks}
+      />
     </div>
   );
 };
