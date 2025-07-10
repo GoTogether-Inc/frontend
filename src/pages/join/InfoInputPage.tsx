@@ -1,22 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Header from '../../../design-system/ui/Header';
 import Button from '../../../design-system/ui/Button';
 import UnderlineTextField from '../../../design-system/ui/textFields/UnderlineTextField';
 import { FormData, zodValidation } from '../../shared/lib/formValidation';
-import { useAgreeTerms, useSendCertificationCode, useUserInfo, useUserUpdate, useVerifyCertificationCode } from '../../features/join/hooks/useUserHook';
+import { useAgreeTerms, useUserInfo, useUserUpdate } from '../../features/join/hooks/useUserHook';
 import useAuthStore from '../../app/provider/authStore';
 import { formatPhoneNumber } from '../../shared/utils/phoneFormatter';
 import { useAgreementStore } from '../../features/join/model/agreementStore';
+import { usePhoneVerification } from '../../shared/utils/phoneVerification';
 
 const InfoInputPage = () => {
   const { data, isLoading } = useUserInfo();
   const { login, setName } = useAuthStore();
   const { mutate: updateUser } = useUserUpdate();
-  const { mutate: sendCode } = useSendCertificationCode();
-  const { mutate: verifyCode } = useVerifyCertificationCode();
-  const [isVerified, setIsVerified] = useState(false);
+  const {
+    isVerified,
+    isVerifyVisible,
+    verificationCode,
+    setVerificationCode,
+    timer,
+    formatTime,
+    requestVerificationCode,
+    submitVerificationCode,
+  } = usePhoneVerification();
 
   const {
     register,
@@ -44,51 +52,6 @@ const InfoInputPage = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
     setValue('phone', formatted, { shouldValidate: true });
-  };
-  // 전화번호 인증
-  const [isVerifyVisible, setIsVerifyVisible] = useState(true);
-  const [verificationCode, setVerificationCode] = useState('');
-  const [timer, setTimer] = useState(0);
-  //인증번호 발급
-  const handlePhoneVerifyClick = () => {
-    if (!phoneValue) {
-      alert('연락처를 입력해주세요.');
-      return;
-    }
-    //인증api호출
-    sendCode({ phoneNumber: phoneValue }, {
-      onSuccess: () => {
-        setIsVerifyVisible(true);
-        setTimer(180);
-      }
-    });
-  };
-  // 인증번호 확인
-  const handleVerifySubmit = () => {
-    if (!verificationCode || verificationCode.length !== 6) {
-      alert('6자리 인증번호를 입력해주세요.');
-      return;
-    }
-    verifyCode({ phoneNumber: phoneValue, certificationCode: verificationCode }, {
-      onSuccess: () => {
-        setIsVerifyVisible(false);
-        setIsVerified(true);
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (isVerifyVisible && timer > 0) {
-      const interval = setInterval(() => {
-        setTimer(prev => prev - 1);
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [isVerifyVisible, timer]);
-  const formatTime = (seconds: number) => {
-    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const s = String(seconds % 60).padStart(2, '0');
-    return `${m}:${s}`;
   };
 
   const onSubmit: SubmitHandler<FormData> = formData => {
@@ -170,7 +133,7 @@ const InfoInputPage = () => {
           <Button
             type='button'
             label="인증하기"
-            onClick={handlePhoneVerifyClick}
+            onClick={() => requestVerificationCode(phoneValue)}
             className="h-11 md:h-11 sm:h-8 px-4 rounded-md"
           />
         </div>
@@ -191,7 +154,7 @@ const InfoInputPage = () => {
               <Button
                 type='button'
                 label="인증확인"
-                onClick={handleVerifySubmit}
+                onClick={() => submitVerificationCode(phoneValue)}
                 className="h-11 md:h-11 sm:h-8 px-4 rounded-md"
               />
             </div>

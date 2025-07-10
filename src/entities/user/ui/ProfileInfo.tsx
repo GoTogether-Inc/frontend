@@ -7,9 +7,10 @@ import ProfileCircle from '../../../../design-system/ui/Profile';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import useAuthStore from '../../../app/provider/authStore';
-import { useSendCertificationCode, useUserInfo, useUserUpdate, useVerifyCertificationCode } from '../../../features/join/hooks/useUserHook';
+import { useUserInfo, useUserUpdate} from '../../../features/join/hooks/useUserHook';
 import { formatProfilName } from '../../../shared/lib/formatProfileName';
 import Button from '../../../../design-system/ui/Button';
+import { usePhoneVerification } from '../../../shared/utils/phoneVerification';
 
 const ProfileInfo = () => {
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
@@ -18,9 +19,17 @@ const ProfileInfo = () => {
   const { mutate: updateUser } = useUserUpdate();
   const [isEditing, setIsEditing] = useState(false);
 
-  const { mutate: sendCode } = useSendCertificationCode();
-  const { mutate: verifyCode } = useVerifyCertificationCode();
-  const [isVerified, setIsVerified] = useState(false);
+  const {
+    isVerified,
+    isVerifyVisible,
+    verificationCode,
+    setVerificationCode,
+    timer,
+    formatTime,
+    requestVerificationCode,
+    submitVerificationCode,
+    resetVerification,
+  } = usePhoneVerification();
 
   const {
     register,
@@ -66,7 +75,6 @@ const ProfileInfo = () => {
         setName(name);
         refetch();
         setIsEditing(false);
-        setIsVerified(false);
         alert('정보가 성공적으로 업데이트 되었습니다.')
       },
       onError: () => {
@@ -75,48 +83,7 @@ const ProfileInfo = () => {
     });
   };
 
-  // 전화번호 인증
-  const [isVerifyVisible, setIsVerifyVisible] = useState(true);
-  const [verificationCode, setVerificationCode] = useState('');
-  const [timer, setTimer] = useState(0);
-  //인증번호 발급
-  const handlePhoneVerifyClick = () => {
-    if (!phoneValue) {
-      alert('연락처를 입력해주세요.');
-      return;
-    }
-    // //인증api호출
-    sendCode({ phoneNumber: phoneValue }, {
-      onSuccess: () => {
-        setIsVerifyVisible(true);
-        setTimer(180);
-      }
-    });
-  };
-  // 인증번호 확인
-  const handleVerifySubmit = () => {
-    if (!verificationCode || verificationCode.length !== 6) {
-      alert('6자리 인증번호를 입력해주세요.');
-      return;
-    }
-    verifyCode({ phoneNumber: phoneValue, certificationCode: verificationCode }, {
-      onSuccess: () => {
-        setIsVerifyVisible(false);
-        setIsVerified(true);
-      }
-    });
-  };
-  useEffect(() => {
-    if (isVerifyVisible && timer > 0) {
-      const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-      return () => clearInterval(interval);
-    }
-  }, [timer, isVerifyVisible]);
-  const formatTime = (seconds: number) => {
-    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const s = String(seconds % 60).padStart(2, '0');
-    return `${m}:${s}`;
-  };
+
 
   if (isLoading) {
     return <div>로딩 중...</div>;
@@ -175,7 +142,7 @@ const ProfileInfo = () => {
                     <Button
                       type="button"
                       label="인증하기"
-                      onClick={handlePhoneVerifyClick}
+                      onClick={() => requestVerificationCode(phoneValue)}
                       className="h-9 sm:h-8 rounded-md w-24"
                     />
                   </div>
@@ -192,7 +159,7 @@ const ProfileInfo = () => {
                         <Button
                           type="button"
                           label="확인"
-                          onClick={handleVerifySubmit}
+                          onClick={() => submitVerificationCode(phoneValue)}
                           className="h-9 px-3 rounded-md"
                         />
                       </div>
@@ -208,8 +175,7 @@ const ProfileInfo = () => {
                           setIsEditing(false);
                           setValue('name', data?.name || '');
                           setValue('phone', data?.phoneNumber || '');
-                          setIsVerified(false);
-                          setIsVerifyVisible(false);
+                          resetVerification();
                           setVerificationCode('');
                         }}
                       />
@@ -227,7 +193,7 @@ const ProfileInfo = () => {
                           setIsEditing(false);
                           setValue('name', data?.name || '');
                           setValue('phone', data?.phoneNumber || '');
-                          setIsVerified(false);
+                          resetVerification();
                           setVerificationCode('');
                         }}
                       />
