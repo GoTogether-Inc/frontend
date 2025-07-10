@@ -31,7 +31,7 @@ export const sendCertificationCode = async (data: { phoneNumber: string }) => {
   return response.data;
 };
 //인증번호 검증 
-export const verifyCertificationCode = async (data: {phoneNumber: string, certificationCode: string}): Promise<void> => {
+export const verifyCertificationCode = async (data: {phoneNumber: string, certificationCode: string}) => {
   const response = await axiosClient.post('/sms/verify', data, {
     headers: { isPublicApi: true },
   });
