@@ -12,6 +12,7 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
   const { eventState, setEventState } = useFunnelState();
   const [isFileValid, setIsFileValid] = useState(false);
   const [isTextValid, setIsTextValid] = useState(false);
+  const [isLinkValid, setIsLinkValid] = useState(false);
 
   const handleFileValidation = (valid: boolean) => {
     setIsFileValid(valid);
@@ -20,10 +21,15 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
   const handleTextValidation = (valid: boolean) => {
     setIsTextValid(valid);
   };
+
+  const handleLinkValidation = (valid: boolean) => { 
+    setIsLinkValid(valid);
+  };
+
   useEffect(() => {
-    const allValid = isFileValid && isTextValid;
+    const allValid = isFileValid && isTextValid && isLinkValid;
     onValidationChange?.(allValid);
-  }, [isFileValid, isTextValid, onValidationChange]);
+  }, [isFileValid, isTextValid, isLinkValid,onValidationChange]);
 
   return (
     <div className="w-full px-5 space-y-8">
@@ -34,13 +40,13 @@ const EventInfoPage = ({ onValidationChange }: EventInfoPageProps) => {
         useDefaultImage={false}
         onValidationChange={handleFileValidation}
       />
-      <TextEditor 
+      <TextEditor
         value={eventState?.description ?? ''}
         eventState={eventState}
         setEventState={setEventState}
         onValidationChange={handleTextValidation}
       />
-      <LinkInput eventState={eventState} setEventState={setEventState} />
+      <LinkInput eventState={eventState} setEventState={setEventState} onValidationChange={handleLinkValidation} />
     </div>
   );
 };

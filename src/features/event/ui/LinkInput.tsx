@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FunnelState } from '../model/FunnelContext';
 import AddButton from '../../../../public/assets/event-manage/creation/AddBtn.svg';
 import CloseButton from '../../../../public/assets/event-manage/creation/CloseBtn.svg';
@@ -14,9 +14,10 @@ interface LinkInputProps {
   onChange?: (value: Link[]) => void;
   eventState?: FunnelState['eventState'];
   setEventState?: React.Dispatch<React.SetStateAction<FunnelState['eventState']>>;
+  onValidationChange?: (isValid: boolean) => void;
 }
 
-const LinkInput = ({ value, onChange, eventState, setEventState }: LinkInputProps) => {
+const LinkInput = ({ value, onChange, eventState, setEventState, onValidationChange }: LinkInputProps) => {
   const links = value ?? eventState?.referenceLinks ?? [];
 
   const [activeInput, setActiveInput] = useState<{ field: 'title' | 'url' | null }>({
@@ -25,6 +26,11 @@ const LinkInput = ({ value, onChange, eventState, setEventState }: LinkInputProp
   const [hoveredInput, setHoveredInput] = useState<{ field: 'title' | 'url' | null }>({
     field: null,
   });
+
+  const validateLinks = (linkArray: Link[]) => {
+    if (linkArray.length === 0) return true;
+    return linkArray.every(link => link.title.trim() !== '' && link.url.trim() !== '');
+  };
 
   const updateAll = (newLinks: Link[]) => {
     onChange?.(newLinks);
@@ -44,9 +50,20 @@ const LinkInput = ({ value, onChange, eventState, setEventState }: LinkInputProp
     updateAll(newLinks);
   };
 
+  useEffect(() => {
+    const isValid = validateLinks(links);
+    onValidationChange?.(isValid);
+  }, [links, onValidationChange]);
+
   return (
     <div className="flex flex-col gap-1">
-      <h1 className="font-bold text-black text-lg">관련 링크</h1>
+      <div className="flex flex-row gap-2 items-center">
+        <h1 className="font-bold text-black text-lg">관련 링크</h1>
+        {links.length > 0 && (<p className="text-placeholderText text-12">
+          링크 추가 시 하이퍼링크와 URL을 모두 입력해주세요
+        </p>)}
+
+      </div>
 
       {links.map((link, index) => (
         <div key={index} className="mb-2">
@@ -64,7 +81,7 @@ const LinkInput = ({ value, onChange, eventState, setEventState }: LinkInputProp
                 value={link.title}
                 onChange={e => updateLink(index, 'title', e.target.value)}
                 className="w-full min-w-[3rem] md:min-w-[6rem] h-8 text-placeholderText ml-1 outline-none bg-transparent text-sm md:text-base"
-                placeholder="참조링크"
+                placeholder="하이퍼링크"
                 autoFocus={activeInput.field === link.title && activeInput.field === 'title'}
               />
             </div>

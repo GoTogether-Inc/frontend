@@ -48,7 +48,7 @@ const EventRegisterLayout = ({
       <div className="absolute top-0 w-full h-36 md:h-40 bg-gradient-to-br from-[#FF5593] to-[rgb(255,117,119)] rounded-b-[60px] z-10">
         <Header
           centerContent="이벤트 등록"
-          leftButtonLabel={goHome ? (              <IconButton
+          leftButtonLabel={goHome ? (<IconButton
             iconPath={<img src={HomeButton} />}
             onClick={() => navigate('/')}
             iconClassName="cursor-pointer z-30 ml-auto"
