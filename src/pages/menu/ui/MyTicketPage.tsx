@@ -133,6 +133,7 @@ const MyTicketPage = () => {
               host={ticket.event.hostChannelName}
               eventDate={ticket.event.startDate}
               location={ticket.event.address}
+              onlineType={ticket.event.onlineType}
               hashtags={ticket.event.hashtags}
               status={ticket.event.status}
               onClick={() => handleEventCardClick(ticket)}
