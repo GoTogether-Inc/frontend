@@ -20,6 +20,7 @@ const EventDetailPage = () => {
   const [bannerImageUrl, setBannerImageUrl] = useState('');
   const [description, setDescription] = useState('');
   const [referenceLinks, setReferenceLinks] = useState<Link[]>([]);
+  const [isLinkValid, setIsLinkValid] = useState(true);
 
   const queryClient = useQueryClient();
 
@@ -67,16 +68,29 @@ const EventDetailPage = () => {
     });
   };
 
+  const handleLinkValidation = (valid: boolean) => {
+    setIsLinkValid(valid);
+  };
+
   return (
     <DashboardLayout centerContent="DASHBOARD">
       <div className="flex flex-col gap-5 mt-8 px-7">
         <h1 className="text-center text-xl font-bold mb-5">이벤트 상세 정보</h1>
         <FileUpload value={bannerImageUrl} onChange={setBannerImageUrl} useDefaultImage={false} />
         <TextEditor value={description} onChange={setDescription} />
-        <LinkInput value={referenceLinks} onChange={setReferenceLinks} />
+        <LinkInput 
+          value={referenceLinks} 
+          onChange={setReferenceLinks} 
+          onValidationChange={handleLinkValidation}
+        />
       </div>
       <div className="w-full p-7">
-        <Button label="저장하기" onClick={handleSave} className="w-full h-12 rounded-full" />
+        <Button 
+          label="저장하기" 
+          onClick={handleSave} 
+          className="w-full h-12 rounded-full" 
+          disabled={!isLinkValid}
+        />
       </div>
     </DashboardLayout>
   );
