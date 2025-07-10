@@ -12,7 +12,7 @@ const Button = ({ label, onClick, disabled = false, className = '', type = 'subm
     type={type} 
       onClick={onClick}
       disabled={disabled}
-      className={`py-2 px-4 text-white font-semibold transition text-base sm:text-xs md:text-sm lg:text-base
+      className={`inline-flex items-center justify-center py-2 px-4 sm:px-2 md:px-4 text-white font-semibold transition text-base sm:text-xs md:text-sm lg:text-base
         ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-main hover:bg-mainDark'} 
         ${className}`}
     >

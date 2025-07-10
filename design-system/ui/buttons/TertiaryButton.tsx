@@ -24,11 +24,13 @@ const TertiaryButton = ({ label, type, color, size, disabled, onClick, className
       ? 'border-main text-main hover:bg-main hover:text-white hover:font-bold'
       : 'border-black text-black hover:bg-black hover:text-white hover:font-bold';
 
+      const disabledStyle = 'bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed';
+
   return (
     <button
       type={type}
       disabled={disabled}
-      className={`${baseStyle} ${sizeClasses[size]} ${colorStyle} ${className}`}
+      className={`${baseStyle} ${sizeClasses[size]} ${disabled ? disabledStyle : colorStyle} ${className}`}
       onClick={onClick}
     >
       {label}
