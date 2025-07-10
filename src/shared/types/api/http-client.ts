@@ -56,10 +56,12 @@ axiosClient.interceptors.response.use(
     return response;
   },
   async (error: AxiosError<ApiErrorResponse>) => {
+    console.log(error)
     const errorInfo = {
       status: error.response?.status || 'NETWORK_ERROR',
       message: error.response?.data?.message || error.message,
       code: error.response?.data.code,
+      result: error.response?.data.result
     };
 
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };

@@ -24,11 +24,16 @@ export const agreeTerms = async (data: TermsAgreementRequest) => {
 };
 
 //인증번호 발급
-export const sendCertificationCode = async (phoneNum: string): Promise<void> => {
-  await axiosClient.post('/sms/send', { phoneNum });
+export const sendCertificationCode = async (data: { phoneNumber: string }) => {
+  const response = await axiosClient.post('/sms/send', data, {
+    headers: { isPublicApi: true },
+  });
+  return response.data;
 };
-
 //인증번호 검증 
-export const verifyCertificationCode = async (phoneNum: string, certificationCode: string): Promise<void> => {
-  await axiosClient.post('/sms/verify', { phoneNum, certificationCode });
+export const verifyCertificationCode = async (data: {phoneNumber: string, certificationCode: string}): Promise<void> => {
+  const response = await axiosClient.post('/sms/verify', data, {
+    headers: { isPublicApi: true },
+  });
+  return response.data;
 };
