@@ -7,8 +7,9 @@ import ProfileCircle from '../../../../design-system/ui/Profile';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import DefaultTextField from '../../../../design-system/ui/textFields/DefaultTextField';
 import useAuthStore from '../../../app/provider/authStore';
-import { useUserInfo, useUserUpdate } from '../../../features/join/hooks/useUserHook';
+import { useSendCertificationCode, useUserInfo, useUserUpdate, useVerifyCertificationCode } from '../../../features/join/hooks/useUserHook';
 import { formatProfilName } from '../../../shared/lib/formatProfileName';
+import Button from '../../../../design-system/ui/Button';
 
 const ProfileInfo = () => {
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
@@ -17,15 +18,22 @@ const ProfileInfo = () => {
   const { mutate: updateUser } = useUserUpdate();
   const [isEditing, setIsEditing] = useState(false);
 
+  const { mutate: sendCode } = useSendCertificationCode();
+  const { mutate: verifyCode } = useVerifyCertificationCode();
+  const [isVerified, setIsVerified] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch
   } = useForm<{ name: string; phone: string }>({
     defaultValues: { name: data?.name || '', phone: data?.phoneNumber || '' },
     resolver: zodResolver(myPageSchema),
   });
+
+  const phoneValue = watch('phone');
 
   useEffect(() => {
     if (data) {
@@ -58,11 +66,56 @@ const ProfileInfo = () => {
         setName(name);
         refetch();
         setIsEditing(false);
+        setIsVerified(false);
+        alert('정보가 성공적으로 업데이트 되었습니다.')
       },
       onError: () => {
         alert('정보 업데이트에 실패했습니다. 다시 시도해주세요.');
       },
     });
+  };
+
+  // 전화번호 인증
+  const [isVerifyVisible, setIsVerifyVisible] = useState(true);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [timer, setTimer] = useState(0);
+  //인증번호 발급
+  const handlePhoneVerifyClick = () => {
+    if (!phoneValue) {
+      alert('연락처를 입력해주세요.');
+      return;
+    }
+    // //인증api호출
+    sendCode({ phoneNumber: phoneValue }, {
+      onSuccess: () => {
+        setIsVerifyVisible(true);
+        setTimer(180);
+      }
+    });
+  };
+  // 인증번호 확인
+  const handleVerifySubmit = () => {
+    if (!verificationCode || verificationCode.length !== 6) {
+      alert('6자리 인증번호를 입력해주세요.');
+      return;
+    }
+    verifyCode({ phoneNumber: phoneValue, certificationCode: verificationCode }, {
+      onSuccess: () => {
+        setIsVerifyVisible(false);
+        setIsVerified(true);
+      }
+    });
+  };
+  useEffect(() => {
+    if (isVerifyVisible && timer > 0) {
+      const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer, isVerifyVisible]);
+  const formatTime = (seconds: number) => {
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   if (isLoading) {
@@ -71,7 +124,6 @@ const ProfileInfo = () => {
   if (error) {
     return <div>정보를 불러오는데 실패했습니다. 다시 시도해주세요.</div>;
   }
-
   return (
     <div className="relative w-full h-52 md:h-56">
       <div className="absolute inset-0 bg-main rounded-[10px]" />
@@ -107,35 +159,90 @@ const ProfileInfo = () => {
                   name={formatProfilName(data?.name || '')}
                   className="w-16 h-16 md:w-18 md:h-18 text-xl md:text-2xl"
                 />
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 flex-1">
                   <DefaultTextField
                     {...register('name')}
-                    errorPosition="right"
+                    errorPosition="bottom"
                     errorMessage={errors.name?.message}
                     className="h-9"
                   />
-                  <DefaultTextField
-                    {...register('phone')}
-                    onChange={handlePhoneChange}
-                    errorPosition="right"
-                    errorMessage={errors.phone?.message}
-                    className="h-9"
-                  />
+                  <div className="flex gap-2 items-center">
+                    <DefaultTextField
+                      {...register('phone')}
+                      onChange={handlePhoneChange}
+                      className="h-9 flex-1"
+                    />
+                    <Button
+                      type="button"
+                      label="인증하기"
+                      onClick={handlePhoneVerifyClick}
+                      className="h-9 sm:h-8 rounded-md w-24"
+                    />
+                  </div>
+
+                  {isVerifyVisible && (
+                    <div className="mt-3 p-4 bg-white rounded-md shadow-md border border-gray-300">
+                      <div className="flex gap-2 mb-2">
+                        <DefaultTextField
+                          placeholder="인증번호 6자리"
+                          value={verificationCode}
+                          onChange={(e) => setVerificationCode(e.target.value)}
+                          className="h-9 flex-1"
+                        />
+                        <Button
+                          type="button"
+                          label="확인"
+                          onClick={handleVerifySubmit}
+                          className="h-9 px-3 rounded-md"
+                        />
+                      </div>
+                      <span className="text-xs text-gray-500 pl-1 mb-3 block">
+                        남은 시간: {formatTime(timer)}
+                      </span>
+                      <TertiaryButton
+                        label="취소하기"
+                        type="button"
+                        color="pink"
+                        size="full"
+                        onClick={() => {
+                          setIsEditing(false);
+                          setValue('name', data?.name || '');
+                          setValue('phone', data?.phoneNumber || '');
+                          setIsVerified(false);
+                          setIsVerifyVisible(false);
+                          setVerificationCode('');
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {!isVerifyVisible && (
+                    <div className="flex gap-2 mt-2">
+                      <TertiaryButton
+                        label="취소하기"
+                        type="button"
+                        color="pink"
+                        size="full"
+                        onClick={() => {
+                          setIsEditing(false);
+                          setValue('name', data?.name || '');
+                          setValue('phone', data?.phoneNumber || '');
+                          setIsVerified(false);
+                          setVerificationCode('');
+                        }}
+                      />
+                      <TertiaryButton
+                        label="수정하기"
+                        type="submit"
+                        color="pink"
+                        size="full"
+                        disabled={
+                          phoneValue !== data?.phoneNumber && !isVerified
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="flex gap-2">
-                <TertiaryButton
-                  label="취소하기"
-                  type="button"
-                  color="pink"
-                  size="full"
-                  onClick={() => {
-                    setIsEditing(false);
-                    setValue('name', data?.name || '');
-                    setValue('phone', data?.phoneNumber || '');
-                  }}
-                />
-                <TertiaryButton label="수정하기" type="submit" color="pink" size="full" />
               </div>
             </form>
           )}
@@ -143,6 +250,7 @@ const ProfileInfo = () => {
       </div>
     </div>
   );
+
 };
 
 export default ProfileInfo;
