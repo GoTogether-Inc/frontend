@@ -38,8 +38,8 @@ export const useSendCertificationCode = () => {
       alert('인증번호를 발송했습니다.');
     },
     onError: (error: AxiosError<any>) => {
-      if (error.result) {
-        const allMessages = Object.values(error.result).join('\n');
+      if (error.response?.data) {
+        const allMessages = Object.values(error.response.data).join('\n');
         alert(allMessages);
       } else {
         alert(error.message || '인증번호 발송에 실패하였습니다.');
@@ -57,8 +57,8 @@ export const useVerifyCertificationCode = () => {
       alert('인증에 성공했습니다.');
     },
     onError: (error: AxiosError<any>) => {
-      if (error.result) {
-        const allMessages = Object.values(error.result).join('\n');
+      if (error.response?.data) {
+        const allMessages = Object.values(error.response.data).join('\n');
         alert(allMessages);
       } else {
         alert(error.message || '인증에 실패하였습니다.');

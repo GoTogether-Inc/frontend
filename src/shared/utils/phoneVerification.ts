@@ -9,7 +9,8 @@ export const usePhoneVerification = () => {
   const [isVerifyVisible, setIsVerifyVisible] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const [timer, setTimer] = useState(0);
-const resetVerification = () => {
+
+  const resetVerification = () => {
     setIsVerified(false);
     setIsVerifyVisible(false);
     setVerificationCode('');
