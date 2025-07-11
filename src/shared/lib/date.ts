@@ -44,11 +44,8 @@ export const formatDateLocalString = (date: Date, time: string): string => {
   return `${year}-${month}-${day}T${hour}:${minute}:00`;
 };
 
-export const formatUtcToKst = (utcString: string): string => {
-  const utcDate = new Date(utcString);
-
-  const kstTimestamp = utcDate.getTime() + 9 * 60 * 60 * 1000;
-  const kstDate = new Date(kstTimestamp);
+export const formatLst = (utcString: string): string => {
+  const kstDate = new Date(utcString);
 
   const year = kstDate.getFullYear();
   const month = (kstDate.getMonth() + 1).toString().padStart(2, '0');

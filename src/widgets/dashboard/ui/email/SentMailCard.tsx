@@ -1,7 +1,7 @@
 import arrow from '../../../../../public/assets/dashboard/mail/Arrow.svg';
 import { useState } from 'react';
 import IconButton from '../../../../../design-system/ui/buttons/IconButton';
-import { formatUtcToKst } from '../../../../shared/lib/date';
+import { formatLst } from '../../../../shared/lib/date';
 import TertiaryButton from '../../../../../design-system/ui/buttons/TertiaryButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ReadEmailResponse } from '../../../../features/dashboard/model/email';
@@ -38,7 +38,7 @@ const SentMailCard = ({ mail, isPending = false, onClickDelete }: SentMailCardPr
             <p>{mail.title}</p>
           </div>
           <p className="text-sm text-placeholderText">
-            {formatUtcToKst(mail.reservationDate)}
+            {formatLst(mail.reservationDate)}
           </p>
         </div>
         <IconButton
