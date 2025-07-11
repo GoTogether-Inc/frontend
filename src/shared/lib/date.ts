@@ -45,13 +45,13 @@ export const formatDateLocalString = (date: Date, time: string): string => {
 };
 
 export const formatLst = (utcString: string): string => {
-  const kstDate = new Date(utcString);
+  const localDate = new Date(utcString);
 
-  const year = kstDate.getFullYear();
-  const month = (kstDate.getMonth() + 1).toString().padStart(2, '0');
-  const day = kstDate.getDate().toString().padStart(2, '0');
-  const hours = kstDate.getHours().toString().padStart(2, '0');
-  const minutes = kstDate.getMinutes().toString().padStart(2, '0');
+  const year = localDate.getFullYear();
+  const month = (localDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = localDate.getDate().toString().padStart(2, '0');
+  const hours = localDate.getHours().toString().padStart(2, '0');
+  const minutes = localDate.getMinutes().toString().padStart(2, '0');
 
   return `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
 };
