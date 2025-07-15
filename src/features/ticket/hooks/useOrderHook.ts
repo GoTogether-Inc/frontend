@@ -50,13 +50,19 @@ export const useOrderTicket = () => {
 // qr 스캔
 export const useTicketQrCodeValidate = () => {
   return useMutation({
-    mutationFn: ({ orderId, sig }: { orderId: number; sig: string }) =>
-      ticketQrCode(orderId, sig),
+    mutationFn: ({ orderId, sig }: { orderId: number; sig: string }) => ticketQrCode(orderId, sig),
     onSuccess: () => {
       alert('체크인 성공!');
     },
-    onError: () => {
-      alert('체크인 실패했습니다. 다시 시도해주세요.');
+    onError: (error: any) => {
+      const errorCode = error?.code;
+      if (errorCode === 'QR_CODE4001') {
+        alert('이미 사용된 QR 코드입니다.');
+      } else if (errorCode === 'QR_CODE4002') {
+        alert('잘못된 QR 코드 형식입니다.');
+      } else {
+        alert('QR 코드 검증 중 오류가 발생했습니다.');
+      }
     },
   });
 };
