@@ -8,11 +8,11 @@ import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
 import { useCancelTicket, useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
-import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteModal';
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import useAuthStore from '../../../app/provider/authStore';
 import TextModal from '../../../shared/ui/TextModal';
+import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
