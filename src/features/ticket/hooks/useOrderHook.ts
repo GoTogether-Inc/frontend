@@ -54,7 +54,7 @@ export const useTicketQrCodeValidate = () => {
     onSuccess: () => {
       alert('체크인 성공!');
     },
-    onError: (error: any) => {
+    onError: (error: { code?: string }) => {
       const errorCode = error?.code;
       if (errorCode === 'QR_CODE4001') {
         alert('이미 사용된 QR 코드입니다.');
