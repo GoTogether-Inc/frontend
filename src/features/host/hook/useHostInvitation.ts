@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { ApiResponse } from '../../../shared/types/api/apiResponse';
-import { HostInvitationRequest } from '../model/hostInvitation';
+import { HostInvitationRequest, HostInvitationResponse } from '../model/hostInvitation';
 import { inviteMember } from '../api/hostInvitation';
+import { AxiosError } from 'axios';
 
 export const useHostInvitation = (hostChannelId: number) => {
-  return useMutation<ApiResponse<null>, Error, HostInvitationRequest>({
+  return useMutation<HostInvitationResponse, AxiosError<HostInvitationResponse>, HostInvitationRequest>({
     mutationFn: async (requestBody: HostInvitationRequest) => {
       return await inviteMember(hostChannelId, requestBody);
     },

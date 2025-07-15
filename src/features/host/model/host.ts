@@ -11,3 +11,8 @@ export interface UpdateHostChannelInfoRequest {
   hostEmail: string;
   channelDescription: string;
 }
+
+export interface HostDeletionResponse {
+  code: string;
+  message: string;
+}

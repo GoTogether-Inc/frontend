@@ -13,27 +13,41 @@ export const useInviteMembers = (hostChannelId: number) => {
 
     const invitationPromises = emails.map(
       email =>
-        new Promise((resolve, reject) => {
+        new Promise<void>((resolve, reject) => {
           inviteMember(
             { email },
             {
-              onSuccess: resolve,
-              onError: reject,
+              onSuccess: () => resolve(),
+              onError: error => reject(error),
             }
           );
         })
     );
 
-    Promise.all(invitationPromises)
-      .then(() => {
+    Promise.allSettled(invitationPromises).then(results => {
+      const failed = results.filter(r => r.status === 'rejected') as PromiseRejectedResult[];
+
+      if (failed.length > 0) {
+        console.log('🚨 first error:', failed[0].reason);
+      }
+
+      if (failed.length === 0) {
         alert('초대가 전송되었습니다.');
         queryClient.invalidateQueries({ queryKey: ['hostInfo', hostChannelId] });
         onSuccess?.();
-      })
-      .catch(() => {
-        alert('초대 중 일부 실패했습니다.');
-        onError?.();
-      });
+        return;
+      }
+
+      const firstError = failed[0].reason;
+
+      const errorMessage =
+        firstError?.response?.data?.message || // AxiosError일 경우
+        firstError?.message || // 일반 에러 객체일 경우
+        '알 수 없는 오류가 발생했습니다.';
+
+      alert(errorMessage);
+      onError?.();
+    });
   };
 
   return { inviteMembers };
