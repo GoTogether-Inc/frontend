@@ -5,7 +5,7 @@ import QrModal from '../../../../design-system/ui/modals/QrModal';
 import QrBackground from '../../../../design-system/icons/QrBackground.svg';
 import EventCard from '../../../shared/ui/EventCard';
 import completedImg from '../../../../public/assets/menu/completed.svg';
-import pendingImg from '../../../../public/assets/menu/Pending.svg';
+import pendingImg from '../../../../public/assets/menu/pending.svg';
 import ticketImg from '../../../../public/assets/menu/Ticket.svg';
 import { useCancelTicket, useTicketOrders } from '../../../features/ticket/hooks/useOrderHook';
 import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteModal';

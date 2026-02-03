@@ -1,5 +1,5 @@
 import link from '../../../../public/assets/event-manage/details/Link.svg';
-import kakao from '../../../../public/assets/event-manage/details/KaKao.svg';
+import kakao from '../../../../public/assets/event-manage/details/Kakao.svg';
 import { shareToKakao } from '../../../shared/lib/kakaoShare';
 import stripHtml from '../lib/stripHtml';
 import EventInfo from '../../../entities/user/ui/EventInfo';

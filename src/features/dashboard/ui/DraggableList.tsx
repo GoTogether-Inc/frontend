@@ -1,7 +1,7 @@
 import { Draggable } from '@hello-pangea/dnd';
 import IconButton from '../../../../design-system/ui/buttons/IconButton';
 import ModifyPencilIcon from '../../../../public/assets/dashboard/ticket/ModifyPencilIcon.svg';
-import DeleteIcon from '../../../../public/assets/dashboard/ticket/DeleteIcon.svg';
+import DeleteIcon from '../../../../public/assets/dashboard/ticket/deleteIcon.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDetachTicketOptionMutation, useDeleteTicketOptionMutation } from '../../ticket/hooks/useTicketOptionHook';
 
