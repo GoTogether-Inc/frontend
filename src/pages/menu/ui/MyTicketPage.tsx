@@ -12,7 +12,7 @@ import EmailDeleteModal from '../../../widgets/dashboard/ui/email/EmailDeleteMod
 import TertiaryButton from '../../../../design-system/ui/buttons/TertiaryButton';
 import useAuthStore from '../../../app/provider/authStore';
 import TextModal from '../../../shared/ui/TextModal';
-import { OrderTicketResponse } from '../../../features/ticket/model/order';
+import { OrderTicketResponse } from '../../../features/ticket/model/Order';
 
 const MyTicketPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -28,7 +28,7 @@ import ParticipantsManagementPage from '../../pages/dashboard/ui/ParticipantsMan
 import MailBoxPage from '../../pages/dashboard/ui/mail/MailBoxPage';
 import EmailEditPage from '../../pages/dashboard/ui/mail/EmailEditPage';
 import PaymentPage from '../../pages/payment/ui/PaymentPage';
-import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TIcketConfirmPage';
+import TicketConfirmPage from '../../pages/dashboard/ui/ticket/TicketConfirmPage';
 import TicketOptionPage from '../../pages/dashboard/ui/ticket/TicketOptionPage';
 import TicketOptionCreatePage from '../../pages/dashboard/ui/ticket/TicketOptionCreatePage';
 import ResponseManagementPage from '../../pages/dashboard/ui/ResponseManagementPage';
