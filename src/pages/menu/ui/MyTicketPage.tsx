@@ -2,7 +2,7 @@ import TicketHostLayout from '../../../shared/ui/backgrounds/TicketHostLayout';
 import TicketLogo from '../../../../public/assets/menu/TicketLogo.svg';
 import { useEffect, useState } from 'react';
 import QrModal from '../../../../design-system/ui/modals/QrModal';
-import QRbackground from '../../../../design-system/icons/QRbackground.svg';
+import QrBackground from '../../../../design-system/icons/QrBackground.svg';
 import EventCard from '../../../shared/ui/EventCard';
 import completedImg from '../../../../public/assets/menu/Completed.svg';
 import pendingImg from '../../../../public/assets/menu/Pending.svg';
@@ -170,7 +170,7 @@ const MyTicketPage = () => {
           <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
             <QrModal
               isChecked={true}
-              iconPath1={<img src={QRbackground} alt="QRbackground" />}
+              iconPath1={<img src={QrBackground} alt="QRbackground" />}
               ticketQrCode={selectedTicket.ticketQrCode}
               title={selectedTicket.event.title}
               hostName={selectedTicket.event.hostChannelName}
